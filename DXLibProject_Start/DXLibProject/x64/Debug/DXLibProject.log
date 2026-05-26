@@ -1,8 +1,85 @@
-﻿  Camera.cpp
+﻿  Player.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Player.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Player.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'World/Character/Player.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'World/Character/Player.cpp' をコンパイルしています)
+  
+  Bee.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Bee.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Bee.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'World/Character/Bee.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'World/Character/Bee.cpp' をコンパイルしています)
+  
+  GameObject.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'World/GameObject.cpp' をコンパイルしています)
+  
+  Collision.cpp
+  MyRandom.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(15,1): warning C4635: XML ドキュメント コメント 'MyRandom.Int(System.Int32,System.Int32)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(15,1): warning C4635: 
+  (ソース ファイル 'Utility/MyRandom.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(22,1): warning C4635: XML ドキュメント コメント 'MyRandom.Float(System.Single,System.Single)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(22,1): warning C4635: 
+  (ソース ファイル 'Utility/MyRandom.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(29,1): warning C4635: XML ドキュメント コメント 'MyRandom.Float01' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(29,1): warning C4635: 
+  (ソース ファイル 'Utility/MyRandom.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(34,1): warning C4635: XML ドキュメント コメント 'MyRandom.Judge(System.Single)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(34,1): warning C4635: 
+  (ソース ファイル 'Utility/MyRandom.cpp' をコンパイルしています)
+  
+  AnimatioController.cpp
+  Camera.cpp
 C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Player.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Camera/Camera.cpp' をコンパイルしています)
   
 C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Camera/Camera.cpp' をコンパイルしています)
   
+  main.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(15,1): warning C4635: XML ドキュメント コメント 'MyRandom.Int(System.Int32,System.Int32)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(15,1): warning C4635: 
+  (ソース ファイル 'main.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(22,1): warning C4635: XML ドキュメント コメント 'MyRandom.Float(System.Single,System.Single)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(22,1): warning C4635: 
+  (ソース ファイル 'main.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(29,1): warning C4635: XML ドキュメント コメント 'MyRandom.Float01' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(29,1): warning C4635: 
+  (ソース ファイル 'main.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(34,1): warning C4635: XML ドキュメント コメント 'MyRandom.Judge(System.Single)' に適用しました: XML の形式が不適切です: XML ドキュメント内では最上位の要素に限り、使用できます。
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\MyRandom.h(34,1): warning C4635: 
+  (ソース ファイル 'main.cpp' をコンパイルしています)
+  
+  SceneBase.cpp
+  SceneManager.cpp
+  SceneTest.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Bee.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Scene/SceneTest.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\GameObject.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Scene/SceneTest.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\World\Character\Player.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Scene/SceneTest.cpp' をコンパイルしています)
+  
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Scene\SceneTest.cpp(113,64): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  SoundManager.cpp
+  GameSetting.cpp
+  Input.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\Input.cpp(187,29): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Vector3.cpp
+C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Utility\Vector3.cpp(95,15): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
   DXLibProject.vcxproj -> C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\x64\Debug\DXLibProject.exe
