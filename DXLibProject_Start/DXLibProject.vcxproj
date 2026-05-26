@@ -192,6 +192,7 @@
     <None Include="Resource\Bee.mv1" />
     <None Include="Resource\ChaWitch\ChaWitch.mv1" />
     <None Include="Resource\ChaWitch\ChaWitchM.mv1" />
+    <None Include="Resource\ChaWitch\ChaWitchMesh.mv1" />
     <None Include="Resource\ChaWitch\Materials\Mat_Cha_Witch.mat" />
     <None Include="Resource\ChaWitch\Motions\Damage.mv1" />
     <None Include="Resource\ChaWitch\Motions\Dead.mv1" />

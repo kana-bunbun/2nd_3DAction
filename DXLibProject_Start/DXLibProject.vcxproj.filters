@@ -147,6 +147,7 @@
     <None Include="Resource\ChaWitch\Motions\Parry.fbx" />
     <None Include="Resource\ChaWitch\Motions\Walk.fbx" />
     <None Include="Resource\ChaWitch\ChaWitchM.mv1" />
+    <None Include="Resource\ChaWitch\ChaWitchMesh.mv1" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />
