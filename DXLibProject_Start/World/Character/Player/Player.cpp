@@ -49,6 +49,7 @@ Player::Player() :
 	m_modelHandle = MV1LoadModel(kModelPath);
 	m_transform.Reset();
 	m_transform.position.x = 100;
+	m_move.SetLerpSpeed(kLerpModelRadian);
 }
 
 Player::~Player()
@@ -111,6 +112,7 @@ void Player::Update()
 	// 移動速度を0で初期化
 	m_move.SetSpeed(0);
 	// 移動の入力が行われていたら
+	m_move.SetDesireRad(m_transform.rotation.y);
 	if (analogAmount != 0) {
 		// 移動ステータスに変更
 		m_status = Status::Player::Walk;
@@ -118,24 +120,6 @@ void Player::Update()
 		m_move.SetDesireRad(analogAngle);
 		// 移動速度を設定
 		m_move.SetSpeed(analogAmount * kMoveSpeed);
-		//// 入力角度まで補間するように
-		//m_desireRad = analogAngle;
-		//// プレイヤーの角度の補間量
-		//float lerpRad = (m_desireRad - m_transform.rotation.y);
-		//// 角度を180～-180の間に収める
-		//lerpRad = MyMath::NormalizeRadian(lerpRad);
-		//// 補間割合をかける
-		//lerpRad *= kLerpModelRadian;
-		//// 
-		//m_transform.rotation.y += lerpRad;
-		//m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
-		// 
-
-		//Vector3 moveVec = Vector3::zero;
-		//moveVec.x = -sinf(m_transform.rotation.y);
-		//moveVec.z = -cosf(m_transform.rotation.y);
-		//moveVec *= analogAmount * kMoveSpeed;
-		//m_transform.position += moveVec;
 	}
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 	// アニメーションの更新
@@ -144,9 +128,13 @@ void Player::Update()
 	m_animation.Debug();
 	printfDx("analogAmount : %f\n", analogAmount);
 	printfDx("m_desireRad : %f\n", m_desireRad);
-	//printfDx("m_currentRad : %f\n", m_currentRad);
 	printfDx("m_desireRad : %f\n", m_desireRad * MyMath::ToDegree);
-	//printfDx("m_currentRad : %f\n", m_currentRad * MyMath::ToDegree);
+
+	// 移動をする
+	m_move.Update();
+	Transform transform = m_move.GetTransform();
+	m_transform.position = transform.position;
+	m_transform.rotation = transform.rotation;
 }
 
 void Player::ResolveCollision(const Collision::Result& result)
