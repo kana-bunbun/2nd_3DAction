@@ -1,5 +1,6 @@
-#include"../GameObject.h"
-#include"AnimatioController.h"
+#include"../../GameObject.h"
+#include"../AnimatioController.h"
+#include"../CharacterMove.h"
 
 class Camera;
 
@@ -18,8 +19,23 @@ public:
 	/// 初期化処理
 	/// </summary>
 	void Init()override;
+	/// <summary>
+	/// 更新処理
+	/// </summary>
 	void Update()override;
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="result"></param>
 	void ResolveCollision(const Collision::Result& result)override;
+
+
+
+
+
+
+
+public:
 	/// <summary>
 	/// カメラのポインタを渡す関数
 	/// </summary>
@@ -51,5 +67,9 @@ private:
 	/// プレイヤーの角度
 	/// </summary>
 	float m_desireRad;
+	/// <summary>
+	/// キャラクターの移動を行う
+	/// </summary>
+	CharacterMove m_move;
 
 };

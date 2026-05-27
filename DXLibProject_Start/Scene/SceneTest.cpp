@@ -10,7 +10,7 @@
 #include "../Camera/Camera.h"
 #include "../System/SoundManager.h"
 #include"../World/Character/Bee.h"
-#include"../World/Character/Player.h"
+#include"../World/Character/Player/Player.h"
 #include<cassert>
 #include <math.h>
 #include<memory>

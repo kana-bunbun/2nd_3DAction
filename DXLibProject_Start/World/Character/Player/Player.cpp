@@ -1,17 +1,19 @@
 #include "Player.h"
 #include<DxLib.h>
 #include<string>
-#include"Animation.h"
-#include"../../Utility/Input.h"
-#include"../../Camera/Camera.h"
+#include"../Animation.h"
+#include"../../../Utility/Input.h"
+#include"../../../Camera/Camera.h"
+#include"../AnimatioController.h"
+#include"../CharacterMove.h"
 namespace {
-	const char* const kModelPath = "Resource\\ChaWitch\\ChaWitchMesh.mv1";
+	const char* const kModelPath = "Resource\\Player\\ChaWitch\\ChaWitchMesh.mv1";
 	const char* const kAnimPath[static_cast<int>(Status::Player::Max)] = {
-		"Resource\\ChaWitch\\Motions\\Idle.mv1",
-		"Resource\\ChaWitch\\Motions\\Walk.mv1",
-		"Resource\\ChaWitch\\Motions\\Parry.mv1",
-		"Resource\\ChaWitch\\Motions\\Damage.mv1",
-		"Resource\\ChaWitch\\Motions\\Dead.mv1",
+		"Resource\\Player\\ChaWitch\\Motions\\Idle.mv1",
+		"Resource\\Player\\ChaWitch\\Motions\\Walk.mv1",
+		"Resource\\Player\\ChaWitch\\Motions\\Parry.mv1",
+		"Resource\\Player\\ChaWitch\\Motions\\Damage.mv1",
+		"Resource\\Player\\ChaWitch\\Motions\\Dead.mv1",
 	};
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
@@ -41,7 +43,8 @@ Player::Player() :
 	m_status(),
 	m_pCamera(nullptr),
 	m_animHandle(),
-	m_desireRad(0)
+	m_desireRad(0),
+	m_move()
 {
 	m_modelHandle = MV1LoadModel(kModelPath);
 	m_transform.Reset();
@@ -50,9 +53,10 @@ Player::Player() :
 
 Player::~Player()
 {
+	// アニメーションハンドルの破棄
 	for (int& anim : m_animHandle)
 		MV1DeleteModel(anim);
-
+	// カメラのポインタを破棄
 	if (m_pCamera) {
 		m_pCamera = nullptr;
 		delete m_pCamera;
@@ -61,9 +65,11 @@ Player::~Player()
 
 void Player::Init()
 {
-
+	// アニメーションの初期化
 	m_animation.Init(GameObject::m_modelHandle);
+	// プレイヤーの状態の数だけ繰り返し
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
+		// アニメーションハンドルの初期化
 		m_animHandle[i] = -1;
 		// アニメーションの更読み込み
 		m_animHandle[i] = MV1LoadModel(kAnimPath[i]);
@@ -71,6 +77,7 @@ void Player::Init()
 		if (m_animHandle[i] ==-1)continue;
 		// アニメーションを追加
 		m_animation.AddAnim(m_animHandle[i],i);
+		// インデックスを設定
 		m_animData[i].index = i;
 	}
 
@@ -90,34 +97,45 @@ void Player::Init()
 
 void Player::Update()
 {
+	// 入力量を取得
 	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1);
+	// 入力角度を取得
 	float analogAngle= Input::AnalogAngle(Input::Joystick::Left, Pad::Player::P1);
+	// 角度をラジアン角に変更
 	analogAngle *= MyMath::ToRadian;
+	// カメラの角度で回転するように
 	if (m_pCamera)
 		analogAngle += m_pCamera->GetHRadian();
 	m_status = Status::Player::Neutral;
+	
+	// 移動速度を0で初期化
+	m_move.SetSpeed(0);
 	// 移動の入力が行われていたら
 	if (analogAmount != 0) {
 		// 移動ステータスに変更
 		m_status = Status::Player::Walk;
 		// 入力角度まで補間するように
-		m_desireRad = analogAngle;
-		// プレイヤーの角度の補間量
-		float lerpRad = (m_desireRad - m_transform.rotation.y);
-		// 角度を180～-180の間に収める
-		lerpRad = MyMath::NormalizeRadian(lerpRad);
-		// 補間割合をかける
-		lerpRad *= kLerpModelRadian;
+		m_move.SetDesireRad(analogAngle);
+		// 移動速度を設定
+		m_move.SetSpeed(analogAmount * kMoveSpeed);
+		//// 入力角度まで補間するように
+		//m_desireRad = analogAngle;
+		//// プレイヤーの角度の補間量
+		//float lerpRad = (m_desireRad - m_transform.rotation.y);
+		//// 角度を180～-180の間に収める
+		//lerpRad = MyMath::NormalizeRadian(lerpRad);
+		//// 補間割合をかける
+		//lerpRad *= kLerpModelRadian;
+		//// 
+		//m_transform.rotation.y += lerpRad;
+		//m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
 		// 
-		m_transform.rotation.y += lerpRad;
-		m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
-		 
 
-		Vector3 moveVec = Vector3::zero;
-		moveVec.x = -sinf(m_transform.rotation.y);
-		moveVec.z = -cosf(m_transform.rotation.y);
-		moveVec *= analogAmount * kMoveSpeed;
-		m_transform.position += moveVec;
+		//Vector3 moveVec = Vector3::zero;
+		//moveVec.x = -sinf(m_transform.rotation.y);
+		//moveVec.z = -cosf(m_transform.rotation.y);
+		//moveVec *= analogAmount * kMoveSpeed;
+		//m_transform.position += moveVec;
 	}
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 	// アニメーションの更新
