@@ -214,13 +214,13 @@ namespace Collision {
 
 			// ‚ß‚è‚İ—Ê‚Ì¬‚³‚¢²‚ğ’²‚×‚ÄAŒü‚«‚Ì+-‚ğİ’è
 			if (normal == Vector3::XAxis) {
-				dir.x = (dir.x <= 0.0f) ? 1.0f : -1.0f;
+				normal.x = (dir.x <= 0.0f) ? 1.0f : -1.0f;
 			}
 			else if (normal == Vector3::YAxis) {
-				dir.y = (dir.y <= 0.0f) ? 1.0f : -1.0f;
+				normal.y = (dir.y <= 0.0f) ? 1.0f : -1.0f;
 			}
 			else if (normal == Vector3::ZAxis) {
-				dir.z = (dir.z <= 0.0f) ? 1.0f : -1.0f;
+				normal.z = (dir.z <= 0.0f) ? 1.0f : -1.0f;
 			}
 			// ’²‚×‚½–@ü‚ÅŠm’è
 			result.normal = normal;

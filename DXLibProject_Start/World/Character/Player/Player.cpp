@@ -40,7 +40,7 @@ namespace {
 	// モデルの大きさ
 	constexpr Vector3 kModelScale = { 2.0f,2.0f,2.0f };
 	constexpr Vector3 kCollisionOffset = { 0.0f,30.0f*kModelScale.y,0.0f };
-	constexpr Vector3 kCollisionSize = { 100.0f,100.0f,100.0f };
+	constexpr Vector3 kCollisionSize = { 100.0f,200.0f,100.0f };
 }
 
 Player::Player() :
@@ -119,20 +119,25 @@ void Player::Update()
 	DrawCapsule3D(topPos.ToVECTOR(), bottomPos.ToVECTOR(), radius, 10, color, color, FALSE);
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	m_collision->DebugDraw();
+	
 }
 
 void Player::ResolveCollision(const Collision::Result& result)
 {
 	if (!result.isHit)return;
 
-	// 押し戻しベクトルを生成
-	Vector3 revertVec = result.normal * result.penetration;
-	// 座標を補正
-	m_transform.position += revertVec;
-	m_move.SetTransform(m_transform);
+	// 押し戻し量を保存
+	Vector3 pendingPush = result.normal * result.penetration*30;
+	m_move.AddPendingPush(pendingPush);
 
-	// 衝突判定の更新
-	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+	//// 押し戻しベクトルを生成
+	//Vector3 revertVec = result.normal * result.penetration;
+	//// 座標を補正
+	//m_transform.position += revertVec;
+	//m_move.SetTransform(m_transform);
+
+	//// 衝突判定の更新
+	//if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 
 }
 

@@ -1,9 +1,15 @@
 #include "CharacterMove.h"
 
+namespace {
+	constexpr float kAttenuation = 0.8f;
+}
+
 CharacterMove::CharacterMove():
 	m_transform(),
 	m_desireRad(0),
-	m_speed(0)
+	m_speed(0),
+	m_lerpSpeed(0),
+	m_pendingPush()
 {
 
 }
@@ -41,5 +47,7 @@ void CharacterMove::Update()
 	moveVec.x = -sinf(m_transform.rotation.y);
 	moveVec.z = -cosf(m_transform.rotation.y);
 	moveVec *= m_speed;
+	moveVec += m_pendingPush;
 	m_transform.position += moveVec;
+	m_pendingPush *= kAttenuation;
 }

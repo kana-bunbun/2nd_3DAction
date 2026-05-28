@@ -102,6 +102,11 @@ SceneBase* SceneTest::Update() {
 	m_pCamera[0]->Update();
 
 	m_pBee->Update();
+
+	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
+	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");
+	m_pPlayer->ResolveCollision(result);
+
 	return this;
 }
 

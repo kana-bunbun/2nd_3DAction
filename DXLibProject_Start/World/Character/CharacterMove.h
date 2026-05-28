@@ -32,6 +32,8 @@ public:		// ゲッター・セッター関数
 	const void SetSpeed(float speed) { m_speed = speed; }
 	// 補間の速度を設定する関数
 	const void SetLerpSpeed(float lerp) { m_lerpSpeed = lerp; }
+	// 押し戻し量を加算
+	const void AddPendingPush(const Vector3& pendingPush) { m_pendingPush += pendingPush; }
 private:
 	/// <summary>
 	/// トランスフォーム
@@ -49,5 +51,9 @@ private:
 	/// 角度の補間割合
 	/// </summary>
 	float m_lerpSpeed;
+	/// <summary>
+	/// 押される量
+	/// </summary>
+	Vector3 m_pendingPush;
 };
 
