@@ -32,6 +32,9 @@ namespace {
 SceneTest::SceneTest() :
 	m_playerNum(0)
 {
+	// ライトの向きを設定
+	Vector3 lightVec= Vector3::YAxis*-1;
+	ChangeLightTypeDir(lightVec.ToVECTOR());
 	// 最初に接続しているコントローラーの数で初期化
 	m_playerNum = GetJoypadNum();
 	// コントローラー接続が失敗していたら警告

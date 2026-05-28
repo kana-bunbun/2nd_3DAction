@@ -80,6 +80,9 @@ void CameraOld::Update()
 		UpdateAngleLerp();
 	}
 	UpdateCameraPos();
+
+	Vector3 lightVec;
+
 }
 
 void CameraOld::Draw()
@@ -139,6 +142,7 @@ void CameraOld::UpdateAngleInput()
 	m_transform.rotation.y = hAngle * MyMath::ToRadian;
 
 	//m_target.position = m_pPlayer->GetPosition();
+
 }
 
 void CameraOld::UpdateAngleLerp()
@@ -169,6 +173,7 @@ void CameraOld::UpdateCameraPos()
 	m_transform.position = cameraPos;
 
 	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
+	ChangeLightTypeDir((rotate*-1).Normalize().ToVECTOR());
 
 	//printfDx("targetèÓïÒ\n");
 	//printfDx("pos    X : %f | Y : %f | Z : %f\n", m_target.position.x, m_target.position.y, m_target.position.z);
