@@ -332,15 +332,17 @@ namespace Collision {
 		// 垂直方向の成分
 		float sinVer = -sinf(m_transform.rotation.x+DX_PI_F*0.5f);
 		float cosVer = -cosf(m_transform.rotation.x + DX_PI_F * 0.5f);
-		Vector3 rotate;
 
+		// ベクトルの計算
+		Vector3 rotate;
 		rotate.x = cosVer * sinHol;
 		rotate.y = sinVer;
 		rotate.z = cosVer * cosHol;
 
-		Vector3 offsetVec = -rotate * m_offset;
-		m_maxPos = (m_transform.position - rotate*m_length) + offsetVec;
-		m_minPos = (m_transform.position + rotate*m_length) + offsetVec;
+		Vector3 offsetVec = rotate * m_offset;
+		// オフセットを考慮したカプセルの二点を計算
+		m_maxPos = (m_transform.position - rotate*m_length) - offsetVec;
+		m_minPos = (m_transform.position + rotate*m_length) - offsetVec;
 
 
 	}

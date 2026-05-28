@@ -57,7 +57,7 @@ namespace {
 	// カプセルのオフセット
 	constexpr float kCupsuleOffset = 50 * kModelScale.y;
 	// カプセルの長さ
-	constexpr float kCupsuleLrngth = 30 * kModelScale.y;
+	constexpr float kCupsuleLength = 30 * kModelScale.y;
 
 }
 
@@ -85,7 +85,9 @@ Player::Player() :
 	m_transform.Reset();
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
-	m_cupsule = Collision::Cupsule(m_transform, kCupsuleRadius, kCupsuleLrngth);
+	// カプセルの初期化
+	m_cupsule = Collision::Cupsule(m_transform, kCupsuleRadius, kCupsuleLength);
+	// カプセルのオフセットを計算
 	m_cupsule.SetOffset(kCupsuleOffset);
 
 }

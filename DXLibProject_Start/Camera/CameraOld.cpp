@@ -159,12 +159,12 @@ void CameraOld::UpdateCameraPos()
 	// 垂直方向の成分
 	float sinVer = sinf(m_transform.rotation.x);
 	float cosVer = cosf(m_transform.rotation.x);
+	// ベクトルの計算
 	Vector3 rotate;
-
-	rotate.x = cosVer * sinHol * m_currentDistance;
-	rotate.y = sinVer * m_currentDistance;
-	rotate.z = cosVer * cosHol * m_currentDistance;
-
+	rotate.x = cosVer * sinHol;
+	rotate.y = sinVer;
+	rotate.z = cosVer * cosHol;
+	rotate *= m_currentDistance;
 	Vector3 cameraPos = Vector3(0.0f, kInitCameraHeight, 0.0f);
 
 	cameraPos += m_target.position;
@@ -173,6 +173,10 @@ void CameraOld::UpdateCameraPos()
 	m_transform.position = cameraPos;
 
 	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
+
+
+
+	// 注視点にむかってライトを当てる
 	ChangeLightTypeDir((rotate*-1).Normalize().ToVECTOR());
 
 	//printfDx("target情報\n");
