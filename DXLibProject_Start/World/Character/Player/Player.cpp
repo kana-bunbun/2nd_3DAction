@@ -78,9 +78,9 @@ void Player::Init()
 		// アニメーションの更読み込み
 		m_animHandle[i] = MV1LoadModel(kAnimPath[i]);
 		// 読み込みができたら
-		if (m_animHandle[i] ==-1)continue;
+		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i],i);
+		m_animation.AddAnim(m_animHandle[i], i);
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
@@ -92,7 +92,7 @@ void Player::Init()
 		// アニメーションデータの割り込み不可能フラグを設定
 		m_animData[i].isForcePlay = kForcePlay[i];
 	}
-	
+
 	// 待機アニメーションを再生
 	m_status = Status::Player::Neutral;
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
@@ -126,7 +126,7 @@ void Player::UpdateTransform()
 	m_speed *= kAttenuation;
 	// 移動の入力が行われていたら
 	m_move.SetDesireRad(m_transform.rotation.y);
-	if (analogAmount&&m_status==Status::Player::Walk) {
+	if (analogAmount && m_status == Status::Player::Walk) {
 		// 入力角度まで補間するように
 		m_move.SetDesireRad(analogAngle);
 		// 入力量だけ移動速度を設定
@@ -153,29 +153,38 @@ void Player::UpdateAnimation()
 	m_animation.Update();
 	// アニメーションのデバッグ表示
 	m_animation.Debug();
+	// 割り込み再生またはアニメーション再生中なら処理しない
 	if (m_animation.IsForcePlay() && m_animation.IsPlaying())return;
+	// 次のアニメーションがどれか調べる
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
-	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::Y, Pad::Player::P1)))
+	// 
+	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::Y, Pad::Player::P1))) {
 		nextStatus = Status::Player::Parry;
+	}
+	// 移動の入力があるとき
 	else if (Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1)) {
 		// 移動ステータスに
 		nextStatus = Status::Player::Walk;
 	}
+	// アニメーションが終了していればアイドル状態に
 	if (!m_animation.IsPlaying())
 		nextStatus = Status::Player::Neutral;
 
+	// ステータスが異なっていたらアニメーションの変更
 	if (m_status != nextStatus) {
 		ChangeAnimation(nextStatus);
-		m_status = nextStatus;
 	}
 
 }
 
 void Player::ChangeAnimation(Status::Player& status)
 {
+	// アニメーションの時間をリセット
 	m_animation.ResetPlayCount();
+	// アニメーションを再生
 	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
-	m_status= status;
+	// ステータスの更新
+	m_status = status;
 }
 
