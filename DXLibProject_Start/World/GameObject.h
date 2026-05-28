@@ -11,6 +11,18 @@
 class GameObject
 {
 public:
+	/// <summary>
+	/// 衝突判定時にGameObjectクラスを区別するときに使用
+	/// </summary>
+	enum class CollisionTag {
+		None,
+		Player,
+		Enemy,
+		Wall,
+		Barrier,
+	};
+
+public:
 	GameObject();
 	virtual ~GameObject() = default;
 
@@ -43,11 +55,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Collision::Shape& GetCollision()const { return *m_collision; }
+	const CollisionTag& GetCollisionTag()const { return m_collisionTag; }
 	/// <summary>
 	/// 衝突後の処理
 	/// </summary>
 	/// <param name="result"></param>
-	virtual void ResolveCollision(const Collision::Result& result) = 0;
+	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
 protected:
 	/// <summary>
 	/// 座標・回転・拡縮
@@ -68,6 +81,9 @@ protected:
 	/// nullptrにしたら持たないことも選択できる(積極的には使用しない)
 	/// </summary>
 	std::unique_ptr<Collision::Shape>m_collision;
-
+	/// <summary>
+	/// 衝突時のオブジェクトの属性
+	/// </summary>
+	CollisionTag m_collisionTag = CollisionTag::None;
 };
 

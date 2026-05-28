@@ -35,6 +35,8 @@ namespace Input {
 		Left = XINPUT_BUTTON_DPAD_LEFT,		// 十字左
 		Start=XINPUT_BUTTON_START,			// STARTボタン		
 		Back=XINPUT_BUTTON_START,			// BACKボタン
+		RThumb=XINPUT_BUTTON_RIGHT_THUMB,	// 右スティック押し込み
+		LThumb=XINPUT_BUTTON_LEFT_THUMB,	// 左スティック押し込み
 	};
 	enum class Joystick {
 		Right,								// 右スティック

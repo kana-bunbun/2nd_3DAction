@@ -5,6 +5,11 @@
 
 namespace MyMath {
 
+	/// <summary>
+	/// 小数の誤差
+	/// </summary>
+	constexpr float Epsilon = 0.00001f;
+
 	// ラジアン角に変更する定数
 	constexpr float ToRadian = DX_PI_F / 180.0f;
 	// デグリー角に変更する定数

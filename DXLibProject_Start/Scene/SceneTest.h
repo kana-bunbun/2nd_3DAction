@@ -17,9 +17,10 @@
 
 // 前方宣言
 class GameSetting;
-class Camera;
+class CameraOld;
 class Player;
 class Bee;
+class Barrier;
 //
 //namespace Collision {
 //	class AABB;
@@ -82,7 +83,7 @@ private:
 	/// <summary>
 	/// Cameraクラスのポインタ
 	/// </summary>
-	std::unique_ptr<Camera> m_pCamera[static_cast<int>(Pad::Player::Max)];
+	std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
 	std::unique_ptr<Player> m_pPlayer;
 
 	/// <summary>
@@ -94,4 +95,6 @@ private:
 	/// Beeのポインタ
 	/// </summary>
 	std::unique_ptr<Bee>m_pBee;
+	std::unique_ptr<Barrier>m_pBarrier;
+	
 };

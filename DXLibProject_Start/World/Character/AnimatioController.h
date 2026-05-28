@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// アニメーションの再生カウントをリセットする関数
 	/// </summary>
-	void ResetPlayCount() { m_playCount = 0.0f; }
+	void ResetPlayCount(float playCount=0.0f) { m_playCount = playCount; }
 	/// <summary>
 	/// 更新処理
 	/// </summary>

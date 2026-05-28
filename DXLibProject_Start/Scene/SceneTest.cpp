@@ -7,10 +7,11 @@
 #include "../Utility/GameSetting.h"
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
-#include "../Camera/Camera.h"
+#include "../Camera/CameraOld.h"
 #include "../System/SoundManager.h"
 #include"../World/Character/Bee.h"
 #include"../World/Character/Player/Player.h"
+#include"../World/Object/Barrier.h"
 #include<cassert>
 #include <math.h>
 #include<memory>
@@ -48,13 +49,14 @@ SceneTest::SceneTest() :
 	// スマートポインタの生成
 	// std::make_unique<クラス名>(コンストラクタの引数)
 	for (int i = 0; i < m_playerNum; i++) {
-		m_pCamera[i] = std::make_unique<Camera>();
+		m_pCamera[i] = std::make_unique<CameraOld>();
 		Pad::Player pp = static_cast<Pad::Player>(i);
 		m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
 
 	}
 	m_pPlayer = std::make_unique<Player>();
 	m_pBee = std::make_unique<Bee>();
+	m_pBarrier = std::make_unique<Barrier>();
 }
 
 SceneTest::~SceneTest() {}
@@ -73,6 +75,7 @@ void SceneTest::Init() {
 	// m_pSound->PlayBGM(Sound::BGM::Title);
 	//SoundManager::GetInstance().PlayBGM(Sound::BGM::Menu);
 	m_pBee->Init();
+	m_pPlayer->SetBarrier(m_pBarrier.get());
 }
 
 void SceneTest::End() {
@@ -102,10 +105,11 @@ SceneBase* SceneTest::Update() {
 	m_pCamera[0]->Update();
 
 	m_pBee->Update();
+	m_pBarrier->Update();
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
-	m_pPlayer->ResolveCollision(result);
+	m_pPlayer->ResolveCollision(*m_pBee, result);
 
 	return this;
 }
@@ -123,9 +127,10 @@ void SceneTest::Draw() {
 	
 		m_pBee->Draw();
 
+		m_pPlayer->Draw();
+		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
 	}
-	m_pPlayer->Draw();
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意
 	Vector3 billboardTarget = Vector3(400.0f, 50.0f, -400.0f);

@@ -25,7 +25,7 @@ public:
 	/// 衝突処理
 	/// </summary>
 	/// <param name="result"></param>
-	void ResolveCollision(const Collision::Result& result)override;
+	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 
 

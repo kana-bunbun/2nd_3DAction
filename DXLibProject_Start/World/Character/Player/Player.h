@@ -1,8 +1,17 @@
 #include"../../GameObject.h"
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
-
-class Camera;
+#include"../../UI/Gauge.h"
+#include<array>
+class CameraOld;
+class Barrier;
+namespace {
+	enum class GaugeType{
+		HP,
+		MP,
+		Max
+	};
+}
 
 class Player : public GameObject 
 {
@@ -24,14 +33,18 @@ public:
 	/// </summary>
 	void Update()override;
 	/// <summary>
-	/// 衝突処理
-	/// </summary>
-	/// <param name="result"></param>
-	void ResolveCollision(const Collision::Result& result)override;
-	/// <summary>
 	/// トランスフォームの更新処理
 	/// </summary>
 	void UpdateTransform();
+	/// <summary>
+	/// はじき返しの処理
+	/// </summary>
+	void Parry();
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="result"></param>
+	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
@@ -43,14 +56,14 @@ public:
 
 
 
-
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>
 	/// カメラのポインタを渡す関数
 	/// </summary>
 	/// <param name="camera"></param>
-	void SetCamera(Camera* camera) { m_pCamera = camera; }
+	void SetCamera(CameraOld* camera) { m_pCamera = camera; }
+	void SetBarrier(Barrier* barrier);
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -67,7 +80,7 @@ private:
 	/// <summary>
 	/// カメラのポインタ
 	/// </summary>
-	Camera* m_pCamera;
+	CameraOld* m_pCamera;
 	/// <summary>
 	/// アニメーションのハンドル
 	/// </summary>
@@ -84,5 +97,20 @@ private:
 	/// キャラクターの移動を行う
 	/// </summary>
 	CharacterMove m_move;
-
+	/// <summary>
+	/// パリィを行ったかどうか
+	/// </summary>
+	bool m_parry;
+	/// <summary>
+	/// バリア
+	/// </summary>
+	Barrier* m_pBarrier;
+	/// <summary>
+	/// ダッシュしているかどうか
+	/// </summary>
+	bool m_dashFlag;
+	/// <summary>
+	/// ゲージの種類
+	/// </summary>
+	std::array<Gauge, static_cast<int>(GaugeType::Max)> m_gauges;
 };

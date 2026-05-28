@@ -38,6 +38,8 @@ void CharacterMove::Update()
 	lerpRad = MyMath::NormalizeRadian(lerpRad);
 	// 補間割合をかける
 	lerpRad *= m_lerpSpeed;
+	if (lerpRad*lerpRad < MyMath::Epsilon)
+		lerpRad = 0;
 	// 
 	m_transform.rotation.y += lerpRad;
 	m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
@@ -48,6 +50,9 @@ void CharacterMove::Update()
 	moveVec.z = -cosf(m_transform.rotation.y);
 	moveVec *= m_speed;
 	moveVec += m_pendingPush;
+	if (moveVec.GetLength() < MyMath::Epsilon)return;
 	m_transform.position += moveVec;
 	m_pendingPush *= kAttenuation;
+	if (m_pendingPush.GetLength() < MyMath::Epsilon)
+		m_pendingPush = Vector3::zero;
 }

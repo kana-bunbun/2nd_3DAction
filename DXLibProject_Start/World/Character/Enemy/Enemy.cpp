@@ -1,6 +1,6 @@
 #include "Enemy.h"
 namespace {
-
+	const char* const kModelPath = "";
 }
 
 Enemy::Enemy():
@@ -21,5 +21,5 @@ void Enemy::Init()
 void Enemy::Update()
 {}
 
-void Enemy::ResolveCollision(const Collision::Result & result)
+void Enemy::ResolveCollision(GameObject& other, const Collision::Result & result)
 {}

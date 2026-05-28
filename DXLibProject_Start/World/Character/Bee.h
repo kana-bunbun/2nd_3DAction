@@ -13,7 +13,7 @@ public:
 	/// </summary>
 	void Init()override;
 	void Update()override;
-	void ResolveCollision(const Collision::Result& result)override;
+	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 	/// <summary>
 	/// Beeクラスのメンバ変数
 	/// </summary>

@@ -60,6 +60,7 @@ Bee::Bee():
 		// アニメーションデータの割り込み不可能フラグを設定
 		m_animData[i].isForcePlay = kForcePlay[i];
 	}
+	GameObject::m_collisionTag = CollisionTag::Enemy;
 }
 
 void Bee::Init()
@@ -84,7 +85,7 @@ void Bee::Update()
 	m_collision->DebugDraw();
 }
 
-void Bee::ResolveCollision(const Collision::Result& result)
+void Bee::ResolveCollision(GameObject& other, const Collision::Result& result)
 {
 
 }

@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\FollowCamera.cpp" />
+    <ClCompile Include="World\UI\Gauge.cpp" />
+    <ClCompile Include="World\Object\Barrier.cpp" />
     <ClCompile Include="World\UI\GaugeShow.cpp" />
     <ClCompile Include="World\Character\CharacterMove.cpp" />
     <ClCompile Include="World\Character\Enemy\Enemy.cpp" />
@@ -154,7 +158,7 @@
     <ClCompile Include="World\Component\Collision.cpp" />
     <ClCompile Include="Utility\MyRandom.cpp" />
     <ClCompile Include="World\Character\AnimatioController.cpp" />
-    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\CameraOld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -171,6 +175,10 @@
     <Image Include="Resource\title.jpeg" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="World\UI\Gauge.h" />
+    <ClInclude Include="World\Object\Barrier.h" />
     <ClInclude Include="World\UI\GaugeShow.h" />
     <ClInclude Include="World\Character\CharacterMove.h" />
     <ClInclude Include="World\Character\Enemy\Enemy.h" />
@@ -182,7 +190,7 @@
     <ClInclude Include="Utility\MyRandom.h" />
     <ClInclude Include="World\Character\Animation.h" />
     <ClInclude Include="World\Character\AnimatioController.h" />
-    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\CameraOld.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\SceneTest.h" />
