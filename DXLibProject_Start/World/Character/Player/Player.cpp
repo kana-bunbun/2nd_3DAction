@@ -34,7 +34,9 @@ namespace {
 	// プレイヤーの回転の補間割合
 	constexpr float kLerpModelRadian = 0.1f;
 	// プレイヤーの移動速度
-	constexpr float kMoveSpeed = 12;
+	constexpr float kMoveSpeed = 8;
+	// 移動速度の減衰量
+	constexpr float kAttenuation = 0.8f;
 }
 
 Player::Player() :
@@ -43,6 +45,7 @@ Player::Player() :
 	m_status(),
 	m_pCamera(nullptr),
 	m_animHandle(),
+	m_speed(0),
 	m_desireRad(0),
 	m_move()
 {
@@ -91,41 +94,47 @@ void Player::Init()
 	}
 	
 	// 待機アニメーションを再生
-	m_status = Status::Player::Walk;
+	m_status = Status::Player::Neutral;
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 
 }
 
 void Player::Update()
 {
+	UpdateTransform();
+	UpdateAnimation();
+}
+
+void Player::ResolveCollision(const Collision::Result& result)
+{
+
+}
+
+void Player::UpdateTransform()
+{
 	// 入力量を取得
 	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1);
 	// 入力角度を取得
-	float analogAngle= Input::AnalogAngle(Input::Joystick::Left, Pad::Player::P1);
+	float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Pad::Player::P1);
 	// 角度をラジアン角に変更
 	analogAngle *= MyMath::ToRadian;
 	// カメラの角度で回転するように
 	if (m_pCamera)
 		analogAngle += m_pCamera->GetHRadian();
-	m_status = Status::Player::Neutral;
-	
-	// 移動速度を0で初期化
-	m_move.SetSpeed(0);
+
+	// 移動速度を減衰させる
+	m_speed *= kAttenuation;
 	// 移動の入力が行われていたら
 	m_move.SetDesireRad(m_transform.rotation.y);
-	if (analogAmount != 0) {
-		// 移動ステータスに変更
-		m_status = Status::Player::Walk;
+	if (analogAmount&&m_status==Status::Player::Walk) {
 		// 入力角度まで補間するように
 		m_move.SetDesireRad(analogAngle);
-		// 移動速度を設定
-		m_move.SetSpeed(analogAmount * kMoveSpeed);
+		// 入力量だけ移動速度を設定
+		m_speed = analogAmount * kMoveSpeed;
 	}
-	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
-	// アニメーションの更新
-	m_animation.Update();
-	// アニメーションの更デバッグ表示
-	m_animation.Debug();
+	m_move.SetSpeed(m_speed);
+
+
 	printfDx("analogAmount : %f\n", analogAmount);
 	printfDx("m_desireRad : %f\n", m_desireRad);
 	printfDx("m_desireRad : %f\n", m_desireRad * MyMath::ToDegree);
@@ -137,8 +146,36 @@ void Player::Update()
 	m_transform.rotation = transform.rotation;
 }
 
-void Player::ResolveCollision(const Collision::Result& result)
+void Player::UpdateAnimation()
 {
 
+	// アニメーションの更新
+	m_animation.Update();
+	// アニメーションのデバッグ表示
+	m_animation.Debug();
+	if (m_animation.IsForcePlay() && m_animation.IsPlaying())return;
+	Status::Player nextStatus;
+	nextStatus = Status::Player::Neutral;
+	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::Y, Pad::Player::P1)))
+		nextStatus = Status::Player::Parry;
+	else if (Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1)) {
+		// 移動ステータスに
+		nextStatus = Status::Player::Walk;
+	}
+	if (!m_animation.IsPlaying())
+		nextStatus = Status::Player::Neutral;
+
+	if (m_status != nextStatus) {
+		ChangeAnimation(nextStatus);
+		m_status = nextStatus;
+	}
+
+}
+
+void Player::ChangeAnimation(Status::Player& status)
+{
+	m_animation.ResetPlayCount();
+	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
+	m_status= status;
 }
 

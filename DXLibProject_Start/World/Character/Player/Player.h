@@ -28,9 +28,18 @@ public:
 	/// </summary>
 	/// <param name="result"></param>
 	void ResolveCollision(const Collision::Result& result)override;
-
-
-
+	/// <summary>
+	/// トランスフォームの更新処理
+	/// </summary>
+	void UpdateTransform();
+	/// <summary>
+	/// アニメーションの更新処理
+	/// </summary>
+	void UpdateAnimation();
+	/// <summary>
+	/// アニメーションの変更を行う処理
+	/// </summary>
+	void ChangeAnimation(Status::Player& status);
 
 
 
@@ -62,7 +71,10 @@ private:
 	/// アニメーションのハンドル
 	/// </summary>
 	int m_animHandle[static_cast<int>(Status::Player::Max)];
-
+	/// <summary>
+	/// 移動速度
+	/// </summary>
+	float m_speed;
 	/// <summary>
 	/// プレイヤーの角度
 	/// </summary>
