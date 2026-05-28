@@ -50,7 +50,8 @@ Camera::CameraView FollowCamera::GetView() const
 
 Vector3 FollowCamera::GetForward() const
 {
-    Vector3 dir = m_view.target - m_view.position;
+    Vector3 dir;
+    dir = m_view.target - m_view.position;
     return dir.Normalize();
 }
 
