@@ -1,5 +1,6 @@
 #pragma once
 #include"../../Utility/Vector3.h"
+#include"Transform.h"
 /// <summary>
 /// 衝突判定関連のデータや処理
 /// </summary>
@@ -11,6 +12,7 @@ namespace Collision {
 	/// </summary>
 	enum class Type {
 		Sphere,
+		Cupsule,
 		AABB,		// Axis Aligned Bounding Box
 		//OBB,		// Oriented Bounding Box
 
@@ -147,6 +149,67 @@ namespace Collision {
 		Vector3 m_halfSize;
 		Vector3 m_offSet;
 	};
+
+	class Cupsule :public Shape {
+	public:
+		Cupsule() = default;
+		Cupsule(const Transform& transform, float radius,float length);
+		~Cupsule() = default;
+		/// <summary>
+		/// 形状データを取得する
+		/// </summary>
+		/// <returns></returns>
+		Type GetType()const override { return Type::Cupsule; }
+		/// <summary>
+		/// 衝突判定
+		/// </summary>
+		/// <returns></returns>
+		Collision::Result CheckCollision(const Shape& other)const override;
+		/// <summary>
+		/// 座標を更新
+		/// </summary>
+		/// <param name="pos"></param>
+		void SetPosition(const Vector3& pos) override;
+		/// <summary>
+		/// 座標の取得
+		/// </summary>
+		/// <returns></returns>
+		Vector3 GetPos()const override { return m_transform.position; }
+		/// <summary>
+		/// 形状のデバッグ描画
+		/// </summary>
+		void DebugDraw()const  override;
+		/// <summary>
+		/// トランスフォームを設定する関数
+		/// </summary>
+		/// <param name="transform"></param>
+		void SetTransform(const Transform& transform);
+		/// <summary>
+		/// カプセルの半径を設定する関数
+		/// </summary>
+		/// <param name="radius"></param>
+		void SetRadius(float radius);
+		/// <summary>
+		/// カプセルの長さを設定する関数
+		/// </summary>
+		/// <param name="length"></param>
+		void SetLength(float length);
+		/// <summary>
+		/// オフセットを設定する関数
+		/// </summary>
+		/// <param name="offset"></param>
+		void SetOffset(float offset) { m_offset = offset; }
+	private:
+		void CheckEndPos();
+	private:
+		Vector3 m_minPos;
+		Vector3 m_maxPos;
+		float m_offset;
+		float m_radius;
+		float m_length;
+		Transform m_transform;
+	};
+
 	/// <summary>
 	/// 点がAABB内に入っているかどうかを調べる
 	/// </summary>

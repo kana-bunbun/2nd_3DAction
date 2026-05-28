@@ -282,5 +282,66 @@ namespace Collision {
 
 		return false;
 	}
-	// AABB---------------------------------------------------------------------------------
+
+
+
+	Cupsule::Cupsule(const Transform& transform, float radius, float length) :
+		m_minPos(),
+		m_maxPos(),
+		m_radius(radius),
+		m_length(length),
+		m_transform(transform)
+	{
+		
+
+	}
+	Collision::Result Cupsule::CheckCollision(const Shape & other) const
+	{
+		return Collision::Result();
+	}
+	void Cupsule::SetPosition(const Vector3& pos)
+	{
+		m_transform.position = pos;
+	}
+	void Cupsule::DebugDraw() const
+	{
+		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, Color::kWhite, Color::kWhite, FALSE);
+		DrawSphere3D(m_maxPos.ToVECTOR(), 20, 10, Color::kRed, Color::kRed, TRUE);
+		DrawSphere3D(m_minPos.ToVECTOR(), 20, 10, Color::kBlue, Color::kBlue, TRUE);
+	}
+	void Cupsule::SetTransform(const Transform& transform)
+	{
+		m_transform = transform;
+		CheckEndPos();
+	}
+	void Cupsule::SetRadius(float radius)
+	{
+		m_radius = radius;
+		CheckEndPos();
+	}
+	void Cupsule::SetLength(float length)
+	{
+		m_length = length;
+		CheckEndPos();
+	}
+	void Cupsule::CheckEndPos()
+	{
+		// êÖïΩï˚å¸ÇÃê¨ï™
+		float sinHol = -sinf(m_transform.rotation.y);
+		float cosHol = -cosf(m_transform.rotation.y);
+		// êÇíºï˚å¸ÇÃê¨ï™
+		float sinVer = -sinf(m_transform.rotation.x+DX_PI_F*0.5f);
+		float cosVer = -cosf(m_transform.rotation.x + DX_PI_F * 0.5f);
+		Vector3 rotate;
+
+		rotate.x = cosVer * sinHol;
+		rotate.y = sinVer;
+		rotate.z = cosVer * cosHol;
+
+		Vector3 offsetVec = -rotate * m_offset;
+		m_maxPos = (m_transform.position - rotate*m_length) + offsetVec;
+		m_minPos = (m_transform.position + rotate*m_length) + offsetVec;
+
+
+	}
 }

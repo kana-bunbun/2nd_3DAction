@@ -113,4 +113,5 @@ private:
 	/// ゲージの種類
 	/// </summary>
 	std::array<Gauge, static_cast<int>(GaugeType::Max)> m_gauges;
+	Collision::Cupsule m_cupsule;
 };

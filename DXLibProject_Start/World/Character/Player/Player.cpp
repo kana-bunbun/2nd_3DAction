@@ -52,7 +52,13 @@ namespace {
 	constexpr Vector3 kCollisionSize = { 100.0f,200.0f,100.0f };
 	// バリアのオフセット
 	constexpr Vector3 kBarrierOffset = { 0.0f,50.0f*kModelScale.y,0.0f };
-	//constexpr 
+	// カプセルの半径
+	constexpr float kCupsuleRadius = 70;
+	// カプセルのオフセット
+	constexpr float kCupsuleOffset = 50 * kModelScale.y;
+	// カプセルの長さ
+	constexpr float kCupsuleLrngth = 30 * kModelScale.y;
+
 }
 
 Player::Player() :
@@ -79,7 +85,9 @@ Player::Player() :
 	m_transform.Reset();
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
-	
+	m_cupsule = Collision::Cupsule(m_transform, kCupsuleRadius, kCupsuleLrngth);
+	m_cupsule.SetOffset(kCupsuleOffset);
+
 }
 
 Player::~Player()
@@ -148,9 +156,11 @@ void Player::Update()
 	Vector3 topPos = m_transform.position+Vector3(0.0f,120.0f*kModelScale.y-radius,0.0f);
 	Vector3 bottomPos = m_transform.position + Vector3(0.0f, radius, 0.0f);
 	unsigned int color = GetColor(0, 255, 0);
-	DrawCapsule3D(topPos.ToVECTOR(), bottomPos.ToVECTOR(), radius, 10, color, color, FALSE);
+	//DrawCapsule3D(topPos.ToVECTOR(), bottomPos.ToVECTOR(), radius, 10, color, color, FALSE);
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	m_collision->DebugDraw();
+	m_cupsule.SetTransform(m_transform);
+
 
 	if (m_pBarrier) {
 	m_pBarrier->SetPosition(m_transform.position);
@@ -192,6 +202,17 @@ void Player::Update()
 	UpdateAnimation();
 
 	printfDx("animSpeed : %f\n", m_animation.GetAnimSpeed());
+
+
+	m_cupsule.SetTransform(m_transform);
+	if (Input::IsDown(Input::Button::Up, Pad::Player::P1)) {
+		m_transform.rotation.x += 0.01f;
+	}
+	if (Input::IsDown(Input::Button::Down, Pad::Player::P1)) {
+		m_transform.rotation.x -= 0.01f;
+	}
+	m_move.SetTransform(m_transform);
+	m_cupsule.DebugDraw();
 }
 
 void Player::Parry()
@@ -240,7 +261,6 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 		// 座標を補正
 		m_transform.position += revertVec;
 		m_move.SetTransform(m_transform);
-
 		// 衝突判定の更新
 		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 		break;
@@ -250,6 +270,7 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 	default:
 		break;
 	}
+	m_cupsule.SetTransform(m_transform);
 
 
 }
@@ -288,6 +309,7 @@ void Player::UpdateTransform()
 
 	// 移動をする
 	m_move.Update();
+
 	Transform transform = m_move.GetTransform();
 	m_transform.position = transform.position;
 	m_transform.rotation = transform.rotation;
