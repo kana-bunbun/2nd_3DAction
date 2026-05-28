@@ -15,15 +15,15 @@ namespace {
 	constexpr float kFieldOfView = 60.0f;	// カメラの視野角 FOV = FieldOfView
 
 	constexpr float kDistanceToTarget = 500.0f;	// カメラの被写体までの初期距離
-	constexpr float kMinDistance = 400;	// 被写体との最短距離
-	constexpr float kMaxDistance = 800.0f;	// 被写体との最長距離
+	constexpr float kMinDistance = 150;	// 被写体との最短距離
+	constexpr float kMaxDistance = 150;	// 被写体との最長距離
 
 	constexpr float kInitCameraHeight = 150.0f;		// カメラの初期の高さ
 
 	constexpr float kPosLerp = 0.02f;
 
 	constexpr float kLowAngle = -30.0f;				// カメラの最大仰角
-	constexpr float kHighAngle = 40.0f;				// カメラの最大俯角
+	constexpr float kHighAngle = 80.0f;				// カメラの最大俯角
 
 	constexpr float kAngleSpeed = 2.0f;	// カメラの角速度
 	constexpr float kDefoultLerp = 0.2f;	// カメラ距離の基本の補間割合
@@ -96,8 +96,14 @@ void Camera::Draw()
 void Camera::UpdateDistance()
 {
 
+	// カメラの最短距離、最長距離を求める
+	float minDistance = kDistanceToTarget - kMinDistance;
+	float maxDistance = kDistanceToTarget - kMaxDistance;
+
+	minDistance = MyMath::Clamp(minDistance, 0.0f, kDistanceToTarget);
+	maxDistance = MyMath::Clamp(maxDistance, kDistanceToTarget, maxDistance);
 	// 距離を指定範囲内に収める
-	m_currentDistance = MyMath::Clamp(m_currentDistance, kMinDistance, kMaxDistance);
+	m_currentDistance = MyMath::Clamp(m_currentDistance, minDistance, maxDistance);
 }
 
 void Camera::UpdateAngleInput()
@@ -162,6 +168,7 @@ void Camera::UpdateCameraPos()
 
 	m_transform.position = cameraPos;
 
+	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
 
 	//printfDx("target情報\n");
 	//printfDx("pos    X : %f | Y : %f | Z : %f\n", m_target.position.x, m_target.position.y, m_target.position.z);
