@@ -50,7 +50,7 @@ public:
 	/// <returns>過ぎた瞬間true</returns>
 	bool CheckOverMoment(float time);
 	/// <summary>
-	/// アニメーションの才瀬尾速度を設定する関数
+	/// アニメーションの再生速度を設定する関数
 	/// </summary>
 	/// <param name="speed">アニメーションの速さ(割合)</param>
 	void SetAnimSpeed(float speed=1) { m_animSpeed = speed; }
