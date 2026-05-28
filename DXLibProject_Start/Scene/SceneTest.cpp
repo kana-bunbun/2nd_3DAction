@@ -100,6 +100,8 @@ SceneBase* SceneTest::Update() {
 	m_pPlayer->Update();
 	m_pCamera[0]->SetTarget(m_pPlayer->GetTransform());
 	m_pCamera[0]->Update();
+
+	m_pBee->Update();
 	return this;
 }
 
