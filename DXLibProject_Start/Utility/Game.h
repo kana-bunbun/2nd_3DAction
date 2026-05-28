@@ -9,8 +9,9 @@ namespace Game {
 	const char* const kWindowText = "Test";
 
 	// ウィンドウサイズ
-	constexpr int kScreenWidth = 1920;
-	constexpr int kScreenHeight = 1080;
+	constexpr float kWindowScale = 1.0f;
+	constexpr int kScreenWidth = 1920 * kWindowScale;
+	constexpr int kScreenHeight = 1080 * kWindowScale;
 
 	// ウィンドウのカラーモード
 	constexpr int kColorBit = 32;
