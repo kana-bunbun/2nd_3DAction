@@ -145,6 +145,7 @@ namespace Collision {
 		Vector3 m_minPos;
 		Vector3 m_maxPos;
 		Vector3 m_halfSize;
+		Vector3 m_offSet;
 	};
 	/// <summary>
 	/// “_‚ªAABB“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é

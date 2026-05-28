@@ -45,6 +45,7 @@ public:
 
 
 public:
+	Vector3 GetCollisionCenterPos();
 	/// <summary>
 	/// カメラのポインタを渡す関数
 	/// </summary>

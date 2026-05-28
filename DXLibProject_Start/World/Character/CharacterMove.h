@@ -25,6 +25,7 @@ public:
 public:		// ゲッター・セッター関数
 	// トランスフォームの取得をする関数
 	const Transform GetTransform() { return m_transform; }
+	const void SetTransform(const Transform &transform) { m_transform = transform; }
 	// 保管するための角度を設定する関数
 	const void SetDesireRad(float radian) { m_desireRad = radian; }
 	// 移動速度を設定する関数
