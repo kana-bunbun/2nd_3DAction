@@ -20,9 +20,9 @@ namespace {
 	// モデルの大きさ
 	constexpr Vector3 kModelScale = { 1.0f,1.0f,1.0f };
 	// 当たり判定の大きさ
-	constexpr Vector3 kCollisionSize = { 70.0f,70.0f,70.0f };
+	constexpr Vector3 kCollisionSize = { 170.0f,170.0f,170.0f };
 	// 当たり判定の座標
-	constexpr Vector3 kCollisionOffset = { 0.0f,30,0.0f };
+	constexpr Vector3 kCollisionOffset = { 0.0f,90.0f,0.0f };
 	// アニメーションの名前
 	const char* const kAnimationName[static_cast<int>(Status::Bee::Max)] = {
 		"MonsterArmature|Bite_Front",
@@ -80,6 +80,8 @@ void Bee::Update()
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	// アニメーションの更新処理
 	UpdateAnimation();
+
+	m_collision->DebugDraw();
 }
 
 void Bee::ResolveCollision(const Collision::Result& result)
@@ -89,7 +91,7 @@ void Bee::ResolveCollision(const Collision::Result& result)
 
 Vector3 Bee::GetCollisionCenterPos() const
 {
-	return Vector3::zero;
+	return m_transform.position;
 }
 
 void Bee::UpdateAnimation()

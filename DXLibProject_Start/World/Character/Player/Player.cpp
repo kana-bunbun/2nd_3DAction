@@ -7,7 +7,7 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 namespace {
-	const char* const kModelPath = "Resource\\Player\\ChaWitch\\ChaWitchMesh.mv1";
+	const char* const kModelPath = "Resource\\Player\\ChaWitch\\Model.mv1";
 	const char* const kAnimPath[static_cast<int>(Status::Player::Max)] = {
 		"Resource\\Player\\ChaWitch\\Motions\\Idle.mv1",
 		"Resource\\Player\\ChaWitch\\Motions\\Walk.mv1",
@@ -37,6 +37,10 @@ namespace {
 	constexpr float kMoveSpeed = 8;
 	// 移動速度の減衰量
 	constexpr float kAttenuation = 0.8f;
+	// モデルの大きさ
+	constexpr Vector3 kModelScale = { 2.0f,2.0f,2.0f };
+	constexpr Vector3 kCollisionOffset = { 0.0f,30.0f*kModelScale.y,0.0f };
+	constexpr Vector3 kCollisionSize = { 100.0f,100.0f,100.0f };
 }
 
 Player::Player() :
@@ -50,6 +54,7 @@ Player::Player() :
 	m_move()
 {
 	m_modelHandle = MV1LoadModel(kModelPath);
+	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 	m_transform.Reset();
 	m_transform.position.x = 100;
 	m_move.SetLerpSpeed(kLerpModelRadian);
@@ -97,16 +102,37 @@ void Player::Init()
 	m_status = Status::Player::Neutral;
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 
+	m_collision = std::make_unique<Collision::AABB>(
+		kCollisionOffset,
+		kCollisionSize
+	);
 }
 
 void Player::Update()
 {
 	UpdateTransform();
 	UpdateAnimation();
+	float radius = 60;
+	Vector3 topPos = m_transform.position+Vector3(0.0f,120.0f*kModelScale.y-radius,0.0f);
+	Vector3 bottomPos = m_transform.position + Vector3(0.0f, radius, 0.0f);
+	unsigned int color = GetColor(0, 255, 0);
+	DrawCapsule3D(topPos.ToVECTOR(), bottomPos.ToVECTOR(), radius, 10, color, color, FALSE);
+	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+	m_collision->DebugDraw();
 }
 
 void Player::ResolveCollision(const Collision::Result& result)
 {
+	if (!result.isHit)return;
+
+	// 押し戻しベクトルを生成
+	Vector3 revertVec = result.normal * result.penetration;
+	// 座標を補正
+	m_transform.position += revertVec;
+	m_move.SetTransform(m_transform);
+
+	// 衝突判定の更新
+	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 
 }
 
@@ -186,5 +212,10 @@ void Player::ChangeAnimation(Status::Player& status)
 	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
 	// ステータスの更新
 	m_status = status;
+}
+
+Vector3 Player::GetCollisionCenterPos()
+{
+	return m_transform.position+ kCollisionOffset;
 }
 

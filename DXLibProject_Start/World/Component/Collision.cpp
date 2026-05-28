@@ -101,11 +101,11 @@ namespace Collision {
 	}
 	// 球-----------------------------------------------------------------------------------
 
-	AABB::AABB(const Vector3& center, const Vector3& size):
-		m_halfSize(size * 0.5f)
+	AABB::AABB(const Vector3& offset, const Vector3& size):
+		m_offSet(offset)
 	{
 		SetSize(size);
-		SetPosition(center);
+		SetPosition(offset);
 	}
 
 	// AABB---------------------------------------------------------------------------------
@@ -233,9 +233,9 @@ namespace Collision {
 	void AABB::SetPosition(const Vector3& pos)
 	{
 		// 中心座標から半分の大きさを足した値
-		m_maxPos = pos + m_halfSize;
+		m_maxPos = pos + m_halfSize + m_offSet;
 		// 中心座標から半分の大きさを引いた値
-		m_minPos = pos - m_halfSize;
+		m_minPos = pos - m_halfSize + m_offSet;
 	}
 	void AABB::DebugDraw() const
 	{
