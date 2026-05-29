@@ -12,6 +12,7 @@
 #include"../World/Character/Bee.h"
 #include"../World/Character/Player/Player.h"
 #include"../World/Object/Barrier.h"
+#include"../World/UI/UIManager.h"
 #include<cassert>
 #include <math.h>
 #include<memory>
@@ -60,6 +61,11 @@ SceneTest::SceneTest() :
 	m_pPlayer = std::make_unique<Player>();
 	m_pBee = std::make_unique<Bee>();
 	m_pBarrier = std::make_unique<Barrier>();
+	m_pUiManager = std::make_unique<UIManager>();
+	for (int i = 0; i < GaugeType::Max; i++) {
+		Vector3 vec = { 500,500+i*100.0f, 0 };
+		m_pUiManager->AddGauge(vec, i, m_pPlayer->GetGauge(i));
+	}
 }
 
 SceneTest::~SceneTest() {}
@@ -100,6 +106,7 @@ void SceneTest::End() {
 	//delete m_pSound;
 	//m_pSound = nullptr;
 	m_pBee->End();
+	m_pUiManager->End();
 }
 
 SceneBase* SceneTest::Update() {
@@ -109,6 +116,8 @@ SceneBase* SceneTest::Update() {
 
 	m_pBee->Update();
 	m_pBarrier->Update();
+	m_pUiManager->Update();
+
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
@@ -133,6 +142,8 @@ void SceneTest::Draw() {
 		m_pPlayer->Draw();
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
+		m_pUiManager->Draw();
+
 	}
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意

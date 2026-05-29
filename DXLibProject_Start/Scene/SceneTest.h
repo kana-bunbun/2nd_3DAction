@@ -21,6 +21,7 @@ class CameraOld;
 class Player;
 class Bee;
 class Barrier;
+class UIManager;
 //
 //namespace Collision {
 //	class AABB;
@@ -96,5 +97,5 @@ private:
 	/// </summary>
 	std::unique_ptr<Bee>m_pBee;
 	std::unique_ptr<Barrier>m_pBarrier;
-	
+	std::unique_ptr<UIManager>m_pUiManager;
 };

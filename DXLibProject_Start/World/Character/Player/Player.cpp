@@ -42,6 +42,12 @@ namespace {
 	constexpr float kLerpModelRadian = 0.1f;
 	// プレイヤーの移動速度
 	constexpr float kMoveSpeed = 8;
+	// ダッシュ時のアニメーションの再生速度の上限
+	constexpr float kRunAnimSpeed = 1.3f;
+	// パリィ時のアニメーションの再生速度
+	constexpr float kParryAnimSpeed = 1.3f;
+	// パリィ時のアニメーションの停止時間
+	constexpr float kParryStopTime = 14.5f;
 	// 移動速度の減衰量
 	constexpr float kAttenuation = 0.8f;
 	// モデルの大きさ
@@ -53,11 +59,11 @@ namespace {
 	// バリアのオフセット
 	constexpr Vector3 kBarrierOffset = { 0.0f,50.0f*kModelScale.y,0.0f };
 	// カプセルの半径
-	constexpr float kCupsuleRadius = 70;
+	constexpr float kCapsuleRadius = 70;
 	// カプセルのオフセット
-	constexpr float kCupsuleOffset = 50 * kModelScale.y;
+	constexpr float kCapsuleOffset = 50 * kModelScale.y;
 	// カプセルの長さ
-	constexpr float kCupsuleLength = 30 * kModelScale.y;
+	constexpr float kCapsuleLength = 30 * kModelScale.y;
 
 }
 
@@ -82,14 +88,18 @@ Player::Player() :
 	m_modelHandle = MV1LoadModel(path.c_str());
 	// モデルの大きさを設定
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
+	// トランスフォームの初期化処理
 	m_transform.Reset();
+	// 移動時の角度の補間割合を設定
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
-	m_cupsule = Collision::Cupsule(m_transform, kCupsuleRadius, kCupsuleLength);
+	m_capsule = Collision::Capsule(m_transform, kCapsuleRadius, kCapsuleLength);
 	// カプセルのオフセットを計算
-	m_cupsule.SetOffset(kCupsuleOffset);
-
+	m_capsule.SetOffset(kCapsuleOffset);
+	for (int i = 0; i < GaugeType::Max; i++) {
+		m_gauges[i] = std::make_unique<Gauge>();
+	}
 }
 
 Player::~Player()
@@ -102,10 +112,12 @@ Player::~Player()
 		m_pCamera = nullptr;
 		delete m_pCamera;
 	}
+	// バリアのポインタを破棄
 	if (m_pBarrier) {
 		m_pBarrier = nullptr;
 		delete m_pBarrier;
 	}
+
 }
 
 void Player::Init()
@@ -115,6 +127,7 @@ void Player::Init()
 	std::string path=kFilePath;
 	// プレイヤーの状態の数だけ繰り返し
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
+		// ファイルパスを組み立てる
 		path = kFilePath;
 		path += kMotionPath;
 		path += kAnimPath[i];
@@ -141,49 +154,115 @@ void Player::Init()
 	// 待機アニメーションを再生
 	m_status = Status::Player::Neutral;
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
-
+	// AABBの初期化
 	m_collision = std::make_unique<Collision::AABB>(
 		kCollisionOffset,
 		kCollisionSize
 	);
+	// タグをプレイヤーに設定
 	GameObject::m_collisionTag = CollisionTag::Player;
 }
 
 void Player::Update()
 {
-
+	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
-	
-	float radius = 60;
-	Vector3 topPos = m_transform.position+Vector3(0.0f,120.0f*kModelScale.y-radius,0.0f);
-	Vector3 bottomPos = m_transform.position + Vector3(0.0f, radius, 0.0f);
-	unsigned int color = GetColor(0, 255, 0);
-	//DrawCapsule3D(topPos.ToVECTOR(), bottomPos.ToVECTOR(), radius, 10, color, color, FALSE);
+	// 当たり判定の中心座標を設定
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-	m_collision->DebugDraw();
-	m_cupsule.SetTransform(m_transform);
+	// カプセルの中心座標を設定
+	m_capsule.SetTransform(m_transform);
 
+	// ステータスに応じた更新処理
+	UpdateAction();
+	// フラグの更新
+	UpdateFlag();
+	// トランスフォームの更新
+	UpdateTransform();
+	// アニメーションの更新
+	UpdateAnimation();
 
+	// バリアの座標を設定
 	if (m_pBarrier) {
-	m_pBarrier->SetPosition(m_transform.position);
+		m_pBarrier->SetPosition(m_transform.position);
 	}
-	
+	// 当たり判定のデバッグ表示
+	m_collision->DebugDraw();
+	// カプセルのデバッグ表示
+	m_capsule.DebugDraw();
+
+	// デバッグ処理================================================
+	if (Input::IsDown(Input::Button::Up, Pad::Player::P1)) {
+		m_transform.rotation.x += 0.01f;
+	}
+	if (Input::IsDown(Input::Button::Down, Pad::Player::P1)) {
+		m_transform.rotation.x -= 0.01f;
+	}
+	m_move.SetTransform(m_transform);
+	// デバッグ処理================================================
+
+	float value = 1;
+	if (Input::IsDown(Input::Button::LB, Pad::Player::P1))
+		for (auto& gauge : m_gauges)
+			gauge->Increase(value);
+	else if(Input::IsDown(Input::Button::RB,Pad::Player::P1))
+		for (auto& gauge : m_gauges)
+			gauge->Decrease(value);
+
+	for (auto& gauge : m_gauges) {
+		printfDx("ゲージ量 : %f\n", gauge->GetValue());
+		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
+		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
+	}
+
+	COLOR_F color= MV1GetMaterialEmiColor(m_modelHandle, 0);
+	printfDx("Color | R : %f | G : %f | B : %f | A : %f\n", color.r, color.g, color.b, color.a);
+	color.r += 0.03f;
+	while (color.r<0)
+	{
+		color.r += 1;
+	}while (color.r > 1)
+	{
+		color.r -= 1;
+	}
+	color.g -= 0.02f;
+	while (color.g < 0)
+	{
+		color.g += 1;
+	}while (color.g > 1)
+	{
+		color.g -= 1;
+	}
+	color.b += 0.01f;
+	while (color.b < 0)
+	{
+		color.b += 1;
+	}while (color.b > 1)
+	{
+		color.b -= 1;
+	}
+	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+}
+
+void Player::UpdateAction()
+{
+	// ステータスによって行動を分岐
 	switch (m_status)
 	{
 	case Status::Player::Neutral:
 		break;
 	case Status::Player::Walk: {
-
+		// 歩き状態の時にボタンを押すとダッシュ
 		if (Input::IsPressed(Input::Button::LThumb, Pad::Player::P1)) {
-
 			m_dashFlag ^= 1;
 		}
+		// 移動速度の速さに応じてアニメーションの再生速度を計算
 		float speed = m_speed / kMoveSpeed;
-		speed = MyMath::Clamp(speed, 0.0f, 1.3f);
+		speed = MyMath::Clamp(speed, 0.0f, kRunAnimSpeed);
 		m_animation.SetAnimSpeed(speed);
 		break;
 	}
 	case Status::Player::Parry:
+		// パリィ時の更新処理
 		Parry();
 		break;
 	case Status::Player::Damage:
@@ -195,86 +274,33 @@ void Player::Update()
 	default:
 		break;
 	}
-	if(m_status != Status::Player::Walk)
-	m_dashFlag = false;
-	if (m_status!=Status::Player::Parry)
-		m_parry = false;
-
-	UpdateTransform();
-	UpdateAnimation();
-
-	printfDx("animSpeed : %f\n", m_animation.GetAnimSpeed());
-
-
-	m_cupsule.SetTransform(m_transform);
-	if (Input::IsDown(Input::Button::Up, Pad::Player::P1)) {
-		m_transform.rotation.x += 0.01f;
-	}
-	if (Input::IsDown(Input::Button::Down, Pad::Player::P1)) {
-		m_transform.rotation.x -= 0.01f;
-	}
-	m_move.SetTransform(m_transform);
-	m_cupsule.DebugDraw();
 }
-
 void Player::Parry()
 {
-	float kStopTime = 14.5f;
-	m_animation.SetAnimSpeed(1.3f);
+	// パリィ時のアニメーションの再生速度を設定
+	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
+	// ボタンを離した瞬間
 	if (Input::IsReleased(Input::Button::A, Pad::Player::P1)) {
-		m_animation.ResetPlayCount(kStopTime);
+		// アニメーションの再生カウントを設定
+		m_animation.ResetPlayCount(kParryStopTime);
+		// フラグをtrueに
 		m_parry = true;
+		// バリアの開始
 		m_pBarrier->Init();
 	}
+	// 押している間
 	if (Input::IsDown(Input::Button::A, Pad::Player::P1)) {
+		// フラグをfalseに
 		m_parry = false;
-		float animSpeed = 1 * (kStopTime - m_animation.GetPlayCount()) / kStopTime;
+		// アニメーションの再生速度を計算し一定カウントを越さないようにする
+		float animSpeed = (kParryStopTime - m_animation.GetPlayCount()) / kParryStopTime;
+		// アニメーションの再生速度を設定
 		m_animation.SetAnimSpeed(animSpeed);
-		if (m_animation.GetPlayCount() > kStopTime)
-			m_animation.ResetPlayCount(kStopTime);
+		// アニメーションのカウントが一定以上いかないようにする(一応)
+		if (m_animation.GetPlayCount() > kParryStopTime)
+			m_animation.ResetPlayCount(kParryStopTime);
 	}
-	else {
-	}
-}
-
-void Player::ResolveCollision(GameObject& other, const Collision::Result& result)
-{
-	if (!result.isHit)return;
-
-
-	switch (other.GetCollisionTag())
-	{
-	case GameObject::CollisionTag::None:
-		break;
-	case GameObject::CollisionTag::Player:
-		break;
-	case GameObject::CollisionTag::Enemy:
-	{
-		// 押し戻し量を保存
-		Vector3 pendingPush = result.normal * result.penetration;
-		m_move.AddPendingPush(pendingPush);
-		break;
-	}
-	case GameObject::CollisionTag::Wall:
-	{
-		// 押し戻しベクトルを生成
-		Vector3 revertVec = result.normal * result.penetration;
-		// 座標を補正
-		m_transform.position += revertVec;
-		m_move.SetTransform(m_transform);
-		// 衝突判定の更新
-		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-		break;
-	}
-	case GameObject::CollisionTag::Barrier:
-		break;
-	default:
-		break;
-	}
-	m_cupsule.SetTransform(m_transform);
-
-
 }
 
 void Player::UpdateTransform()
@@ -305,13 +331,10 @@ void Player::UpdateTransform()
 	// 移動速度を設定
 	m_move.SetSpeed(m_speed);
 
-	printfDx("analogAmount : %f\n", analogAmount);
-	printfDx("m_desireRad : %f\n", m_desireRad);
-	printfDx("m_desireRad : %f\n", m_desireRad * MyMath::ToDegree);
-
 	// 移動をする
 	m_move.Update();
 
+	// トランスフォームを更新
 	Transform transform = m_move.GetTransform();
 	m_transform.position = transform.position;
 	m_transform.rotation = transform.rotation;
@@ -329,8 +352,9 @@ void Player::UpdateAnimation()
 	// 次のアニメーションがどれか調べる
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
-	// 
+	// パリィ時またはボタンを押した瞬間
 	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::A, Pad::Player::P1))) {
+		// パリィ状態に
 		nextStatus = Status::Player::Parry;
 	}
 	// 移動の入力があるとき
@@ -349,6 +373,15 @@ void Player::UpdateAnimation()
 
 }
 
+void Player::UpdateFlag()
+{
+	// ステータスに応じたフラグの更新
+	if (m_status != Status::Player::Walk)
+		m_dashFlag = false;
+	if (m_status != Status::Player::Parry)
+		m_parry = false;
+}
+
 void Player::ChangeAnimation(Status::Player& status)
 {
 	// アニメーションの時間をリセット
@@ -359,6 +392,45 @@ void Player::ChangeAnimation(Status::Player& status)
 	m_status = status;
 }
 
+void Player::ResolveCollision(GameObject& other, const Collision::Result& result)
+{
+	if (!result.isHit)return;
+
+	switch (other.GetCollisionTag())
+	{
+	case GameObject::CollisionTag::None:
+		break;
+	case GameObject::CollisionTag::Player:
+		break;
+	case GameObject::CollisionTag::Enemy:
+	{
+		// 押し戻し量を保存
+		Vector3 pendingPush = result.normal * result.penetration;
+		m_move.AddPendingPush(pendingPush);
+		break;
+	}
+	case GameObject::CollisionTag::Wall:
+	{
+		// 押し戻しベクトルを生成
+		Vector3 revertVec = result.normal * result.penetration;
+		// 座標を補正
+		m_transform.position += revertVec;
+		m_move.SetTransform(m_transform);
+		// 衝突判定の更新
+		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+		break;
+	}
+	case GameObject::CollisionTag::Barrier:
+		break;
+	default:
+		break;
+	}
+	// 当たり判定のトランスフォームを更新
+	m_capsule.SetTransform(m_transform);
+
+
+}
+
 Vector3 Player::GetCollisionCenterPos()
 {
 	return m_transform.position + kCollisionOffset;
@@ -367,6 +439,7 @@ Vector3 Player::GetCollisionCenterPos()
 void Player::SetBarrier(Barrier* barrier)
 {
 	m_pBarrier = barrier;
+	// バリアのオフセットを設定
 	m_pBarrier->SetOffset(kBarrierOffset);
 }
 

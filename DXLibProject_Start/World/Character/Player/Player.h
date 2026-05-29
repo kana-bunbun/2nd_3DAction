@@ -2,16 +2,11 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"../../UI/Gauge.h"
+#include"../../UI/GaugeShow.h"
 #include<array>
 class CameraOld;
 class Barrier;
-namespace {
-	enum class GaugeType{
-		HP,
-		MP,
-		Max
-	};
-}
+
 
 class Player : public GameObject 
 {
@@ -33,18 +28,21 @@ public:
 	/// </summary>
 	void Update()override;
 	/// <summary>
-	/// トランスフォームの更新処理
+	/// ステータスに応じた行動の更新処理
 	/// </summary>
-	void UpdateTransform();
+	void UpdateAction();
 	/// <summary>
 	/// はじき返しの処理
 	/// </summary>
 	void Parry();
 	/// <summary>
-	/// 衝突処理
+	/// フラグ管理の処理
 	/// </summary>
-	/// <param name="result"></param>
-	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
+	void UpdateFlag();
+	/// <summary>
+	/// トランスフォームの更新処理
+	/// </summary>
+	void UpdateTransform();
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
@@ -53,6 +51,11 @@ public:
 	/// アニメーションの変更を行う処理
 	/// </summary>
 	void ChangeAnimation(Status::Player& status);
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="result"></param>
+	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 
 
@@ -64,6 +67,7 @@ public:
 	/// <param name="camera"></param>
 	void SetCamera(CameraOld* camera) { m_pCamera = camera; }
 	void SetBarrier(Barrier* barrier);
+	Gauge* GetGauge(int num) { return m_gauges[num].get(); }
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -112,6 +116,7 @@ private:
 	/// <summary>
 	/// ゲージの種類
 	/// </summary>
-	std::array<Gauge, static_cast<int>(GaugeType::Max)> m_gauges;
-	Collision::Cupsule m_cupsule;
+	std::array<std::unique_ptr<Gauge>, static_cast<int>(GaugeType::Max)> m_gauges;
+	public:
+	Collision::Capsule m_capsule;
 };
