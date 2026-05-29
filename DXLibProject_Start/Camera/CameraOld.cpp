@@ -22,7 +22,7 @@ namespace {
 
 	constexpr float kPosLerp = 0.02f;
 
-	constexpr float kLowAngle = -30.0f;				// カメラの最大仰角
+	constexpr float kLowAngle = -40.0f;				// カメラの最大仰角
 	constexpr float kHighAngle = 80.0f;				// カメラの最大俯角
 
 	constexpr float kAngleSpeed = 2.0f;	// カメラの角速度
@@ -177,7 +177,7 @@ void CameraOld::UpdateCameraPos()
 
 
 	// 注視点にむかってライトを当てる
-	ChangeLightTypeDir((rotate*-1).Normalize().ToVECTOR());
+	//ChangeLightTypeDir((rotate*-1).Normalize().ToVECTOR());
 
 	//printfDx("target情報\n");
 	//printfDx("pos    X : %f | Y : %f | Z : %f\n", m_target.position.x, m_target.position.y, m_target.position.z);

@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
+    <ClCompile Include="World\UI\UIManager.cpp" />
     <ClCompile Include="World\UI\Gauge.cpp" />
     <ClCompile Include="World\Object\Barrier.cpp" />
     <ClCompile Include="World\UI\GaugeShow.cpp" />
@@ -173,10 +174,16 @@
     <Image Include="Resource\ChaWitch\Textures\Cha_Witch.png" />
     <Image Include="Resource\main.png" />
     <Image Include="Resource\title.jpeg" />
+    <Image Include="Resource\UI\DoragonFace.png" />
+    <Image Include="Resource\UI\HPGauge.png" />
+    <Image Include="Resource\UI\MPFrame.png" />
+    <Image Include="Resource\UI\MPGauge.png" />
+    <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="World\UI\UIManager.h" />
     <ClInclude Include="World\UI\Gauge.h" />
     <ClInclude Include="World\Object\Barrier.h" />
     <ClInclude Include="World\UI\GaugeShow.h" />
