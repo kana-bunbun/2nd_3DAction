@@ -285,46 +285,79 @@ namespace Collision {
 
 
 
-	Cupsule::Cupsule(const Transform& transform, float radius, float length) :
+	Capsule::Capsule(const Transform& transform, float radius, float length) :
 		m_minPos(),
 		m_maxPos(),
 		m_radius(radius),
 		m_length(length),
-		m_transform(transform)
+		m_transform(transform),
+		m_offset(0)
 	{
-		
+		SetTransform(m_transform);
 
 	}
-	Collision::Result Cupsule::CheckCollision(const Shape & other) const
+	Collision::Result Capsule::CheckCollision(const Shape & other) const
 	{
-		return Collision::Result();
+		Collision::Result result;
+		switch (other.GetType())
+		{
+		case Collision::Type::Sphere:
+			break;
+		case Collision::Type::AABB:
+			break;
+		case Collision::Type::Capsule:
+		{
+			result.isHit = false;
+			// 判定を調べるためキャストする
+			const Capsule* checkCapsule = dynamic_cast<const Capsule*>(&other);
+
+			// カプセル同士の距離を測る
+			float length = Segment_Segment_MinLength(
+				m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), checkCapsule->m_maxPos.ToVECTOR(), checkCapsule->m_minPos.ToVECTOR());
+
+			// 半径の合計を調べる
+			float radiusSum = m_radius + checkCapsule->m_radius;
+			// カプセル同士の距離が互いの半径の合計より遠いいとき
+			if (length > radiusSum)break;
+			// カプセル同士の距離が互いの半径の合計より近いとき
+
+			// 当たっている判定
+			result.isHit = true;
+		}
+
+			break;
+		default:
+			break;
+		}
+
+		return result;
 	}
-	void Cupsule::SetPosition(const Vector3& pos)
+	void Capsule::SetPosition(const Vector3& pos)
 	{
 		m_transform.position = pos;
 	}
-	void Cupsule::DebugDraw() const
+	void Capsule::DebugDraw() const
 	{
 		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, Color::kWhite, Color::kWhite, FALSE);
 		DrawSphere3D(m_maxPos.ToVECTOR(), 20, 10, Color::kRed, Color::kRed, TRUE);
 		DrawSphere3D(m_minPos.ToVECTOR(), 20, 10, Color::kBlue, Color::kBlue, TRUE);
 	}
-	void Cupsule::SetTransform(const Transform& transform)
+	void Capsule::SetTransform(const Transform& transform)
 	{
 		m_transform = transform;
 		CheckEndPos();
 	}
-	void Cupsule::SetRadius(float radius)
+	void Capsule::SetRadius(float radius)
 	{
 		m_radius = radius;
 		CheckEndPos();
 	}
-	void Cupsule::SetLength(float length)
+	void Capsule::SetLength(float length)
 	{
 		m_length = length;
 		CheckEndPos();
 	}
-	void Cupsule::CheckEndPos()
+	void Capsule::CheckEndPos()
 	{
 		// 水平方向の成分
 		float sinHol = -sinf(m_transform.rotation.y);

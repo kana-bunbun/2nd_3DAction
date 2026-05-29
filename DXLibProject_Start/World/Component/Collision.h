@@ -12,7 +12,7 @@ namespace Collision {
 	/// </summary>
 	enum class Type {
 		Sphere,
-		Cupsule,
+		Capsule,
 		AABB,		// Axis Aligned Bounding Box
 		//OBB,		// Oriented Bounding Box
 
@@ -150,16 +150,16 @@ namespace Collision {
 		Vector3 m_offSet;
 	};
 
-	class Cupsule :public Shape {
+	class Capsule :public Shape {
 	public:
-		Cupsule() = default;
-		Cupsule(const Transform& transform, float radius,float length);
-		~Cupsule() = default;
+		Capsule() = default;
+		Capsule(const Transform& transform, float radius,float length);
+		~Capsule() = default;
 		/// <summary>
 		/// 形状データを取得する
 		/// </summary>
 		/// <returns></returns>
-		Type GetType()const override { return Type::Cupsule; }
+		Type GetType()const override { return Type::Capsule; }
 		/// <summary>
 		/// 衝突判定
 		/// </summary>
