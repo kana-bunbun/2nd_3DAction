@@ -29,5 +29,6 @@ private:
 	int m_gaugeHandle;
 	int m_frameHandle;
 	Vector3 m_drawPos;
+	float m_rate;
 };
 

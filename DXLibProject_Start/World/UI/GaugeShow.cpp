@@ -2,7 +2,9 @@
 #include "Gauge.h"
 #include<string>
 #include<DxLib.h>
+#include"../../Utility/MyMath.h"
 namespace {
+	// ファイルパス
 	const char* const kFilePath = "Resource\\UI\\";
 	const char* const kTypePath[static_cast<int>(GaugeType::Max)] = {
 	 "HP",
@@ -10,13 +12,17 @@ namespace {
 	};
 	const char* const kGaugePath = "Gauge.png";
 	const char* const kFramePath = "Frame.png";
+
+
+	constexpr float kScale = 0.2f;
 }
 
 GaugeShow::GaugeShow() :
 	m_gauge(nullptr),
 	m_gaugeHandle(-1),
 	m_frameHandle(-1),
-	m_drawPos(Vector3::zero)
+	m_drawPos(Vector3::zero),
+	m_rate(0)
 {
 
 }
@@ -66,6 +72,17 @@ void GaugeShow::Draw()
 	int sizeX = -1;
 	int sizeY = -1;
 	GetGraphSize(m_gaugeHandle, &sizeX, &sizeY);
-	DrawRectGraph(m_drawPos.x, m_drawPos.y - 100, m_drawPos.x - (sizeX * 0.5f), m_drawPos.y - 100 - (sizeY * 0.5f), sizeX*m_gauge->GetRate(), sizeY, m_gaugeHandle, TRUE, FALSE);
-	DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
+	//DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
+	float lerp = m_gauge->GetRate() - m_rate;
+	if (MyMath::Abs(lerp) < 0.001f)
+		m_rate = m_gauge->GetRate();
+	else {
+	lerp *= 0.2f;
+	m_rate += lerp;
+	}
+	float rate = 1 - m_rate;
+	float posX = m_drawPos.x + sizeX * (rate-0.5f);
+	float posY = m_drawPos.y - sizeY * 0.5f;
+	DrawRectGraph(posX, posY, (sizeX * rate), 0, sizeX, sizeY, m_gaugeHandle, TRUE, FALSE);
+	DrawCircle(posX, posY, 10, GetColor(255, 0, 0),TRUE);
 }

@@ -19,6 +19,10 @@ public:
 	/// </summary>
 	/// <param name="value">減少量</param>
 	void Decrease(float value);
+	/// <summary>
+	/// 最大値～最小値までの範囲にする
+	/// </summary>
+	void Clamp();
 public:
 	/// <summary>
 	/// 現在の値を取得する関数

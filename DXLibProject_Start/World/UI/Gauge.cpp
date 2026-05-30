@@ -46,6 +46,12 @@ void Gauge::Decrease(float value)
 	m_value -= value;
 }
 
+void Gauge::Clamp()
+{
+	if (m_value < m_min)m_value = m_min;
+	if (m_value > m_max)m_value = m_max;
+}
+
 float Gauge::GetValue()
 {
 	// 現在の値を返す
