@@ -84,6 +84,9 @@
     <ClCompile Include="World\UI\UIManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\CsvLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -196,6 +199,9 @@
     <ClInclude Include="World\UI\UIManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\CsvLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -211,6 +217,7 @@
     <None Include="Resource\ChaWitch\Motions\Walk.fbx" />
     <None Include="Resource\ChaWitch\ChaWitchM.mv1" />
     <None Include="Resource\ChaWitch\ChaWitchMesh.mv1" />
+    <None Include="Resource\CSV\PlayerEmiColor.csv" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

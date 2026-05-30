@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
+    <ClCompile Include="Utility\CsvLoader.cpp" />
     <ClCompile Include="World\UI\UIManager.cpp" />
     <ClCompile Include="World\UI\Gauge.cpp" />
     <ClCompile Include="World\Object\Barrier.cpp" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="Utility\CsvLoader.h" />
     <ClInclude Include="World\UI\UIManager.h" />
     <ClInclude Include="World\UI\Gauge.h" />
     <ClInclude Include="World\Object\Barrier.h" />
@@ -223,6 +225,7 @@
     <None Include="Resource\ChaWitch\Motions\Walk.fbx" />
     <None Include="Resource\ChaWitch\Motions\Walk.mv1" />
     <None Include="Resource\ChaWitch\Textures\Cha_Witch.png.meta" />
+    <None Include="Resource\CSV\PlayerEmiColor.csv" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />
