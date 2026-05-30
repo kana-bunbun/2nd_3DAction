@@ -1,3 +1,6 @@
-﻿途中までのパス,モーション,モデル,待機,移動,パリィ,ダメージ,死亡
-Resource\\Player\\ChaWitch\\,Motions\\,Model.mv1,Idle.mv1,Walk.mv1,Parry.mv1,Damage.mv1,Dead.mv1
-,,,,,,,
+﻿途中までのパス,モーション,,,
+Resource\\Player\\ChaWitch\\,Motions\\,,,
+モデル,,,,
+Model.mv1,,,,
+待機,移動,パリィ,ダメージ,死亡
+Idle.mv1,Walk.mv1,Parry.mv1,Damage.mv1,Dead.mv1

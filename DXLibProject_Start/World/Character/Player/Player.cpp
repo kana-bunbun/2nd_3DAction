@@ -139,11 +139,10 @@ void Player::LoadModel()
 	// アニメーションの初期化
 	m_animation.Init(GameObject::m_modelHandle);
 	CsvLoader csv("PlayerModelPath.csv");
-	std::vector<std::string>path;
-	for (int i = 0; i < csv.GetLoadData()[0].size(); i++)
-		path.push_back(csv.GetLoadData()[1][i]);
+	std::vector<std::vector<std::string>>path;
+	path = csv.GetLoadData();
 	// 組み立てたファイルパスで読みこむ
-	std::string str = (path[0] + path[2]);
+	std::string str = (path[1][0] + path[3][0]);
 	//str = kFilePath;
 	//str += kModelPath;
 	m_modelHandle = MV1LoadModel(str.c_str());
@@ -153,10 +152,8 @@ void Player::LoadModel()
 		// ファイルパスを組み立てる
 		// アニメーションハンドルの初期化
 		m_animHandle[i] = -1;
-		str = (path[0] + path[1] + path[3 + i]);
-		//str = (kFilePath);
-		//str += kMotionPath;
-		//str += kAnimPath[i];
+		str = (path[1][0] + path[1][1] + path[5][i]);
+
 		// アニメーションの更読み込み
 		m_animHandle[i] = MV1LoadModel(str.c_str());
 		// 読み込みができたら
