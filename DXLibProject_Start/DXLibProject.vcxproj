@@ -226,6 +226,7 @@
     <None Include="Resource\ChaWitch\Motions\Walk.mv1" />
     <None Include="Resource\ChaWitch\Textures\Cha_Witch.png.meta" />
     <None Include="Resource\CSV\PlayerEmiColor.csv" />
+    <None Include="Resource\CSV\PlayerModelPath.csv" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

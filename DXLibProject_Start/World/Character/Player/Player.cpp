@@ -1,6 +1,7 @@
 #include "Player.h"
 #include<DxLib.h>
 #include<string>
+#include<vector>
 #include"../Animation.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/CameraOld.h"
@@ -9,20 +10,6 @@
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"
 namespace {
-	// キャラクターまでのファイルパス
-	const char* const kFilePath = "Resource\\Player\\ChaWitch\\";
-	// モデルのファイルパス
-	const char* const kModelPath = "Model.mv1";
-	// モーションファイルまでのファイルパス
-	const char* const kMotionPath = "Motions\\";
-	// モーションのファイルパス
-	const char* const kAnimPath[static_cast<int>(Status::Player::Max)] = {
-		"Idle.mv1",
-		"Walk.mv1",
-		"Parry.mv1",
-		"Damage.mv1",
-		"Dead.mv1",
-	};
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
 		true,  	// アイドル
@@ -82,13 +69,7 @@ Player::Player() :
 	m_dashFlag(false),
 	m_gauges()
 {
-	// ファイルパスを組み立てる
-	std::string path = kFilePath;
-	path += kModelPath;
-	// 組み立てたファイルパスで読みこむ
-	m_modelHandle = MV1LoadModel(path.c_str());
-	// モデルの大きさを設定
-	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
+	LoadModel();
 	// トランスフォームの初期化処理
 	m_transform.Reset();
 	// 移動時の角度の補間割合を設定
@@ -128,25 +109,7 @@ void Player::Init()
 {
 	// アニメーションの初期化
 	m_animation.Init(GameObject::m_modelHandle);
-	std::string path=kFilePath;
-	// プレイヤーの状態の数だけ繰り返し
-	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
-		// ファイルパスを組み立てる
-		path = kFilePath;
-		path += kMotionPath;
-		path += kAnimPath[i];
-		// アニメーションハンドルの初期化
-		m_animHandle[i] = -1;
-		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel(path.c_str());
-		// 読み込みができたら
-		if (m_animHandle[i] == -1)continue;
-		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i], i);
-		// インデックスを設定
-		m_animData[i].index = i;
-	}
-
+	
 	// アニメーションデータの初期化処理
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
 		// アニメーションデータのループフラグを設定
@@ -167,8 +130,45 @@ void Player::Init()
 	GameObject::m_collisionTag = CollisionTag::Player;
 
 
+	
+
+}
+
+void Player::LoadModel()
+{
+	// アニメーションの初期化
+	m_animation.Init(GameObject::m_modelHandle);
+	CsvLoader csv("PlayerModelPath.csv");
+	std::vector<std::string>path;
+	for (int i = 0; i < csv.GetLoadData()[0].size(); i++)
+		path.push_back(csv.GetLoadData()[1][i]);
+	// 組み立てたファイルパスで読みこむ
+	std::string str = (path[0] + path[2]);
+	//str = kFilePath;
+	//str += kModelPath;
+	m_modelHandle = MV1LoadModel(str.c_str());
+	// モデルの大きさを設定
+	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
+	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
+		// ファイルパスを組み立てる
+		// アニメーションハンドルの初期化
+		m_animHandle[i] = -1;
+		str = (path[0] + path[1] + path[3 + i]);
+		//str = (kFilePath);
+		//str += kMotionPath;
+		//str += kAnimPath[i];
+		// アニメーションの更読み込み
+		m_animHandle[i] = MV1LoadModel(str.c_str());
+		// 読み込みができたら
+		if (m_animHandle[i] == -1)continue;
+		// アニメーションを追加
+		m_animation.AddAnim(m_animHandle[i], i);
+		// インデックスを設定
+		m_animData[i].index = i;
+	}
+
 	// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
-	CsvLoader csv("PlayerEmiColor.csv");
+	csv=CsvLoader("PlayerEmiColor.csv");
 	// 値を格納する配列
 	std::vector<float> emiColor;
 	for (int i = 0; i < csv.GetLoadData().size(); i++) {
@@ -179,8 +179,6 @@ void Player::Init()
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { emiColor[0],emiColor[1],emiColor[2],emiColor[3] };
 	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
-	
-
 }
 
 void Player::Update()
@@ -234,34 +232,6 @@ void Player::Update()
 		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
 		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
 	}
-
-	//COLOR_F color= MV1GetMaterialEmiColor(m_modelHandle, 0);
-	//printfDx("Color | R : %f | G : %f | B : %f | A : %f\n", color.r, color.g, color.b, color.a);
-	//color.r += 0.03f;
-	//while (color.r<0)
-	//{
-	//	color.r += 1;
-	//}while (color.r > 1)
-	//{
-	//	color.r -= 1;
-	//}
-	//color.g -= 0.02f;
-	//while (color.g < 0)
-	//{
-	//	color.g += 1;
-	//}while (color.g > 1)
-	//{
-	//	color.g -= 1;
-	//}
-	//color.b += 0.01f;
-	//while (color.b < 0)
-	//{
-	//	color.b += 1;
-	//}while (color.b > 1)
-	//{
-	//	color.b -= 1;
-	//}
-	//MV1SetMaterialEmiColor(m_modelHandle, 0, color);
 }
 
 void Player::UpdateAction()

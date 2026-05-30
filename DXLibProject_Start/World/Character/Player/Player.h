@@ -24,6 +24,10 @@ public:
 	/// </summary>
 	void Init()override;
 	/// <summary>
+	/// モデルを読み込む関数
+	/// </summary>
+	void LoadModel();
+	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update()override;

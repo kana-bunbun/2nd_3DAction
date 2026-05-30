@@ -7,13 +7,14 @@
 #include<cassert>
 
 namespace {
-	const char* const kResourePath = "Resource\\CSV\\";
+	// CSVデータまでのファイルパス
+	const char* const kCsvPath = "Resource\\CSV\\";
 }
 
 CsvLoader::CsvLoader(std::string filePath):
 	m_loadData()
 {
-	std::string path = kResourePath;
+	std::string path = kCsvPath;
 	path += filePath;
 	bool loaded = LoadCSVData(path);
 	// 読み込みが失敗していたら警告
