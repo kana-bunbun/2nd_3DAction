@@ -7,6 +7,7 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
+#include"../../../Utility/CsvLoader.h"
 namespace {
 	// キャラクターまでのファイルパス
 	const char* const kFilePath = "Resource\\Player\\ChaWitch\\";
@@ -100,6 +101,9 @@ Player::Player() :
 	for (int i = 0; i < GaugeType::Max; i++) {
 		m_gauges[i] = std::make_unique<Gauge>();
 	}
+
+
+	
 }
 
 Player::~Player()
@@ -161,6 +165,22 @@ void Player::Init()
 	);
 	// タグをプレイヤーに設定
 	GameObject::m_collisionTag = CollisionTag::Player;
+
+
+	// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
+	CsvLoader csv("PlayerEmiColor.csv");
+	// 値を格納する配列
+	std::vector<float> emiColor;
+	for (int i = 0; i < csv.GetLoadData().size(); i++) {
+		// csvのB列の値を使う
+		float color = std::stof(csv.GetLoadData()[i][1]);
+		emiColor.push_back(color);
+	}
+	// 読み込んだ値を元にエミッシブカラーを設定
+	COLOR_F color = { emiColor[0],emiColor[1],emiColor[2],emiColor[3] };
+	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	
+
 }
 
 void Player::Update()
@@ -209,38 +229,39 @@ void Player::Update()
 			gauge->Decrease(value);
 
 	for (auto& gauge : m_gauges) {
+		gauge->Clamp();
 		printfDx("ゲージ量 : %f\n", gauge->GetValue());
 		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
 		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
 	}
 
-	COLOR_F color= MV1GetMaterialEmiColor(m_modelHandle, 0);
-	printfDx("Color | R : %f | G : %f | B : %f | A : %f\n", color.r, color.g, color.b, color.a);
-	color.r += 0.03f;
-	while (color.r<0)
-	{
-		color.r += 1;
-	}while (color.r > 1)
-	{
-		color.r -= 1;
-	}
-	color.g -= 0.02f;
-	while (color.g < 0)
-	{
-		color.g += 1;
-	}while (color.g > 1)
-	{
-		color.g -= 1;
-	}
-	color.b += 0.01f;
-	while (color.b < 0)
-	{
-		color.b += 1;
-	}while (color.b > 1)
-	{
-		color.b -= 1;
-	}
-	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	//COLOR_F color= MV1GetMaterialEmiColor(m_modelHandle, 0);
+	//printfDx("Color | R : %f | G : %f | B : %f | A : %f\n", color.r, color.g, color.b, color.a);
+	//color.r += 0.03f;
+	//while (color.r<0)
+	//{
+	//	color.r += 1;
+	//}while (color.r > 1)
+	//{
+	//	color.r -= 1;
+	//}
+	//color.g -= 0.02f;
+	//while (color.g < 0)
+	//{
+	//	color.g += 1;
+	//}while (color.g > 1)
+	//{
+	//	color.g -= 1;
+	//}
+	//color.b += 0.01f;
+	//while (color.b < 0)
+	//{
+	//	color.b += 1;
+	//}while (color.b > 1)
+	//{
+	//	color.b -= 1;
+	//}
+	//MV1SetMaterialEmiColor(m_modelHandle, 0, color);
 }
 
 void Player::UpdateAction()
