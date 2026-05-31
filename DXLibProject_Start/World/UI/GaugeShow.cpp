@@ -102,7 +102,6 @@ void GaugeShow::Draw()
 	float posX = m_drawPos.x + sizeX * (rate-0.5f);
 	float posY = m_drawPos.y - sizeY * 0.5f;
 	DrawRectGraph(posX, posY, (sizeX * rate), 0, sizeX, sizeY, m_gaugeHandle, TRUE, FALSE);
-	DrawCircle(posX, posY, 10, GetColor(255, 0, 0),TRUE);
 	posX = m_drawPos.x +470;
 	DrawCircle(posX, m_drawPos.y, 400 * kScale,GetColor(255,150,0), TRUE);
 	DrawCircle(posX, m_drawPos.y, 350 * kScale,GetColor(255,180,0), TRUE);
