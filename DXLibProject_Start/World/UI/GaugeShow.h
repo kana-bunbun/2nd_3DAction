@@ -28,6 +28,7 @@ private:
 	Gauge* m_gauge;
 	int m_gaugeHandle;
 	int m_frameHandle;
+	int m_faceHandle;
 	Vector3 m_drawPos;
 	float m_rate;
 };

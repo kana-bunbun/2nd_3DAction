@@ -12,6 +12,9 @@ namespace {
 	};
 	const char* const kGaugePath = "Gauge.png";
 	const char* const kFramePath = "Frame.png";
+	const char* const kPlayer = "Player";
+	const char* const kDragon= "Doragon";
+	const char* const kFacePath = "Face.png";
 
 
 	constexpr float kScale = 0.2f;
@@ -21,6 +24,7 @@ GaugeShow::GaugeShow() :
 	m_gauge(nullptr),
 	m_gaugeHandle(-1),
 	m_frameHandle(-1),
+	m_faceHandle(-1),
 	m_drawPos(Vector3::zero),
 	m_rate(0)
 {
@@ -31,7 +35,9 @@ GaugeShow::GaugeShow(Vector3 position,int type):
 	m_gauge(nullptr),
 	m_gaugeHandle(-1),
 	m_frameHandle(-1),
-	m_drawPos(position)
+	m_faceHandle(-1),
+	m_drawPos(position),
+	m_rate(0)
 {
 	// ファイルパスを組み立てる
 	std::string filePath;
@@ -41,6 +47,15 @@ GaugeShow::GaugeShow(Vector3 position,int type):
 	m_gaugeHandle = LoadGraph((filePath + kGaugePath).c_str());
 	// ゲージの枠のグラフィックハンドルの読み込み
 	m_frameHandle = LoadGraph((filePath + kFramePath).c_str());
+	filePath = kFilePath;
+	if (type == GaugeType::HP) {
+		filePath += kPlayer;
+	}
+	else {
+		filePath += kDragon;
+	}
+	filePath += kFacePath;
+	m_faceHandle = LoadGraph(filePath.c_str());
 }
 
 GaugeShow::~GaugeShow()
@@ -49,6 +64,9 @@ GaugeShow::~GaugeShow()
 		m_gauge = nullptr;
 		delete m_gauge;
 	}
+	DeleteGraph(m_gaugeHandle);
+	DeleteGraph(m_frameHandle);
+	DeleteGraph(m_faceHandle);
 }
 
 void GaugeShow::Init()
@@ -85,4 +103,8 @@ void GaugeShow::Draw()
 	float posY = m_drawPos.y - sizeY * 0.5f;
 	DrawRectGraph(posX, posY, (sizeX * rate), 0, sizeX, sizeY, m_gaugeHandle, TRUE, FALSE);
 	DrawCircle(posX, posY, 10, GetColor(255, 0, 0),TRUE);
+	posX = m_drawPos.x +470;
+	DrawCircle(posX, m_drawPos.y, 400 * kScale,GetColor(255,150,0), TRUE);
+	DrawCircle(posX, m_drawPos.y, 350 * kScale,GetColor(255,180,0), TRUE);
+	DrawRotaGraph(posX, m_drawPos.y, kScale, 0, m_faceHandle, TRUE);
 }

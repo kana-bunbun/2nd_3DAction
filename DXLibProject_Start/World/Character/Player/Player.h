@@ -121,6 +121,5 @@ private:
 	/// ゲージの種類
 	/// </summary>
 	std::array<std::unique_ptr<Gauge>, static_cast<int>(GaugeType::Max)> m_gauges;
-	public:
 	Collision::Capsule m_capsule;
 };

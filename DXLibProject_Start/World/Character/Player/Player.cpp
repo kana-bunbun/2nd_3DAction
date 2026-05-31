@@ -69,6 +69,7 @@ Player::Player() :
 	m_dashFlag(false),
 	m_gauges()
 {
+	// モデルの設定
 	LoadModel();
 	// トランスフォームの初期化処理
 	m_transform.Reset();
