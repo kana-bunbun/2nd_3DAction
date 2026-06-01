@@ -57,8 +57,8 @@ void GaugePlayer::SetPlayer(Player* player)
 	for (int i = 0; i < GaugeType::Max; i++) {
 		Vector3 pos=kGaugePos;
 
-		pos.y += kDiffer * (i -0.5f);
-		GaugeShow* gauge = new GaugeShow(pos, (GaugeType::Max - 1) - i);
+		pos.y -= kDiffer * (i -0.5f);
+		GaugeShow* gauge = new GaugeShow(pos, /*(GaugeType::Max - 1) - */i);
 		gauge->SetGauge(player->GetGauge(i));
 		m_gauges[i] = gauge;
 	}
@@ -84,11 +84,11 @@ void GaugePlayer::Draw()
 	Vector3 pos = (m_gauges[0]->GetPosition() + m_gauges[1]->GetPosition())*0.5f;
 	Vector3 size = m_gauges[0]->GetGaugeSize()* GaugeParam::kInitScale;
 	DrawRotaGraph(pos.x, pos.y, GaugeParam::kInitScale, 0, m_backHandle, TRUE);
-	float posX = m_gauges[1]->GetPosition().x+ (size.x * 0.5f) + (kRadius);
-	DrawRotaGraph(posX, m_gauges[1]->GetPosition().y, kScale*GaugeParam::kInitScale, 0, m_faceBackHandle, TRUE);
+	float posX = m_gauges[0]->GetPosition().x+ (size.x * 0.5f) + (kRadius);
+	DrawRotaGraph(posX, m_gauges[0]->GetPosition().y, kScale*GaugeParam::kInitScale, 0, m_faceBackHandle, TRUE);
 	//DrawCircle(posX, pos.y, kRadFrame, GetColor(255, 150, 0), TRUE);
 	//DrawCircle(posX, pos.y, kRadius, GetColor(255, 180, 0), TRUE);
-	DrawRotaGraph(posX, m_gauges[1]->GetPosition().y, kFaceScale* GaugeParam::kInitScale, 0, m_faceHandle, TRUE);
+	DrawRotaGraph(posX, m_gauges[0]->GetPosition().y, kFaceScale* GaugeParam::kInitScale, 0, m_faceHandle, TRUE);
 	// ゲージの描画処理を行う
 	for (auto& gauge : m_gauges)
 		gauge->Draw();

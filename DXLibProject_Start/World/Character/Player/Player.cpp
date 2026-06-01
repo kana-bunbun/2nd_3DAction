@@ -231,6 +231,7 @@ void Player::Update()
 		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
 		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
 	}
+	m_gauges[GaugeType::MP]->Increase(0.01f);
 }
 
 void Player::UpdateAction()
@@ -287,6 +288,7 @@ void Player::Parry()
 		float animSpeed = (kParryStopTime - m_animation.GetPlayCount()) / kParryStopTime;
 		// アニメーションの再生速度を設定
 		m_animation.SetAnimSpeed(animSpeed);
+		m_gauges[GaugeType::MP]->Decrease(0.05f);
 		// アニメーションのカウントが一定以上いかないようにする(一応)
 		if (m_animation.GetPlayCount() > kParryStopTime)
 			m_animation.ResetPlayCount(kParryStopTime);
