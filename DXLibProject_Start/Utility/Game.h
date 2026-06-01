@@ -9,7 +9,7 @@ namespace Game {
 	const char* const kWindowText = "Test";
 
 	// ウィンドウサイズ
-	constexpr float kWindowScale = 1.0f;
+	constexpr float kWindowScale =1.0f;
 	constexpr int kScreenWidth = 1920 * kWindowScale;
 	constexpr int kScreenHeight = 1080 * kWindowScale;
 

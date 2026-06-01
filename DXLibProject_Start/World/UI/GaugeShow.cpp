@@ -3,6 +3,7 @@
 #include<string>
 #include<DxLib.h>
 #include"../../Utility/MyMath.h"
+#include"GaugeParam.h"
 namespace {
 	// ファイルパス
 	const char* const kFilePath = "Resource\\UI\\";
@@ -15,6 +16,7 @@ namespace {
 	const char* const kBodyPath = "Body.png";
 	const char* const kFramePath = "Frame.png";
 	const char* const kFrontPath = "Front.png";
+
 
 	
 
@@ -85,7 +87,7 @@ void GaugeShow::Update()
 
 void GaugeShow::Draw()
 {
-	DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_frameHandle, TRUE);
+	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kInitScale, 0, m_frameHandle, TRUE);
 
 	//DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
 	float lerp = m_gauge->GetRate() - m_rate;
@@ -99,11 +101,17 @@ void GaugeShow::Draw()
 	int sizeX;
 	int sizeY;
 	GetGraphSize(m_bodyHandle, &sizeX, &sizeY);
+	sizeX *= GaugeParam::kInitScale;
+	sizeY *= GaugeParam::kInitScale;
 	Vector3 pos1 = m_drawPos - Vector3(sizeX, sizeY, 0) * 0.5f;
 	Vector3 pos2 = m_drawPos + Vector3(sizeX, sizeY, 0) * 0.5f;
+
 	pos1.x += sizeX * rate;
+	float addPosY = sizeY * 0.5f;
 	//DrawRectGraph(posX, posY, (m_graphSizeX * rate), 0, m_graphSizeX, m_graphSizeY, m_bodyHandle, TRUE, FALSE);
 	DrawExtendGraph(pos1.x, pos1.y, pos2.x, pos2.y, m_bodyHandle, TRUE);
-	DrawRotaGraph(pos1.x, pos1.y+sizeY*0.5f, 1, 0, m_headHandle, TRUE);
-	DrawRotaGraph(pos2.x, m_drawPos.y, 1, 0, m_frontHandle, TRUE);
+	DrawRotaGraph(pos1.x, pos1.y+addPosY, GaugeParam::kInitScale, 0, m_headHandle, TRUE);
+	DrawRotaGraph(pos2.x, m_drawPos.y, GaugeParam::kInitScale, 0, m_frontHandle, TRUE);
+
+
 }

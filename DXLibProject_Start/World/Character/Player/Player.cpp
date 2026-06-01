@@ -49,9 +49,9 @@ namespace {
 	// カプセルの半径
 	constexpr float kCapsuleRadius = 70;
 	// カプセルのオフセット
-	constexpr float kCapsuleOffset = 50 * kModelScale.y;
+	constexpr float kCapsuleOffset = 55 * kModelScale.y;
 	// カプセルの長さ
-	constexpr float kCapsuleLength = 30 * kModelScale.y;
+	constexpr float kCapsuleLength = 20 * kModelScale.y;
 
 }
 

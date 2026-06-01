@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
     <ClInclude Include="Utility\CsvLoader.h" />
     <ClInclude Include="World\UI\UIManager.h" />

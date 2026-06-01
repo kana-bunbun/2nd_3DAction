@@ -1,6 +1,8 @@
 #include "GaugePlayer.h"
 #include "../Character/Player/Player.h"
 #include "../../Utility/Game.h"
+#include"GaugeShow.h"
+#include"GaugeParam.h"
 #include<string>
 namespace {
 	const char* const kFilePath = "Resource\\UI\\";
@@ -12,15 +14,15 @@ namespace {
 	const char* const kFaceBackPath = "FaceBack.png";
 
 	// 顔画像の描画をする際の単位スケール
-	constexpr float kScale = 0.58f;
+	constexpr float kScale = 1.2f;
+	constexpr float kFaceScale = 0.77f*kScale;
 	// 背景として描画する円の大きさ
-	constexpr float kRadius = 360 * kScale;
+	constexpr float kRadius = 310 * kFaceScale* GaugeParam::kInitScale;
 	// 背景の枠として描画する円の大きさ
-	constexpr float kRadFrame = kRadius * 1.1f;
 	// ゲージを描画する座標
-	constexpr Vector3 kGaugePos = { Game::kScreenWidth - (1000 * Game::kWindowScale), Game::kScreenHeight - (250*Game::kWindowScale), 0 };
+	constexpr Vector3 kGaugePos = { Game::kScreenWidth - (1200 * GaugeParam::kInitScale), Game::kScreenHeight - (250*GaugeParam::kInitScale), 0 };
 	// ゲージ同士の距離
-	constexpr float kDiffer = -120 * Game::kWindowScale;
+	constexpr float kDiffer = -150 * GaugeParam::kInitScale;
 }
 GaugePlayer::GaugePlayer():
 	m_faceHandle(-1),
@@ -80,13 +82,13 @@ void GaugePlayer::Draw()
 {
 	// 描画の中心座標を求める
 	Vector3 pos = (m_gauges[0]->GetPosition() + m_gauges[1]->GetPosition())*0.5f;
-	Vector3 size = m_gauges[0]->GetGaugeSize();
-	DrawRotaGraph(pos.x, pos.y, 1, 0, m_backHandle, TRUE);
-	float posX = pos.x+ (size.x * 0.5f) + (kRadFrame);
-	DrawRotaGraph(posX, pos.y, 1, 0, m_faceBackHandle, TRUE);
+	Vector3 size = m_gauges[0]->GetGaugeSize()* GaugeParam::kInitScale;
+	DrawRotaGraph(pos.x, pos.y, GaugeParam::kInitScale, 0, m_backHandle, TRUE);
+	float posX = m_gauges[1]->GetPosition().x+ (size.x * 0.5f) + (kRadius);
+	DrawRotaGraph(posX, m_gauges[1]->GetPosition().y, kScale*GaugeParam::kInitScale, 0, m_faceBackHandle, TRUE);
 	//DrawCircle(posX, pos.y, kRadFrame, GetColor(255, 150, 0), TRUE);
 	//DrawCircle(posX, pos.y, kRadius, GetColor(255, 180, 0), TRUE);
-	DrawRotaGraph(posX, pos.y, kScale, 0, m_faceHandle, TRUE);
+	DrawRotaGraph(posX, m_gauges[1]->GetPosition().y, kFaceScale* GaugeParam::kInitScale, 0, m_faceHandle, TRUE);
 	// ゲージの描画処理を行う
 	for (auto& gauge : m_gauges)
 		gauge->Draw();
