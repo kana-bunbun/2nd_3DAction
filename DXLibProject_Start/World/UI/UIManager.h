@@ -1,9 +1,10 @@
 #pragma once
+#include"../../Utility/Vector3.h"
 #include<memory>
 #include<vector>
-#include"GaugeShow.h"
-
-
+class GaugePlayer;
+class Player;
+// UIの
 class UIManager
 {
 public:
@@ -13,9 +14,20 @@ public:
 	void End();
 	void Update();
 	void Draw();
-	void AddGauge(const Vector3& position, int type, Gauge* gauge);
+
+	/// <summary>
+	/// プレイヤーのポインタを設定する関数
+	/// </summary>
+	/// <param name="pPlayer"></param>
+	void SetPlayer(Player* pPlayer);
 private:
-	// ゲージの配列
-	std::vector<std::unique_ptr<GaugeShow>> m_gaugeShow;
+	/// <summary>
+	/// プレイヤーのポインタ
+	/// </summary>
+	Player* m_pPlayer;
+	/// <summary>
+	/// プレイヤーのゲージ
+	/// </summary>
+	std::unique_ptr<GaugePlayer>m_gaugePlayer;
 };
 

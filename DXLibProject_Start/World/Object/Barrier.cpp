@@ -23,12 +23,12 @@ Barrier::Barrier(const Vector3& offset):
 
 	MATERIALPARAM Material;
 	// マテリアルの設定
-	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);
-	Material.Specular = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-	Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
-	Material.Emissive = GetColorF(0.5f, 0.5f, 1.0f, 0.0f);
-	Material.Power = 20.0f;
-	SetMaterialParam(Material);
+	//Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);
+	//Material.Specular = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+	//Material.Ambient = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
+	//Material.Emissive = GetColorF(0.5f, 0.5f, 1.0f, 0.0f);
+	//Material.Power = 20.0f;
+	//SetMaterialParam(Material);
 
 
 }
@@ -52,7 +52,7 @@ void Barrier::Update()
 
 void Barrier::Draw()
 {
-
+	if (!m_alpha)return;
 	MATERIALPARAM Material;
 	// マテリアルの設定
 	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);

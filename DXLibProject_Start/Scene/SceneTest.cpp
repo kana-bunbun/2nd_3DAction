@@ -62,10 +62,7 @@ SceneTest::SceneTest() :
 	m_pBee = std::make_unique<Bee>();
 	m_pBarrier = std::make_unique<Barrier>();
 	m_pUiManager = std::make_unique<UIManager>();
-	for (int i = 0; i < GaugeType::Max; i++) {
-		Vector3 vec = { Game::kScreenWidth - 550,Game::kScreenHeight - ((i+1) * 200.0f), 0 };
-		m_pUiManager->AddGauge(vec, i, m_pPlayer->GetGauge(i));
-	}
+	m_pUiManager->SetPlayer(m_pPlayer.get());
 }
 
 SceneTest::~SceneTest() {}

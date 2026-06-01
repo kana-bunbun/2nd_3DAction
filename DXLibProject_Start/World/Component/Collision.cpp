@@ -197,6 +197,7 @@ namespace Collision {
 			float minOverlap = overlapX;
 			Vector3 normal = Vector3::XAxis;
 
+
 			// –@ü‚ğ’²‚×‚é	
 			if (overlapY < minOverlap) {
 				minOverlap = overlapY;

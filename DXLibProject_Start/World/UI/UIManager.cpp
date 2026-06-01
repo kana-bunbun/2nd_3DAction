@@ -1,42 +1,46 @@
 #include "UIManager.h"
-
-UIManager::UIManager()
+#include"GaugeShow.h"
+#include"GaugePlayer.h"
+#include<memory>
+UIManager::UIManager():
+	m_pPlayer(nullptr),
+	m_gaugePlayer(nullptr)
 {
-
+	m_gaugePlayer = std::make_unique<GaugePlayer>();
 }
 
 UIManager::~UIManager()
 {
-
+	if (m_pPlayer) {
+		m_pPlayer = nullptr;
+		delete m_pPlayer;
+	}
 }
 
 void UIManager::Init()
 {
-
+	m_gaugePlayer->Init();
 }
 
 void UIManager::End()
 {
-	for (auto& gaugeShow : m_gaugeShow)
-		gaugeShow->End();
+	m_gaugePlayer->End();
 }
 
 void UIManager::Update()
 {
-	for (auto& gaugeShow : m_gaugeShow)
-		gaugeShow->Update();
+	m_gaugePlayer->Update();
 }
 
 void UIManager::Draw()
 {
-	for (auto& gaugeShow : m_gaugeShow)
-		gaugeShow->Draw();
+	m_gaugePlayer->Draw();
+
 }
 
-void UIManager::AddGauge(const Vector3& position, int type, Gauge* gauge)
+void UIManager::SetPlayer(Player* pPlayer)
 {
-	std::unique_ptr<GaugeShow>gaugeShow = std::make_unique<GaugeShow>(position, type);
-	gaugeShow->SetGauge(gauge);
-	m_gaugeShow.push_back(std::move(gaugeShow));
+	m_pPlayer = pPlayer;
+	if(m_gaugePlayer)
+	m_gaugePlayer->SetPlayer(pPlayer);
 }
-

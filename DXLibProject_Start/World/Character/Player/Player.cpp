@@ -80,6 +80,7 @@ Player::Player() :
 	m_capsule = Collision::Capsule(m_transform, kCapsuleRadius, kCapsuleLength);
 	// カプセルのオフセットを計算
 	m_capsule.SetOffset(kCapsuleOffset);
+	// ゲージの初期化
 	for (int i = 0; i < GaugeType::Max; i++) {
 		m_gauges[i] = std::make_unique<Gauge>();
 	}
