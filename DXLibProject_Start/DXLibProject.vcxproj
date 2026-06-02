@@ -145,8 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
+    <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
+    <ClCompile Include="World\Character\Enemy\EnemyManager.cpp" />
     <ClCompile Include="World\UI\GaugePlayer.cpp" />
     <ClCompile Include="Utility\CsvLoader.cpp" />
     <ClCompile Include="World\UI\UIManager.cpp" />
@@ -177,14 +180,27 @@
     <Image Include="Resource\main.png" />
     <Image Include="Resource\title.jpeg" />
     <Image Include="Resource\UI\DoragonFace.png" />
+    <Image Include="Resource\UI\FaceBack.png" />
+    <Image Include="Resource\UI\GaugeBack.png" />
+    <Image Include="Resource\UI\HPFrame.png" />
+    <Image Include="Resource\UI\HPFront.png" />
     <Image Include="Resource\UI\HPGauge.png" />
+    <Image Include="Resource\UI\HPGaugeBody.png" />
+    <Image Include="Resource\UI\HPGaugeHead.png" />
     <Image Include="Resource\UI\MPFrame.png" />
+    <Image Include="Resource\UI\MPFront.png" />
     <Image Include="Resource\UI\MPGauge.png" />
+    <Image Include="Resource\UI\MPGaugeBody.png" />
+    <Image Include="Resource\UI\MPGaugeFoot.png" />
+    <Image Include="Resource\UI\MPGaugeHead.png" />
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="World\Character\Guardian\Dragon.h" />
+    <ClInclude Include="World\Character\Enemy\EnemyManager.h" />
     <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
     <ClInclude Include="Utility\CsvLoader.h" />
@@ -230,6 +246,18 @@
     <None Include="Resource\ChaWitch\Textures\Cha_Witch.png.meta" />
     <None Include="Resource\CSV\PlayerEmiColor.csv" />
     <None Include="Resource\CSV\PlayerModelPath.csv" />
+    <None Include="Resource\Dragon\ChaDragon\Model.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Attack.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Damage.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Death.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Idle.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Move.mv1" />
+    <None Include="Resource\UI\HPFrame.psd" />
+    <None Include="Resource\UI\HPGauge.psd" />
+    <None Include="Resource\UI\HPGaugeBody.psd" />
+    <None Include="Resource\UI\MPFrame.psd" />
+    <None Include="Resource\UI\MPGauge.psd" />
+    <None Include="Resource\UI\MPGaugeBody.psd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

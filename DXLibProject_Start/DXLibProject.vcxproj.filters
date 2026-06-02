@@ -90,6 +90,15 @@
     <ClCompile Include="World\UI\GaugePlayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\Character\Enemy\EnemyManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Character\Guardian\Dragon.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -117,6 +126,36 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="Resource\UI\MPGauge.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\FaceBack.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\GaugeBack.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\HPFrame.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\HPFront.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\HPGaugeBody.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\HPGaugeHead.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\MPFront.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\MPGaugeBody.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\MPGaugeFoot.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\MPGaugeHead.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -211,6 +250,15 @@
     <ClInclude Include="World\UI\GaugeParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="World\Character\Enemy\EnemyManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Character\Guardian\Dragon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -228,6 +276,18 @@
     <None Include="Resource\ChaWitch\ChaWitchMesh.mv1" />
     <None Include="Resource\CSV\PlayerEmiColor.csv" />
     <None Include="Resource\CSV\PlayerModelPath.csv" />
+    <None Include="Resource\UI\HPFrame.psd" />
+    <None Include="Resource\UI\HPGauge.psd" />
+    <None Include="Resource\UI\HPGaugeBody.psd" />
+    <None Include="Resource\UI\MPFrame.psd" />
+    <None Include="Resource\UI\MPGauge.psd" />
+    <None Include="Resource\UI\MPGaugeBody.psd" />
+    <None Include="Resource\Dragon\ChaDragon\Model.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Attack.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Damage.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Death.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Idle.mv1" />
+    <None Include="Resource\Dragon\ChaDragon\Motions\Move.mv1" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />
