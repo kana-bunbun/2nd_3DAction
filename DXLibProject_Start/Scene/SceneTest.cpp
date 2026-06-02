@@ -11,6 +11,7 @@
 #include "../System/SoundManager.h"
 #include"../World/Character/Bee.h"
 #include"../World/Character/Player/Player.h"
+#include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
 #include<cassert>
@@ -63,6 +64,7 @@ SceneTest::SceneTest() :
 	m_pBarrier = std::make_unique<Barrier>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pUiManager->SetPlayer(m_pPlayer.get());
+	m_pDragon = std::make_unique<Dragon>();
 }
 
 SceneTest::~SceneTest() {}
@@ -82,6 +84,7 @@ void SceneTest::Init() {
 	//SoundManager::GetInstance().PlayBGM(Sound::BGM::Menu);
 	m_pBee->Init();
 	m_pPlayer->SetBarrier(m_pBarrier.get());
+	m_pDragon->Init();
 }
 
 void SceneTest::End() {
@@ -92,6 +95,7 @@ void SceneTest::End() {
 		//m_pCamera = nullptr;
 
 	}
+	m_pDragon->End();
 
 
 	//delete m_pGrassMgr.get();			// ƒ|ƒCƒ“ƒ^‚Ìíœ
@@ -114,12 +118,14 @@ SceneBase* SceneTest::Update() {
 	m_pBee->Update();
 	m_pBarrier->Update();
 	m_pUiManager->Update();
+	m_pDragon->Update();
 
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");
 	m_pPlayer->ResolveCollision(*m_pBee, result);
-
+	if (Input::IsDown(Input::Button::RT, Pad::Player::P1))
+		m_pPlayer->SetCameraAngle(m_pBee->GetTransform().position);
 	return this;
 }
 
@@ -135,7 +141,7 @@ void SceneTest::Draw() {
 		m_pCamera[i]->Draw();
 	
 		m_pBee->Draw();
-
+		m_pDragon->Draw();
 		m_pPlayer->Draw();
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);

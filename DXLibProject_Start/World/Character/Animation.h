@@ -15,6 +15,15 @@ namespace Status {
 		Dead,
 		Max
 	};
+	enum class Dragon {
+
+		Neutral = 0,
+		Walk,
+		Attack,
+		Damage,
+		Dead,
+		Max
+	};
 
 	/// <summary>
 	/// 蜂のアニメーションID
