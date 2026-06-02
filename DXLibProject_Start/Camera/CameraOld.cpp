@@ -40,7 +40,7 @@ CameraOld::CameraOld() :
 	m_lerpDistance(kDefoultLerp),
 	m_pPlayer(nullptr),
 	m_target(),
-	m_pad(Pad::Player::Max),
+	m_pad(Pad::Player::P1),
 	m_input(true)
 {
 }
@@ -112,7 +112,7 @@ void CameraOld::UpdateDistance()
 void CameraOld::UpdateAngleInput()
 {
 
-	float inputRadian = Input::AnalogAngle(Input::Joystick::Right, m_pad) * MyMath::ToRadian;
+	float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1) * MyMath::ToRadian;
 
 	// 計算用のVECTOR
 	Vector3 m_moveVector = { 0.0f,0.0f,0.0f };
@@ -123,7 +123,7 @@ void CameraOld::UpdateAngleInput()
 	// 正規化
 	m_moveVector = m_moveVector.Normalize();
 	// 移動量の計算 レバーを倒した割合にかける
-	float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, m_pad) * kAngleSpeed;
+	float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1) * kAngleSpeed;
 	// 移動速度をかける
 	m_moveVector = (m_moveVector * moveAmount);
 

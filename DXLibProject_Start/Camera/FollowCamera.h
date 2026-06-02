@@ -52,7 +52,7 @@ private:
 	/// <summary>
 	/// カメラの座標・回転・拡縮
 	/// </summary>
-	Transform m_transsform;
+	Transform m_transform;
 	/// <summary>
 	/// targetとの距離
 	/// </summary>

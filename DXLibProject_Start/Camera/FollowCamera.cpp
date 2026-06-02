@@ -19,8 +19,8 @@ namespace {
     constexpr float kAngleSpeed = 2.0f;         	// カメラの角速度
 
     constexpr float kInitCameraHeight = 150.0f;		// カメラの初期の高さ
-    constexpr float kLowAngle = -30.0f;				// カメラの最大仰角
-    constexpr float kHighAngle = 80.0f;				// カメラの最大俯角
+    constexpr float kLowAngle = -30.0f * MyMath::ToRadian;				// カメラの最大仰角
+    constexpr float kHighAngle = 80.0f * MyMath::ToRadian;				// カメラの最大俯角
 }
 
 FollowCamera::FollowCamera(const Transform* target):
@@ -57,7 +57,7 @@ Vector3 FollowCamera::GetForward() const
 
 float FollowCamera::GetYawRad() const
 {
-    return m_transsform.rotation.y;
+    return m_transform.rotation.y;
 }
 
 void FollowCamera::UpdateDistance()
@@ -74,10 +74,65 @@ void FollowCamera::UpdateDistance()
 
 void FollowCamera::UpdateAngle()
 {
+    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1)*MyMath::ToRadian;
+    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
+    float pitchRad = m_transform.rotation.x;
+    float yawRad = m_transform.rotation.y;
+    // 計算用のVECTOR
+    Vector3 m_moveVector = Vector3::zero;
+    // 入力角度からX,Y方向の移動量を計算
+    m_moveVector.x = -sinf(inputRadian);
+    m_moveVector.y = -cosf(inputRadian);
+    // 正規化
+    m_moveVector = m_moveVector.Normalize();
+    // 移動量の計算 レバーを倒した割合にかける
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1) * kAngleSpeed;
+    // 移動速度をかける
+    m_moveVector = (m_moveVector * moveAmount);
+    pitchRad += m_moveVector.x;
+    pitchRad = MyMath::Clamp(pitchRad, kLowAngle, kHighAngle);
+    m_transform.rotation.x = pitchRad;
+
+    yawRad = MyMath::NormalizeRadian(yawRad);
+
+
+
+
+    yawRad -= m_moveVector.x;
+    // 水平方向の角度を範囲内に収める
+    yawRad = MyMath::NormalizeAngle(yawRad);
+    m_transform.rotation.y = yawRad * MyMath::ToRadian;
 
 }
 
 void FollowCamera::UpdatePosition()
 {
 
+    assert(!m_target);
+    if (!m_target)return;
+
+    // 水平方向の成分
+    float sinHol = sinf(m_transform.rotation.y);
+    float cosHol = cosf(m_transform.rotation.y);
+    // 垂直方向の成分
+    float sinVer = sinf(m_transform.rotation.x);
+    float cosVer = cosf(m_transform.rotation.x);
+    // ベクトルの計算
+    Vector3 rotate;
+    rotate.x = cosVer * sinHol;
+    rotate.y = sinVer;
+    rotate.z = cosVer * cosHol;
+    rotate *= m_distance;
+    
+    
+    Vector3 cameraPos = Vector3(0.0f, kInitCameraHeight, 0.0f);
+
+    cameraPos += m_target->position;
+    cameraPos = (cameraPos + rotate);
+
+    m_view.position = cameraPos;
+    m_view.target = m_target->position;
+    m_transform.position = cameraPos;
+
+    m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
 }

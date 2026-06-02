@@ -62,6 +62,8 @@ public:
 	const void SetInput(bool input) { m_input = input; }
 	float CheckAlpha(const Vector3& vec);
 
+	void SetCameraAngle(const Vector3& angle) { m_transform.rotation = angle; }
+	const Transform GetTransform()const { return m_transform; }
 private:
 
 	/// <summary>
@@ -81,7 +83,6 @@ private:
 	///  カメラの角度から位置を計算して更新
 	/// </summary>
 	void UpdateCameraPos();
-
 private:
 
 	///// <summary>
