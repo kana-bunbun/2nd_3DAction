@@ -62,7 +62,7 @@ public:
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 
-
+	void SetCameraAngle(const Vector3& position);
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>

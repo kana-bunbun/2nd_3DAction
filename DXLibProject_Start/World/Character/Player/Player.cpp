@@ -231,7 +231,9 @@ void Player::Update()
 		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
 		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
 	}
+	if(m_status!=Status::Player::Parry)
 	m_gauges[GaugeType::MP]->Increase(0.01f);
+	
 }
 
 void Player::UpdateAction()
@@ -272,13 +274,15 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if (Input::IsReleased(Input::Button::A, Pad::Player::P1)) {
+	if (Input::IsReleased(Input::Button::A, Pad::Player::P1)||
+		!m_gauges[GaugeType::MP]->GetRate()) {
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
 		m_parry = true;
 		// バリアの開始
 		m_pBarrier->Init();
+		return;
 	}
 	// 押している間
 	if (Input::IsDown(Input::Button::A, Pad::Player::P1)) {
@@ -421,6 +425,19 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 	m_capsule.SetTransform(m_transform);
 
 
+}
+
+void Player::SetCameraAngle(const Vector3& position)
+{
+	Vector3 vec=position - m_transform.position;
+	Vector3 rotate;
+	rotate.z = 0;
+	rotate.y = -atan2(vec.z, vec.x) - DX_PI_F * 0.5f;
+	rotate.x = m_pCamera->GetTransform().rotation.x;
+	printfDx("rotation.x : %d\n", static_cast<int>(rotate.x * MyMath::ToDegree));
+	printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
+	printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
+	m_pCamera->SetCameraAngle(rotate);
 }
 
 Vector3 Player::GetCollisionCenterPos()
