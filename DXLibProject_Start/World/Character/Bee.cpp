@@ -81,7 +81,7 @@ void Bee::Update()
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	// アニメーションの更新処理
 	UpdateAnimation();
-
+	m_transform.position.z--;
 	m_collision->DebugDraw();
 }
 
