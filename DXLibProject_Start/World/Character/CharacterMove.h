@@ -32,7 +32,7 @@ public:		// ゲッター・セッター関数
 	const void SetSpeed(float speed) { m_speed = speed; }
 	// 補間の速度を設定する関数
 	const void SetLerpSpeed(float lerp) { m_lerpSpeed = lerp; }
-	// 押し戻し量を加算
+	// 押し戻し量を設定
 	const void AddPendingPush(const Vector3& pendingPush) { m_pendingPush += pendingPush; }
 	// 押し戻し量を加算
 	const void AddCollisionPush(const Vector3& collisionPush) { m_transform.position += collisionPush; }

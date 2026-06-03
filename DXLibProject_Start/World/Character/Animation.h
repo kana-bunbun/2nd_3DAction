@@ -18,7 +18,7 @@ namespace Status {
 	enum class Dragon {
 
 		Neutral = 0,
-		Walk,
+		Move,
 		Attack,
 		Damage,
 		Dead,
