@@ -4,7 +4,7 @@
 #include "Utility/GameSetting.h"
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
-
+#include"Utility/Time.h"
 //========================================================
 // WinMain関数　ここからプログラムが始まる
 //========================================================
@@ -29,6 +29,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 乱数の初期化
 	MyRandom::Init();
 
+	Time::GetInstance();
+
 	// シーン制御のポインタを生成
 	SceneManager* pSceneMgr;
 	pSceneMgr = new SceneManager();
@@ -42,13 +44,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// メインループ
 	while (ProcessMessage() == 0) {
 
-		LONGLONG time = GetNowHiPerformanceCount();	// 現在のカウントを取得
+		Time::GetInstance().Update();	// 現在のカウントを取得
 
 		ClearDrawScreen();		// 画面の初期化
 		clsDx();				// デバッグ文字の初期化
 
 		pSceneMgr->Update();
 		pSceneMgr->Draw();
+#ifdef _DEBUG
+		printfDx("FPS %f\n", 1.0f / Time::GetInstance().GetDeltaTime());
+		printfDx("deltaTime %f\n",Time::GetInstance().GetDeltaTime());
+		/*PROCESS_MEMORY_COUNTERS_EX pmc;
+		GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+		printfDx("Memory %d MB\n", pmc.WorkingSetSize / 1024 / 1024);*/
+#endif
 
 		//Input::Update();
 		//Input::Debug();
@@ -56,9 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ScreenFlip();
 		// FPS調整
 		// 1フレームあたりの経過時間が経過するため待機
-		while (GetNowHiPerformanceCount() - time < Game::kElapsedTime) {
-
-		}
+		Time::GetInstance().WaitProcess();
 	}
 
 	pSceneMgr->End();

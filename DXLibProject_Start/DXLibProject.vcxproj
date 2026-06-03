@@ -148,6 +148,7 @@
     <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
+    <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="World\Character\Guardian\DragonAttack.cpp" />
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
     <ClCompile Include="World\Character\Enemy\EnemyManager.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
+    <ClInclude Include="Utility\Time.h" />
     <ClInclude Include="World\Character\Guardian\DragonAttack.h" />
     <ClInclude Include="World\Character\Guardian\Dragon.h" />
     <ClInclude Include="World\Character\Enemy\EnemyManager.h" />
