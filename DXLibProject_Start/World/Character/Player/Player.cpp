@@ -207,15 +207,6 @@ void Player::Update()
 	// カプセルのデバッグ表示
 	m_capsule.DebugDraw();
 
-	// デバッグ処理================================================
-	if (Input::IsDown(Input::Button::Up, Pad::Player::P1)) {
-		m_transform.rotation.x += 0.01f;
-	}
-	if (Input::IsDown(Input::Button::Down, Pad::Player::P1)) {
-		m_transform.rotation.x -= 0.01f;
-	}
-	m_move.SetTransform(m_transform);
-	// デバッグ処理================================================
 
 	float value = 1;
 	if (Input::IsDown(Input::Button::LB, Pad::Player::P1))
