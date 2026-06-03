@@ -14,6 +14,6 @@ public:
 private:
 	bool m_active;
 	bool m_attackFlag;
-	int m_attackCount;
+	float m_attackCount;
 };
 

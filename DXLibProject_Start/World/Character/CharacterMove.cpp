@@ -1,7 +1,7 @@
 #include "CharacterMove.h"
-
+#include"../../Utility/Time.h"
 namespace {
-	constexpr float kAttenuation = 0.8f;
+	constexpr float kAttenuation = 50.0f;
 }
 
 CharacterMove::CharacterMove():
@@ -31,7 +31,7 @@ void CharacterMove::End()
 
 void CharacterMove::Update()
 {
-
+	float deltaTime = Time::GetInstance().GetDeltaTime();
 	// プレイヤーの角度の補間量
 	float lerpRad = (m_desireRad - m_transform.rotation.y);
 	// 角度を180～-180の間に収める
@@ -41,7 +41,7 @@ void CharacterMove::Update()
 	if (lerpRad*lerpRad < MyMath::Epsilon)
 		lerpRad = 0;
 	// 
-	m_transform.rotation.y += lerpRad;
+	m_transform.rotation.y += lerpRad*deltaTime;
 	m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
 
 
@@ -51,8 +51,8 @@ void CharacterMove::Update()
 	moveVec *= m_speed;
 	moveVec += m_pendingPush;
 	if (moveVec.GetLength() < MyMath::Epsilon)return;
-	m_transform.position += moveVec;
-	m_pendingPush *= kAttenuation;
+	m_transform.position += moveVec * deltaTime;
+	m_pendingPush *= kAttenuation * deltaTime;
 	if (m_pendingPush.GetLength() < MyMath::Epsilon)
 		m_pendingPush = Vector3::zero;
 }

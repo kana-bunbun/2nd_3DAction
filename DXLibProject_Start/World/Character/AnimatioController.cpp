@@ -1,14 +1,14 @@
 #include "AnimatioController.h"
 #include"../../Utility/Vector3.h"
-#include"../../Utility/MyMath.h"
+#include"../../Utility/Time.h"
 
 namespace {
 
 	// アニメーションの再生速度
-	constexpr float kPlaySpeed = 0.5f;
-	constexpr float kBlentSpeed = 0.05f;
-	constexpr float kBlentMin = 0.05f;
-	constexpr float kBlentMax = 1.0f;
+	constexpr float kPlaySpeed = 30;
+	constexpr float kBlentSpeed = 0.3f;
+	constexpr float kBlentMin = 0.3f;
+	constexpr float kBlentMax = 30.0f;
 
 }
 
@@ -74,9 +74,9 @@ void AnimatioController::Update()
 	m_playCountOld = m_playCount;
 	// 再生していなければ即時rturn;
 	if (!m_isPlaying)	return;
-
+	float deltaTime = Time::GetInstance().GetDeltaTime();
 	// 再生時間の更新
-	m_playCount += kPlaySpeed*m_animSpeed;
+	m_playCount += kPlaySpeed*m_animSpeed*deltaTime;
 
 	// 再生時間が総尺を過ぎたら
 	if (m_playCount > m_totalTime) {

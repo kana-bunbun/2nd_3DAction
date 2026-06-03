@@ -9,6 +9,7 @@
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"
+#include"../../../Utility/Time.h"
 namespace {
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
@@ -27,9 +28,9 @@ namespace {
 		true  	// 死亡
 	};
 	// プレイヤーの回転の補間割合
-	constexpr float kLerpModelRadian = 0.1f;
+	constexpr float kLerpModelRadian = 6.0f;
 	// プレイヤーの移動速度
-	constexpr float kMoveSpeed = 8;
+	constexpr float kMoveSpeed = 480;
 	// ダッシュ時のアニメーションの再生速度の上限
 	constexpr float kRunAnimSpeed = 1.3f;
 	// パリィ時のアニメーションの再生速度
@@ -262,6 +263,7 @@ void Player::UpdateAction()
 void Player::Parry()
 {
 	// パリィ時のアニメーションの再生速度を設定
+	float deltaTime = Time::GetInstance().GetDeltaTime();
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
@@ -392,7 +394,7 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 	case GameObject::CollisionTag::Enemy:
 	{
 		// 押し戻し量を保存
-		Vector3 pendingPush = result.normal * result.penetration;
+		Vector3 pendingPush = result.normal * result.penetration*30;
 		m_move.AddPendingPush(pendingPush);
 		break;
 	}

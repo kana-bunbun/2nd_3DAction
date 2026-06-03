@@ -35,9 +35,9 @@ namespace {
 	// 移動関連
 
 	// 移動角度の補間割合
-	constexpr float kLerpRad = 0.04f;
+	constexpr float kLerpRad = 2.4f;
 	// 移動速度
-	constexpr float kMoveSpeed = 8 ;
+	constexpr float kMoveSpeed = 480;
 
 	// モデルの大きさ倍率
 	constexpr float kModelScale = 0.5f;
@@ -239,16 +239,15 @@ void Dragon::FollowPlayer()
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
 	m_speed = distance.GetSqLength()*kFollowSqLengthRate;
-	m_speed = MyMath::Clamp(m_speed, 0.0f, 3.0f);
+	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
 		float angle = atan2(distance.x, distance.z);
 
 		printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
 		m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kFollowSqLength) {
 		//m_speed = 1;
-		float lerpSpeed = kLerpRad * m_speed;
+		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed,0.0f,1.0f);
 		m_move.SetLerpSpeed(lerpSpeed);
-		m_status = Status::Dragon::Move;
 
 	
 	}
@@ -273,7 +272,7 @@ void Dragon::FollowTarget()
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
 		m_speed = distance.GetSqLength() * kFollowSqLengthRate;
 
-		float lerpSpeed = kLerpRad * m_speed;
+		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed,0.0f,1.0f);
 		m_move.SetLerpSpeed(lerpSpeed);
 
 		m_canAttackFlag = false;
@@ -289,7 +288,7 @@ void Dragon::FollowTarget()
 	printfDx("m_attack: %d\n", m_attack.GetAttackFlag());
 	printfDx("m_attackCount: %d\n", m_attack.GetCount());
 	printfDx("m_speed: %f\n", m_speed);
-	m_speed = MyMath::Clamp(m_speed, 0.0f, 1.0f);
+	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
 	m_move.SetSpeed(m_speed*kMoveSpeed);
 	m_move.Update();
 	m_transform = m_move.GetTransform();
@@ -311,10 +310,9 @@ void Dragon::UpdateAnimation()
 		// パリィ状態に
 		nextStatus = Status::Dragon::Attack;
 	}
-	// 移動の入力があるとき
 	else if (m_speed>0.1f) {
 		// 移動ステータスに
-		nextStatus = Status::Dragon::Move;
+		//nextStatus = Status::Dragon::Move;
 	}
 	// アニメーションが終了していればアイドル状態に
 	if (!m_animation.IsPlaying()) {
@@ -329,8 +327,8 @@ void Dragon::UpdateAnimation()
 		if ((m_status != Status::Dragon::Neutral && nextStatus != Status::Dragon::Move) ||
 			(nextStatus != Status::Dragon::Neutral && m_status != Status::Dragon::Move)) {
 		// アニメーションの時間をリセット
-		m_animation.ResetPlayCount();
 		}
+		m_animation.ResetPlayCount();
 
 		ChangeAnimation(nextStatus);
 	}

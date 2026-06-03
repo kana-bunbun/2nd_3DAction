@@ -1,8 +1,9 @@
 #include "Barrier.h"
 #include"../../Utility/Color.h"
+#include"../../Utility/Time.h"
 namespace {
 	// 透明度を変える速さ
-	constexpr float kSpeed = 0.1f;
+	constexpr float kSpeed = 4.0f;
 	// 透明度の最大値
 	constexpr float kMaxAlpha = 0.7f;
 	// 時間の最大値
@@ -45,8 +46,9 @@ void Barrier::Init()
 
 void Barrier::Update()
 {
+	float deltaTime = Time::GetInstance().GetDeltaTime();
 	m_alpha = CheckAlpha();
-	m_time -= kSpeed * m_speed;
+	m_time -= kSpeed * m_speed*deltaTime;
 	m_time = MyMath::Clamp(m_time, 0.0f, kMaxTime);
 }
 

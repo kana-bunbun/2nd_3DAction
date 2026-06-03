@@ -3,6 +3,7 @@
 #include<string>
 #include<DxLib.h>
 #include"../../Utility/MyMath.h"
+#include"../../Utility/Time.h"
 #include"GaugeParam.h"
 namespace {
 	// ファイルパス
@@ -18,7 +19,7 @@ namespace {
 	const char* const kFrontPath = "Front.png";
 
 
-	
+	constexpr float kGaugeLerp = 15.0f;
 
 
 	
@@ -90,11 +91,12 @@ void GaugeShow::Draw()
 	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kInitScale, 0, m_frameHandle, TRUE);
 
 	//DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
+	float deltaTime = Time::GetInstance().GetDeltaTime();
 	float lerp = m_gauge->GetRate() - m_rate;
 	if (MyMath::Abs(lerp) < 0.001f)
 		m_rate = m_gauge->GetRate();
 	else {
-	lerp *= 0.2f;
+		lerp *= MyMath::Clamp(kGaugeLerp * deltaTime,0.0f,1.0f);
 	m_rate += lerp;
 	}
 	float rate = 1 - m_rate;
