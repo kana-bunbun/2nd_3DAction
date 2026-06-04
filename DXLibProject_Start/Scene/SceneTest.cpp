@@ -65,7 +65,6 @@ SceneTest::SceneTest() :
 	m_pBee = std::make_unique<Bee>();
 	m_pBarrier = std::make_unique<Barrier>();
 	m_pUiManager = std::make_unique<UIManager>();
-	m_pUiManager->SetPlayer(m_pPlayer.get());
 	m_pDragon = std::make_unique<Dragon>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
 }
@@ -89,6 +88,9 @@ void SceneTest::Init() {
 	m_pBee->Init();
 	m_pPlayer->SetBarrier(m_pBarrier.get());
 	m_pDragon->Init();
+	m_pUiManager->SetPlayer(m_pPlayer.get());
+	m_pUiManager->SetDragon(m_pDragon.get());
+
 }
 
 void SceneTest::End() {

@@ -3,7 +3,9 @@
 #include<memory>
 #include<vector>
 class GaugePlayer;
+class GaugeDragon;
 class Player;
+class Dragon;
 // UIの
 class UIManager
 {
@@ -20,14 +22,17 @@ public:
 	/// </summary>
 	/// <param name="pPlayer"></param>
 	void SetPlayer(Player* pPlayer);
+	void SetDragon(Dragon* pDragon);
 private:
 	/// <summary>
 	/// プレイヤーのポインタ
 	/// </summary>
 	Player* m_pPlayer;
+	Dragon* m_pDragon;
 	/// <summary>
 	/// プレイヤーのゲージ
 	/// </summary>
 	std::unique_ptr<GaugePlayer>m_gaugePlayer;
+	std::unique_ptr<GaugeDragon>m_gaugeDragon;
 };
 

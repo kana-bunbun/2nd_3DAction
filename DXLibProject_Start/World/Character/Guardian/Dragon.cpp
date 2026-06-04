@@ -7,6 +7,7 @@
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
 #include"../../../Utility/Time.h"
+#include"../../../Utility/Input.h"
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
 	const char* const kModelPath = "Model.mv1";
@@ -180,6 +181,19 @@ void Dragon::Update()
 	// 攻撃アニメーション以外ではフラグをfalseに
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
+
+	float value = 1;
+	if (Input::IsDown(Input::Button::LB, Pad::Player::P1))
+			m_gauge->Increase(value);
+	else if (Input::IsDown(Input::Button::RB, Pad::Player::P1))
+			m_gauge->Decrease(value);
+
+		m_gauge->Clamp();
+		printfDx("Dゲージ量 : %f\n", m_gauge->GetValue());
+		printfDx("Dゲージ最大量 : %f\n", m_gauge->GetMax());
+		printfDx("Dゲージ割合 : %f\n", m_gauge->GetRate());
+	
+
 }
 
 void Dragon::FollowUpdate()
