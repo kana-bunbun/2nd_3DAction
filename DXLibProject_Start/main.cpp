@@ -63,9 +63,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//Input::Debug();
 		// 描画先を切り替える
 		ScreenFlip();
-		// FPS調整
-		// 1フレームあたりの経過時間が経過するため待機
-		Time::GetInstance().WaitProcess();
 	}
 
 	pSceneMgr->End();

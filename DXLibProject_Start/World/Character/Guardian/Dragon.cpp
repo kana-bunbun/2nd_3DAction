@@ -6,6 +6,7 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
+#include"../../../Utility/Time.h"
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
 	const char* const kModelPath = "Model.mv1";
@@ -38,6 +39,7 @@ namespace {
 	constexpr float kLerpRad = 2.4f;
 	// 移動速度
 	constexpr float kMoveSpeed = 480;
+	constexpr float kMaxSpeedRate = 4.0f;
 
 	// モデルの大きさ倍率
 	constexpr float kModelScale = 0.5f;
@@ -64,6 +66,8 @@ namespace {
 	// ターゲットを追従する距離の2乗
 	constexpr float kTargetFollowSqLength = kTargetFollowLength * kTargetFollowLength;
 
+	// 移動速度の減衰量
+	constexpr float kAttenuationSpeed = 55;
 }
 Dragon::Dragon() :
 	m_animation(),
@@ -82,9 +86,9 @@ Dragon::Dragon() :
 	m_transform.Reset();
 
 	std::string path = kFilePath;
+	// モデルの読み込み
 	m_modelHandle = MV1LoadModel((path+kModelPath).c_str());
 	MV1SetScale(m_modelHandle, Vector3(kModelScale, kModelScale, kModelScale).ToVECTOR());
-	m_animation.Init(m_modelHandle);
 	path += kMotionPath;
 	for (int i = 0; i < static_cast<int>(Status::Dragon::Max);i++) {
 
@@ -101,16 +105,26 @@ Dragon::Dragon() :
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
-
+	// アニメーション初期化
+	m_animation.Init(m_modelHandle);
+	// 座標を設定
 	m_transform.position+=kPosOffset;
+
 	m_move.SetTransform(m_transform);
+	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
+	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
 }
 
 Dragon::~Dragon()
 {
+	// モデルハンドルを破棄
 	MV1DeleteModel(m_modelHandle);
+	// アニメーションハンドルを破棄
+	for (int& anim : m_animHandle)
+		MV1DeleteModel(anim);
+	// ポインタの破棄
 	if (m_pPlayer) {
 		m_pPlayer = nullptr;
 		delete m_pPlayer;
@@ -129,17 +143,16 @@ void Dragon::Init()
 	}
 
 	m_status = Status::Dragon::Neutral;
+	// アニメーション再生
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 
 }
 
 void Dragon::Update()
 {
-	//m_animation.Update();
-
-	//printfDx("デバッグ\n");
-	//m_animation.Debug();
+	// アニメーション速度を初期化
 	m_animation.SetAnimSpeed();
+	// ステータスによって分岐
 	switch (m_status)
 	{
 	case Status::Dragon::Neutral:
@@ -158,7 +171,10 @@ void Dragon::Update()
 	default:
 		break;
 	}
+	// アニメーション更新処理
 	UpdateAnimation();
+
+	// 攻撃アニメーション以外ではフラグをfalseに
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
 }
@@ -181,11 +197,16 @@ void Dragon::FollowUpdate()
 
 void Dragon::AttackUpdate()
 {
+	// 攻撃のインターバルをリセット
 	m_attack.ResetCount();
-	if(m_animation.GetPlayCount()>6)
-	m_animation.SetAnimSpeed(0.3f);
+	// アニメーションのカウントが一定を超えたら
+	if (m_animation.GetPlayCount() > 6) {
+		// アニメーション速度をゆっくりに
+		m_animation.SetAnimSpeed(0.3f);
+	}
+	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
-	m_speed *= 0.96f;
+	m_speed *= kAttenuationSpeed*Time::GetInstance().GetDeltaTime();
 	m_move.SetSpeed(m_speed);
 	m_move.Update();
 	m_transform = m_move.GetTransform();
@@ -239,7 +260,7 @@ void Dragon::FollowPlayer()
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
 	m_speed = distance.GetSqLength()*kFollowSqLengthRate;
-	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
+	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
 
 		printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
@@ -266,12 +287,12 @@ void Dragon::FollowTarget()
 	Vector3  distance = myPos - m_pTarget->GetTransform().position;
 	float angle = atan2(distance.x, distance.z);
 
-	m_speed *= 0.96f;
+	m_speed *= kAttenuationSpeed*Time::GetInstance().GetDeltaTime();
 	printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
 		m_speed = distance.GetSqLength() * kFollowSqLengthRate;
-
+		m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed,0.0f,1.0f);
 		m_move.SetLerpSpeed(lerpSpeed);
 
