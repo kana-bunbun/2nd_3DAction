@@ -20,7 +20,7 @@ Time& Time::GetInstance()
 void Time::Update()
 {
 	m_LastTime = GetNowHiPerformanceCount();
-	printfDx("lastTime %f\n", m_LastTime);
+	WaitProcess();
 }
 
 void Time::WaitProcess()
