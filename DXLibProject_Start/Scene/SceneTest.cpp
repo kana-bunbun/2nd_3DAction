@@ -8,6 +8,8 @@
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
 #include "../Camera/CameraOld.h"
+#include "../Camera/CameraManager.h"
+#include "../Camera/FollowCamera.h"
 #include "../System/SoundManager.h"
 #include"../World/Character/Bee.h"
 #include"../World/Character/Player/Player.h"
@@ -47,16 +49,16 @@ SceneTest::SceneTest() :
 	//m_pPlayer = new Player();
 	//m_pCamera = new Camera();
 	//m_pGrassMgr = new GrassManagerV();
-	for (int i = 0; i < m_playerNum; i++) {
-		m_pCamera[i] = nullptr;
-	}
+	//for (int i = 0; i < m_playerNum; i++) {
+	//	m_pCamera[i] = nullptr;
+	//}
 	// スマートポインタのインスタンス生成
 	// スマートポインタの生成
 	// std::make_unique<クラス名>(コンストラクタの引数)
 	for (int i = 0; i < m_playerNum; i++) {
-		m_pCamera[i] = std::make_unique<CameraOld>();
+		//m_pCamera[i] = std::make_unique<CameraOld>();
 		Pad::Player pp = static_cast<Pad::Player>(i);
-		m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
+		//m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
 
 	}
 	m_pPlayer = std::make_unique<Player>();
@@ -65,16 +67,18 @@ SceneTest::SceneTest() :
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pUiManager->SetPlayer(m_pPlayer.get());
 	m_pDragon = std::make_unique<Dragon>();
+	m_pCameraMgr = std::make_unique<CameraManager>();
 }
 
 SceneTest::~SceneTest() {}
 
 void SceneTest::Init() {
-	m_pPlayer->SetCamera(m_pCamera[0].get());
+	//m_pPlayer->SetCamera(m_pCamera[0].get());
 	//m_pSound->LoadSe();
 	//m_pSound->LoadBGM();
 	m_pPlayer -> Init();
-	m_pCamera[0]->Init(m_pPlayer.get());
+	m_pCameraMgr->Init();
+	m_pCameraMgr->AddCamera(std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
 	m_pDragon->SetPlayer(m_pPlayer.get());
 	// シングルトンのSoundManagerでの読み込み
 	SoundManager::GetInstance().LoadBGM();
@@ -90,7 +94,6 @@ void SceneTest::Init() {
 void SceneTest::End() {
 	for (int i = 0; i < m_playerNum; i++) {
 
-		m_pCamera[i]->End();
 		//delete m_pCamera.get();
 		//m_pCamera = nullptr;
 
@@ -111,10 +114,10 @@ void SceneTest::End() {
 }
 
 SceneBase* SceneTest::Update() {
+	//m_pCameraMgr->SetTarget(m_pPlayer->GetTransform());
+	m_pCameraMgr->Update();
+	m_pPlayer->SetMoveBasicRad(m_pCameraMgr->GetYawRad());
 	m_pPlayer->Update();
-	m_pCamera[0]->SetTarget(m_pPlayer->GetTransform());
-	m_pCamera[0]->Update();
-
 	m_pBee->Update();
 	m_pBarrier->Update();
 	m_pUiManager->Update();
@@ -144,7 +147,7 @@ void SceneTest::Draw() {
 		printfDx("Pad::Player->%d\n",i);
 		SetCameraScreenCenter(Game::kScreenWidth / (m_playerNum * 2) * ((i * 2)+1), Game::kScreenHeight / 2);
 	
-		m_pCamera[i]->Draw();
+		m_pCameraMgr->Apply();
 	
 		m_pBee->Draw();
 		m_pDragon->Draw();

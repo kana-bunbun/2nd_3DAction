@@ -18,6 +18,7 @@
 // 前方宣言
 class GameSetting;
 class CameraOld;
+class CameraManager;
 class Player;
 class Dragon;
 class Bee;
@@ -85,7 +86,8 @@ private:
 	/// <summary>
 	/// Cameraクラスのポインタ
 	/// </summary>
-	std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
+	//std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
+	std::unique_ptr<CameraManager> m_pCameraMgr;
 	std::unique_ptr<Player> m_pPlayer;
 	std::unique_ptr<Dragon> m_pDragon;
 
