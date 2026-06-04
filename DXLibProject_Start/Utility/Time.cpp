@@ -3,12 +3,13 @@
 namespace {
 	constexpr float kMicroSecond = 0.000001f;
 }
-Time::Time() :
-	m_deltaTime(0.0f),
-	m_timeScale(1.0f),
-	m_LastTime(0),
-	m_frameRate(60)
+
+Time::Time()
 {
+	m_deltaTime = 0;
+	m_LastTime = GetNowHiPerformanceCount();
+	m_timeScale = 1;
+	m_frameRate = 60;
 }
 
 Time& Time::GetInstance()
@@ -19,8 +20,12 @@ Time& Time::GetInstance()
 
 void Time::Update()
 {
+	m_deltaTime = (GetNowHiPerformanceCount() - m_LastTime) * kMicroSecond;
 	m_LastTime = GetNowHiPerformanceCount();
-	WaitProcess();
+
+	//WaitProcess();
+	if (m_deltaTime > 0.5f)
+		m_deltaTime = 0.5f;
 }
 
 void Time::WaitProcess()
