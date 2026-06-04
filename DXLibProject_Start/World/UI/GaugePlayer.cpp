@@ -25,7 +25,6 @@ namespace {
 	constexpr float kDiffer = -150 * GaugeParam::kInitScale;
 }
 GaugePlayer::GaugePlayer():
-	m_faceHandle(-1),
 	m_gauges()
 {
 	std::string filePath = kFilePath;

@@ -1,5 +1,6 @@
 #pragma once
 #include"GaugeShow.h"
+#include"CharaGauge.h"
 #include<array>
 #include<vector>
 /// <summary>
@@ -7,22 +8,18 @@
 /// </summary>
 class GaugeShow;
 class Player;
-class GaugePlayer
+class GaugePlayer:public CharaGauge
 {
 public:
 	GaugePlayer();
 	~GaugePlayer();
-	void Init();
+	void Init()override;
 	void SetPlayer(Player* player);
-	void End();
-	void Update();
-	void Draw();
+	void End()override;
+	void Update()override;
+	void Draw()override;
 private:
-	// プレイヤーの顔画像
-	int m_faceHandle;
-	// 背景の画像
-	int m_backHandle;
-	int m_faceBackHandle;
+
 	// ゲージの配列
 	std::array<GaugeShow*, GaugeType::Max>m_gauges;
 };
