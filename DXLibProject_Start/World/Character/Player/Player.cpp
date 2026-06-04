@@ -60,7 +60,6 @@ Player::Player() :
 	m_animation(),
 	m_animData(),
 	m_status(),
-	m_pCamera(nullptr),
 	m_animHandle(),
 	m_speed(0),
 	m_desireRad(0),
@@ -95,11 +94,7 @@ Player::~Player()
 	// アニメーションハンドルの破棄
 	for (int& anim : m_animHandle)
 		MV1DeleteModel(anim);
-	// カメラのポインタを破棄
-	if (m_pCamera) {
-		m_pCamera = nullptr;
-		delete m_pCamera;
-	}
+	
 	// バリアのポインタを破棄
 	if (m_pBarrier) {
 		m_pBarrier = nullptr;
@@ -301,8 +296,7 @@ void Player::UpdateTransform()
 	// 角度をラジアン角に変更
 	analogAngle *= MyMath::ToRadian;
 	// カメラの角度で回転するように
-	if (m_pCamera)
-		analogAngle += m_pCamera->GetHRadian();
+		analogAngle += m_cameraYawRad;
 
 	// 移動速度を減衰させる
 	m_speed *= kAttenuation;
@@ -335,7 +329,7 @@ void Player::UpdateAnimation()
 	// アニメーションの更新
 	m_animation.Update();
 	// アニメーションのデバッグ表示
-	m_animation.Debug();
+	//m_animation.Debug();
 	// 割り込み再生またはアニメーション再生中なら処理しない
 	if (m_animation.IsForcePlay() && m_animation.IsPlaying())return;
 	// 次のアニメーションがどれか調べる
@@ -426,11 +420,11 @@ void Player::SetCameraAngle(const Vector3& position)
 	Vector3 rotate;
 	rotate.z = 0;
 	rotate.y = -atan2(vec.z, vec.x) - DX_PI_F * 0.5f;
-	rotate.x = m_pCamera->GetTransform().rotation.x;
+	rotate.x = m_cameraYawRad;
 	printfDx("rotation.x : %d\n", static_cast<int>(rotate.x * MyMath::ToDegree));
 	printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
 	printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
-	m_pCamera->SetCameraAngle(rotate);
+	//m_pCamera->SetCameraAngle(rotate);
 }
 
 Vector3 Player::GetCollisionCenterPos()

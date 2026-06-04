@@ -69,7 +69,8 @@ public:
 	/// カメラのポインタを渡す関数
 	/// </summary>
 	/// <param name="camera"></param>
-	void SetCamera(CameraOld* camera) { m_pCamera = camera; }
+	//void SetCamera(CameraOld* camera) { m_pCamera = camera; }
+	void SetMoveBasicRad(float yawRad) { m_cameraYawRad = yawRad; }
 	void SetBarrier(Barrier* barrier);
 	Gauge* GetGauge(int num) { return m_gauges[num].get(); }
 private:
@@ -86,9 +87,10 @@ private:
 	/// </summary>
 	Status::Player m_status;
 	/// <summary>
-	/// カメラのポインタ
+	/// カメラのY軸方向の角度
 	/// </summary>
-	CameraOld* m_pCamera;
+	float m_cameraYawRad;
+
 	/// <summary>
 	/// アニメーションのハンドル
 	/// </summary>
@@ -122,4 +124,5 @@ private:
 	/// </summary>
 	std::array<std::unique_ptr<Gauge>, static_cast<int>(GaugeType::Max)> m_gauges;
 	Collision::Capsule m_capsule;
+
 };
