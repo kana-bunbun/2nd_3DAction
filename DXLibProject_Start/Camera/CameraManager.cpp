@@ -1,5 +1,6 @@
 #include "CameraManager.h"
-
+#include"../Utility/MyMath.h"
+#include<cassert>
 namespace {
 	constexpr float kNearDistance = 5.0f;	// カメラの手前のクリップ距離
 	constexpr float kFarDistance = 5000.0f;	// カメラの奥のクリップ距離
@@ -8,7 +9,8 @@ namespace {
 
 CameraManager::CameraManager():
 	m_activeCamera(nullptr),
-	m_currentView{}
+	m_currentView{},
+	m_activeIndex(0)
 {
 
 }
@@ -25,24 +27,54 @@ void CameraManager::Init()
 
 void CameraManager::Update()
 {
-
+	assert(!m_cameras.empty());
+	if (m_cameras.empty())return;
+	m_cameras[m_activeIndex]->Update();
+	m_currentView=m_cameras[m_activeIndex]->GetView();
 }
 
 void CameraManager::Apply()
 {
+	SetCameraPositionAndTarget_UpVecY(
+		m_currentView.position.ToVECTOR(),
+		m_currentView.target.ToVECTOR()
+	);
+
+	// カメラの視野角を設定
+	SetupCamera_Perspective(m_currentView.fov * MyMath::ToRadian);
 }
 
-void CameraManager::SetActiveCamera(std::unique_ptr<ICamera> camera)
-{
 
+void CameraManager::AddCamera(std::unique_ptr<ICamera> camera)
+{
+	m_cameras.push_back(std::move(camera));
+}
+
+void CameraManager::SetActiveCamera(size_t activeIndex)
+{
+	if (activeIndex < m_cameras.size())
+	{
+		m_activeIndex = activeIndex;
+	}
+}
+
+void CameraManager::NextCamera()
+{
+	m_activeIndex = (m_cameras.size() + m_activeIndex++)% m_cameras.size();
 }
 
 Vector3 CameraManager::GetForward() const
 {
-	return Vector3();
+	assert(!m_cameras.empty());
+	if (m_cameras.empty())return Vector3::zero;
+
+	return m_cameras[m_activeIndex]->GetForward();
 }
 
 float CameraManager::GetYawRad() const
 {
-	return 0.0f;
+	assert(m_cameras[m_activeIndex]);
+	if (!m_cameras[m_activeIndex])return 0.0f;
+
+	return m_cameras[m_activeIndex]->GetYawRad();
 }

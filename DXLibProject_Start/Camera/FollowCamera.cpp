@@ -9,6 +9,8 @@
 
 #include "../Utility/Input.h"
 #include "../Utility/MyMath.h"
+#include "../Utility/Time.h"
+
 
 namespace {
     constexpr float kFieldOfView = 60.0f;       	// カメラの視野角 FOV = field of view
@@ -28,7 +30,6 @@ FollowCamera::FollowCamera(const Transform* target):
     m_view{},
     m_distance(kDistanceToTarget)
 {
-
 }
 
 FollowCamera::~FollowCamera()
@@ -41,6 +42,10 @@ void FollowCamera::Update()
     UpdateDistance();
     UpdateAngle();
     UpdatePosition();
+    printfDx("/////transform/////\n");
+    printfDx("rotation  X : %f\n",m_transform.rotation.x * MyMath::ToDegree);
+    printfDx("rotation  Y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
+    printfDx("rotation  Z : %f\n", m_transform.rotation.z * MyMath::ToDegree);
 }
 
 Camera::CameraView FollowCamera::GetView() const
@@ -74,6 +79,9 @@ void FollowCamera::UpdateDistance()
 
 void FollowCamera::UpdateAngle()
 {
+
+    float deltaTime=Time::GetInstance().GetDeltaTime();
+
     float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1)*MyMath::ToRadian;
     float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
     float pitchRad = m_transform.rotation.x;
@@ -89,7 +97,7 @@ void FollowCamera::UpdateAngle()
     float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1) * kAngleSpeed;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
-    pitchRad += m_moveVector.x;
+    pitchRad += m_moveVector.y * deltaTime;
     pitchRad = MyMath::Clamp(pitchRad, kLowAngle, kHighAngle);
     m_transform.rotation.x = pitchRad;
 
@@ -98,18 +106,18 @@ void FollowCamera::UpdateAngle()
 
 
 
-    yawRad -= m_moveVector.x;
+    yawRad -= m_moveVector.x * deltaTime;
     // 水平方向の角度を範囲内に収める
     yawRad = MyMath::NormalizeAngle(yawRad);
-    m_transform.rotation.y = yawRad * MyMath::ToRadian;
+    m_transform.rotation.y = yawRad /** MyMath::ToRadian*/;
 
 }
 
 void FollowCamera::UpdatePosition()
 {
 
-    assert(!m_target);
-    if (!m_target)return;
+    //assert(m_target);
+    //if (m_target)return;
 
     // 水平方向の成分
     float sinHol = sinf(m_transform.rotation.y);

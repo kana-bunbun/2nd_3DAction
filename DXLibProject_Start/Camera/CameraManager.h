@@ -1,6 +1,7 @@
 #pragma once
 
 #include<memory>
+#include<vector>
 #include"../Utility/Vector3.h"
 #include"../Camera/Camera.h"
 
@@ -10,6 +11,7 @@
 /// </summary>
 class CameraManager
 {
+public:
 	CameraManager();
 	~CameraManager();
 
@@ -25,7 +27,24 @@ class CameraManager
 	/// カメラの設定
 	/// </summary>
 	/// <param name="camera"></param>
-	void SetActiveCamera(std::unique_ptr<ICamera> camera);
+	//void SetActiveCamera(std::unique_ptr<ICamera> camera);
+
+	/// <summary>
+	/// 管理するカメラの追加
+	/// </summary>
+	/// <param name="camera"></param>
+	void AddCamera(std::unique_ptr<ICamera> camera);
+
+	/// <summary>
+	/// 使用するカメラの設定
+	/// </summary>
+	/// <param name="activeIndex"></param>
+	void SetActiveCamera(size_t activeIndex);
+
+	/// <summary>
+	/// カメラを切り替える
+	/// </summary>
+	void NextCamera();
 
 	/// <summary>
 	/// カメラの前方ベクトルの取得
@@ -43,9 +62,22 @@ private:
 	/// 現在適応しているカメラ
 	/// </summary>
 	std::unique_ptr<ICamera>m_activeCamera;
+
+	/// <summary>
+	/// 保持しているカメラ群
+	/// </summary>
+	std::vector <std::unique_ptr<ICamera>> m_cameras;
+
 	/// <summary>
 	/// カメラの情報
 	/// </summary>
 	Camera::CameraView m_currentView;
+
+	/// <summary>
+	/// 現在使用しているカメラのインデックス
+	/// </summary>
+	size_t m_activeIndex;
+
+
 };
 
