@@ -3,6 +3,8 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
+#include"../../UI/Gauge.h"
+#include"../../UI/GaugeShow.h"
 namespace {
 	enum FollowState {
 		Normal,
@@ -36,6 +38,7 @@ public:
 	void CallBack();
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	Vector3 CheckFollowOffset();
+	Gauge* GetGauge() { return m_gauge.get(); }
 
 private:
 	void FollowPlayer();
@@ -75,5 +78,6 @@ private:
 	bool m_attackFlag;
 	bool m_canAttackFlag;
 	float m_speed;
+	std::unique_ptr<Gauge> m_gauge;
 };
 

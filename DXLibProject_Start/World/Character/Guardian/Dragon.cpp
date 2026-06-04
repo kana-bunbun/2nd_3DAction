@@ -12,7 +12,7 @@ namespace {
 	const char* const kModelPath = "Model.mv1";
 	const char* const kMotionPath = "Motions\\";
 	const char* const kAnimPath[static_cast<int>(Status::Dragon::Max)] = {
-		 "Idle.mv1",
+		 "Move.mv1",
 		 "Move.mv1",
 		 "Attack.mv1",
 		 "Damage.mv1",
@@ -115,6 +115,7 @@ Dragon::Dragon() :
 	m_move.SetLerpSpeed(kLerpRad);
 	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
+	m_gauge = std::make_unique<Gauge>(300,300,0);
 }
 
 Dragon::~Dragon()
@@ -173,7 +174,9 @@ void Dragon::Update()
 	}
 	// アニメーション更新処理
 	UpdateAnimation();
-
+	// 移動
+	m_move.Update();
+	m_transform = m_move.GetTransform();
 	// 攻撃アニメーション以外ではフラグをfalseに
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
@@ -206,10 +209,11 @@ void Dragon::AttackUpdate()
 	}
 	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
+	// 移動速度の減衰
 	m_speed *= kAttenuationSpeed*Time::GetInstance().GetDeltaTime();
+	// 移動速度を設定
 	m_move.SetSpeed(m_speed);
-	m_move.Update();
-	m_transform = m_move.GetTransform();
+
 	printfDx("Attack\n");
 	printfDx("canAttack : %d\n",m_canAttackFlag);
 }
@@ -277,8 +281,7 @@ void Dragon::FollowPlayer()
 
 		printfDx("m_speed: %f\n", m_speed);
 	m_move.SetSpeed(kMoveSpeed*m_speed);
-	m_move.Update();
-	m_transform = m_move.GetTransform();
+
 }
 
 void Dragon::FollowTarget()
@@ -311,8 +314,7 @@ void Dragon::FollowTarget()
 	printfDx("m_speed: %f\n", m_speed);
 	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
 	m_move.SetSpeed(m_speed*kMoveSpeed);
-	m_move.Update();
-	m_transform = m_move.GetTransform();
+
 }
 
 void Dragon::UpdateAnimation()
@@ -320,7 +322,7 @@ void Dragon::UpdateAnimation()
 	// アニメーションの更新
 	m_animation.Update();
 	// アニメーションのデバッグ表示
-	m_animation.Debug();
+	//m_animation.Debug();
 	// 割り込み再生またはアニメーション再生中なら処理しない
 	if (m_animation.IsForcePlay() && m_animation.IsPlaying())return;
 	// 次のアニメーションがどれか調べる
