@@ -124,11 +124,13 @@ SceneBase* SceneTest::Update() {
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");
 	m_pPlayer->ResolveCollision(*m_pBee, result);
-	if (Input::IsPressed(Input::Button::Up, Pad::Player::P1))
+	if (Input::IsPressed(Input::Button::RT, Pad::Player::P1)) {
+	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
 		m_pDragon->Call(m_pBee.get());
-	if (Input::IsPressed(Input::Button::Down, Pad::Player::P1))
+	else
 		m_pDragon->CallBack();
-	if (Input::IsDown(Input::Button::RT, Pad::Player::P1))
+	}
+	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
 		m_pPlayer->SetCameraAngle(m_pBee->GetTransform().position);
 	return this;
 }
