@@ -11,11 +11,13 @@
 #include "../Camera/CameraManager.h"
 #include "../Camera/FollowCamera.h"
 #include "../System/SoundManager.h"
+#include "../System/FontManager.h"
 #include"../World/Character/Bee.h"
 #include"../World/Character/Player/Player.h"
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
+#include"../World/Character/CharaGaugeManager.h"
 #include<cassert>
 #include <math.h>
 #include<memory>
@@ -31,6 +33,9 @@ namespace {
 
 	constexpr Vector3 kInitGrassPos = { 0.0f, 0.0f, -400.0f };	// 草の初期座標
 
+	const char* const kFontName = "Ink Free";
+	constexpr int kSize = 50;
+	constexpr int kThickness = 50;
 }
 
 SceneTest::SceneTest() :
@@ -67,6 +72,7 @@ SceneTest::SceneTest() :
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pDragon = std::make_unique<Dragon>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
+	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 }
 
 SceneTest::~SceneTest() {}
@@ -90,7 +96,9 @@ void SceneTest::Init() {
 	m_pDragon->Init();
 	m_pUiManager->SetPlayer(m_pPlayer.get());
 	m_pUiManager->SetDragon(m_pDragon.get());
-
+	m_pGaugeManager->Init();
+	m_pGaugeManager->SetPlayer(m_pPlayer);
+	m_pGaugeManager->SetDragon(m_pDragon);
 }
 
 void SceneTest::End() {
@@ -113,6 +121,7 @@ void SceneTest::End() {
 	//m_pSound = nullptr;
 	m_pBee->End();
 	m_pUiManager->End();
+	m_pGaugeManager->End();
 }
 
 SceneBase* SceneTest::Update() {
@@ -124,7 +133,7 @@ SceneBase* SceneTest::Update() {
 	m_pBarrier->Update();
 	m_pUiManager->Update();
 	m_pDragon->Update();
-
+	m_pGaugeManager->Update();
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
@@ -159,6 +168,10 @@ void SceneTest::Draw() {
 		m_pUiManager->Draw();
 
 	}
+	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
+
+	DrawStringToHandle(300, 500, "fontfontfont", Color::kMagenta, handle);
+
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意
 	Vector3 billboardTarget = Vector3(400.0f, 50.0f, -400.0f);

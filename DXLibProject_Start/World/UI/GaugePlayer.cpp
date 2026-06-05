@@ -39,7 +39,7 @@ void GaugePlayer::SetPlayer(Player* player)
 
 		pos.y -= GaugeParam::kDiffer * (i -0.5f);
 		GaugeShow* gauge = new GaugeShow(pos, /*(GaugeType::Max - 1) - */i);
-		gauge->SetGauge(player->GetGauge(i));
+		gauge->SetGauge(player->GetGauge()[i]);
 		m_gauges[i] = gauge;
 	}
 }

@@ -116,7 +116,7 @@ Dragon::Dragon() :
 	m_move.SetLerpSpeed(kLerpRad);
 	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
-	m_gauge = std::make_unique<Gauge>(300,300,0);
+	m_gauge = std::make_shared<Gauge>(300,300,0);
 }
 
 Dragon::~Dragon()
@@ -181,12 +181,6 @@ void Dragon::Update()
 	// 攻撃アニメーション以外ではフラグをfalseに
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
-
-	float value = 1;
-	if (Input::IsDown(Input::Button::LB, Pad::Player::P1))
-			m_gauge->Increase(value);
-	else if (Input::IsDown(Input::Button::RB, Pad::Player::P1))
-			m_gauge->Decrease(value);
 
 		m_gauge->Clamp();
 		printfDx("Dゲージ量 : %f\n", m_gauge->GetValue());
@@ -262,8 +256,11 @@ Vector3 Dragon::CheckFollowOffset()
 	OffsetLeft *= kFollowOffset;
 	OffsetRight = targetTransform.position - OffsetLeft;
 	OffsetLeft += targetTransform.position;
+
 	DrawSphere3D(OffsetLeft.ToVECTOR(), 80, 10, 0xff0000, 0xff0000, FALSE);
 	DrawSphere3D(OffsetRight.ToVECTOR(), 80, 10, 0x0000ff, 0x0000ff, FALSE);
+
+
 
 
 	float distanceRight = (myPos - OffsetRight).GetSqLength();

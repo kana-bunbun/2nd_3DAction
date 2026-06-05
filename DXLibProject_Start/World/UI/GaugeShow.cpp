@@ -26,7 +26,7 @@ namespace {
 }
 
 GaugeShow::GaugeShow() :
-	m_gauge(nullptr),
+	//m_gauge(nullptr),
 	m_bodyHandle(-1),
 	m_headHandle(-1),
 	m_frameHandle(-1),
@@ -61,10 +61,7 @@ GaugeShow::GaugeShow(Vector3 position,int type):
 
 GaugeShow::~GaugeShow()
 {
-	if (m_gauge) {
-		m_gauge = nullptr;
-		delete m_gauge;
-	}
+
 	DeleteGraph(m_bodyHandle);
 	DeleteGraph(m_headHandle);
 	DeleteGraph(m_frameHandle);

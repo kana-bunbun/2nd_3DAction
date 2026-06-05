@@ -72,7 +72,7 @@ public:
 	//void SetCamera(CameraOld* camera) { m_pCamera = camera; }
 	void SetMoveBasicRad(float yawRad) { m_cameraYawRad = yawRad; }
 	void SetBarrier(Barrier* barrier);
-	Gauge* GetGauge(int num) { return m_gauges[num].get(); }
+	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -122,7 +122,7 @@ private:
 	/// <summary>
 	/// ゲージの種類
 	/// </summary>
-	std::array<std::unique_ptr<Gauge>, static_cast<int>(GaugeType::Max)> m_gauges;
+	std::vector<std::shared_ptr<Gauge>> m_gauges;
 	Collision::Capsule m_capsule;
 
 };

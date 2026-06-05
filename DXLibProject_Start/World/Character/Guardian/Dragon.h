@@ -38,7 +38,7 @@ public:
 	void CallBack();
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	Vector3 CheckFollowOffset();
-	Gauge* GetGauge() { return m_gauge.get(); }
+	std::shared_ptr<Gauge> GetGauge() { return m_gauge; }
 
 private:
 	void FollowPlayer();
@@ -78,6 +78,6 @@ private:
 	bool m_attackFlag;
 	bool m_canAttackFlag;
 	float m_speed;
-	std::unique_ptr<Gauge> m_gauge;
+	std::shared_ptr<Gauge> m_gauge;
 };
 

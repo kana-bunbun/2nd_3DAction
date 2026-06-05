@@ -21,6 +21,7 @@ class CameraOld;
 class CameraManager;
 class Player;
 class Dragon;
+class CharaGaugeManager;
 class Bee;
 class Barrier;
 class UIManager;
@@ -88,8 +89,9 @@ private:
 	/// </summary>
 	//std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
 	std::unique_ptr<CameraManager> m_pCameraMgr;
-	std::unique_ptr<Player> m_pPlayer;
-	std::unique_ptr<Dragon> m_pDragon;
+	std::shared_ptr<Player> m_pPlayer;
+	std::shared_ptr<Dragon> m_pDragon;
+	std::shared_ptr<CharaGaugeManager> m_pGaugeManager;
 
 	/// <summary>
 	/// ƒvƒŒƒCƒ„[‚Ì”

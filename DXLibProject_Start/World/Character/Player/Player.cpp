@@ -82,7 +82,7 @@ Player::Player() :
 	m_capsule.SetOffset(kCapsuleOffset);
 	// ゲージの初期化
 	for (int i = 0; i < GaugeType::Max; i++) {
-		m_gauges[i] = std::make_unique<Gauge>();
+		m_gauges.emplace_back(std::make_shared<Gauge>());
 	}
 
 
@@ -203,24 +203,9 @@ void Player::Update()
 	// カプセルのデバッグ表示
 	m_capsule.DebugDraw();
 
-
-	float value = 1;
-	if (Input::IsDown(Input::Button::LB, Pad::Player::P1))
-		for (auto& gauge : m_gauges)
-			gauge->Increase(value);
-	else if(Input::IsDown(Input::Button::RB,Pad::Player::P1))
-		for (auto& gauge : m_gauges)
-			gauge->Decrease(value);
-
-	for (auto& gauge : m_gauges) {
-		gauge->Clamp();
-		printfDx("ゲージ量 : %f\n", gauge->GetValue());
-		printfDx("ゲージ最大量 : %f\n", gauge->GetMax());
-		printfDx("ゲージ割合 : %f\n", gauge->GetRate());
-	}
 	if(m_status!=Status::Player::Parry)
 	m_gauges[GaugeType::MP]->Increase(0.01f);
-	
+
 }
 
 void Player::UpdateAction()
