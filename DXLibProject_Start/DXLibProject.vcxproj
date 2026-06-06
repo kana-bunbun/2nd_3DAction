@@ -151,6 +151,9 @@
     <ClCompile Include="Camera\DebugCamera.cpp" />
     <ClCompile Include="System\FontManager.cpp" />
     <ClCompile Include="World\Character\CharaGaugeManager.cpp" />
+    <ClCompile Include="World\Map\MapCreate.cpp" />
+    <ClCompile Include="World\Map\MapManager.cpp" />
+    <ClCompile Include="World\Map\MapTile.cpp" />
     <ClCompile Include="World\UI\GaugeDragon.cpp" />
     <ClCompile Include="World\UI\CharaGauge.cpp" />
     <ClCompile Include="Utility\Time.cpp" />
@@ -209,6 +212,10 @@
     <ClInclude Include="Camera\DebugCamera.h" />
     <ClInclude Include="System\FontManager.h" />
     <ClInclude Include="World\Character\CharaGaugeManager.h" />
+    <ClInclude Include="World\Map\MapConst.h" />
+    <ClInclude Include="World\Map\MapCreate.h" />
+    <ClInclude Include="World\Map\MapManager.h" />
+    <ClInclude Include="World\Map\MapTile.h" />
     <ClInclude Include="World\UI\GaugeDragon.h" />
     <ClInclude Include="World\UI\CharaGauge.h" />
     <ClInclude Include="Utility\Time.h" />
