@@ -1,6 +1,6 @@
 #include "Enemy.h"
 namespace {
-	const char* const kModelPath = "";
+	const char* const kModelPath = "Resource\\Enemy\\Queen\\Model.mv1";
 }
 
 Enemy::Enemy():
@@ -10,6 +10,7 @@ Enemy::Enemy():
 	m_animHandle(),
 	m_desireRad()
 {
+	//m_modelHandle=MV1Loadmm
 }
 
 Enemy::~Enemy()

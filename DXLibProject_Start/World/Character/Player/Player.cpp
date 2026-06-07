@@ -203,8 +203,13 @@ void Player::Update()
 	// カプセルのデバッグ表示
 	m_capsule.DebugDraw();
 
+	// ゲージが上限・下限を超えないようにする
+	for (auto& gauge : m_gauges)
+		gauge->Clamp();
+
+	// MPの自動回復
 	if(m_status!=Status::Player::Parry)
-	m_gauges[GaugeType::MP]->Increase(0.01f);
+	m_gauges[GaugeType::MP]->Increase(Time::GetInstance().GetDeltaTime());
 
 }
 

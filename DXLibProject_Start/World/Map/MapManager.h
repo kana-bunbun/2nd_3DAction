@@ -38,7 +38,8 @@ public:
 	/// 関数ポインタを使う
 	/// </summary>
 	/// <param name="action"></param>
-	void ExecuteAllSquare(std::function<void(MapTile*)> action);
+	void ExecuteAllSquare(std::function<void(MapTile*)>& action);
+	void SetFirstWall();
 private:
 	// シングルトンにするのでprivate
 	MapManager()=default;

@@ -25,6 +25,7 @@ class CharaGaugeManager;
 class Bee;
 class Barrier;
 class UIManager;
+class MapDraw;
 //
 //namespace Collision {
 //	class AABB;
@@ -104,4 +105,7 @@ private:
 	std::unique_ptr<Bee>m_pBee;
 	std::unique_ptr<Barrier>m_pBarrier;
 	std::unique_ptr<UIManager>m_pUiManager;
+
+	std::unique_ptr<MapDraw>m_mapdraw;
+
 };

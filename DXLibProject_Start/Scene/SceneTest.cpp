@@ -18,6 +18,7 @@
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
 #include"../World/Character/CharaGaugeManager.h"
+#include"../World/Map/MapDraw.h"
 #include<cassert>
 #include <math.h>
 #include<memory>
@@ -73,6 +74,8 @@ SceneTest::SceneTest() :
 	m_pDragon = std::make_unique<Dragon>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
+
+	m_mapdraw = std::make_unique<MapDraw>();
 }
 
 SceneTest::~SceneTest() {}
@@ -166,11 +169,10 @@ void SceneTest::Draw() {
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
 		m_pUiManager->Draw();
-
+		m_mapdraw->Draw();
 	}
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 
-	DrawStringToHandle(300, 500, "fontfontfont", Color::kMagenta, handle);
 
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意

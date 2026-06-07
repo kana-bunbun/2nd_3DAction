@@ -129,6 +129,9 @@
     <ClCompile Include="World\Map\MapTile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\Map\MapDraw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -186,6 +189,16 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="Resource\UI\MPGaugeHead.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_BaseColor.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga" />
+    <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -322,6 +335,9 @@
     <ClInclude Include="World\Map\MapManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="World\Map\MapDraw.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -351,8 +367,35 @@
     <None Include="Resource\Dragon\ChaDragon\Motions\Death.mv1" />
     <None Include="Resource\Dragon\ChaDragon\Motions\Idle.mv1" />
     <None Include="Resource\Dragon\ChaDragon\Motions\Move.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\Death.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%402HitComboClawsAttack1Forward.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%402HitComboClawsAttack2.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Death.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40GetHit1.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40GetHit2.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Idle.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40JumpClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40LeftClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40LeftClawsAttackForward.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40RightClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Roar.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Run.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40TailAttackRight.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40TurnLeft180.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40TurnRight180.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Walk.FBX" />
+    <None Include="Resource\Enemy\Queen\Animation\Idle.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\Roar.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\Run.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\Walk.mv1" />
+    <None Include="Resource\Enemy\Queen\Queen.mv1" />
+    <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_BaseColor.png.meta" />
+    <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga.meta" />
+    <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png.meta" />
+    <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />
+    <Text Include="Resource\Enemy\Queen\Log.txt" />
   </ItemGroup>
 </Project>

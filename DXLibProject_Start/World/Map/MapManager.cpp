@@ -34,7 +34,7 @@ int MapManager::PositionToID(Vector3 position)
 Vector3 MapManager::IDToPosition(size_t ID)
 {
     Vector3 position=Vector3::zero;
-    if (ID >= m_mapData.size())return Vector3(-1.0f, -1.0f, -1.0f);
+    if (ID >= MAP_SQUARE_HEIGHT_COUNT * MAP_SQUARE_WIDTH_COUNT)return Vector3(-1.0f, -1.0f, -1.0f);
 
 
     position.x = ID % MAP_SQUARE_WIDTH_COUNT;
@@ -54,10 +54,28 @@ MapTile* MapManager::GetTile(Vector3 position)
     return GetTile(PositionToID(position));
 }
 
-void MapManager::ExecuteAllSquare(std::function<void(MapTile*)> action)
+void MapManager::ExecuteAllSquare(std::function<void(MapTile*)>& action)
 {
     if (!action || m_mapData.empty()) return;
     for (int i = 0; i < m_mapData.size(); i++) {
         action(m_mapData[i].get());
+    }
+}
+
+void MapManager::SetFirstWall()
+{
+    for (int i = 0; i < m_mapData.size(); i++) {
+        m_mapData[i]->SetTerrain(eTerrain::Wall);
+        // 最初の分割線マスを追加
+        int x = static_cast<int>(m_mapData[i]->GetPos().x);
+        int y = static_cast<int>(m_mapData[i]->GetPos().y);
+        // 外周マスの排除
+        if (x == 0 || x == MAP_SQUARE_WIDTH_COUNT - 1 ||
+            y == 0 || y == MAP_SQUARE_HEIGHT_COUNT - 1) continue;
+        // 外周から1マス離れたマス以外の排除
+        if (x != 1 && x != MAP_SQUARE_WIDTH_COUNT - 2 &&
+            y != 1 && y != MAP_SQUARE_HEIGHT_COUNT - 2) continue;
+        // 分割線マスの追加
+        MapCreate::GetInstance().AddDevideLine(m_mapData[i].get());
     }
 }

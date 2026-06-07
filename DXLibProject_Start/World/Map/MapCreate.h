@@ -34,10 +34,15 @@ public:
 	void SetFirstWall(MapTile* tile);
 	void AddDevideLine(MapTile* tile);
 	void DevideAreaFixCount();
-	void DevideArea(AreaData devideArea, bool isVertical);
-	void DevideAreaVertical(AreaData devideArea);
-	void DevideAreaHorizontal(AreaData devideArea);
+	void DevideArea(AreaData* devideArea, bool isVertical);
+	void DevideAreaVertical(AreaData* devideArea);
+	void DevideAreaHorizontal(AreaData* devideArea);
 	AreaData GetMaxSizeArea();
+
+	const std::vector<AreaData>& GetAreaData() { return m_areaData; }
+	// 分割線のマスのIDリスト
+	const std::vector<int>& GetDevidLine(){ return m_devideLine; }
+
 	private:
 
 	// シングルトンなのでprivate
