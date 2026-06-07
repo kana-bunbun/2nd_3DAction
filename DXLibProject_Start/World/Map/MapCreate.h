@@ -12,10 +12,12 @@ private:
 	class AreaData {
 	public:
 		// 始点
-		Vector3 start = Vector3::zero;
-		Vector3 size = Vector3::zero;
+		int startX = -1;
+		int startY = -1;
+		int sizeX = -1;
+		int sizeY = -1;
 		AreaData()=default;
-		AreaData(Vector3 start, Vector3 size) :start(start), size(size) {}
+		AreaData(int startX,int startY, int sizeX,int sizeY) :startX(startX),startY(startY), sizeX(sizeX) ,sizeY(sizeY){}
 	};
 public:
 	static MapCreate& GetInstance();
@@ -37,9 +39,10 @@ public:
 	void DevideArea(AreaData* devideArea, bool isVertical);
 	void DevideAreaVertical(AreaData* devideArea);
 	void DevideAreaHorizontal(AreaData* devideArea);
-	AreaData GetMaxSizeArea();
+	AreaData* GetMaxSizeArea();
 
-	const std::vector<AreaData>& GetAreaData() { return m_areaData; }
+	const std::vector<AreaData*>& GetAreaData() { return m_areaData; }
+
 	// 分割線のマスのIDリスト
 	const std::vector<int>& GetDevidLine(){ return m_devideLine; }
 
@@ -57,12 +60,9 @@ public:
 	MapCreate& operator=(const MapCreate&&) = delete;
 private:
 	// エリアの配列
-	std::vector<AreaData> m_areaData;
+	std::vector<AreaData*> m_areaData;
 	// 分割線のマスのIDリスト
 	std::vector<int> m_devideLine;
 	// エリアの分割回数
 };
 
-	const int _AREA_DEVIDE_COUNT = 8;
-	// 最小部屋サイズ
-	const int _MIN_ROOM_SIZE = 3;

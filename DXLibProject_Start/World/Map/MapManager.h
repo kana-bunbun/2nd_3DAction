@@ -59,16 +59,3 @@ private:
 	std::vector<std::unique_ptr<MapTile>>m_mapData;
 };
 
-	///// <summary>
-	///// 全てのマスに対して指定処理実行
-	///// </summary>
-	///// <param name="action">実行する処理(SquareObjectを引数に取る)</param>
-	//public void ExecuteAllSquare(System.Action<SquareObject> action) {
-	//	if (action == null || CommonModule.IsEmpty(_squareList)) return;
-
-	//	for (int i = 0; i < _squareList.Count; i++) {
-	//		action(_squareList[i]);
-	//	}
-	//}
-
-//}

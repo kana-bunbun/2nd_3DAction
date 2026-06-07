@@ -32,7 +32,7 @@ void MapCreate::CreateFirstArea()
 	// 全てのマスを壁にする
 	//std::function<void(MapTile*)> action = SetFirstWall;
 	MapManager::GetInstance().SetFirstWall();
-	AreaData firstArea = AreaData(Vector3(2, 2, 0), Vector3(MAP_SQUARE_WIDTH_COUNT - 4, MAP_SQUARE_HEIGHT_COUNT - 4,0));
+	AreaData* firstArea = new AreaData(2, 2, MAP_SQUARE_WIDTH_COUNT - 4, MAP_SQUARE_HEIGHT_COUNT - 4);
 	m_areaData.push_back(firstArea);
 }
 
@@ -64,25 +64,25 @@ void MapCreate::DevideAreaFixCount()
 {
 	for (int i = 0; i < _AREA_DEVIDE_COUNT; i++) {
 		// 幅最大のエリアを取得
-		AreaData devideArea = GetMaxSizeArea();
-		bool isVertical = devideArea.size.x < devideArea.size.y;
+		AreaData* devideArea = GetMaxSizeArea();
+		bool isVertical = devideArea->sizeX < devideArea->sizeY;
 		// 三項演算子：条件 ? trueの際の処理 : falseの際の処理 ;
-		int maxSize = isVertical ? devideArea.size.y : devideArea.size.x;
+		int maxSize = isVertical ? devideArea->sizeY : devideArea->sizeX;
 		// 取得したエリアが分割可能か判定
 		if (maxSize < (_MIN_ROOM_SIZE + 2) * 2 + 1) break;
 		// 取得したエリアを分割
-		DevideArea(&devideArea, isVertical);
+		DevideArea(devideArea, isVertical);
 	}
 }
 
 void MapCreate::DevideArea(AreaData* devideArea, bool isVertical)
 {
 	if (isVertical) {
-		// 水平に線を引いて縦に分割
+		// エリアを上下に分割
 		DevideAreaVertical(devideArea);
 	}
 	else {
-		// 垂直に線を引いて横に分割
+		// エリアを左右に分割
 		DevideAreaHorizontal(devideArea);
 	}
 }
@@ -90,19 +90,19 @@ void MapCreate::DevideArea(AreaData* devideArea, bool isVertical)
 void MapCreate::DevideAreaVertical(AreaData* devideArea)
 {
 	// 分割位置の決定
-	int randomMax = devideArea->size.y - (_MIN_ROOM_SIZE + 2) * 2;
+	int randomMax = devideArea->sizeY - (_MIN_ROOM_SIZE + 2) * 2;
 	int devidePos = MyRandom::Int(0, randomMax);
-	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->start.y;
+	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->startY;
 	// 新しいエリアを生成
-	int newAreaHeight = devideArea->start.y + devideArea->size.y- devidePos - 1;
+	int newAreaHeight = devideArea->startY + devideArea->sizeY- devidePos - 1;
 	int newAreaY = devidePos + 1;
-	AreaData newArea = AreaData(Vector3(devideArea->start.x, newAreaY, 0), Vector3(devideArea->size.x, newAreaHeight,0));
+	AreaData* newArea = new AreaData(devideArea->startX, newAreaY, devideArea->sizeX, newAreaHeight);
 	m_areaData.push_back(newArea);
 	// 既存エリアの修正
-	devideArea->size.y = devidePos - devideArea->start.y;
+	devideArea->sizeY = devidePos - devideArea->startY;
 	// 分割線マスの追加
-	for (int x = 0; x < devideArea->size.x; x++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devideArea->start.x + x, devidePos,0));
+	for (int x = 0; x < devideArea->sizeX; x++) {
+		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devideArea->startX + x, devidePos,0));
 		AddDevideLine(square);
 	}
 }
@@ -110,37 +110,37 @@ void MapCreate::DevideAreaVertical(AreaData* devideArea)
 void MapCreate::DevideAreaHorizontal(AreaData* devideArea)
 {
 	// 分割位置の決定
-	int randomMax = devideArea->size.x - (_MIN_ROOM_SIZE + 2) * 2;
+	int randomMax = devideArea->sizeX - (_MIN_ROOM_SIZE + 2) * 2;
 	int devidePos = MyRandom::Int(0, randomMax);
-	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->start.x;
+	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->startX;
 	// 新しいエリアを生成
-	int newAreaWidth = devideArea->start.x+ devideArea->size.x - devidePos - 1;
+	int newAreaWidth = devideArea->startX+ devideArea->sizeX - devidePos - 1;
 	int newAreaX = devidePos + 1;
-	AreaData newArea = AreaData(Vector3(newAreaX, devideArea->start.y, 0), Vector3(newAreaWidth, devideArea->size.y,0));
+	AreaData* newArea = new AreaData(newAreaX, devideArea->startY, newAreaWidth, devideArea->sizeY);
 	m_areaData.push_back(newArea);
 	// 既存エリアの修正
-	devideArea->size.x = devidePos - devideArea->start.x;
+	devideArea->sizeX = devidePos - devideArea->startX;
 	// 分割線マスの追加
-	for (int y = 0; y < devideArea->size.y; y++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devidePos, devideArea->start.y+ y,0));
+	for (int y = 0; y < devideArea->sizeY; y++) {
+		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devidePos, devideArea->startY+ y,0));
 		AddDevideLine(square);
 	}
 }
 
-MapCreate::AreaData MapCreate::GetMaxSizeArea()
+MapCreate::AreaData* MapCreate::GetMaxSizeArea()
 {
 	int maxSize = -1;
-	AreaData result;
+	AreaData* result=nullptr;
 	for (int i = 0; i < m_areaData.size(); i++) {
-		AreaData area = m_areaData[i];
+		AreaData* area = m_areaData[i];
 		// 横幅の確認
-		if (area.size.x > maxSize) {
-			maxSize = area.size.x;
+		if (area->sizeX > maxSize) {
+			maxSize = area->sizeX;
 			result = area;
 		}
 		// 縦幅の確認
-		if (area.size.y > maxSize) {
-			maxSize = area.size.y;
+		if (area->sizeY > maxSize) {
+			maxSize = area->sizeY;
 			result = area;
 		}
 	}
