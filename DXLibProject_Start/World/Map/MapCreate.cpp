@@ -102,7 +102,7 @@ void MapCreate::DivideAreaVertical(AreaData* divideArea)
 	divideArea->sizeY = devidePos - divideArea->startY;
 	// 分割線マスの追加
 	for (int x = 0; x < divideArea->sizeX; x++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(divideArea->startX + x, devidePos,0));
+		MapTile* square = MapManager::GetInstance().GetTile(divideArea->startX + x, devidePos);
 		AddDivideLine(square);
 	}
 }
@@ -122,7 +122,7 @@ void MapCreate::DivideAreaHorizontal(AreaData* divideArea)
 	divideArea->sizeX = devidePos - divideArea->startX;
 	// 分割線マスの追加
 	for (int y = 0; y < divideArea->sizeY; y++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devidePos, divideArea->startY+ y,0));
+		MapTile* square = MapManager::GetInstance().GetTile(devidePos, divideArea->startY+ y);
 		AddDivideLine(square);
 	}
 }
@@ -165,20 +165,20 @@ void MapCreate::CreateRoom(AreaData* area)
 	// 部屋の位置決定
 	int xRandomRange = area->sizeX - roomWidth;
 	int yRandomRange = area->sizeY - roomheight;
-	int startX = area->startX + Random.Range(1, xRandomRange);
-	int startY = area.startY + Random.Range(1, yRandomRange);
+	int startX = area->startX + MyRandom::Int(1, xRandomRange);
+	int startY = area->startY + MyRandom::Int(1, yRandomRange);
 	// 部屋の生成
-	List<int> roomidList = new List<int>(roomWidth * roomheight);
+	std::vector<int>;
 	for (int y = 0; y < roomheight; y++)
 	{
 		for (int x = 0; x < roomWidth; x++)
 		{
-			SquareObject square = MapSquareManager.instance.GetSquare(startX + x, startY + y);
-			if (square == null) continue;
+			MapTile* square = MapManager::GetInstance().GetTile(startX + x, startY + y);
+			if (!square) continue;
 			// マスを部屋地形に変更
-			square.SetTerrain(eTerrain.Room);
-			roomidList.Add(square.squareData.Id);
+			square->SetTerrain(eTerrain::Room);
+			m_rooms.push_back(square.squareData.Id);
 		}
 	}
-	MapSquareManager.instance.AddRoom(roomidList);
+	MapManager::GetInstance().AddRoom(roomidList);
 }

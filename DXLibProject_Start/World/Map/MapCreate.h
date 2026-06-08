@@ -106,56 +106,56 @@ private:
 /// <summary>
 /// すべての部屋をつなげる
 /// </summary>
-private void ConnecctAllRoom()
-{
-    // 掘削方向の決定
-    eDerectionFour digDirection = (eDerectionFour)Random.Range(0, (int)eDerectionFour.Max);
-
-
-    for (int i = 0; i < _areaList.Count - 1; i++)
-    {
-        // エリアから分割線まで掘る
-        AreaData area1 = _areaList[i];
-
-
-
-        // 次のエリアを分割線まで掘る
-        AreaData area2 = _areaList[i + 1];
-
-        // 分割線内で通路をつなげる
-
-        // 掘削方向を決定
-
-
-    }
-}
-
-/// <summary>
-/// 指定エリアから指定方向に分割線まで掘る
-/// </summary>
-/// <param name="area"></param>
-/// <param name="direction"></param>
-private void DigToDevideLine(AreaData area, eDerectionFour direction)
-{
-    // 掘削開始マスを決定
-    // 掘削方向の逆方向を取得
-    eDerectionFour reverse = direction.ReverseDerection();
-    // areaへのアクセスの回数を減らすためキャッシュ
-    int startX = area.startX;
-    int startY = area.startY;
-    // エリアのすべてのマスから壁かつ、掘削方向と逆方向の隣接マスが部屋マスのマスを集約
-    for (int y = 0; y < area.width; y++)
-    {
-        for (int x = 0; x < area.height; x++)
-        {
-            SquareObject square = MapSquareManager.instance.GetSquare(startX + x, startY + y);
-            // 壁でなければ処理しない
-            if (square == null || square.squareData.terrain != eTerrain.Wall) continue;
-            // 掘削方向の逆のエリアを取得
-        }
-
-    }
-    // ↑からランダムに1マス抽選
-
-    // 分割線までの掘削
-}
+//private void ConnecctAllRoom()
+//{
+//    // 掘削方向の決定
+//    eDerectionFour digDirection = (eDerectionFour)Random.Range(0, (int)eDerectionFour.Max);
+//
+//
+//    for (int i = 0; i < _areaList.Count - 1; i++)
+//    {
+//        // エリアから分割線まで掘る
+//        AreaData area1 = _areaList[i];
+//
+//
+//
+//        // 次のエリアを分割線まで掘る
+//        AreaData area2 = _areaList[i + 1];
+//
+//        // 分割線内で通路をつなげる
+//
+//        // 掘削方向を決定
+//
+//
+//    }
+//}
+//
+///// <summary>
+///// 指定エリアから指定方向に分割線まで掘る
+///// </summary>
+///// <param name="area"></param>
+///// <param name="direction"></param>
+//private void DigToDevideLine(AreaData area, eDerectionFour direction)
+//{
+//    // 掘削開始マスを決定
+//    // 掘削方向の逆方向を取得
+//    eDerectionFour reverse = direction.ReverseDerection();
+//    // areaへのアクセスの回数を減らすためキャッシュ
+//    int startX = area.startX;
+//    int startY = area.startY;
+//    // エリアのすべてのマスから壁かつ、掘削方向と逆方向の隣接マスが部屋マスのマスを集約
+//    for (int y = 0; y < area.width; y++)
+//    {
+//        for (int x = 0; x < area.height; x++)
+//        {
+//            SquareObject square = MapSquareManager.instance.GetSquare(startX + x, startY + y);
+//            // 壁でなければ処理しない
+//            if (square == null || square.squareData.terrain != eTerrain.Wall) continue;
+//            // 掘削方向の逆のエリアを取得
+//        }
+//
+//    }
+//    // ↑からランダムに1マス抽選
+//
+//    // 分割線までの掘削
+//}

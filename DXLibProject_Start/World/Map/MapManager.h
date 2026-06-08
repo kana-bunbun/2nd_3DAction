@@ -17,7 +17,7 @@ public:
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	int PositionToID(Vector3 position);
+	int PositionToID(int posX, int posY);
 	/// <summary>
 	/// IDから座標を取得
 	/// </summary>
@@ -34,7 +34,7 @@ public:
 	/// <summary>
 	/// 座標を指定しタイル取得
 	/// </summary>
-	MapTile* GetTile(Vector3 position);
+	MapTile* GetTile(int posX, int posY);
 	/// <summary>
 	/// すべてのマスに行う処理を適応する
 	/// 関数ポインタを使う
@@ -60,7 +60,7 @@ public:
 	void SetFirstWall();
 private:
 	// シングルトンにするのでprivate
-	MapManager()=default;
+	MapManager() = default;
 	// コピー禁止
 	MapManager(const MapManager&) = delete;
 	// コピー代入を禁止

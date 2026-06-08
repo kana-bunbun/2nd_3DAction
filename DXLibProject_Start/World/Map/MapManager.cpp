@@ -24,12 +24,12 @@ void MapManager::Initialize()
     }
 }
 
-int MapManager::PositionToID(Vector3 position)
+int MapManager::PositionToID(int posX,int posY)
 {
     // マップの範囲外を指定していたら不正な値を返す
-    if (position.x < 0 || position.x >= MAP_SQUARE_WIDTH_COUNT ||
-        position.y < 0 || position.y >= MAP_SQUARE_HEIGHT_COUNT) return -1;
-    return position.y * MAP_SQUARE_WIDTH_COUNT + position.x;
+    if (posX < 0 || posX >= MAP_SQUARE_WIDTH_COUNT ||
+        posY < 0 || posY >= MAP_SQUARE_HEIGHT_COUNT) return -1;
+    return posY * MAP_SQUARE_WIDTH_COUNT + posX;
 }
 
 int MapManager::IDToPosX(size_t ID)
@@ -59,9 +59,9 @@ MapTile* MapManager::GetTile(size_t ID)
     return m_mapData[ID].get();
 }
 
-MapTile* MapManager::GetTile(Vector3 position)
+MapTile* MapManager::GetTile(int posX,int posY)
 {
-    return GetTile(PositionToID(position));
+    return GetTile(PositionToID(posX,posY));
 }
 
 void MapManager::ExecuteAllSquare(std::function<void(MapTile*)>& action)
