@@ -50,31 +50,8 @@ void CameraManager::AddCamera(std::unique_ptr<ICamera> camera)
 	m_cameras.push_back(std::move(camera));
 }
 
-void CameraManager::SetActiveCamera(size_t activeIndex)
-{
-	if (activeIndex < m_cameras.size())
-	{
-		m_activeIndex = activeIndex;
-	}
-}
 
 void CameraManager::NextCamera()
 {
 	m_activeIndex = (m_cameras.size() + m_activeIndex++)% m_cameras.size();
-}
-
-Vector3 CameraManager::GetForward() const
-{
-	assert(!m_cameras.empty());
-	if (m_cameras.empty())return Vector3::zero;
-
-	return m_cameras[m_activeIndex]->GetForward();
-}
-
-float CameraManager::GetYawRad() const
-{
-	assert(m_cameras[m_activeIndex]);
-	if (!m_cameras[m_activeIndex])return 0.0f;
-
-	return m_cameras[m_activeIndex]->GetYawRad();
 }

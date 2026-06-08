@@ -5,7 +5,7 @@
 class DebugCamera :public ICamera
 {
 public:
-	DebugCamera(const Transform* target);
+	DebugCamera();
 	~DebugCamera();
 
 	/// =========================================
@@ -14,8 +14,10 @@ public:
 
 	void Update()override;
 	Camera::CameraView GetView()const override;
-	Vector3 GetForward()const override;
-	float GetYawRad()const override;
+
+
+	void UpdatePos();
+
 private:
 	Transform m_transform;
 	Camera::CameraView m_view;

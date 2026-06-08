@@ -18,8 +18,7 @@ public:
 
 	void Update()override;
 	Camera::CameraView GetView()const override;
-	Vector3 GetForward()const override;
-	float GetYawRad()const override;
+
 
 	/// =========================================
 	///		FollowCamera クラスのメンバ変数

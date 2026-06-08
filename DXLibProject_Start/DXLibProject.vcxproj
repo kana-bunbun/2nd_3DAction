@@ -149,6 +149,8 @@
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
+    <ClCompile Include="World\Map\SquareData.cpp" />
+    <ClCompile Include="World\Map\RoomData.cpp" />
     <ClCompile Include="World\Map\MapDraw.cpp" />
     <ClCompile Include="System\FontManager.cpp" />
     <ClCompile Include="World\Character\CharaGaugeManager.cpp" />
@@ -215,6 +217,8 @@
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
+    <ClInclude Include="World\Map\SquareData.h" />
+    <ClInclude Include="World\Map\RoomData.h" />
     <ClInclude Include="World\Map\MapDraw.h" />
     <ClInclude Include="System\FontManager.h" />
     <ClInclude Include="World\Character\CharaGaugeManager.h" />

@@ -18,7 +18,7 @@ void MapCreate::CreateMap()
 	// 最初のエリアを生成
 	CreateFirstArea();
 	// エリアを分割
-	DevideAreaFixCount();
+	DivideAreaFixCount();
 	// 部屋の配置
 
 	// 全部屋を連結
@@ -40,8 +40,8 @@ void MapCreate::SetFirstWall(MapTile* tile)
 {
 	tile->SetTerrain(eTerrain::Wall);
 	// 最初の分割線マスを追加
-	int x = static_cast<int>(tile->GetPos().x);
-	int y = static_cast<int>(tile->GetPos().y);
+	int x = static_cast<int>(tile->GetPosX());
+	int y = static_cast<int>(tile->GetPosY());
 	// 外周マスの排除
 	if (x == 0 || x == MAP_SQUARE_WIDTH_COUNT - 1 ||
 		y == 0 || y == MAP_SQUARE_HEIGHT_COUNT - 1) return;
@@ -49,18 +49,18 @@ void MapCreate::SetFirstWall(MapTile* tile)
 	if (x != 1 && x != MAP_SQUARE_WIDTH_COUNT - 2 &&
 		y != 1 && y != MAP_SQUARE_HEIGHT_COUNT - 2) return;
 	// 分割線マスの追加
-	AddDevideLine(tile);
+	AddDivideLine(tile);
 }
 
 
 
-void MapCreate::AddDevideLine(MapTile* tile)
+void MapCreate::AddDivideLine(MapTile* tile)
 {
-	m_devideLine.push_back(tile->GetId());
+	m_divideLine.push_back(tile->GetId());
 	tile->SetTerrain(eTerrain::Wall);
 }
 
-void MapCreate::DevideAreaFixCount()
+void MapCreate::DivideAreaFixCount()
 {
 	for (int i = 0; i < _AREA_DEVIDE_COUNT; i++) {
 		// 幅最大のエリアを取得
@@ -71,59 +71,59 @@ void MapCreate::DevideAreaFixCount()
 		// 取得したエリアが分割可能か判定
 		if (maxSize < (_MIN_ROOM_SIZE + 2) * 2 + 1) break;
 		// 取得したエリアを分割
-		DevideArea(devideArea, isVertical);
+		DivideArea(devideArea, isVertical);
 	}
 }
 
-void MapCreate::DevideArea(AreaData* devideArea, bool isVertical)
+void MapCreate::DivideArea(AreaData* divideArea, bool isVertical)
 {
 	if (isVertical) {
 		// エリアを上下に分割
-		DevideAreaVertical(devideArea);
+		DivideAreaVertical(divideArea);
 	}
 	else {
 		// エリアを左右に分割
-		DevideAreaHorizontal(devideArea);
+		DivideAreaHorizontal(divideArea);
 	}
 }
 
-void MapCreate::DevideAreaVertical(AreaData* devideArea)
+void MapCreate::DivideAreaVertical(AreaData* divideArea)
 {
 	// 分割位置の決定
-	int randomMax = devideArea->sizeY - (_MIN_ROOM_SIZE + 2) * 2;
+	int randomMax = divideArea->sizeY - (_MIN_ROOM_SIZE + 2) * 2;
 	int devidePos = MyRandom::Int(0, randomMax);
-	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->startY;
+	devidePos += _MIN_ROOM_SIZE + 2 + divideArea->startY;
 	// 新しいエリアを生成
-	int newAreaHeight = devideArea->startY + devideArea->sizeY- devidePos - 1;
+	int newAreaHeight = divideArea->startY + divideArea->sizeY- devidePos - 1;
 	int newAreaY = devidePos + 1;
-	AreaData* newArea = new AreaData(devideArea->startX, newAreaY, devideArea->sizeX, newAreaHeight);
+	AreaData* newArea = new AreaData(divideArea->startX, newAreaY, divideArea->sizeX, newAreaHeight);
 	m_areaData.push_back(newArea);
 	// 既存エリアの修正
-	devideArea->sizeY = devidePos - devideArea->startY;
+	divideArea->sizeY = devidePos - divideArea->startY;
 	// 分割線マスの追加
-	for (int x = 0; x < devideArea->sizeX; x++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devideArea->startX + x, devidePos,0));
-		AddDevideLine(square);
+	for (int x = 0; x < divideArea->sizeX; x++) {
+		MapTile* square = MapManager::GetInstance().GetTile(Vector3(divideArea->startX + x, devidePos,0));
+		AddDivideLine(square);
 	}
 }
 
-void MapCreate::DevideAreaHorizontal(AreaData* devideArea)
+void MapCreate::DivideAreaHorizontal(AreaData* divideArea)
 {
 	// 分割位置の決定
-	int randomMax = devideArea->sizeX - (_MIN_ROOM_SIZE + 2) * 2;
+	int randomMax = divideArea->sizeX - (_MIN_ROOM_SIZE + 2) * 2;
 	int devidePos = MyRandom::Int(0, randomMax);
-	devidePos += _MIN_ROOM_SIZE + 2 + devideArea->startX;
+	devidePos += _MIN_ROOM_SIZE + 2 + divideArea->startX;
 	// 新しいエリアを生成
-	int newAreaWidth = devideArea->startX+ devideArea->sizeX - devidePos - 1;
+	int newAreaWidth = divideArea->startX+ divideArea->sizeX - devidePos - 1;
 	int newAreaX = devidePos + 1;
-	AreaData* newArea = new AreaData(newAreaX, devideArea->startY, newAreaWidth, devideArea->sizeY);
+	AreaData* newArea = new AreaData(newAreaX, divideArea->startY, newAreaWidth, divideArea->sizeY);
 	m_areaData.push_back(newArea);
 	// 既存エリアの修正
-	devideArea->sizeX = devidePos - devideArea->startX;
+	divideArea->sizeX = devidePos - divideArea->startX;
 	// 分割線マスの追加
-	for (int y = 0; y < devideArea->sizeY; y++) {
-		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devidePos, devideArea->startY+ y,0));
-		AddDevideLine(square);
+	for (int y = 0; y < divideArea->sizeY; y++) {
+		MapTile* square = MapManager::GetInstance().GetTile(Vector3(devidePos, divideArea->startY+ y,0));
+		AddDivideLine(square);
 	}
 }
 
@@ -145,4 +145,40 @@ MapCreate::AreaData* MapCreate::GetMaxSizeArea()
 		}
 	}
 	return result;
+}
+
+void MapCreate::CreateAllRoom()
+{
+	for (int i = 0; i < m_areaData.size(); i++)
+	{
+		CreateRoom(m_areaData[i]);
+	}
+}
+
+void MapCreate::CreateRoom(AreaData* area)
+{
+	if (!area) return;
+
+	// 部屋のサイズ決定
+	int roomWidth = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeX - 2 + 1);
+	int roomheight = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeY - 2 + 1);
+	// 部屋の位置決定
+	int xRandomRange = area->sizeX - roomWidth;
+	int yRandomRange = area->sizeY - roomheight;
+	int startX = area->startX + Random.Range(1, xRandomRange);
+	int startY = area.startY + Random.Range(1, yRandomRange);
+	// 部屋の生成
+	List<int> roomidList = new List<int>(roomWidth * roomheight);
+	for (int y = 0; y < roomheight; y++)
+	{
+		for (int x = 0; x < roomWidth; x++)
+		{
+			SquareObject square = MapSquareManager.instance.GetSquare(startX + x, startY + y);
+			if (square == null) continue;
+			// マスを部屋地形に変更
+			square.SetTerrain(eTerrain.Room);
+			roomidList.Add(square.squareData.Id);
+		}
+	}
+	MapSquareManager.instance.AddRoom(roomidList);
 }

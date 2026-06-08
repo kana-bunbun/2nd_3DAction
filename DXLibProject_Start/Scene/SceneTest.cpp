@@ -10,6 +10,7 @@
 #include "../Camera/CameraOld.h"
 #include "../Camera/CameraManager.h"
 #include "../Camera/FollowCamera.h"
+#include "../Camera/DebugCamera.h"
 #include "../System/SoundManager.h"
 #include "../System/FontManager.h"
 #include"../World/Character/Bee.h"
@@ -87,6 +88,8 @@ void SceneTest::Init() {
 	m_pPlayer -> Init();
 	m_pCameraMgr->Init();
 	m_pCameraMgr->AddCamera(std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
+	m_pCameraMgr->AddCamera(std::make_unique<DebugCamera>());
+	//m_pCameraMgr->SetActiveCamera(1);
 	m_pDragon->SetPlayer(m_pPlayer.get());
 	// ƒVƒ“ƒOƒ‹ƒgƒ“‚ÌSoundManager‚Å‚Ì“Ç‚Ýž‚Ý
 	SoundManager::GetInstance().LoadBGM();
@@ -130,7 +133,7 @@ void SceneTest::End() {
 SceneBase* SceneTest::Update() {
 	//m_pCameraMgr->SetTarget(m_pPlayer->GetTransform());
 	m_pCameraMgr->Update();
-	m_pPlayer->SetMoveBasicRad(m_pCameraMgr->GetYawRad());
+	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->Update();
 	m_pBee->Update();
 	m_pBarrier->Update();

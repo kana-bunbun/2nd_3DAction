@@ -10,6 +10,7 @@
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"
 #include"../../../Utility/Time.h"
+#include"../../../Camera/Camera.h"
 namespace {
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
@@ -286,7 +287,7 @@ void Player::UpdateTransform()
 	// 角度をラジアン角に変更
 	analogAngle *= MyMath::ToRadian;
 	// カメラの角度で回転するように
-		analogAngle += m_cameraYawRad;
+		analogAngle += CameraRotaY();
 
 	// 移動速度を減衰させる
 	m_speed *= kAttenuation;
@@ -410,17 +411,27 @@ void Player::SetCameraAngle(const Vector3& position)
 	Vector3 rotate;
 	rotate.z = 0;
 	rotate.y = -atan2(vec.z, vec.x) - DX_PI_F * 0.5f;
-	rotate.x = m_cameraYawRad;
+	rotate.x = CameraRotaY();
 	printfDx("rotation.x : %d\n", static_cast<int>(rotate.x * MyMath::ToDegree));
 	printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
 	printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
 	//m_pCamera->SetCameraAngle(rotate);
 }
 
+float Player::CameraRotaY()
+{
+	float yawRad = 0.0f;
+	Vector3 forwaard = m_cameraView.GetForward();
+	yawRad = atan2(forwaard.x,forwaard.z);
+
+	return yawRad;
+}
+
 Vector3 Player::GetCollisionCenterPos()
 {
 	return m_transform.position + kCollisionOffset;
 }
+
 
 void Player::SetBarrier(Barrier* barrier)
 {

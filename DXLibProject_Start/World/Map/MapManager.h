@@ -6,6 +6,7 @@
 //#include"MapCreate.h"
 #include<functional>
 class MapCreate;
+class RoomData;
 class MapManager
 {
 public:
@@ -22,7 +23,8 @@ public:
 	/// </summary>
 	/// <param name="ID"></param>
 	/// <returns></returns>
-	Vector3 IDToPosition(size_t ID);
+	int IDToPosX(size_t ID);
+	int IDToPosY(size_t ID);
 	/// <summary>
 	/// IDを指定したタイル取得
 	/// </summary>
@@ -39,6 +41,22 @@ public:
 	/// </summary>
 	/// <param name="action"></param>
 	void ExecuteAllSquare(std::function<void(MapTile*)>& action);
+	/// <summary>
+	/// 部屋の追加
+	/// </summary>
+	void AddRoom(std::vector<int> idList);
+
+	/// <summary>
+	/// 使用可能な部屋取得
+	/// </summary>
+	/// <returns></returns>
+	RoomData* GetCanUseRoom();
+
+	/// <summary>
+	/// 部屋の破棄
+	/// </summary>
+	void RemoveAllRoom();
+
 	void SetFirstWall();
 private:
 	// シングルトンにするのでprivate
@@ -57,5 +75,9 @@ private:
 	/// 管理中のマスオブジェクト配列
 	/// </summary>
 	std::vector<std::unique_ptr<MapTile>>m_mapData;
+
+	std::vector <std::unique_ptr<RoomData>> m_rooms;
+	std::vector<std::unique_ptr<RoomData>>m_unUseRooms;
+
 };
 

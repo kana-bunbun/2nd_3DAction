@@ -53,18 +53,6 @@ Camera::CameraView FollowCamera::GetView() const
     return m_view;
 }
 
-Vector3 FollowCamera::GetForward() const
-{
-    Vector3 dir;
-    dir = m_view.target - m_view.position;
-    return dir.Normalize();
-}
-
-float FollowCamera::GetYawRad() const
-{
-    return m_transform.rotation.y;
-}
-
 void FollowCamera::UpdateDistance()
 {
     // カメラの最短距離、最長距離を求める

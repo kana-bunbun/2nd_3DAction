@@ -36,26 +36,14 @@ public:
 	void AddCamera(std::unique_ptr<ICamera> camera);
 
 	/// <summary>
-	/// 使用するカメラの設定
-	/// </summary>
-	/// <param name="activeIndex"></param>
-	void SetActiveCamera(size_t activeIndex);
-
-	/// <summary>
 	/// カメラを切り替える
 	/// </summary>
 	void NextCamera();
-
 	/// <summary>
-	/// カメラの前方ベクトルの取得
+	/// 現在のCameraView取得
 	/// </summary>
 	/// <returns></returns>
-	Vector3 GetForward()const;
-	/// <summary>
-	/// カメラのyawラジアンの取得
-	/// </summary>
-	/// <returns></returns>
-	float GetYawRad()const;
+	const Camera::CameraView& GetCameraView()const { return m_currentView; }
 
 private:
 	/// <summary>

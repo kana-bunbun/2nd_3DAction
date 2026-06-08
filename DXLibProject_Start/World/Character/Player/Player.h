@@ -3,6 +3,7 @@
 #include"../CharacterMove.h"
 #include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
+#include"../../../Camera/Camera.h"
 #include<array>
 class CameraOld;
 class Barrier;
@@ -61,8 +62,10 @@ public:
 	/// <param name="result"></param>
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
-
 	void SetCameraAngle(const Vector3& position);
+
+	float CameraRotaY();
+
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>
@@ -70,7 +73,8 @@ public:
 	/// </summary>
 	/// <param name="camera"></param>
 	//void SetCamera(CameraOld* camera) { m_pCamera = camera; }
-	void SetMoveBasicRad(float yawRad) { m_cameraYawRad = yawRad; }
+	void SetCameraView(const Camera::CameraView& cameraview) { m_cameraView = cameraview; }
+
 	void SetBarrier(Barrier* barrier);
 	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
 private:
@@ -89,7 +93,7 @@ private:
 	/// <summary>
 	/// カメラのY軸方向の角度
 	/// </summary>
-	float m_cameraYawRad;
+	Camera::CameraView m_cameraView;
 
 	/// <summary>
 	/// アニメーションのハンドル

@@ -257,15 +257,27 @@ Vector3 Dragon::CheckFollowOffset()
 	OffsetRight = targetTransform.position - OffsetLeft;
 	OffsetLeft += targetTransform.position;
 
-	DrawSphere3D(OffsetLeft.ToVECTOR(), 80, 10, 0xff0000, 0xff0000, FALSE);
-	DrawSphere3D(OffsetRight.ToVECTOR(), 80, 10, 0x0000ff, 0x0000ff, FALSE);
-
+	DrawSphere3D(OffsetLeft.ToVECTOR(), 8, 10, 0xff0000, 0xff0000, FALSE);
+	DrawSphere3D(OffsetRight.ToVECTOR(), 8, 10, 0x0000ff, 0x0000ff, FALSE);
 
 
 
 	float distanceRight = (myPos - OffsetRight).GetSqLength();
 	float distanceLeft = (myPos - OffsetLeft).GetSqLength();
-	return (distanceLeft > distanceRight) ? OffsetRight : OffsetLeft;
+	float distancePlayer = (myPos - m_pPlayer->GetTransform().position).GetSqLength();
+
+	float resultDistance = distanceRight;
+	Vector3  result= OffsetRight;
+	if (resultDistance > distanceLeft) {
+		resultDistance = distanceLeft;
+		result = OffsetLeft;
+	}
+	if (resultDistance > distancePlayer) {
+		resultDistance = distancePlayer;
+		result = targetTransform.position;
+	}
+
+	return result;
 }
 
 void Dragon::FollowPlayer()
@@ -274,7 +286,8 @@ void Dragon::FollowPlayer()
 	Vector3 myPos = m_transform.position;
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
-	m_speed = distance.GetSqLength()*kFollowSqLengthRate;
+	Vector3  distancePlayer = myPos - m_pPlayer->GetTransform().position;
+	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.5f;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
 
