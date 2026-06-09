@@ -20,10 +20,14 @@ void MapCreate::CreateMap()
 	// エリアを分割
 	DivideAreaFixCount();
 	// 部屋の配置
+	CreateAllRoom();
 
 	// 全部屋を連結
 
 	// 階段を置く
+
+	MapManager::GetInstance().SetInvalid();
+
 }
 
 void MapCreate::CreateFirstArea()
@@ -62,7 +66,8 @@ void MapCreate::AddDivideLine(MapTile* tile)
 
 void MapCreate::DivideAreaFixCount()
 {
-	for (int i = 0; i < _AREA_DEVIDE_COUNT; i++) {
+	int divedeCount = MyRandom::Int(AREA_DIVIDE_MIN, AREA_DIVIDE_MAX);
+	for (int i = 0; i < divedeCount; i++) {
 		// 幅最大のエリアを取得
 		AreaData* devideArea = GetMaxSizeArea();
 		bool isVertical = devideArea->sizeX < devideArea->sizeY;
@@ -91,7 +96,7 @@ void MapCreate::DivideAreaVertical(AreaData* divideArea)
 {
 	// 分割位置の決定
 	int randomMax = divideArea->sizeY - (_MIN_ROOM_SIZE + 2) * 2;
-	int devidePos = MyRandom::Int(0, randomMax);
+	int devidePos = MyRandom::Int(0, randomMax-1);
 	devidePos += _MIN_ROOM_SIZE + 2 + divideArea->startY;
 	// 新しいエリアを生成
 	int newAreaHeight = divideArea->startY + divideArea->sizeY- devidePos - 1;
@@ -111,7 +116,7 @@ void MapCreate::DivideAreaHorizontal(AreaData* divideArea)
 {
 	// 分割位置の決定
 	int randomMax = divideArea->sizeX - (_MIN_ROOM_SIZE + 2) * 2;
-	int devidePos = MyRandom::Int(0, randomMax);
+	int devidePos = MyRandom::Int(0, randomMax-1);
 	devidePos += _MIN_ROOM_SIZE + 2 + divideArea->startX;
 	// 新しいエリアを生成
 	int newAreaWidth = divideArea->startX+ divideArea->sizeX - devidePos - 1;
@@ -160,15 +165,15 @@ void MapCreate::CreateRoom(AreaData* area)
 	if (!area) return;
 
 	// 部屋のサイズ決定
-	int roomWidth = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeX - 2 + 1);
-	int roomheight = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeY - 2 + 1);
+	int roomWidth = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeX - 2);
+	int roomheight = MyRandom::Int(_MIN_ROOM_SIZE, area->sizeY - 2);
 	// 部屋の位置決定
 	int xRandomRange = area->sizeX - roomWidth;
 	int yRandomRange = area->sizeY - roomheight;
-	int startX = area->startX + MyRandom::Int(1, xRandomRange);
-	int startY = area->startY + MyRandom::Int(1, yRandomRange);
+	int startX = area->startX + MyRandom::Int(1, xRandomRange-1);
+	int startY = area->startY + MyRandom::Int(1, yRandomRange-1);
 	// 部屋の生成
-	std::vector<int>;
+	std::vector<int>rooms;
 	for (int y = 0; y < roomheight; y++)
 	{
 		for (int x = 0; x < roomWidth; x++)
@@ -177,8 +182,8 @@ void MapCreate::CreateRoom(AreaData* area)
 			if (!square) continue;
 			// マスを部屋地形に変更
 			square->SetTerrain(eTerrain::Room);
-			m_rooms.push_back(square.squareData.Id);
+			rooms.push_back(square->GetSquareData()->GetId());
 		}
 	}
-	MapManager::GetInstance().AddRoom(roomidList);
+	MapManager::GetInstance().AddRoom(rooms);
 }

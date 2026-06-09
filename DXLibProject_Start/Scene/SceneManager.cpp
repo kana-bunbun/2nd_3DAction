@@ -5,60 +5,77 @@
 
 SceneManager::SceneManager() {
 
-	m_pScene = nullptr;
+	m_pCurrentScene = nullptr;
 }
 
 SceneManager::~SceneManager() {}
 
 void SceneManager::Init() {
 
-	m_pScene = new SceneTest;
-	m_pScene->Init();
-	Input::Init();
+	m_pCurrentScene = std::make_unique<SceneTest>();
+	m_pCurrentScene->Init();
 
 }
 
 void SceneManager::End() {
 
 	// 確認処理
-	assert(m_pScene);
-	if (!m_pScene) return;
-
-	m_pScene->End();
-	delete m_pScene;
+	assert(m_pCurrentScene);
+	if (m_pCurrentScene) {
+	m_pCurrentScene->End();
+	m_pCurrentScene.reset();
+	}
+	if (m_pNextScene) {
+		m_pNextScene->End();
+		m_pNextScene.reset();
+	}
 }
 
 void SceneManager::Update() {
 
-	// 入力更新
-	Input::Update();
 
 	// 確認処理
-	assert(m_pScene);
-	if (!m_pScene) return;
+	assert(m_pCurrentScene);
+	if (!m_pCurrentScene) return;
 
-	// シーンの切り替えもしくは更新
-	SceneBase* pScene = m_pScene->Update();
+	// フェード処理
+	m_pCurrentScene->SceneBase::UpdateFade();
 
-	if ( pScene != m_pScene ) {
-
-		m_pScene->End();
-		delete m_pScene;
-
-		// ポインタを初期化
-		m_pScene = pScene;
-		m_pScene->Init();
+	// シーンの更新処理
+	if (!m_pNextScene) {
+		m_pNextScene = m_pCurrentScene->Update();
+		if (m_pNextScene) {
+			m_pCurrentScene->SceneBase::StartFadeOut();
+		}
 	}
+
+	// フェードアウトが完了していたら後処理
+	if (m_pNextScene && !m_pCurrentScene->IsFading()) {
+		m_pCurrentScene->End();
+		m_pCurrentScene = std::move(m_pNextScene);
+		m_pCurrentScene->Init();
+		m_pCurrentScene->SceneBase::StartFadeIn();
+	}
+
+	////if ( pScene != m_pCurrentScene ) {
+
+	//	m_pCurrentScene->End();
+	//	//delete m_pCurrentScene;
+
+	//	// ポインタを初期化
+	//	m_pCurrentScene = pScene;
+	//	m_pCurrentScene->Init();
+	//}
 
 }
 
 void SceneManager::Draw() {
 
 	// 確認処理
-	assert(m_pScene);
-	if (!m_pScene) return;
+	assert(m_pCurrentScene);
+	if (!m_pCurrentScene) return;
 
-	m_pScene->Draw();
-
+	m_pCurrentScene->Draw();
+	m_pCurrentScene->SceneBase::DrawFade();
 }
 

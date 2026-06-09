@@ -42,6 +42,8 @@ public:
 
 	/// <summary>
 	/// トランスフォームを取得
+	/// 値変更をしてほしくないため最初にconst
+	/// m_transformを変更してほしくないため最後にconst
 	/// </summary>
 	/// <returns></returns>
 	const Transform& GetTransform()const { return m_transform; }
@@ -61,6 +63,10 @@ public:
 	/// </summary>
 	/// <param name="result"></param>
 	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
+
+	bool IsActive()const { return m_isActive; }
+	void SetActive(const bool active) { m_isActive = active; }
+
 protected:
 	/// <summary>
 	/// 座標・回転・拡縮
@@ -85,5 +91,7 @@ protected:
 	/// 衝突時のオブジェクトの属性
 	/// </summary>
 	CollisionTag m_collisionTag = CollisionTag::None;
+
+	bool m_isActive=true;
 };
 

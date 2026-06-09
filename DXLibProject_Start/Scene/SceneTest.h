@@ -22,6 +22,7 @@ class CameraManager;
 class Player;
 class Dragon;
 class CharaGaugeManager;
+class EnemyManager;
 class Bee;
 class Barrier;
 class UIManager;
@@ -69,7 +70,7 @@ public:
 	/// SceneTest画面の処理を行う
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
-	SceneBase* Update();
+	std::unique_ptr<SceneBase> Update();
 
 	/// <summary>
 	/// SceneTest画面の描画を行う
@@ -93,6 +94,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;
 	std::shared_ptr<Dragon> m_pDragon;
 	std::shared_ptr<CharaGaugeManager> m_pGaugeManager;
+	std::shared_ptr<EnemyManager> m_pEnemyManager;
 
 	/// <summary>
 	/// プレイヤーの数

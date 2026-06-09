@@ -77,6 +77,9 @@ void Bee::Init()
 
 void Bee::Update()
 {
+	// アクティブ状態で時実行しない
+	if (!m_isActive)return;
+
 	// 衝突判定の更新処理
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	// アニメーションの更新処理

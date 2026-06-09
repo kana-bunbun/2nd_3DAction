@@ -33,8 +33,12 @@ public:
 	/// 管理するカメラの追加
 	/// </summary>
 	/// <param name="camera"></param>
-	void AddCamera(std::unique_ptr<ICamera> camera);
-
+	void AddCamera(Camera::CameraType type, std::unique_ptr<ICamera> camera);
+	/// <summary>
+	/// 管理するカメラの設定
+	/// </summary>
+	/// <param name="type"></param>
+	void SetAcctiveCamera(Camera::CameraType type);
 	/// <summary>
 	/// カメラを切り替える
 	/// </summary>
@@ -44,6 +48,13 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Camera::CameraView& GetCameraView()const { return m_currentView; }
+
+	/// <summary>
+	/// 現在アクティブなカメラのインデックスを取得
+	/// </summary>
+	/// <returns></returns>
+	//size_t GetActiveCameraIndex()const { return m_activeIndex; }
+	Camera::CameraType GetActiveCameraType()const { return m_cameraType; }
 
 private:
 	/// <summary>
@@ -64,8 +75,8 @@ private:
 	/// <summary>
 	/// 現在使用しているカメラのインデックス
 	/// </summary>
-	size_t m_activeIndex;
+	//size_t m_activeIndex;
 
-
+	Camera::CameraType m_cameraType;
 };
 

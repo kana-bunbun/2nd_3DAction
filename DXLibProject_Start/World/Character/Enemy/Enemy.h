@@ -1,22 +1,21 @@
 #pragma once
 #include"../../GameObject.h"
 #include"../AnimatioController.h"
-
+#include"../../Component/Transform.h"
 class Enemy :public GameObject
 {
 public:
-	/// <summary>
-	/// プレイヤーのコンストラクタ
-	/// </summary>
 	Enemy();
-	/// <summary>
-	/// プレイヤーのデストラクタ
-	/// </summary>
+	Enemy(const Transform& transform);
 	~Enemy();
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
 	void Init()override;
+	/// <summary>
+	/// モデル読み込み
+	/// </summary>
+	void LoadModel();
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -28,10 +27,7 @@ public:
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 	void SetModelHandle(int modelHandle);
-
-
-
-
+	void SetTarget(GameObject* target);
 
 public:		// ゲッター・セッター関数
 private:
@@ -42,21 +38,25 @@ private:
 	/// <summary>
 	/// アニメーションデータの配列
 	/// </summary>
-	Status::AnimData m_animData[static_cast<int>(Status::Player::Max)] = { -1 };
+	Status::AnimData m_animData[static_cast<int>(Status::Queen::Max)] = { -1 };
 	/// <summary>
 	/// 現在のステータス
 	/// </summary>
-	Status::Player m_status;
+	Status::Queen m_status;
 	/// <summary>
 	/// アニメーションのハンドル
 	/// </summary>
-	int m_animHandle[static_cast<int>(Status::Player::Max)];
+	int m_animHandle[static_cast<int>(Status::Queen::Max)];
 
 	/// <summary>
 	/// 角度
 	/// </summary>
 	float m_desireRad;
 
+	/// <summary>
+	/// ターゲット
+	/// </summary>
+	GameObject* m_target;
 };
 
 

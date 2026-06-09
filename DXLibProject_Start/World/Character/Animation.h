@@ -24,7 +24,17 @@ namespace Status {
 		Dead,
 		Max
 	};
-
+	enum class Queen {
+		Neutral = 0,
+		Roar,
+		Walk,
+		run,
+		Attack,
+		JumpAttack,
+		Damage,
+		Dead,
+		Max
+	};
 	/// <summary>
 	/// 蜂のアニメーションID
 	/// </summary>

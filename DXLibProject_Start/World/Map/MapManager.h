@@ -30,7 +30,7 @@ public:
 	/// </summary>
 	/// <param name="ID"></param>
 	/// <returns></returns>
-	MapTile* GetTile(size_t ID);
+	MapTile* GetTile(int ID);
 	/// <summary>
 	/// 座標を指定しタイル取得
 	/// </summary>
@@ -58,6 +58,7 @@ public:
 	void RemoveAllRoom();
 
 	void SetFirstWall();
+	void SetInvalid();
 private:
 	// シングルトンにするのでprivate
 	MapManager() = default;

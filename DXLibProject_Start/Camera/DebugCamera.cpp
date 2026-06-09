@@ -26,6 +26,9 @@ DebugCamera::DebugCamera():
     m_rotSpeed(kRotSpeed)
 {
 
+    m_view.target = Vector3::ZAxis;
+    m_view.fov = kFieldOfView;
+
 }
 
 DebugCamera::~DebugCamera()
@@ -96,7 +99,15 @@ void DebugCamera::Update()
 
     m_view.GetForward();
 
-    m_transform.Translate(move);
+    Vector3 forward;
+    forward.x = cosf(pitchRad) * sinf(yawRad);
+    forward.y = cosf(pitchRad);
+    forward.z = cosf(pitchRad) * cosf(yawRad);
+    
+    //float length = forward.GetLength();         // 長さデバッグ
+
+    forward = forward.Normalize();
+    //m_transform.Translate(move);
 
     printfDx("transform\n");
     printfDx("position\n");

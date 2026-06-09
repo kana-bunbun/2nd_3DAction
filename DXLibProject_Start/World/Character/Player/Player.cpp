@@ -179,6 +179,9 @@ void Player::LoadModel()
 
 void Player::Update()
 {
+	// アクティブ状態で時実行しない
+	if (!m_isActive)return;
+
 	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
 	// 当たり判定の中心座標を設定

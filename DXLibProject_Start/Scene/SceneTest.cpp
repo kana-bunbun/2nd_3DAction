@@ -19,6 +19,7 @@
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
 #include"../World/Character/CharaGaugeManager.h"
+#include"../World/Character/Enemy/EnemyManager.h"
 #include"../World/Map/MapDraw.h"
 #include<cassert>
 #include <math.h>
@@ -75,8 +76,9 @@ SceneTest::SceneTest() :
 	m_pDragon = std::make_unique<Dragon>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
-
+	m_pEnemyManager = std::make_unique<EnemyManager>();
 	m_mapdraw = std::make_unique<MapDraw>();
+
 }
 
 SceneTest::~SceneTest() {}
@@ -87,8 +89,8 @@ void SceneTest::Init() {
 	//m_pSound->LoadBGM();
 	m_pPlayer -> Init();
 	m_pCameraMgr->Init();
-	m_pCameraMgr->AddCamera(std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
-	m_pCameraMgr->AddCamera(std::make_unique<DebugCamera>());
+	m_pCameraMgr->AddCamera(Camera::CameraType::Follow,std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
+	m_pCameraMgr->AddCamera(Camera::CameraType::Debug, std::make_unique<DebugCamera>());
 	//m_pCameraMgr->SetActiveCamera(1);
 	m_pDragon->SetPlayer(m_pPlayer.get());
 	// ƒVƒ“ƒOƒ‹ƒgƒ“‚ÌSoundManager‚Å‚Ì“Ç‚Ýž‚Ý
@@ -105,6 +107,8 @@ void SceneTest::Init() {
 	m_pGaugeManager->Init();
 	m_pGaugeManager->SetPlayer(m_pPlayer);
 	m_pGaugeManager->SetDragon(m_pDragon);
+	m_pEnemyManager->Init();
+	m_pEnemyManager->SetTarget(m_pPlayer.get());
 }
 
 void SceneTest::End() {
@@ -128,9 +132,10 @@ void SceneTest::End() {
 	m_pBee->End();
 	m_pUiManager->End();
 	m_pGaugeManager->End();
+	m_pEnemyManager->End();
 }
 
-SceneBase* SceneTest::Update() {
+std::unique_ptr<SceneBase> SceneTest::Update() {
 	//m_pCameraMgr->SetTarget(m_pPlayer->GetTransform());
 	m_pCameraMgr->Update();
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
@@ -140,6 +145,7 @@ SceneBase* SceneTest::Update() {
 	m_pUiManager->Update();
 	m_pDragon->Update();
 	m_pGaugeManager->Update();
+	m_pEnemyManager->Update();
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");
@@ -152,6 +158,14 @@ SceneBase* SceneTest::Update() {
 	}
 	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
 		m_pPlayer->SetCameraAngle(m_pBee->GetTransform().position);
+	if (Input::IsPressed(Input::Button::RThumb, Pad::Player::P1)) {
+		m_pCameraMgr->NextCamera();
+		bool isDebug = m_pCameraMgr->GetActiveCameraType() == Camera::CameraType::Follow;
+		m_pPlayer->SetActive(isDebug);
+		m_pDragon->SetActive(isDebug);
+		m_pBarrier->SetActive(isDebug);
+		m_pBee->SetActive(isDebug);
+	}
 	return this;
 }
 
@@ -166,6 +180,7 @@ void SceneTest::Draw() {
 	
 		m_pCameraMgr->Apply();
 	
+		m_pEnemyManager->Draw();
 		m_pBee->Draw();
 		m_pDragon->Draw();
 		m_pPlayer->Draw();

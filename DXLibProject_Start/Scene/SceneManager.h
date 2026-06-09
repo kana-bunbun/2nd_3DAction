@@ -1,5 +1,6 @@
 #pragma once
 
+#include<memory>
 // 前方宣言
 class SceneBase;
 
@@ -45,5 +46,7 @@ public:
 private:
 
 	// シーンのポインタ
-	SceneBase* m_pScene;
+	std::unique_ptr<SceneBase> m_pCurrentScene;
+	// 遷移先のシーンのポインタ
+	std::unique_ptr<SceneBase>m_pNextScene;
 };

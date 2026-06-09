@@ -42,6 +42,12 @@ namespace Camera{
 
 		}
 	};
+
+	enum class CameraType {
+		Follow,
+		Debug,
+		Max,
+	};
 }
 class ICamera
 {
@@ -56,6 +62,5 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual Camera::CameraView GetView()const = 0;
-
 };
 

@@ -2,19 +2,21 @@
 #include "../Utility/Color.h"
 #include "../Utility/Game.h"
 #include "../Utility/Vector3.h"
+#include "../Utility/MyMath.h"
 
 namespace {
 
 	// フェード速度
 	constexpr int kFadeSpeed = 5;
+	constexpr int kBrightMax = 255;
 }
 
 // コンストラクタ
 SceneBase::SceneBase() :
 	m_fadeColor(Color::kBlack),
-	m_fadeBright(255),
+	m_fadeBright(kBrightMax),
 	m_fadeSpeed(-kFadeSpeed),
-	m_isFadeOut(false)
+	m_isFading(false)
 {
 }
 
@@ -44,6 +46,9 @@ void SceneBase::UpdateFade() {
 		}
 	}
 }
+
+void SceneBase::StartFadeIn()
+{}
 
 // フェードの描画
 void SceneBase::DrawFade() const {

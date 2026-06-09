@@ -7,10 +7,11 @@ namespace {
 	constexpr float kFieldOfView = 60.0f;	// カメラの視野角
 }
 
-CameraManager::CameraManager():
+CameraManager::CameraManager() :
 	m_activeCamera(nullptr),
 	m_currentView{},
-	m_activeIndex(0)
+	//m_activeIndex(0)
+	m_cameraType(Camera::CameraType::Follow)
 {
 
 }
@@ -28,13 +29,20 @@ void CameraManager::Init()
 void CameraManager::Update()
 {
 	assert(!m_cameras.empty());
-	if (m_cameras.empty())return;
-	m_cameras[m_activeIndex]->Update();
-	m_currentView=m_cameras[m_activeIndex]->GetView();
+	//if (m_cameras.empty())return;
+	//m_cameras[m_activeIndex]->Update();
+	//m_currentView=m_cameras[m_activeIndex]->GetView();
+	size_t index = static_cast<size_t>(m_cameraType);
+	if (!m_cameras[index])return;
+	m_cameras[index]->Update();
+	m_currentView = m_cameras[index]->GetView();
 }
 
 void CameraManager::Apply()
 {
+	size_t index = static_cast<size_t>(m_cameraType);
+	if (!m_cameras[index])return;
+
 	SetCameraPositionAndTarget_UpVecY(
 		m_currentView.position.ToVECTOR(),
 		m_currentView.target.ToVECTOR()
@@ -45,13 +53,36 @@ void CameraManager::Apply()
 }
 
 
-void CameraManager::AddCamera(std::unique_ptr<ICamera> camera)
+void CameraManager::AddCamera(Camera::CameraType type, std::unique_ptr<ICamera> camera)
 {
-	m_cameras.push_back(std::move(camera));
+	if (static_cast<int>(type) >= m_cameras.size()) {
+	while (static_cast<int>(type) >= m_cameras.size())
+	{
+		m_cameras.push_back(std::move(camera));
+		
+	}
+	return;
+	}
+
+	m_cameras[static_cast<size_t>(type)] = std::move(camera);
+	//m_cameras.push_back(std::move(camera));
 }
 
 
+void CameraManager::SetAcctiveCamera(Camera::CameraType type)
+{
+	m_cameraType = type;
+}
+
 void CameraManager::NextCamera()
 {
-	m_activeIndex = (m_cameras.size() + m_activeIndex++)% m_cameras.size();
+
+	//m_activeIndex = (m_cameras.size() + m_activeIndex++)% m_cameras.size();
+	//if (m_activeIndex<0 || m_activeIndex > m_cameras.size() - 1)m_activeIndex = 0;
+
+	size_t index = static_cast<size_t>(m_cameraType);
+	index++;
+	index = MyMath::Clamp(index, static_cast<size_t>(0), static_cast<size_t>(Camera::CameraType::Max));
+	if (!m_cameras[index])return;
+
 }

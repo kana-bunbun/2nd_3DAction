@@ -28,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 乱数の初期化
 	MyRandom::Init();
+	Input::Init();
 
 	Time::GetInstance();
 
@@ -48,6 +49,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ClearDrawScreen();		// 画面の初期化
 		clsDx();				// デバッグ文字の初期化
+
+		// 入力更新
+		Input::Update();
 
 		pSceneMgr->Update();
 		pSceneMgr->Draw();

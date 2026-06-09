@@ -152,6 +152,10 @@ void Dragon::Init()
 
 void Dragon::Update()
 {
+	// アクティブ状態でない時実行しない
+	if (!m_isActive)return;
+
+
 	// アニメーション速度を初期化
 	m_animation.SetAnimSpeed();
 	// ステータスによって分岐
@@ -287,7 +291,7 @@ void Dragon::FollowPlayer()
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
 	Vector3  distancePlayer = myPos - m_pPlayer->GetTransform().position;
-	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.5f;
+	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.2f;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
 
@@ -301,6 +305,8 @@ void Dragon::FollowPlayer()
 	
 	}
 	else {
+		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed, 0.0f, 1.0f);
+		m_move.SetLerpSpeed(lerpSpeed);
 	}
 
 		printfDx("m_speed: %f\n", m_speed);

@@ -1,5 +1,5 @@
 #pragma once
-
+#include<memory>
 /// <summary>
 /// 各画面の基本クラス
 /// 基本的にはこのクラスを継承して各画面のクラスを作成する
@@ -37,7 +37,7 @@ public:
 	/// 更新処理
 	/// </summary>
 	/// <returns>自身のポインタを返す</returns>
-	virtual SceneBase* Update() { return this; }
+	virtual std::unique_ptr<SceneBase> Update() = 0;
 
 	/// <summary>
 	/// 描画処理
@@ -53,6 +53,7 @@ public:
 	/// フェードの更新
 	/// </summary>
 	void UpdateFade();
+	void StartFadeIn();
 
 	/// <summary>
 	/// フェードの描画
@@ -93,6 +94,6 @@ protected:
 	// フェードのスピード
 	int m_fadeSpeed;
 	// フェードアウトを行っているかどうか
-	bool m_isFadeOut;
+	bool m_isFading;
 
 };

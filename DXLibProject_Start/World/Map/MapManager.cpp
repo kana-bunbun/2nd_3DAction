@@ -52,9 +52,10 @@ int MapManager::IDToPosY(size_t ID)
     return positionY;
 }
 
-MapTile* MapManager::GetTile(size_t ID)
+MapTile* MapManager::GetTile(int ID)
 {
-    if (ID >= m_mapData.size())return nullptr;
+    if(ID<0||
+        ID >= m_mapData.size())return nullptr;
 
     return m_mapData[ID].get();
 }
@@ -124,4 +125,32 @@ void MapManager::SetFirstWall()
         // 分割線マスの追加
         MapCreate::GetInstance().AddDivideLine(m_mapData[i].get());
     }
+}
+
+void MapManager::SetInvalid()
+{
+    int id;
+    std::vector<MapTile*>openTile;
+    for (int i = 0; i < m_mapData.size(); i++) {
+        id = m_mapData[i]->GetId();
+        MapTile* checkTile = GetTile(id + 1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id - 1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id + MAP_SQUARE_WIDTH_COUNT);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id - MAP_SQUARE_WIDTH_COUNT);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id + MAP_SQUARE_WIDTH_COUNT-1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id + MAP_SQUARE_WIDTH_COUNT+1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id - MAP_SQUARE_WIDTH_COUNT-1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        checkTile = GetTile(id - MAP_SQUARE_WIDTH_COUNT+1);
+        if (checkTile && checkTile->GetSquareData()->GetTerrain() != eTerrain::Wall)continue;
+        openTile.push_back(GetTile(id));
+    }
+    for(auto& checkTile:openTile)
+        checkTile->SetTerrain(eTerrain::Invalid);
 }
