@@ -109,6 +109,14 @@ void SceneTest::Init() {
 	m_pGaugeManager->SetDragon(m_pDragon);
 	m_pEnemyManager->Init();
 	m_pEnemyManager->SetTarget(m_pPlayer.get());
+
+
+
+
+
+	// フェード処理開始
+	SceneBase::StartFadeIn();
+
 }
 
 void SceneTest::End() {
@@ -166,7 +174,17 @@ std::unique_ptr<SceneBase> SceneTest::Update() {
 		m_pBarrier->SetActive(isDebug);
 		m_pBee->SetActive(isDebug);
 	}
-	return this;
+
+
+
+	// シーン遷移処理
+	//if (シーン切り替えの条件) {
+	// return std::make_unique<遷移させたいシーン>();
+	//}
+
+
+
+	return nullptr;
 }
 
 void SceneTest::Draw() {

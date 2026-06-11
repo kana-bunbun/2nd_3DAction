@@ -3,18 +3,19 @@
 #include "../Utility/Game.h"
 #include "../Utility/Vector3.h"
 #include "../Utility/MyMath.h"
+#include "../Utility/Time.h"
 
 namespace {
 
 	// フェード速度
 	constexpr int kFadeSpeed = 5;
-	constexpr int kBrightMax = 255;
+	constexpr int kFadeMax = 255;
 }
 
 // コンストラクタ
 SceneBase::SceneBase() :
 	m_fadeColor(Color::kBlack),
-	m_fadeBright(kBrightMax),
+	m_fadeBright(kFadeMax),
 	m_fadeSpeed(-kFadeSpeed),
 	m_isFading(false)
 {
@@ -23,32 +24,25 @@ SceneBase::SceneBase() :
 // フェードの更新
 void SceneBase::UpdateFade() {
 
-	// フェードインアウト
-	m_fadeBright += m_fadeSpeed;
+	if (m_fadeSpeed == 0)return;
+	m_fadeBright += kFadeMax * m_fadeSpeed *0.7f;
+	// 値を地域内に収める
+	m_fadeBright = MyMath::Clamp(m_fadeBright, 0, kFadeMax);
 
-	if (m_fadeBright >= 255) {
-
-		m_fadeBright = 255;
-
-		if ( m_fadeSpeed > 0 ) {
-
-			m_fadeSpeed = 0;
-		}
+	if (m_fadeBright==0 && m_fadeSpeed < 0) {
+		m_fadeSpeed = 0;
+		m_isFading = false;
+	}
+	else if (m_fadeBright >= kFadeMax && m_fadeSpeed > 0) {
+		m_fadeSpeed = 0;
+		m_isFading = false;
+	}
+	else {
+		m_isFading = true;
 	}
 
-	if ( m_fadeBright <= 0 ) {
-
-		m_fadeBright = 0;
-
-		if ( m_fadeSpeed < 0 ) {
-
-			m_fadeSpeed = 0;
-		}
-	}
 }
 
-void SceneBase::StartFadeIn()
-{}
 
 // フェードの描画
 void SceneBase::DrawFade() const {
@@ -59,28 +53,24 @@ void SceneBase::DrawFade() const {
 }
 
 // フェードイン中かどうかを判定
-bool SceneBase::IsFadingIn() const {
-
-	if (m_fadeSpeed < 0) return true;
-	return false;
-}
+bool SceneBase::IsFadingIn() const { return (m_isFading && m_fadeSpeed < 0); }
 
 // フェードアウト中かどうかを判定
-bool SceneBase::IsFadingOut() const {
-
-	if (m_fadeSpeed > 0) return true;
-	return false;
-}
+bool SceneBase::IsFadingOut() const { return (m_isFading && m_fadeSpeed > 0); }
 
 // フェード中かどうかを判定
-bool SceneBase::IsFading() const {
+bool SceneBase::IsFading() const { return m_isFading; }
 
-	return IsFadingIn() || IsFadingOut();
-}
-
-/// フェードアウト開始
+// フェードアウト開始
 void SceneBase::StartFadeOut() {
-
 	m_fadeSpeed = kFadeSpeed;
+	m_isFading = true;
 }
 
+// フェードイン開始
+void SceneBase::StartFadeIn()
+{
+	
+	m_fadeSpeed = -kFadeSpeed;
+	m_isFading = true;
+}

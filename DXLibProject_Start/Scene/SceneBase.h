@@ -53,7 +53,6 @@ public:
 	/// フェードの更新
 	/// </summary>
 	void UpdateFade();
-	void StartFadeIn();
 
 	/// <summary>
 	/// フェードの描画
@@ -82,6 +81,7 @@ public:
 	/// フェードアウト開始
 	/// </summary>
 	void StartFadeOut();
+	void StartFadeIn();
 
 
 protected:

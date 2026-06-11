@@ -59,23 +59,23 @@ public:
 	/// <summary>
 	/// 画面の初期設定を行う
 	/// </summary>
-	void Init();
+	void Init()override;
 
 	/// <summary>
 	/// 画面の後処理を行う
 	/// </summary>
-	void End();
+	void End()override;
 
 	/// <summary>
 	/// SceneTest画面の処理を行う
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
-	std::unique_ptr<SceneBase> Update();
+	std::unique_ptr<SceneBase> Update()override;
 
 	/// <summary>
 	/// SceneTest画面の描画を行う
 	/// </summary>
-	void Draw();
+	void Draw()override;
 
 private:
 
