@@ -10,7 +10,8 @@
 GameObject::GameObject():
 m_transform(),
 m_modelHandle(-1),
-m_collision()
+m_collision(),
+m_isActive(true)
 {
 }
 
