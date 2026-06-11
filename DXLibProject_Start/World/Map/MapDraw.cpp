@@ -13,8 +13,8 @@ namespace {
 	constexpr Vector3 blockSize = { 5.0f,5.0f,0.0f };
 	constexpr Vector3 blockInterval = { blockSize.x /*+ 2.0f*/,blockSize.y /*+ 2.0f*/,0.0f };
 	constexpr Vector3 drawBlockStart ={
-		-(blockInterval.x* (static_cast<float>(MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MAP_SQUARE_WIDTH_COUNT % 2)),
-		blockInterval.y* (static_cast<float>(MAP_SQUARE_HEIGHT_COUNT) * 0.5f) - (blockInterval.y * 0.5f) * (MAP_SQUARE_WIDTH_COUNT % 2),
+		-(blockInterval.x* (static_cast<float>(MapConst::MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2)),
+		blockInterval.y* (static_cast<float>(MapConst::MAP_SQUARE_HEIGHT_COUNT) * 0.5f) - (blockInterval.y * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2),
 		0.0f};
 	constexpr float sphereSize = 5;
 }
@@ -88,24 +88,24 @@ void MapDraw::DrawMap()
 {
 	Vector3 pos;
 
-	for (int y = 0; y < MAP_SQUARE_HEIGHT_COUNT; y++) {
-		for (int x = 0; x < MAP_SQUARE_WIDTH_COUNT; x++) {
+	for (int y = 0; y < MapConst::MAP_SQUARE_HEIGHT_COUNT; y++) {
+		for (int x = 0; x < MapConst::MAP_SQUARE_WIDTH_COUNT; x++) {
 			pos.x = x * sphereSize * 2;
 			pos.y = -sphereSize;
 			pos.z = y * sphereSize * 2;
 			int color = 0xffffff;
-			eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
+			MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
 			switch (terrain) {
-			case::eTerrain::Invalid:
+			case::MapConst::eTerrain::Invalid:
 				continue;
 				break;
-			case::eTerrain::Passage:
+			case::MapConst::eTerrain::Passage:
 				color = Color::kCyan;
 				break;
-			case::eTerrain::Room:
+			case::MapConst::eTerrain::Room:
 				color = Color::kBlue;
 				break;
-			case::eTerrain::Wall:
+			case::MapConst::eTerrain::Wall:
 				color = Color::kRed;
 				break;
 			default:
@@ -130,22 +130,22 @@ void MapDraw::DrawMiniMap()
 	//0x000000, TRUE);
 	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	for (int y = 0; y < MAP_SQUARE_HEIGHT_COUNT; y++) {
-		for (int x = 0; x < MAP_SQUARE_WIDTH_COUNT; x++) {
+	for (int y = 0; y < MapConst::MAP_SQUARE_HEIGHT_COUNT; y++) {
+		for (int x = 0; x < MapConst::MAP_SQUARE_WIDTH_COUNT; x++) {
 			int color = 0xffffff;
-			eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
+			MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
 			switch (terrain) {
-			case::eTerrain::Invalid:
+			case::MapConst::eTerrain::Invalid:
 				//continue;
 				color = 0x000000;
 				break;
-			case::eTerrain::Passage:
+			case::MapConst::eTerrain::Passage:
 				color = Color::kCyan;
 				break;
-			case::eTerrain::Room:
+			case::MapConst::eTerrain::Room:
 				color = Color::kBlue;
 				break;
-			case::eTerrain::Wall:
+			case::MapConst::eTerrain::Wall:
 				color = Color::kRed;
 				break;
 			default:

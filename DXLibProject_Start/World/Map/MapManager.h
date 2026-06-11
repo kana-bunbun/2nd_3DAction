@@ -3,6 +3,7 @@
 #include<memory>
 #include"../../Utility/Vector3.h"
 #include "MapTile.h";
+#include "MapConst.h";
 //#include"MapCreate.h"
 #include<functional>
 class MapCreate;
@@ -35,6 +36,15 @@ public:
 	/// 座標を指定しタイル取得
 	/// </summary>
 	MapTile* GetTile(int posX, int posY);
+	/// <summary>
+	/// 指定座標のマスから見た指定方向マスのポインタ取得
+	/// </summary>
+	MapTile* GetToDirSquare(int x, int y, MapConst::eDirectionFour direction);
+		/// <summary>
+	/// 指定した座標から指定した方向にあるマスの座標取得
+	/// </summary>
+	void ToDirPosition(int& x, int& y, MapConst::eDirectionFour direction);
+
 	/// <summary>
 	/// すべてのマスに行う処理を適応する
 	/// 関数ポインタを使う
