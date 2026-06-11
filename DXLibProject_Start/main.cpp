@@ -5,6 +5,9 @@
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
 #include"Utility/Time.h"
+#include<memory>
+
+
 //========================================================
 // WinMain関数　ここからプログラムが始まる
 //========================================================
@@ -20,8 +23,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// ゲーム設定クラスのポインタを生成
-	GameSetting* pSetting;
-	pSetting = new GameSetting();
+	std::unique_ptr<GameSetting> pSetting;
+	pSetting = std::make_unique<GameSetting>();
 
 	// ゲームの3Dの初期設定
 	pSetting->InitDxLib3D();
@@ -33,8 +36,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Time::GetInstance();
 
 	// シーン制御のポインタを生成
-	SceneManager* pSceneMgr;
-	pSceneMgr = new SceneManager();
+	std::unique_ptr<SceneManager> pSceneMgr;
+	pSceneMgr = std::unique_ptr<SceneManager>();
 
 	// シーンの初期化
 	pSceneMgr->Init();
