@@ -8,7 +8,7 @@ RouteSearcher& RouteSearcher::GetInstance()
 	return instance;
 }
 
-std::vector<ManhattanMoveData> RouteSearcher::RouteSearchManhattan(int startID, int goalID, std::function<bool(MapTile)> tileCheck)
+std::vector<ManhattanMoveData> RouteSearcher::RouteSearchManhattan(int startID, int goalID, std::function<bool(SquareData*)> tileCheck)
 {
 	// ゴールノードにたどり着くまでノードをオープン
 	OpenNodeToGoalManhattan(startID, goalID, tileCheck);
@@ -17,7 +17,7 @@ std::vector<ManhattanMoveData> RouteSearcher::RouteSearchManhattan(int startID, 
 	return CreateRouteManhattan();
 }
 
-void RouteSearcher::OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(MapTile)> tileCheck)
+void RouteSearcher::OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(SquareData*)> tileCheck)
 {
 	m_manhattanTable->Crear();
 	// スタートノードを生成
@@ -40,7 +40,11 @@ void RouteSearcher::OpenNodeToGoalManhattan(int startID, int goalID, std::functi
 		// 周りをオープン
 		OpenNodeAroundManhattan(minScoreNode, goalID, tileCheck);
 		// クローズする
-		m_manhattanTable->openList.Remove(minScoreNode);	// オープン済みリストから取り除く
+		// オープン済みリストから取り除く
+		m_manhattanTable->openList.erase(
+			std::remove(m_manhattanTable->openList.begin(), m_manhattanTable->openList.end(), minScoreNode),
+			m_manhattanTable->openList.end());
+
 		m_manhattanTable->closeList.push_back(minScoreNode);
 	}
 
@@ -88,7 +92,7 @@ DistanceNodeManhattan* RouteSearcher::GetMinScoreNode(int goalX, int goalY)
 	return nullptr;
 }
 
-void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(MapTile)> tileCheck)
+void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(SquareData*)> tileCheck)
 {
 	if (!baseNode)return;
 	// オープンするノードの実コストを決定
@@ -107,7 +111,16 @@ void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int
 		if (std::find(m_manhattanTable->closeList.begin(), m_manhattanTable->closeList.end(), openTile->GetSquareData()->GetID()) != m_manhattanTable->closeList.end());
 		// すでにオープン済みのマスなら処理しない
 		if (std::find(m_manhattanTable->openList.begin(), m_manhattanTable->openList.end(), openTile->GetSquareData()->GetID()) != m_manhattanTable->openList.end());
+
 		// 通行不可のマスなら処理しない
-		if (tileCheck(openTile->GetSquareData()))continue;
+		if (!tileCheck(openTile->GetSquareData()))continue;
+
+		// ノードのオープン
+		DistanceNodeManhattan*addNode=new DistanceNodeManhattan(distance, openTile->GetSquareData()->GetID(), direction, baseNode);
+		m_manhattanTable->openList.push_back(addNode);
+		// ゴールでなければ続ける
+		if (openTile->GetSquareData()->GetID() != goalId)continue;
+		m_manhattanTable->goalNode = addNode;
+		return;
 	}
 }

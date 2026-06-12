@@ -12,13 +12,13 @@ public:
 	static RouteSearcher& GetInstance();
 
 
-	std::vector<ManhattanMoveData>RouteSearchManhattan(int startID, int goalID, std::function<bool(MapTile)>tileCheck);
+	std::vector<ManhattanMoveData>RouteSearchManhattan(int startID, int goalID, std::function<bool(SquareData*)>tileCheck);
 
 private:
-	void OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(MapTile)>tileCheck);
+	void OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(SquareData*)>tileCheck);
 	std::vector<ManhattanMoveData>CreateRouteManhattan();
 	DistanceNodeManhattan* GetMinScoreNode(int goalX, int goalY);
-	void OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(MapTile)>tileCheck);
+	void OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(SquareData*)>tileCheck);
 private:
 
 	// シングルトンなのでprivate
