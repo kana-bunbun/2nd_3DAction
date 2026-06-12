@@ -149,6 +149,9 @@
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
+    <ClCompile Include="World\Map\DistanceNodeManhattanTable.cpp" />
+    <ClCompile Include="World\Map\DistanceNodeManhattan.cpp" />
+    <ClCompile Include="World\Map\DistanceNode.cpp" />
     <ClCompile Include="World\Map\RouteSearcher.cpp" />
     <ClCompile Include="World\Map\ManhattanMoveData.cpp" />
     <ClCompile Include="World\Map\ExpantionMethod.cpp" />
@@ -221,6 +224,9 @@
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
+    <ClInclude Include="World\Map\DistanceNodeManhattanTable.h" />
+    <ClInclude Include="World\Map\DistanceNodeManhattan.h" />
+    <ClInclude Include="World\Map\DistanceNode.h" />
     <ClInclude Include="World\Map\RouteSearcher.h" />
     <ClInclude Include="World\Map\ManhattanMoveData.h" />
     <ClInclude Include="World\Map\ExpantionMethod.h" />
