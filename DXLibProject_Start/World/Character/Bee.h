@@ -12,7 +12,7 @@ public:
 	/// GameObjectクラスのメンバ関数
 	/// </summary>
 	void Init()override;
-	void Update()override;
+	void Update(float deltaTime)override;
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 	/// <summary>
 	/// Beeクラスのメンバ変数

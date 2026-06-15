@@ -22,10 +22,10 @@ SceneBase::SceneBase() :
 }
 
 // フェードの更新
-void SceneBase::UpdateFade() {
+void SceneBase::UpdateFade(float deltaTime) {
 
 	if (m_fadeSpeed == 0)return;
-	m_fadeBright += kFadeMax * m_fadeSpeed *0.7f;
+	m_fadeBright += kFadeMax * m_fadeSpeed * deltaTime;
 	// 値を地域内に収める
 	m_fadeBright = MyMath::Clamp(m_fadeBright, 0, kFadeMax);
 

@@ -70,7 +70,7 @@ public:
 	/// SceneTest画面の処理を行う
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
-	std::unique_ptr<SceneBase> Update()override;
+	std::unique_ptr<SceneBase> Update(float deltaTime)override;
 
 	/// <summary>
 	/// SceneTest画面の描画を行う

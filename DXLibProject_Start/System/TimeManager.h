@@ -41,7 +41,7 @@ private:
 	// FPS用の計測した合計時間
 	static float m_fpsTimer;
 	// FPS用のフレームカウント
-	static int m_flameCount;
+	static int m_frameCount;
 	// 現在のFPS
 	static float m_fps;
 };

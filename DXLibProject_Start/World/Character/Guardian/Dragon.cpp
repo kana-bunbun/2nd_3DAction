@@ -150,7 +150,7 @@ void Dragon::Init()
 
 }
 
-void Dragon::Update()
+void Dragon::Update(float deltaTime)
 {
 	// アクティブ状態でない時実行しない
 	if (!m_isActive)return;

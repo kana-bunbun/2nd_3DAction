@@ -56,7 +56,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	virtual void Update() = 0;
+	virtual void Update(float deltaTime) = 0;
 	/// <summary>
 	/// 現在のカメラデータを取得
 	/// </summary>

@@ -11,7 +11,7 @@ public:
 
 	void Init();
 	void End();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 	void CreateEnemy(const Transform& createTransform=Transform());
 	void SetTarget(GameObject* target);

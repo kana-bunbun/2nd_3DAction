@@ -36,7 +36,7 @@ public:
 	/// <summary>
 	/// 毎フレームの処理
 	/// </summary>
-	void Update();
+	void Update(float deltaTime);
 
 	/// <summary>
 	/// シーンの描画

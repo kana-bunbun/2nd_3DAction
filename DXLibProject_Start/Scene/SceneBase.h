@@ -37,7 +37,7 @@ public:
 	/// 更新処理
 	/// </summary>
 	/// <returns>自身のポインタを返す</returns>
-	virtual std::unique_ptr<SceneBase> Update() = 0;
+	virtual std::unique_ptr<SceneBase> Update(float deltaTime) = 0;
 
 	/// <summary>
 	/// 描画処理
@@ -52,7 +52,7 @@ public:
 	/// <summary>
 	/// フェードの更新
 	/// </summary>
-	void UpdateFade();
+	void UpdateFade(float deltaTime);
 
 	/// <summary>
 	/// フェードの描画

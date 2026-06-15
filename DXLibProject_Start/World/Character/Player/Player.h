@@ -31,7 +31,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update()override;
+	void Update(float deltaTime)override;
 	/// <summary>
 	/// ステータスに応じた行動の更新処理
 	/// </summary>

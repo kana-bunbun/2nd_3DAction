@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "SceneTest.h"
 #include "../Utility/Input.h"
+#include "../System/TimeManager.h"
 
 SceneManager::SceneManager() {
 
@@ -31,19 +32,18 @@ void SceneManager::End() {
 	}
 }
 
-void SceneManager::Update() {
+void SceneManager::Update(float deltaTime) {
 
 
 	// 確認処理
 	assert(m_pCurrentScene);
 	if (!m_pCurrentScene) return;
-
 	// フェード処理
-	m_pCurrentScene->SceneBase::UpdateFade();
+	m_pCurrentScene->SceneBase::UpdateFade(deltaTime);
 
 	// シーンの更新処理
 	if (!m_pNextScene) {
-		m_pNextScene = m_pCurrentScene->Update();
+		m_pNextScene = m_pCurrentScene->Update(deltaTime);
 		if (m_pNextScene) {
 			m_pCurrentScene->SceneBase::StartFadeOut();
 		}

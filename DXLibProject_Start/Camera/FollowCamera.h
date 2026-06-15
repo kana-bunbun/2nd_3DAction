@@ -16,7 +16,7 @@ public:
 	///		ICamera クラスのメンバ変数
 	/// =========================================
 
-	void Update()override;
+	void Update(float deltaTime)override;
 	Camera::CameraView GetView()const override;
 
 
@@ -27,15 +27,15 @@ public:
 	/// <summary>
 	/// 被写体との距離を更新
 	/// </summary>
-	void UpdateDistance();
+	void UpdateDistance(float deltaTime);
 	/// <summary>
 	/// カメラの角度を更新
 	/// </summary>
-	void UpdateAngle();
+	void UpdateAngle(float deltaTime);
 	/// <summary>
 	/// カメラの座標を更新
 	/// </summary>
-	void UpdatePosition();
+	void UpdatePosition(float deltaTime);
 
 
 

@@ -44,12 +44,11 @@ void Barrier::Init()
 	m_time = kMaxTime;
 }
 
-void Barrier::Update()
+void Barrier::Update(float deltaTime)
 {
 	// アクティブ状態で時実行しない
 	if (!m_isActive)return;
 
-	float deltaTime = Time::GetInstance().GetDeltaTime();
 	m_alpha = CheckAlpha();
 	m_time -= kSpeed * m_speed*deltaTime;
 	m_time = MyMath::Clamp(m_time, 0.0f, kMaxTime);

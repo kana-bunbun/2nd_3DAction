@@ -36,10 +36,9 @@ DebugCamera::~DebugCamera()
 
 }
 
-void DebugCamera::Update()
+void DebugCamera::Update(float deltaTime)
 {
-    float deltaTime = Time::GetInstance().GetDeltaTime();
-
+ 
     float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1) * MyMath::ToRadian;
     float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
     float pitchRad = m_transform.rotation.x;

@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update()override;
+	void Update(float deltaTime)override;
 	/// <summary>
 	/// 衝突処理
 	/// </summary>

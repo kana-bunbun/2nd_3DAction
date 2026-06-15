@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update()override;
+	void Update(float deltaTime)override;
 	/// <summary>
 	/// 描画処理
 	/// </summary>

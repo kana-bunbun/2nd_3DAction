@@ -143,17 +143,17 @@ void SceneTest::End() {
 	m_pEnemyManager->End();
 }
 
-std::unique_ptr<SceneBase> SceneTest::Update() {
+std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//m_pCameraMgr->SetTarget(m_pPlayer->GetTransform());
-	m_pCameraMgr->Update();
+	m_pCameraMgr->Update(deltaTime);
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pPlayer->Update();
-	m_pBee->Update();
-	m_pBarrier->Update();
+	m_pPlayer->Update(deltaTime);
+	m_pBee->Update(deltaTime);
+	m_pBarrier->Update(deltaTime);
 	m_pUiManager->Update();
-	m_pDragon->Update();
+	m_pDragon->Update(deltaTime);
 	m_pGaugeManager->Update();
-	m_pEnemyManager->Update();
+	m_pEnemyManager->Update(deltaTime);
 
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");

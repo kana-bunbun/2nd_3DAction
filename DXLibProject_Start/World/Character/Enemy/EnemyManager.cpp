@@ -24,10 +24,10 @@ void EnemyManager::End()
 		enemy->End();
 }
 
-void EnemyManager::Update()
+void EnemyManager::Update(float deltaTime)
 {
 	for (auto& enemy : m_enemys)
-		enemy->Update();
+		enemy->Update(deltaTime);
 }
 
 void EnemyManager::Draw()

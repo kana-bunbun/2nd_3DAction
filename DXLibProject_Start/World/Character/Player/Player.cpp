@@ -177,7 +177,7 @@ void Player::LoadModel()
 	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
 	// アクティブ状態で時実行しない
 	if (!m_isActive)return;

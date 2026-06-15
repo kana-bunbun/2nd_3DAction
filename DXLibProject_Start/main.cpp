@@ -5,6 +5,7 @@
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
 #include"Utility/Time.h"
+#include"System/TimeManager.h"
 #include<memory>
 
 
@@ -32,6 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// —”‚Ì‰Šú‰»
 	MyRandom::Init();
 	Input::Init();
+	TimeManager::Init();
 
 	Time::GetInstance();
 
@@ -56,7 +58,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// “ü—ÍXV
 		Input::Update();
 
-		pSceneMgr->Update();
+		float deltaTime = TimeManager::GetDeltaTime();
+		pSceneMgr->Update(deltaTime);
+		
 		pSceneMgr->Draw();
 #ifdef _DEBUG
 		printfDx("FPS %f\n", 1.0f / Time::GetInstance().GetDeltaTime());

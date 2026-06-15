@@ -20,7 +20,7 @@ public:
 	~Dragon();
 
 	void Init()override;
-	void Update()override;
+	void Update(float deltaTime)override;
 	/// <summary>
 	/// 追従時の更新処理
 	/// </summary>

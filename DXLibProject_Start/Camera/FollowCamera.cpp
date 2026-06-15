@@ -37,11 +37,11 @@ FollowCamera::~FollowCamera()
 
 }
 
-void FollowCamera::Update()
+void FollowCamera::Update(float deltaTime)
 {
-    UpdateDistance();
-    UpdateAngle();
-    UpdatePosition();
+    UpdateDistance(deltaTime);
+    UpdateAngle(deltaTime);
+    UpdatePosition(deltaTime);
     printfDx("/////transform/////\n");
     printfDx("rotation  X : %f\n",m_transform.rotation.x * MyMath::ToDegree);
     printfDx("rotation  Y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
@@ -53,7 +53,7 @@ Camera::CameraView FollowCamera::GetView() const
     return m_view;
 }
 
-void FollowCamera::UpdateDistance()
+void FollowCamera::UpdateDistance(float deltaTime)
 {
     // カメラの最短距離、最長距離を求める
     float minDistance = kDistanceToTarget - kMinDistance;
@@ -65,10 +65,8 @@ void FollowCamera::UpdateDistance()
     m_distance = MyMath::Clamp(m_distance, minDistance, maxDistance);
 }
 
-void FollowCamera::UpdateAngle()
+void FollowCamera::UpdateAngle(float deltaTime)
 {
-
-    float deltaTime=Time::GetInstance().GetDeltaTime();
 
     float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1)*MyMath::ToRadian;
     float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
@@ -101,7 +99,7 @@ void FollowCamera::UpdateAngle()
 
 }
 
-void FollowCamera::UpdatePosition()
+void FollowCamera::UpdatePosition(float deltaTime)
 {
 
     //assert(m_target);
