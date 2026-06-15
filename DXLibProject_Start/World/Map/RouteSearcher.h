@@ -16,9 +16,9 @@ public:
 
 private:
 	void OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(SquareData*)>tileCheck);
-	std::vector<ManhattanMoveData>CreateRouteManhattan();
 	DistanceNodeManhattan* GetMinScoreNode(int goalX, int goalY);
 	void OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(SquareData*)>tileCheck);
+	std::vector<ManhattanMoveData>CreateRouteManhattan();
 private:
 
 	// シングルトンなのでprivate

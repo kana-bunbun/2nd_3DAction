@@ -2,6 +2,7 @@
 #include"MapConst.h"
 #include"MapTile.h"
 #include"MapManager.h"
+#include<functional>
 RouteSearcher& RouteSearcher::GetInstance()
 {
 	static RouteSearcher instance;
@@ -59,7 +60,7 @@ std::vector<ManhattanMoveData> RouteSearcher::CreateRouteManhattan()
 	int routeNum = m_manhattanTable->goalNode->GetDistance();
 
 	DistanceNodeManhattan* currentNode = m_manhattanTable->goalNode;
-	for (int i = routeNum; i >= 0; i++) {
+	for (int i = routeNum; i >= 0; i--) {
 		ManhattanMoveData moveData = ManhattanMoveData(currentNode->GetRootNode()->GetTileID(), currentNode->GetTileID(), currentNode->GetPrevDirection());
 		route[i] = moveData;
 		// 親ノードを現在のノードにする
@@ -107,16 +108,22 @@ void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int
 
 		MapTile* openTile = MapManager::GetInstance().GetToDirSquare(baseX, baseY, direction);
 		if (!openTile)continue;
+		std::vector<int>openID;
+		std::vector<int>closeID;
+		for (int i = 0; i < m_manhattanTable->closeList.size(); i++)
+			closeID.push_back(m_manhattanTable->closeList[i]->GetTileID());
+		for (int i = 0; i < m_manhattanTable->openList.size(); i++)
+			openID.push_back(m_manhattanTable->openList[i]->GetTileID());
 		// すでにクローズ済みのマスなら処理しない
-		if (std::find(m_manhattanTable->closeList.begin(), m_manhattanTable->closeList.end(), openTile->GetSquareData()->GetID()) != m_manhattanTable->closeList.end());
+		if (std::find(openID.begin(), openID.end(), openTile->GetSquareData()->GetID()) != openID.end());
 		// すでにオープン済みのマスなら処理しない
-		if (std::find(m_manhattanTable->openList.begin(), m_manhattanTable->openList.end(), openTile->GetSquareData()->GetID()) != m_manhattanTable->openList.end());
+		if (std::find(closeID.begin(), closeID.end(), openTile->GetSquareData()->GetID()) != closeID.end());
 
 		// 通行不可のマスなら処理しない
 		if (!tileCheck(openTile->GetSquareData()))continue;
 
 		// ノードのオープン
-		DistanceNodeManhattan*addNode=new DistanceNodeManhattan(distance, openTile->GetSquareData()->GetID(), direction, baseNode);
+		DistanceNodeManhattan* addNode = new DistanceNodeManhattan(distance, openTile->GetSquareData()->GetID(), direction, baseNode);
 		m_manhattanTable->openList.push_back(addNode);
 		// ゴールでなければ続ける
 		if (openTile->GetSquareData()->GetID() != goalId)continue;

@@ -80,14 +80,14 @@ public:
 	/// <summary>
 	/// 分割線上で指定した座標同士の経路をつなぐ
 	/// </summary>
-	void ConnectDivideLine(int sartId, int goalLine);
+	void ConnectDivideLine(int sartId, int goalId);
 
 
 	const std::vector<AreaData*>& GetAreaData() { return m_areas; }
 
 	// 分割線のマスのIDリスト
 	const std::vector<int>& GetDivideLine(){ return m_divideLines; }
-
+	bool IsDivideLine(SquareData* tile);
 private:
 
 	// シングルトンなのでprivate

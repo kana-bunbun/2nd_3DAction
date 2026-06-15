@@ -3,6 +3,7 @@
 #include "MapTile.h"
 #include "MapConst.h"
 #include "ManhattanMoveData.h"
+#include "RouteSearcher.h"
 
 #include"../../Utility/MyRandom.h"
 #include"ExpantionMethod.h"
@@ -24,7 +25,7 @@ void MapCreate::CreateMap()
 	CreateAllRoom();
 
 	// 全部屋を連結
-
+	ConnectAllRoom();
 	// 階段を置く
 
 	MapManager::GetInstance().SetInvalid();
@@ -242,7 +243,8 @@ int MapCreate::DigToDivideLine(AreaData* area, MapConst::eDirectionFour directio
 	// 要素がなければreturn
 	if (targets.size() < 1)return -1;
 	// ランダムに1マス抽選
-	MapTile* currentTile = targets[MyRandom::Int(0, targets.size() - 1)];
+	int rand = MyRandom::Int(0, targets.size() - 1);
+	MapTile* currentTile = targets[rand];
 
 	// 分割線にたどり着くまでループ
 	while (true) {
@@ -256,7 +258,34 @@ int MapCreate::DigToDivideLine(AreaData* area, MapConst::eDirectionFour directio
 	return currentTile->GetSquareData()->GetID();
 }
 
-void MapCreate::ConnectDivideLine(int sartId, int goalLine)
+void MapCreate::ConnectDivideLine(int sartId, int goalId)
 {
-	//std::vector<ManhattanMoveData> route=
+	std::function<bool(SquareData*)>tilecheck; 
+	
+	tilecheck = [&](SquareData* data) {
+		return IsDivideLine(data);
+		};
+
+	std::vector<ManhattanMoveData> route = RouteSearcher::GetInstance().RouteSearchManhattan(sartId, goalId, tilecheck);
+	
+	if (route.size() < 1)return;
+	// 経路のマスをすべて通路にする
+	for (int i = 0; i < route.size(); i++) {
+		ManhattanMoveData moveData = route[i];
+		MapTile* tile = MapManager::GetInstance().GetTile(moveData.m_targetSquareID);
+		if (!tile)return;
+		tile->SetTerrain(MapConst::eTerrain::Passage);
+	}
+}
+
+bool MapCreate::IsDivideLine(SquareData* tile)
+{
+
+	//for ( const auto& hoge: m_divideLines) {
+
+
+	//	hoge == 
+	//}
+
+	return std::find(m_divideLines.begin(), m_divideLines.end(), tile->GetID()) != m_divideLines.end();
 }
