@@ -70,6 +70,7 @@ public:
 	float GetLength()const;						// ベクトルの大きさを取得する関数
 	float GetSqLength()const;						// ベクトルの大きさを取得する関数
 	Vector3 Normalize()const;					// ベクトルを正規化する
+	bool IsLengthNearlyZero()const;					// ベクトルの長さが0に近しいかどうか
 	/// <summary>
 	/// DxLibのVECTOR型に変換する関数
 	/// </summary>

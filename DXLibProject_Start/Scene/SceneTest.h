@@ -27,6 +27,7 @@ class Bee;
 class Barrier;
 class UIManager;
 class MapDraw;
+class FloorBlock;
 //
 //namespace Collision {
 //	class AABB;
@@ -108,6 +109,7 @@ private:
 	std::unique_ptr<Barrier>m_pBarrier;
 	std::unique_ptr<UIManager>m_pUiManager;
 
-	std::unique_ptr<MapDraw>m_mapdraw;
+	std::unique_ptr<MapDraw>m_pMapdraw;
+	std::unique_ptr<FloorBlock>m_pFloor;
 
 };

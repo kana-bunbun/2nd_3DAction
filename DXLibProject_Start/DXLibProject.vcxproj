@@ -149,6 +149,7 @@
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
+    <ClCompile Include="World\Object\FloorBlock.cpp" />
     <ClCompile Include="World\Map\DistanceNodeManhattanTable.cpp" />
     <ClCompile Include="World\Map\DistanceNodeManhattan.cpp" />
     <ClCompile Include="World\Map\DistanceNode.cpp" />
@@ -210,6 +211,7 @@
     <Image Include="Resource\UI\HPGauge.png" />
     <Image Include="Resource\UI\HPGaugeBody.png" />
     <Image Include="Resource\UI\HPGaugeHead.png" />
+    <Image Include="Resource\UI\MapPlayerCursor.png" />
     <Image Include="Resource\UI\MPFrame.png" />
     <Image Include="Resource\UI\MPFront.png" />
     <Image Include="Resource\UI\MPGauge.png" />
@@ -223,6 +225,7 @@
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
+    <ClInclude Include="World\Object\FloorBlock.h" />
     <ClInclude Include="World\Map\DistanceNodeManhattanTable.h" />
     <ClInclude Include="World\Map\DistanceNodeManhattan.h" />
     <ClInclude Include="World\Map\DistanceNode.h" />
@@ -289,6 +292,7 @@
     <None Include="Resource\ChaWitch\Textures\Cha_Witch.png.meta" />
     <None Include="Resource\CSV\PlayerEmiColor.csv" />
     <None Include="Resource\CSV\PlayerModelPath.csv" />
+    <None Include="Resource\Cube_Grass_Single.mv1" />
     <None Include="Resource\Dragon\ChaDragon\Model.mv1" />
     <None Include="Resource\Dragon\ChaDragon\Motions\Attack.mv1" />
     <None Include="Resource\Dragon\ChaDragon\Motions\Damage.mv1" />
@@ -324,6 +328,7 @@
     <None Include="Resource\UI\HPFrame.psd" />
     <None Include="Resource\UI\HPGauge.psd" />
     <None Include="Resource\UI\HPGaugeBody.psd" />
+    <None Include="Resource\UI\MapPlayerCursor.psd" />
     <None Include="Resource\UI\MPFrame.psd" />
     <None Include="Resource\UI\MPGauge.psd" />
     <None Include="Resource\UI\MPGaugeBody.psd" />

@@ -156,6 +156,9 @@
     <ClCompile Include="World\Map\DistanceNodeManhattanTable.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\Object\FloorBlock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -223,6 +226,9 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\MapPlayerCursor.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -386,6 +392,9 @@
     <ClInclude Include="World\Map\DistanceNodeManhattanTable.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="World\Object\FloorBlock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -441,6 +450,8 @@
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
+    <None Include="Resource\Cube_Grass_Single.mv1" />
+    <None Include="Resource\UI\MapPlayerCursor.psd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

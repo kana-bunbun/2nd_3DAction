@@ -8,25 +8,38 @@
 #include<vector>
 
 namespace {
-	constexpr Vector3 drawCenter = { Game::kScreenWidth- 180.0f,180.0f,0.0f };
-	constexpr Vector3 drawSize = { 250.0f,250.0f,0.0f };
 	constexpr Vector3 blockSize = { 5.0f,5.0f,0.0f };
 	constexpr Vector3 blockInterval = { blockSize.x /*+ 2.0f*/,blockSize.y /*+ 2.0f*/,0.0f };
-	constexpr Vector3 drawBlockStart ={
+	constexpr Vector3 kDrawBlockStart ={
 		-(blockInterval.x* (static_cast<float>(MapConst::MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2)),
 		blockInterval.y* (static_cast<float>(MapConst::MAP_SQUARE_HEIGHT_COUNT) * 0.5f) - (blockInterval.y * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2),
 		0.0f};
 	constexpr float sphereSize = 300;
+	constexpr Vector3 kDrawCenter = 
+	{
+		Game::kScreenWidth- blockSize.x*(MapConst::MAP_SQUARE_WIDTH_COUNT*0.5f+10),
+		blockSize.y * (MapConst::MAP_SQUARE_HEIGHT_COUNT * 0.5f + 10),
+		0.0f
+	};
+	constexpr Vector3 kDrawSize = { 250.0f,250.0f,0.0f };
+	constexpr Vector3 kMapSize = { sphereSize* MapConst::MAP_SQUARE_WIDTH_COUNT,sphereSize * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
+	const char* const kCursorPath = "Resource\\UI\\MapPlayerCursor.png";
 }
 
-MapDraw::MapDraw()
+MapDraw::MapDraw():
+	m_markPos(),
+	m_cursorHandle(-1)
 {
+	m_markPos.Reset();
 	MapManager::GetInstance().Initialize();
 	MapCreate::GetInstance().CreateMap();
+	m_cursorHandle = LoadGraph(kCursorPath);
 }
 
 MapDraw::~MapDraw()
-{}
+{
+	DeleteGraph(m_cursorHandle);
+}
 
 void MapDraw::Draw()
 {
@@ -81,7 +94,7 @@ void MapDraw::Draw()
 
 	DrawMap();
 	DrawMiniMap();
-
+	DrawMark();
 }
 
 void MapDraw::DrawMap()
@@ -152,7 +165,7 @@ void MapDraw::DrawMiniMap()
 				color = Color::kCyan;
 			}*/
 
-			Vector3 drawBox = drawCenter + Vector3(-blockInterval.x * x, blockInterval.y * y, 0.0f) - drawBlockStart;
+			Vector3 drawBox = kDrawCenter + Vector3(-blockInterval.x * x, blockInterval.y * y, 0.0f) - kDrawBlockStart;
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 			DrawBox(drawBox.x - (blockSize.x * 0.5f), drawBox.y - (blockSize.y * 0.5f),
 				drawBox.x + (blockSize.x * 0.5f), drawBox.y + (blockSize.y * 0.5f),
@@ -170,4 +183,14 @@ bool MapDraw::InDevideList(size_t id)
 		if (devideLine[i] == id)return true;
 	}
 	return false;
+}
+
+void MapDraw::DrawMark()
+{
+	Vector3 drawStart = kDrawCenter - kDrawBlockStart;
+	Vector3 toMapPos=Vector3::zero;
+	toMapPos.x= m_markPos.position.x / kMapSize.x* kDrawBlockStart.x;
+	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
+	toMapPos += drawStart;
+	DrawRotaGraph(toMapPos.x, toMapPos.y, 0.20f, m_markPos.rotation.y, m_cursorHandle, TRUE);
 }

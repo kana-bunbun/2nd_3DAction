@@ -21,6 +21,7 @@
 #include"../World/Character/CharaGaugeManager.h"
 #include"../World/Character/Enemy/EnemyManager.h"
 #include"../World/Map/MapDraw.h"
+#include"../World/Object/FloorBlock.h"
 #include<cassert>
 #include <math.h>
 #include<memory>
@@ -77,7 +78,8 @@ SceneTest::SceneTest() :
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 	m_pEnemyManager = std::make_unique<EnemyManager>();
-	m_mapdraw = std::make_unique<MapDraw>();
+	m_pMapdraw = std::make_unique<MapDraw>();
+	m_pFloor = std::make_unique<FloorBlock>();
 
 }
 
@@ -110,9 +112,10 @@ void SceneTest::Init() {
 	m_pEnemyManager->Init();
 	m_pEnemyManager->SetTarget(m_pPlayer.get());
 
+	m_pFloor->Init();
 
-
-
+	//Transform* pos = m_pPlayer->GetTransform();
+	m_pMapdraw->SetMarkPos(m_pPlayer->GetTransform());
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
@@ -141,6 +144,8 @@ void SceneTest::End() {
 	m_pUiManager->End();
 	m_pGaugeManager->End();
 	m_pEnemyManager->End();
+	m_pFloor->End();
+
 }
 
 std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
@@ -154,10 +159,16 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pDragon->Update(deltaTime);
 	m_pGaugeManager->Update();
 	m_pEnemyManager->Update(deltaTime);
+	m_pFloor->Update(deltaTime);
 
+	// 敵と当たっているかどうかを調べる
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
 	m_pPlayer->ResolveCollision(*m_pBee, result);
+
+	Collision::Result hitFloor = m_pFloor->GetCollision().CheckCollision(m_pPlayer->GetCollision());
+	m_pPlayer->ResolveCollision(*m_pFloor, result);
+
 	if (Input::IsPressed(Input::Button::RT, Pad::Player::P1)) {
 	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
 		m_pDragon->Call(m_pBee.get());
@@ -176,6 +187,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	}
 
 
+	m_pMapdraw->SetMarkPos(m_pPlayer->GetTransform());
 
 	// シーン遷移処理
 	//if (シーン切り替えの条件) {
@@ -197,14 +209,15 @@ void SceneTest::Draw() {
 		SetCameraScreenCenter(Game::kScreenWidth / (m_playerNum * 2) * ((i * 2)+1), Game::kScreenHeight / 2);
 	
 		m_pCameraMgr->Apply();
-	
+		m_pFloor->Draw();
+
 		m_pEnemyManager->Draw();
 		m_pBee->Draw();
 		m_pDragon->Draw();
 		m_pPlayer->Draw();
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
-		m_mapdraw->Draw();
+		m_pMapdraw->Draw();
 		m_pUiManager->Draw();
 	}
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);

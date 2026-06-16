@@ -19,6 +19,7 @@ public:
 		Player,
 		Enemy,
 		Wall,
+		Floor,
 		Barrier,
 	};
 
@@ -37,7 +38,8 @@ public:
 
 	virtual void Init() = 0;
 	virtual void End();
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(float deltaTime) {};
+	virtual void LateUpdate(float deltaTime) {};
 	virtual void Draw();
 
 	/// <summary>

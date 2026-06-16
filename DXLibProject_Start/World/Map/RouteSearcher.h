@@ -19,6 +19,8 @@ private:
 	DistanceNodeManhattan* GetMinScoreNode(int goalX, int goalY);
 	void OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int goalId, std::function<bool(SquareData*)>tileCheck);
 	std::vector<ManhattanMoveData>CreateRouteManhattan();
+	//template <typename T>
+	//bool InVector(std::vector<T> vector, T value);
 private:
 
 	// シングルトンなのでprivate
@@ -34,4 +36,3 @@ private:
 private:
 	DistanceNodeManhattanTable* m_manhattanTable;
 };
-

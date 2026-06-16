@@ -67,6 +67,8 @@ Player::Player() :
 	m_parry(false),
 	m_pBarrier(nullptr),
 	m_dashFlag(false),
+	m_isGroud(true),
+	m_isJump(false),
 	m_gauges()
 {
 	// モデルの設定
@@ -370,7 +372,8 @@ void Player::ChangeAnimation(Status::Player& status)
 void Player::ResolveCollision(GameObject& other, const Collision::Result& result)
 {
 	if (!result.isHit)return;
-
+	// 押し戻しベクトルを生成
+	Vector3 revertVec = result.normal * result.penetration;
 	switch (other.GetCollisionTag())
 	{
 	case GameObject::CollisionTag::None:
@@ -385,16 +388,25 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 		break;
 	}
 	case GameObject::CollisionTag::Wall:
-	{
-		// 押し戻しベクトルを生成
-		Vector3 revertVec = result.normal * result.penetration;
 		// 座標を補正
 		m_transform.position += revertVec;
 		m_move.SetTransform(m_transform);
 		// 衝突判定の更新
 		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 		break;
-	}
+	case GameObject::CollisionTag::Floor:
+		// 座標を補正
+		m_transform.position += revertVec;
+		m_move.SetTransform(m_transform);
+		// 衝突判定の更新
+		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+
+		if (result.normal.y > 0.0f) {
+			m_isGroud = true;
+			m_isJump = false;
+		}
+
+		break;
 	case GameObject::CollisionTag::Barrier:
 		break;
 	default:

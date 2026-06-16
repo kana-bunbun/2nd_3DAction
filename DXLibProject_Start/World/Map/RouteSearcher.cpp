@@ -121,9 +121,9 @@ void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int
 		for (int i = 0; i < m_manhattanTable->openList.size(); i++)
 			openID.push_back(m_manhattanTable->openList[i]->GetTileID());
 		// すでにクローズ済みのマスなら処理しない
-		if (std::find(openID.begin(), openID.end(), openTile->GetSquareData()->GetID()) != openID.end());
+		if (std::find(openID.begin(), openID.end(), openTile->GetSquareData()->GetID()) != openID.end())continue;
 		// すでにオープン済みのマスなら処理しない
-		if (std::find(closeID.begin(), closeID.end(), openTile->GetSquareData()->GetID()) != closeID.end());
+		if (std::find(closeID.begin(), closeID.end(), openTile->GetSquareData()->GetID()) != closeID.end())continue;
 
 		// 通行不可のマスなら処理しない
 		if (!tileCheck(openTile->GetSquareData()))continue;
@@ -137,3 +137,12 @@ void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int
 		return;
 	}
 }
+//
+//template<typename T>
+//inline bool RouteSearcher::InVector(std::vector<T> vector, T value)
+//{
+//	for (auto Vector& : vector) {
+//		(Vector == value) ? return true : continue;
+//	}
+//	return false;
+//}

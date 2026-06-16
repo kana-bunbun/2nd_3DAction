@@ -13,7 +13,7 @@ namespace Camera{
 			Vector3 dir;
 			dir = position - target;
 			// 0割り対策
-			if (dir.GetSqLength() == 0.0f) {
+			if (dir.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
 			}
@@ -23,7 +23,7 @@ namespace Camera{
 			Vector3 vec = GetForward();
 			vec.y = 0.0f;
 			// 0割り対策
-			if (vec.GetSqLength() == 0.0f) {
+			if (vec.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
 			}
@@ -34,7 +34,7 @@ namespace Camera{
 			Vector3 vec = GetPlaneVectorForward();
 			vec.y = 0.0f;
 			// 0割り対策
-			if (vec.GetSqLength() == 0.0f) {
+			if (vec.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
 			}

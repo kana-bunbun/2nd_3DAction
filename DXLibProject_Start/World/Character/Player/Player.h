@@ -77,6 +77,7 @@ public:
 
 	void SetBarrier(Barrier* barrier);
 	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
+	bool GetIsGround() { return m_isGroud; }
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -123,6 +124,8 @@ private:
 	/// ダッシュしているかどうか
 	/// </summary>
 	bool m_dashFlag;
+	bool m_isGroud;
+	bool m_isJump;
 	/// <summary>
 	/// ゲージの種類
 	/// </summary>

@@ -1,6 +1,7 @@
 #include "Vector3.h"
 #include<DxLib.h>
 #include<math.h>
+#include"MyMath.h"
 #include<cassert>
 const Vector3 Vector3::zero{ 0.0f, 0.0f, 0.0f };
 const Vector3 Vector3::XAxis{ 1.0f, 0.0f, 0.0f };
@@ -114,6 +115,11 @@ Vector3 Vector3::Normalize() const
 	size = GetLength();
 	res = *this / size;
 	return res;
+}
+
+bool Vector3::IsLengthNearlyZero() const
+{
+	return GetSqLength() < MyMath::Epsilon * MyMath::Epsilon;
 }
 
 VECTOR Vector3::ToVECTOR() const
