@@ -19,7 +19,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Vector3 GetCollisionCenterPos()const;
-	void UpdateAnimation();
+	void UpdateAnimation(float deltaTime);
 	void ChangeAnimation(Status::Bee next);
 private:
 	/// <summary>

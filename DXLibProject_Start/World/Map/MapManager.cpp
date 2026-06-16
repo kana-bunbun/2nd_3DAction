@@ -71,6 +71,7 @@ MapTile* MapManager::GetTile(int posX,int posY)
 
 MapTile* MapManager::GetToDirSquare(int x, int y, MapConst::eDirectionFour direction)
 {
+    int beforeX = x, beforeY = y;
     // 指定方向の隣接マス取得
     ToDirPosition(x, y, direction);
     // ブレークポインタを置いて確認する可能性を考慮して一時格納

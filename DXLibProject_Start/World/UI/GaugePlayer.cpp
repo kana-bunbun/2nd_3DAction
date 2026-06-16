@@ -51,11 +51,11 @@ void GaugePlayer::End()
 		gauge->End();
 }
 
-void GaugePlayer::Update()
+void GaugePlayer::Update(float deltaTime)
 {
 	// ゲージの更新処理を行う
 	for (auto& gauge : m_gauges)
-		gauge->Update();
+		gauge->Update(deltaTime);
 }
 
 void GaugePlayer::Draw()

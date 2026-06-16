@@ -24,11 +24,11 @@ public:
 	/// <summary>
 	/// 追従時の更新処理
 	/// </summary>
-	void FollowUpdate();
+	void FollowUpdate(float deltaTime);
 	/// <summary>
 	/// 攻撃時の更新処理　
 	/// </summary>
-	void AttackUpdate();
+	void AttackUpdate(float deltaTime);
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 	/// <summary>
 	/// ターゲットを設定して追いかける処理
@@ -42,12 +42,12 @@ public:
 
 private:
 	void FollowPlayer();
-	void FollowTarget();
+	void FollowTarget(float deltaTime);
 
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
-	void UpdateAnimation();
+	void UpdateAnimation(float deltaTime);
 	/// <summary>
 	/// アニメーションの変更を行う処理
 	/// </summary>

@@ -47,11 +47,11 @@ public:
 	/// <summary>
 	/// トランスフォームの更新処理
 	/// </summary>
-	void UpdateTransform();
+	void UpdateTransform(float deltaTime);
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
-	void UpdateAnimation();
+	void UpdateAnimation(float deltaTime);
 	/// <summary>
 	/// アニメーションの変更を行う処理
 	/// </summary>

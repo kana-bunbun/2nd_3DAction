@@ -1,6 +1,5 @@
 #include "Barrier.h"
 #include"../../Utility/Color.h"
-#include"../../Utility/Time.h"
 namespace {
 	// 透明度を変える速さ
 	constexpr float kSpeed = 4.0f;

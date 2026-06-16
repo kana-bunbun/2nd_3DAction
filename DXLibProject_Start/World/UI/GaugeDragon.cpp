@@ -51,10 +51,10 @@ void GaugeDragon::End()
 		m_gauge->End();
 }
 
-void GaugeDragon::Update()
+void GaugeDragon::Update(float deltaTime)
 {
 	if (m_gauge)
-		m_gauge->Update();
+		m_gauge->Update(deltaTime);
 }
 
 void GaugeDragon::Draw()

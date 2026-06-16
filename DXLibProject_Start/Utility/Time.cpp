@@ -20,8 +20,9 @@ Time& Time::GetInstance()
 
 void Time::Update()
 {
-	m_deltaTime = (GetNowHiPerformanceCount() - m_LastTime) * kMicroSecond;
-	m_LastTime = GetNowHiPerformanceCount();
+	LONGLONG nowCount = GetNowHiPerformanceCount();
+	m_deltaTime = (nowCount - m_LastTime) * kMicroSecond;
+	m_LastTime = nowCount;
 
 	//WaitProcess();
 	if (m_deltaTime > 0.5f)

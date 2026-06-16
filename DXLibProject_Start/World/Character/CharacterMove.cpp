@@ -1,5 +1,5 @@
 #include "CharacterMove.h"
-#include"../../Utility/Time.h"
+
 namespace {
 	constexpr float kAttenuation = 50.0f;
 }
@@ -29,9 +29,8 @@ void CharacterMove::End()
 
 }
 
-void CharacterMove::Update()
+void CharacterMove::Update(float deltaTime)
 {
-	float deltaTime = Time::GetInstance().GetDeltaTime();
 	// プレイヤーの角度の補間量
 	float lerpRad = (m_desireRad - m_transform.rotation.y);
 	// 角度を180～-180の間に収める

@@ -5,7 +5,7 @@ public:
 	DragonAttack();
 	~DragonAttack();
 	void Init();
-	void Update();
+	void Update(float deltaTime);
 	void End();
 	bool GetAttackFlag() { return m_attackFlag; }
 	bool GetActive() { return m_active; }

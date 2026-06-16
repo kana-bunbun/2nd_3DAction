@@ -164,6 +164,7 @@ void MapCreate::CreateAllRoom()
 
 void MapCreate::CreateRoom(AreaData* area)
 {
+
 	if (!area) return;
 
 	// 部屋のサイズ決定
@@ -251,7 +252,7 @@ int MapCreate::DigToDivideLine(AreaData* area, MapConst::eDirectionFour directio
 		// currenTileを通路マスに
 		currentTile->SetTerrain(MapConst::eTerrain::Passage);
 		// 分割線までたどり着いたらループを抜ける
-		if (std::find(m_divideLines.begin(), m_divideLines.end(), currentTile->GetSquareData()->GetID()) != m_divideLines.end());
+		if (std::find(m_divideLines.begin(), m_divideLines.end(), currentTile->GetSquareData()->GetID()) != m_divideLines.end())break;
 		currentTile = MapManager::GetInstance().GetToDirSquare(currentTile->GetSquareData()->GetPosX(), currentTile->GetSquareData()->GetPosY(), direction);
 	}
 

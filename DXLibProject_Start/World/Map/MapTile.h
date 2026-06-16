@@ -17,7 +17,8 @@ public:
 	const int GetId()const { return m_id; }
 	const void SetTerrain(MapConst::eTerrain terrain) { m_terrain = terrain; m_squareData->SetTerrain(terrain); }
 	void SetRoomId(int id) { m_squareData->SetRoomID(id); }
-	SquareData* GetSquareData() { return m_squareData; }
+	SquareData* GetSquareData() {
+ return m_squareData; }
 private:
 	int m_posX;
 	int m_posY;

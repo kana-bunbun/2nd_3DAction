@@ -121,7 +121,9 @@ void Enemy::Update(float deltaTime)
 	m_animation.SetAnimSpeed();
 
 
-	m_animation.Update();
+	m_animation.Update(deltaTime);
+	printfDx("Queen\n");
+	printfDx("status : %d\n",m_status);
 	m_animation.Debug();
 }
 

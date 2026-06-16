@@ -83,7 +83,7 @@ void Bee::Update(float deltaTime)
 	// 衝突判定の更新処理
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	// アニメーションの更新処理
-	UpdateAnimation();
+	UpdateAnimation(deltaTime);
 	m_transform.position.z--;
 	m_collision->DebugDraw();
 }
@@ -98,10 +98,10 @@ Vector3 Bee::GetCollisionCenterPos() const
 	return m_transform.position;
 }
 
-void Bee::UpdateAnimation()
+void Bee::UpdateAnimation(float deltaTime)
 {
 	// アニメーションの再生
-	m_animation.Update();
+	m_animation.Update(deltaTime);
 }
 
 void Bee::ChangeAnimation(Status::Bee next)

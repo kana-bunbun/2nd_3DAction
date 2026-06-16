@@ -7,5 +7,5 @@ MapTile::MapTile(int posX,int posY, int id) :
 	m_terrain(MapConst::eTerrain::Invalid),
 	m_squareData(nullptr)
 {
-	m_squareData = new SquareData(posX, posY, id);
+	m_squareData = new SquareData(id, posX, posY);
 }

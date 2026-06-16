@@ -1,4 +1,5 @@
 #include <cassert>
+#include <memory>
 #include "SceneManager.h"
 #include "SceneTest.h"
 #include "../Utility/Input.h"
@@ -12,10 +13,8 @@ SceneManager::SceneManager() {
 SceneManager::~SceneManager() {}
 
 void SceneManager::Init() {
-
 	m_pCurrentScene = std::make_unique<SceneTest>();
 	m_pCurrentScene->Init();
-
 }
 
 void SceneManager::End() {

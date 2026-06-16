@@ -6,7 +6,6 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
-#include"../../../Utility/Time.h"
 #include"../../../Utility/Input.h"
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
@@ -163,10 +162,10 @@ void Dragon::Update(float deltaTime)
 	{
 	case Status::Dragon::Neutral:
 	case Status::Dragon::Move:
-		FollowUpdate();
+		FollowUpdate(deltaTime);
 		break;
 	case Status::Dragon::Attack:
-		AttackUpdate();
+		AttackUpdate(deltaTime);
 		break;
 	case Status::Dragon::Damage:
 		break;
@@ -178,9 +177,9 @@ void Dragon::Update(float deltaTime)
 		break;
 	}
 	// アニメーション更新処理
-	UpdateAnimation();
+	UpdateAnimation(deltaTime);
 	// 移動
-	m_move.Update();
+	m_move.Update(deltaTime);
 	m_transform = m_move.GetTransform();
 	// 攻撃アニメーション以外ではフラグをfalseに
 	if (m_status != Status::Dragon::Attack)
@@ -194,7 +193,7 @@ void Dragon::Update(float deltaTime)
 
 }
 
-void Dragon::FollowUpdate()
+void Dragon::FollowUpdate(float deltaTime)
 {
 	// フォローの状態によって分岐
 	switch (m_followState)
@@ -203,14 +202,14 @@ void Dragon::FollowUpdate()
 		FollowPlayer();
 		break;
 	case FollowState::Attack:
-		FollowTarget();
+		FollowTarget(deltaTime);
 		break;
 	default:
 		break;
 	}
 }
 
-void Dragon::AttackUpdate()
+void Dragon::AttackUpdate(float deltaTime)
 {
 	// 攻撃のインターバルをリセット
 	m_attack.ResetCount();
@@ -222,7 +221,7 @@ void Dragon::AttackUpdate()
 	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
 	// 移動速度の減衰
-	m_speed *= kAttenuationSpeed*Time::GetInstance().GetDeltaTime();
+	m_speed *= kAttenuationSpeed*deltaTime;
 	// 移動速度を設定
 	m_move.SetSpeed(m_speed);
 
@@ -314,13 +313,13 @@ void Dragon::FollowPlayer()
 
 }
 
-void Dragon::FollowTarget()
+void Dragon::FollowTarget(float deltaTime)
 {
 	Vector3 myPos = m_transform.position- kPosOffset;
 	Vector3  distance = myPos - m_pTarget->GetTransform().position;
 	float angle = atan2(distance.x, distance.z);
 
-	m_speed *= kAttenuationSpeed*Time::GetInstance().GetDeltaTime();
+	m_speed *= kAttenuationSpeed*deltaTime;
 	printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
@@ -335,7 +334,7 @@ void Dragon::FollowTarget()
 	}
 	else {
 		m_canAttackFlag = true;
-		m_attack.Update();
+		m_attack.Update(deltaTime);
 		m_attackFlag = m_attack.GetAttackFlag();
 	}
 
@@ -347,10 +346,10 @@ void Dragon::FollowTarget()
 
 }
 
-void Dragon::UpdateAnimation()
+void Dragon::UpdateAnimation(float deltaTime)
 {
 	// アニメーションの更新
-	m_animation.Update();
+	m_animation.Update(deltaTime);
 	// アニメーションのデバッグ表示
 	//m_animation.Debug();
 	// 割り込み再生またはアニメーション再生中なら処理しない

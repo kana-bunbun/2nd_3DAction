@@ -14,7 +14,7 @@ public:
 	~UIManager();
 	void Init();
 	void End();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	/// <summary>

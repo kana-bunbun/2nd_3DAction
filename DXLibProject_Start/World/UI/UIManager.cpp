@@ -37,10 +37,10 @@ void UIManager::End()
 	m_gaugeDragon->End();
 }
 
-void UIManager::Update()
+void UIManager::Update(float deltaTime)
 {
-	m_gaugePlayer->Update();
-	m_gaugeDragon->Update();
+	m_gaugePlayer->Update(deltaTime);
+	m_gaugeDragon->Update(deltaTime);
 }
 
 void UIManager::Draw()

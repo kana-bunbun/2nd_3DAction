@@ -4,7 +4,6 @@
 #include "Utility/GameSetting.h"
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
-#include"Utility/Time.h"
 #include"System/TimeManager.h"
 #include<memory>
 
@@ -35,11 +34,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Input::Init();
 	TimeManager::Init();
 
-	Time::GetInstance();
 
 	// シーン制御のポインタを生成
 	std::unique_ptr<SceneManager> pSceneMgr;
-	pSceneMgr = std::unique_ptr<SceneManager>();
+	pSceneMgr = std::make_unique<SceneManager>();
 
 	// シーンの初期化
 	pSceneMgr->Init();
@@ -50,26 +48,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// メインループ
 	while (ProcessMessage() == 0) {
 
-		Time::GetInstance().Update();	// 現在のカウントを取得
-
 		ClearDrawScreen();		// 画面の初期化
 		clsDx();				// デバッグ文字の初期化
 
 		// 入力更新
 		Input::Update();
-
+		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
 		pSceneMgr->Update(deltaTime);
 		
 		pSceneMgr->Draw();
-#ifdef _DEBUG
-		printfDx("FPS %f\n", 1.0f / Time::GetInstance().GetDeltaTime());
-		printfDx("deltaTime %f\n",Time::GetInstance().GetDeltaTime());
-		/*PROCESS_MEMORY_COUNTERS_EX pmc;
-		GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
-		printfDx("Memory %d MB\n", pmc.WorkingSetSize / 1024 / 1024);*/
-#endif
-
+		printfDx("deltaItme : %f\n", deltaTime);
+		printfDx("rawdeltaItme : %f\n", TimeManager::GetRawDeltaTime());
+		printfDx("Fps : %f\n", TimeManager::GetFPS());
+		printfDx("timesScale : %f\n", TimeManager::GetTimeScale());
 		//Input::Update();
 		//Input::Debug();
 		// 描画先を切り替える

@@ -9,7 +9,6 @@
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"
-#include"../../../Utility/Time.h"
 #include"../../../Camera/Camera.h"
 namespace {
 	// 各アニメーションのループフラグ
@@ -194,9 +193,9 @@ void Player::Update(float deltaTime)
 	// フラグの更新
 	UpdateFlag();
 	// トランスフォームの更新
-	UpdateTransform();
+	UpdateTransform(deltaTime);
 	// アニメーションの更新
-	UpdateAnimation();
+	UpdateAnimation(deltaTime);
 
 	// バリアの座標を設定
 	if (m_pBarrier) {
@@ -213,7 +212,7 @@ void Player::Update(float deltaTime)
 
 	// MPの自動回復
 	if(m_status!=Status::Player::Parry)
-	m_gauges[GaugeType::MP]->Increase(Time::GetInstance().GetDeltaTime());
+	m_gauges[GaugeType::MP]->Increase(deltaTime);
 
 }
 
@@ -252,7 +251,6 @@ void Player::UpdateAction()
 void Player::Parry()
 {
 	// パリィ時のアニメーションの再生速度を設定
-	float deltaTime = Time::GetInstance().GetDeltaTime();
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
@@ -281,7 +279,7 @@ void Player::Parry()
 	}
 }
 
-void Player::UpdateTransform()
+void Player::UpdateTransform(float deltaTime)
 {
 	// 入力量を取得
 	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1);
@@ -309,7 +307,7 @@ void Player::UpdateTransform()
 	m_move.SetSpeed(m_speed);
 
 	// 移動をする
-	m_move.Update();
+	m_move.Update(deltaTime);
 
 	// トランスフォームを更新
 	Transform transform = m_move.GetTransform();
@@ -317,11 +315,11 @@ void Player::UpdateTransform()
 	m_transform.rotation = transform.rotation;
 }
 
-void Player::UpdateAnimation()
+void Player::UpdateAnimation(float deltaTime)
 {
 
 	// アニメーションの更新
-	m_animation.Update();
+	m_animation.Update(deltaTime);
 	// アニメーションのデバッグ表示
 	//m_animation.Debug();
 	// 割り込み再生またはアニメーション再生中なら処理しない

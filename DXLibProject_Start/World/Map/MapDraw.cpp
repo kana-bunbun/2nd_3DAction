@@ -16,7 +16,7 @@ namespace {
 		-(blockInterval.x* (static_cast<float>(MapConst::MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2)),
 		blockInterval.y* (static_cast<float>(MapConst::MAP_SQUARE_HEIGHT_COUNT) * 0.5f) - (blockInterval.y * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2),
 		0.0f};
-	constexpr float sphereSize = 5;
+	constexpr float sphereSize = 300;
 }
 
 MapDraw::MapDraw()
@@ -93,12 +93,11 @@ void MapDraw::DrawMap()
 			pos.x = x * sphereSize * 2;
 			pos.y = -sphereSize;
 			pos.z = y * sphereSize * 2;
-			int color = 0xffffff;
+			int color = Color::kWhite;
 			MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
 			switch (terrain) {
 			case::MapConst::eTerrain::Invalid:
 				continue;
-				break;
 			case::MapConst::eTerrain::Passage:
 				color = Color::kCyan;
 				break;
@@ -109,12 +108,11 @@ void MapDraw::DrawMap()
 				color = Color::kRed;
 				break;
 			default:
-				color = 0xffffff;
+				color = Color::kBlack;
+
 				break;
 			}
-			if (InDevideList(MapManager::GetInstance().PositionToID(x, y))) {
-				color = Color::kCyan;
-			}
+		
 			DrawSphere3D(pos.ToVECTOR(), sphereSize, 10, color, color, true);
 
 		}
@@ -132,12 +130,10 @@ void MapDraw::DrawMiniMap()
 
 	for (int y = 0; y < MapConst::MAP_SQUARE_HEIGHT_COUNT; y++) {
 		for (int x = 0; x < MapConst::MAP_SQUARE_WIDTH_COUNT; x++) {
-			int color = 0xffffff;
+			int color = Color::kBlack;
 			MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
 			switch (terrain) {
 			case::MapConst::eTerrain::Invalid:
-				//continue;
-				color = 0x000000;
 				break;
 			case::MapConst::eTerrain::Passage:
 				color = Color::kCyan;
@@ -149,7 +145,7 @@ void MapDraw::DrawMiniMap()
 				color = Color::kRed;
 				break;
 			default:
-				color = 0xffffff;
+				color = Color::kBlack;
 				break;
 			}
 	/*		if (InDevideList(MapManager::GetInstance().PositionToID(x, y))) {

@@ -19,7 +19,7 @@ public:
 	~GaugeShow();
 	void Init();
 	void End();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 public:		// ゲッター・セッター

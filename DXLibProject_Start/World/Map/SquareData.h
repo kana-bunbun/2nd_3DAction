@@ -4,7 +4,8 @@
 class SquareData
 {
 public:
-	SquareData(int id, int posX, int posY):m_id(id),m_posX(posX),m_posY(posY),m_roomId(-1),m_terrain(MapConst::eTerrain::Invalid){}
+	SquareData(int id, int posX, int posY):m_id(id),m_posX(posX),m_posY(posY),m_roomId(-1),m_terrain(MapConst::eTerrain::Invalid){
+	}
 
 	void SetId(int id) { m_id = id; }
 	int GetID() { return m_id; }

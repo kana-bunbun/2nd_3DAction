@@ -7,7 +7,7 @@ namespace {
 	/// <summary>
 	/// 1秒あたりのカウント数
 	/// </summary>
-	constexpr float kCountPerSecond = 1000000.0f;
+	constexpr float kCountPerSecond = 0.000001f;
 	/// <summary>
 	/// 最大のdeltaTime 0.1f = 100ms
 	/// ブレイクポイントやウィンドウがアクティブになっていないときの応急処置
@@ -27,7 +27,7 @@ float TimeManager::m_fps = 0.0f;
 
 void TimeManager::Init()
 {
-	m_prevTime = 0;
+	m_prevTime = GetNowHiPerformanceCount();
 	m_deltaTime = 0.0f;
 	m_rawdeltaTime = 0.0f;
 	m_timeScale = 1.0f;
@@ -49,13 +49,13 @@ void TimeManager::Update()
 	// 経過時間を計算
 	LONGLONG differ = currentTime - m_prevTime;
 	// 経過時間を1秒に変換
-	float deltaTime = differ / kCountPerSecond;
+	float deltaTime = differ * kCountPerSecond;
 	// デバッグ等の確認環境による異常値を制限
-	if (deltaTime < kMaxDeltaTime)
+	if (deltaTime > kMaxDeltaTime)
 		deltaTime = kMaxDeltaTime;
 	// 時間倍率適応前に更新
-	m_deltaTime = deltaTime;
-	m_rawdeltaTime = deltaTime * m_timeScale;
+	m_rawdeltaTime = deltaTime;
+	m_deltaTime = deltaTime* m_timeScale;
 
 	// FPSを計算
 	m_fpsTimer += m_rawdeltaTime;
@@ -67,7 +67,7 @@ void TimeManager::Update()
 		m_frameCount = 0;
 		m_fpsTimer = 0.0f;
 	}
-	
+	m_prevTime = currentTime;
 
 }
 

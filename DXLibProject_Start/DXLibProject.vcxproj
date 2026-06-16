@@ -166,7 +166,6 @@
     <ClCompile Include="World\Map\MapTile.cpp" />
     <ClCompile Include="World\UI\GaugeDragon.cpp" />
     <ClCompile Include="World\UI\CharaGauge.cpp" />
-    <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="World\Character\Guardian\DragonAttack.cpp" />
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
     <ClCompile Include="World\Character\Enemy\EnemyManager.cpp" />
@@ -242,7 +241,6 @@
     <ClInclude Include="World\Map\MapTile.h" />
     <ClInclude Include="World\UI\GaugeDragon.h" />
     <ClInclude Include="World\UI\CharaGauge.h" />
-    <ClInclude Include="Utility\Time.h" />
     <ClInclude Include="World\Character\Guardian\DragonAttack.h" />
     <ClInclude Include="World\Character\Guardian\Dragon.h" />
     <ClInclude Include="World\Character\Enemy\EnemyManager.h" />

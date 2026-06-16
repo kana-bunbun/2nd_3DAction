@@ -150,7 +150,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pPlayer->Update(deltaTime);
 	m_pBee->Update(deltaTime);
 	m_pBarrier->Update(deltaTime);
-	m_pUiManager->Update();
+	m_pUiManager->Update(deltaTime);
 	m_pDragon->Update(deltaTime);
 	m_pGaugeManager->Update();
 	m_pEnemyManager->Update(deltaTime);
@@ -204,8 +204,8 @@ void SceneTest::Draw() {
 		m_pPlayer->Draw();
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
-		m_pUiManager->Draw();
 		m_mapdraw->Draw();
+		m_pUiManager->Draw();
 	}
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 

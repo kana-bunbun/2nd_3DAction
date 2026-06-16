@@ -1,6 +1,5 @@
 #include "AnimatioController.h"
 #include"../../Utility/Vector3.h"
-#include"../../Utility/Time.h"
 
 namespace {
 
@@ -69,12 +68,11 @@ void AnimatioController::PlayAnimation(const Status::AnimData& data)
 	m_isPlaying = true;
 }
 
-void AnimatioController::Update()
+void AnimatioController::Update(float deltaTime)
 {
 	m_playCountOld = m_playCount;
 	// Ä¶‚µ‚Ä‚¢‚È‚¯‚ê‚Î‘¦rturn;
 	if (!m_isPlaying)	return;
-	float deltaTime = Time::GetInstance().GetDeltaTime();
 	// Ä¶ŠÔ‚ÌXV
 	m_playCount += kPlaySpeed*m_animSpeed*deltaTime;
 

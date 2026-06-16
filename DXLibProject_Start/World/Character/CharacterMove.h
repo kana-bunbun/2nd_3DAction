@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Update(float deltaTime);
 
 public:		// ゲッター・セッター関数
 	// トランスフォームの取得をする関数

@@ -20,7 +20,13 @@ std::vector<ManhattanMoveData> RouteSearcher::RouteSearchManhattan(int startID, 
 
 void RouteSearcher::OpenNodeToGoalManhattan(int startID, int goalID, std::function<bool(SquareData*)> tileCheck)
 {
+	if (m_manhattanTable) {
 	m_manhattanTable->Crear();
+	}
+	else {
+	m_manhattanTable=new DistanceNodeManhattanTable();
+
+	}
 	// スタートノードを生成
 	m_manhattanTable->openList.push_back(new DistanceNodeManhattan(0, startID, MapConst::eDirectionFour::Invalid, nullptr));
 
@@ -60,9 +66,9 @@ std::vector<ManhattanMoveData> RouteSearcher::CreateRouteManhattan()
 	int routeNum = m_manhattanTable->goalNode->GetDistance();
 
 	DistanceNodeManhattan* currentNode = m_manhattanTable->goalNode;
-	for (int i = routeNum; i >= 0; i--) {
+	for (int i = routeNum-1; i >= 0; i--) {
 		ManhattanMoveData moveData = ManhattanMoveData(currentNode->GetRootNode()->GetTileID(), currentNode->GetTileID(), currentNode->GetPrevDirection());
-		route[i] = moveData;
+		route.push_back(moveData);
 		// 親ノードを現在のノードにする
 		currentNode = currentNode->GetRootNode();
 	}

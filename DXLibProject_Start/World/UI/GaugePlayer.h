@@ -16,7 +16,7 @@ public:
 	void Init()override;
 	void SetPlayer(Player* player);
 	void End()override;
-	void Update()override;
+	void Update(float deltaTime)override;
 	void Draw()override;
 private:
 

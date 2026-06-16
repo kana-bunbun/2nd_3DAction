@@ -3,7 +3,6 @@
 #include<string>
 #include<DxLib.h>
 #include"../../Utility/MyMath.h"
-#include"../../Utility/Time.h"
 #include"GaugeParam.h"
 namespace {
 	// ファイルパス
@@ -78,17 +77,9 @@ void GaugeShow::End()
 
 }
 
-void GaugeShow::Update()
+void GaugeShow::Update(float deltaTime)
 {
-
-}
-
-void GaugeShow::Draw()
-{
-	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frameHandle, TRUE);
-
 	//DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
-	float deltaTime = Time::GetInstance().GetDeltaTime();
 	float lerp = m_gauge->GetRate() - m_rate;
 	if (MyMath::Abs(lerp) < 0.001f)
 		m_rate = m_gauge->GetRate();
@@ -96,6 +87,13 @@ void GaugeShow::Draw()
 		lerp *= MyMath::Clamp(kGaugeLerp * deltaTime,0.0f,1.0f);
 	m_rate += lerp;
 	}
+}
+
+void GaugeShow::Draw()
+{
+	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frameHandle, TRUE);
+
+
 	float rate = 1 - m_rate;
 	int sizeX;
 	int sizeY;

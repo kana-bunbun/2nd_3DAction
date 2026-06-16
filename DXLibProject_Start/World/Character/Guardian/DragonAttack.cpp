@@ -1,5 +1,4 @@
 #include "DragonAttack.h"
-#include"../../../Utility/Time.h"
 namespace {
 	constexpr int kAttackInterval = 1;
 }
@@ -21,9 +20,9 @@ void DragonAttack::Init()
 
 }
 
-void DragonAttack::Update()
+void DragonAttack::Update(float deltaTime)
 {
-	m_attackCount+=Time::GetInstance().GetDeltaTime();
+	m_attackCount+=deltaTime;
 	m_attackFlag = false;
 	if (m_attackCount < kAttackInterval)return;
 	m_attackFlag = true;
