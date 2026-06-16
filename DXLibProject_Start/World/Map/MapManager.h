@@ -67,7 +67,7 @@ public:
 	/// </summary>
 	void RemoveAllRoom();
 
-	void SetFirstWall();
+	//void SetFirstWall();
 	void SetInvalid();
 private:
 	// シングルトンにするのでprivate

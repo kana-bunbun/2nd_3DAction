@@ -34,10 +34,14 @@ void MapCreate::CreateMap()
 
 void MapCreate::CreateFirstArea()
 {
-	//void (*action)(MapTile*) = MapCreate::SetFirstWall;
+	// 関数ポインタを渡してすべてのマスを壁にする
+	std::function<void(MapTile*)>firstWall;
+	firstWall = [&](MapTile* data) {
+		SetFirstWall(data);
+		};
 	// 全てのマスを壁にする
-	//std::function<void(MapTile*)> action = SetFirstWall;
-	MapManager::GetInstance().SetFirstWall();
+	MapManager::GetInstance().ExecuteAllSquare(firstWall);
+	//MapManager::GetInstance().SetFirstWall();
 	AreaData* firstArea = new AreaData(2, 2, MapConst::MAP_SQUARE_WIDTH_COUNT - 4, MapConst::MAP_SQUARE_HEIGHT_COUNT - 4);
 	m_areas.push_back(firstArea);
 }

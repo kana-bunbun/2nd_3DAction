@@ -137,12 +137,3 @@ void RouteSearcher::OpenNodeAroundManhattan(DistanceNodeManhattan* baseNode, int
 		return;
 	}
 }
-//
-//template<typename T>
-//inline bool RouteSearcher::InVector(std::vector<T> vector, T value)
-//{
-//	for (auto Vector& : vector) {
-//		(Vector == value) ? return true : continue;
-//	}
-//	return false;
-//}

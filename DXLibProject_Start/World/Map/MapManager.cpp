@@ -148,23 +148,23 @@ void MapManager::RemoveAllRoom()
     }
 }
 
-void MapManager::SetFirstWall()
-{
-    for (int i = 0; i < m_mapData.size(); i++) {
-        m_mapData[i]->SetTerrain(MapConst::eTerrain::Wall);
-        // 最初の分割線マスを追加
-        int x = static_cast<int>(m_mapData[i]->GetPosX());
-        int y = static_cast<int>(m_mapData[i]->GetPosY());
-        // 外周マスの排除
-        if (x == 0 || x == MapConst::MAP_SQUARE_WIDTH_COUNT - 1 ||
-            y == 0 || y == MapConst::MAP_SQUARE_HEIGHT_COUNT - 1) continue;
-        // 外周から1マス離れたマス以外の排除
-        if (x != 1 && x != MapConst::MAP_SQUARE_WIDTH_COUNT - 2 &&
-            y != 1 && y != MapConst::MAP_SQUARE_HEIGHT_COUNT - 2) continue;
-        // 分割線マスの追加
-        MapCreate::GetInstance().AddDivideLine(m_mapData[i].get());
-    }
-}
+//void MapManager::SetFirstWall()
+//{
+//    for (int i = 0; i < m_mapData.size(); i++) {
+//        m_mapData[i]->SetTerrain(MapConst::eTerrain::Wall);
+//        // 最初の分割線マスを追加
+//        int x = static_cast<int>(m_mapData[i]->GetPosX());
+//        int y = static_cast<int>(m_mapData[i]->GetPosY());
+//        // 外周マスの排除
+//        if (x == 0 || x == MapConst::MAP_SQUARE_WIDTH_COUNT - 1 ||
+//            y == 0 || y == MapConst::MAP_SQUARE_HEIGHT_COUNT - 1) continue;
+//        // 外周から1マス離れたマス以外の排除
+//        if (x != 1 && x != MapConst::MAP_SQUARE_WIDTH_COUNT - 2 &&
+//            y != 1 && y != MapConst::MAP_SQUARE_HEIGHT_COUNT - 2) continue;
+//        // 分割線マスの追加
+//        MapCreate::GetInstance().AddDivideLine(m_mapData[i].get());
+//    }
+//}
 
 void MapManager::SetInvalid()
 {
