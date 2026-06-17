@@ -111,5 +111,5 @@ private:
 
 	std::unique_ptr<MapDraw>m_pMapdraw;
 	std::unique_ptr<FloorBlock>m_pFloor;
-
+	int randomID;
 };

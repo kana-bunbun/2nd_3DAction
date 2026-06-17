@@ -149,7 +149,9 @@
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
-    <ClCompile Include="TileModelAssign.cpp" />
+    <ClCompile Include="World\Map\WallTile.cpp" />
+    <ClCompile Include="World\Map\FloorTile.cpp" />
+    <ClCompile Include="World\Map\TileModelAssign.cpp" />
     <ClCompile Include="World\Map\TileObject.cpp" />
     <ClCompile Include="World\Object\FloorBlock.cpp" />
     <ClCompile Include="World\Map\DistanceNodeManhattanTable.cpp" />
@@ -227,7 +229,9 @@
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
-    <ClInclude Include="TileModelAssign.h" />
+    <ClInclude Include="World\Map\WallTile.h" />
+    <ClInclude Include="World\Map\FloorTile.h" />
+    <ClInclude Include="World\Map\TileModelAssign.h" />
     <ClInclude Include="World\Map\TileObject.h" />
     <ClInclude Include="World\Object\FloorBlock.h" />
     <ClInclude Include="World\Map\DistanceNodeManhattanTable.h" />
@@ -321,9 +325,12 @@
     <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40TurnRight180.FBX" />
     <None Include="Resource\Enemy\Queen\Animation\GastaroidQueen%40Walk.FBX" />
     <None Include="Resource\Enemy\Queen\Animation\Idle.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\JumpAttack.mv1" />
     <None Include="Resource\Enemy\Queen\Animation\Roar.mv1" />
     <None Include="Resource\Enemy\Queen\Animation\Run.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\TailAttack.mv1" />
     <None Include="Resource\Enemy\Queen\Animation\Walk.mv1" />
+    <None Include="Resource\Enemy\Queen\Model.mv1" />
     <None Include="Resource\Enemy\Queen\Queen.mv1" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_BaseColor.png.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga.meta" />

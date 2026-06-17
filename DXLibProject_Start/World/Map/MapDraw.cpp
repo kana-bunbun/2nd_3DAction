@@ -2,6 +2,8 @@
 #include"MapConst.h"
 #include"MapCreate.h"
 #include"MapManager.h"
+#include"TileObject.h"
+#include"FloorTile.h"
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
 #include<DxLib.h>
@@ -9,7 +11,7 @@
 
 namespace {
 	constexpr Vector3 blockSize = { 5.0f,5.0f,0.0f };
-	constexpr Vector3 blockInterval = { blockSize.x /*+ 2.0f*/,blockSize.y /*+ 2.0f*/,0.0f };
+	constexpr Vector3 blockInterval = { blockSize.x,blockSize.y,0.0f };
 	constexpr Vector3 kDrawBlockStart ={
 		-(blockInterval.x* (static_cast<float>(MapConst::MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2)),
 		blockInterval.y* (static_cast<float>(MapConst::MAP_SQUARE_HEIGHT_COUNT) * 0.5f) - (blockInterval.y * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2),
@@ -28,12 +30,30 @@ namespace {
 
 MapDraw::MapDraw():
 	m_markPos(),
-	m_cursorHandle(-1)
+	m_cursorHandle(-1),
+	m_pTiles()
 {
 	m_markPos.Reset();
 	MapManager::GetInstance().Initialize();
 	MapCreate::GetInstance().CreateMap();
 	m_cursorHandle = LoadGraph(kCursorPath);
+	m_pTiles.clear();
+	for (int i = 0; i < MapConst::MAP_SQUARE_HEIGHT_COUNT * MapConst::MAP_SQUARE_HEIGHT_COUNT; i++) {
+		MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(i)->GetSquareData()->GetTerrain();
+		switch (terrain)
+		{
+		case MapConst::eTerrain::Passage:
+		case MapConst::eTerrain::Room:
+			m_pTiles.push_back(std::make_unique<FloorTile>(i, GetTilePosFromID(i)));
+			break;
+		case MapConst::eTerrain::Wall:
+			m_pTiles.push_back(std::make_unique<FloorTile>(i, GetTilePosFromID(i)));
+			break;
+		case MapConst::eTerrain::Invalid:
+		default:
+			continue;
+		}
+	}
 }
 
 MapDraw::~MapDraw()
@@ -95,6 +115,12 @@ void MapDraw::Draw()
 	DrawMap();
 	DrawMiniMap();
 	DrawMark();
+
+	for (auto& tile : m_pTiles) {
+		tile->Update(0);
+		tile->Draw();
+
+	}
 }
 
 void MapDraw::DrawMap()
@@ -164,6 +190,7 @@ void MapDraw::DrawMiniMap()
 	/*		if (InDevideList(MapManager::GetInstance().PositionToID(x, y))) {
 				color = Color::kCyan;
 			}*/
+			int id = MapManager::GetInstance().PositionToID(x, y);
 
 			Vector3 drawBox = kDrawCenter + Vector3(-blockInterval.x * x, blockInterval.y * y, 0.0f) - kDrawBlockStart;
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
@@ -174,6 +201,7 @@ void MapDraw::DrawMiniMap()
 
 		}
 	}
+
 }
 
 bool MapDraw::InDevideList(size_t id)
@@ -193,4 +221,12 @@ void MapDraw::DrawMark()
 	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
 	toMapPos += drawStart;
 	DrawRotaGraph(toMapPos.x, toMapPos.y, 0.20f, m_markPos.rotation.y, m_cursorHandle, TRUE);
+}
+
+Vector3 MapDraw::GetTilePosFromID(int ID)
+{
+	int initPosX = MapManager::GetInstance().IDToPosX(ID);
+	int initPosZ = MapManager::GetInstance().IDToPosY(ID);
+	Vector3 pos(initPosX, 0, initPosZ);
+	return pos * sphereSize*2;
 }

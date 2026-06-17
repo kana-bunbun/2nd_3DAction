@@ -3,6 +3,7 @@
 #include"MapConst.h"
 #include<memory>
 #include<vector>
+
 class TileObject:public GameObject
 {
 public:
@@ -12,13 +13,13 @@ public:
 	void Init()override;
 	void End()override;
 	void Update(float deltaTime)override;
-	void Draw()override;
+	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 
-private:
-	// モデルハンドルの配列
-	std::vector<int>m_modelHandles;
-	// 壁の描画方向の配列
-	std::vector<MapConst::eDirectionFour>m_wallDirections;
+	void SetFloorModel(int modelHandle) { m_modelHandle=modelHandle; }
+
+protected:
+	int m_ID;
+
 };
 

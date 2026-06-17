@@ -162,7 +162,13 @@
     <ClCompile Include="World\Map\TileObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TileModelAssign.cpp">
+    <ClCompile Include="World\Map\TileModelAssign.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Map\FloorTile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Map\WallTile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -404,7 +410,13 @@
     <ClInclude Include="World\Map\TileObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="TileModelAssign.h">
+    <ClInclude Include="World\Map\TileModelAssign.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Map\FloorTile.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Map\WallTile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -464,6 +476,9 @@
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
     <None Include="Resource\Cube_Grass_Single.mv1" />
     <None Include="Resource\UI\MapPlayerCursor.psd" />
+    <None Include="Resource\Enemy\Queen\Animation\JumpAttack.mv1" />
+    <None Include="Resource\Enemy\Queen\Animation\TailAttack.mv1" />
+    <None Include="Resource\Enemy\Queen\Model.mv1" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

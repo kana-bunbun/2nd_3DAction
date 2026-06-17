@@ -6,7 +6,7 @@ namespace {
 	const char* const kMotionPath = "Animation\\";
 	const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
 	{
-		"Idle.mv1",
+		"GastaroidQueen@Idle.FBX",
 		"Roar.mv1",
 		"Run.mv1",
 		"Walk.mv1",
@@ -14,7 +14,7 @@ namespace {
 		"JumpAttack.mv1",
 		"Damage.mv1",
 		"Death.mv1",
-	};
+	}; 
 	constexpr bool kLoopFrag[static_cast<int>(Status::Queen::Max)]{
 	true,
 	true,
@@ -71,9 +71,7 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-	m_status = Status::Queen::Neutral;
-	// アニメーション再生
-	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
+	
 }
 
 void Enemy::LoadModel()
@@ -83,7 +81,7 @@ void Enemy::LoadModel()
 	// モデルの読み込み
 	m_modelHandle = MV1LoadModel((path + kModelPath).c_str());
 	//MV1SetScale(m_modelHandle, Vector3(kModelScale, kModelScale, kModelScale).ToVECTOR());
-	m_animation.Init(m_modelHandle);
+	//m_animation.Init(m_modelHandle);
 	path += kMotionPath;
 	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
 
@@ -99,27 +97,25 @@ void Enemy::LoadModel()
 		m_animation.AddAnim(m_animHandle[i], i);
 		// インデックスを設定
 		m_animData[i].index = i;
-	}
-
-	// アニメーション初期化
-	//m_animation.Init(m_modelHandle);
-
-	// アニメーションデータの初期化処理
-	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
 		// アニメーションデータのループフラグを設定
 		m_animData[i].isLoop = kLoopFrag[i];
 		// アニメーションデータの割り込み不可能フラグを設定
 		m_animData[i].isForcePlay = kForcePlay[i];
 	}
 
+	// アニメーション初期化
+	m_animation.Init(m_modelHandle);
+
+	m_status = Status::Queen::Neutral;
+	// アニメーション再生
+	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 
 }
 
 void Enemy::Update(float deltaTime)
 {
 	// アニメーション速度を初期化
-	m_animation.SetAnimSpeed();
-
+	UpdateAnimation(deltaTime);
 
 	m_animation.Update(deltaTime);
 	printfDx("Queen\n");
@@ -134,3 +130,35 @@ void Enemy::SetTarget(GameObject* target)
 {
 	m_target = target;
 }
+
+void Enemy::UpdateAnimation(float deltaTime)
+{
+	// アニメーションの更新
+	m_animation.Update(deltaTime);
+	// アニメーションのデバッグ表示
+	//m_animation.Debug();
+	// 割り込み再生またはアニメーション再生中なら処理しない
+	if (m_animation.IsForcePlay() && m_animation.IsPlaying())return;
+	// 次のアニメーションがどれか調べる
+	Status::Queen nextStatus;
+	nextStatus = Status::Queen::Neutral;
+	// アニメーションが終了していればアイドル状態に
+	if (!m_animation.IsPlaying())
+		nextStatus = Status::Queen::Neutral;
+
+	// ステータスが異なっていたらアニメーションの変更
+	if (m_status != nextStatus) {
+		ChangeAnimation(nextStatus);
+	}
+}
+
+void Enemy::ChangeAnimation(const Status::Queen& status)
+{
+	// アニメーションの時間をリセット
+	m_animation.ResetPlayCount();
+	// アニメーションを再生
+	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
+	// ステータスの更新
+	m_status = status;
+}
+

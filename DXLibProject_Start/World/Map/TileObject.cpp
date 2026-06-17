@@ -1,17 +1,13 @@
 #include "TileObject.h"
+#include "../../Utility/Color.h"
 
-TileObject::TileObject():
-	m_modelHandles(),
-	m_wallDirections()
+TileObject::TileObject()
 {
-
 }
 
 TileObject::~TileObject()
 {
-	for (auto& model : m_modelHandles) {
-		MV1DeleteModel(model);
-	}
+	MV1DeleteModel(m_modelHandle);
 }
 
 void TileObject::Init()
@@ -26,10 +22,10 @@ void TileObject::End()
 
 void TileObject::Update(float deltaTime)
 {
-
+	DrawSphere3D(m_transform.position.ToVECTOR(), 10, 10, Color::kYellow, Color::kYellow, TRUE);
 }
 
-void TileObject::Draw()
-{
+void TileObject::ResolveCollision(GameObject& other, const Collision::Result& result)
+{}
 
-}
+

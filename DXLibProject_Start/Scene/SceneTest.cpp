@@ -5,6 +5,7 @@
 #include "../Utility/Input.h"
 #include "../Utility/Color.h"
 #include "../Utility/GameSetting.h"
+#include "../Utility/MyRandom.h"
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
 #include "../Camera/CameraOld.h"
@@ -21,6 +22,8 @@
 #include"../World/Character/CharaGaugeManager.h"
 #include"../World/Character/Enemy/EnemyManager.h"
 #include"../World/Map/MapDraw.h"
+#include"../World/Map/MapCreate.h"
+#include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
 #include<cassert>
 #include <math.h>
@@ -70,7 +73,6 @@ SceneTest::SceneTest() :
 		//m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
 
 	}
-	m_pPlayer = std::make_unique<Player>();
 	m_pBee = std::make_unique<Bee>();
 	m_pBarrier = std::make_unique<Barrier>();
 	m_pUiManager = std::make_unique<UIManager>();
@@ -81,6 +83,13 @@ SceneTest::SceneTest() :
 	m_pMapdraw = std::make_unique<MapDraw>();
 	m_pFloor = std::make_unique<FloorBlock>();
 
+	// 部屋マスの中でランダムなIDを取得
+	std::vector<int>roomID = MapCreate::GetInstance().GetRooms();
+	randomID = roomID[MyRandom::Int(0, roomID.size() - 1)];
+	//取得したマスのIDからマスの座標を計算
+	Vector3 initPos = m_pMapdraw->GetTilePosFromID(randomID);
+	// ランダムな部屋マスにプレイヤーを生成
+	m_pPlayer = std::make_unique<Player>(initPos);
 }
 
 SceneTest::~SceneTest() {}
@@ -221,7 +230,7 @@ void SceneTest::Draw() {
 		m_pUiManager->Draw();
 	}
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
-
+	printfDx("randomID : %d\n", randomID);
 
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意

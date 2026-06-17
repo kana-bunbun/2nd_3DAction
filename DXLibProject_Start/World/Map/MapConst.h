@@ -7,7 +7,7 @@ namespace MapConst{
 	const int AREA_DIVIDE_MAX = 6;
 	const int AREA_DIVIDE_MIN = 3;
 	// 最小部屋サイズ
-	const int _MIN_ROOM_SIZE = 3;
+	const int _MIN_ROOM_SIZE = 6;
 
 	enum class eTerrain {
 		Invalid = -1,	// 無効な値

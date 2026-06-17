@@ -88,6 +88,9 @@ public:
 	// 分割線のマスのIDリスト
 	const std::vector<int>& GetDivideLine(){ return m_divideLines; }
 	bool IsDivideLine(SquareData* tile);
+	// 部屋マスのIDの配列を取得GrassManager
+	std::vector<int> GetRooms() { return m_rooms; }
+
 private:
 
 	// シングルトンなのでprivate
@@ -105,5 +108,6 @@ private:
 	std::vector<AreaData*> m_areas;
 	// 分割線のマスのIDリスト
 	std::vector<int> m_divideLines;
-	// エリアの分割回数
+	std::vector<int>m_rooms;
+
 };

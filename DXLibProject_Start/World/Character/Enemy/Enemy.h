@@ -28,7 +28,8 @@ public:
 
 	void SetModelHandle(int modelHandle);
 	void SetTarget(GameObject* target);
-
+	void UpdateAnimation(float deltaTime);
+	void ChangeAnimation(const Status::Queen& status);
 public:		// ゲッター・セッター関数
 private:
 	/// <summary>

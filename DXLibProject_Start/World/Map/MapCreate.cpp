@@ -180,7 +180,7 @@ void MapCreate::CreateRoom(AreaData* area)
 	int startX = area->startX + MyRandom::Int(1, xRandomRange-1);
 	int startY = area->startY + MyRandom::Int(1, yRandomRange-1);
 	// 部屋の生成
-	std::vector<int>rooms;
+	m_rooms.clear();
 	for (int y = 0; y < roomheight; y++)
 	{
 		for (int x = 0; x < roomWidth; x++)
@@ -189,10 +189,10 @@ void MapCreate::CreateRoom(AreaData* area)
 			if (!square) continue;
 			// マスを部屋地形に変更
 			square->SetTerrain(MapConst::eTerrain::Room);
-			rooms.push_back(square->GetSquareData()->GetID());
+			m_rooms.push_back(square->GetSquareData()->GetID());
 		}
 	}
-	MapManager::GetInstance().AddRoom(rooms);
+	MapManager::GetInstance().AddRoom(m_rooms);
 }
 
 void MapCreate::ConnectAllRoom()

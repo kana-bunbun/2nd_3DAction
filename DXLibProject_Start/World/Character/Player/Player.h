@@ -16,6 +16,7 @@ public:
 	/// プレイヤーのコンストラクタ
 	/// </summary>
 	Player();
+	Player(Vector3 position);
 	/// <summary>
 	/// プレイヤーのデストラクタ
 	/// </summary>
@@ -55,7 +56,7 @@ public:
 	/// <summary>
 	/// アニメーションの変更を行う処理
 	/// </summary>
-	void ChangeAnimation(Status::Player& status);
+	void ChangeAnimation(const Status::Player& status);
 	/// <summary>
 	/// 衝突処理
 	/// </summary>
@@ -65,7 +66,7 @@ public:
 	void SetCameraAngle(const Vector3& position);
 
 	float CameraRotaY();
-
+	void SetFirstPos(const Vector3& pos) { m_transform.position = pos; }
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>

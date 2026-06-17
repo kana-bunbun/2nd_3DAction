@@ -91,6 +91,42 @@ Player::Player() :
 	
 }
 
+Player::Player(Vector3 position) :
+	m_animation(),
+	m_animData(),
+	m_status(),
+	m_animHandle(),
+	m_speed(0),
+	m_desireRad(0),
+	m_move(),
+	m_parry(false),
+	m_pBarrier(nullptr),
+	m_dashFlag(false),
+	m_isGroud(true),
+	m_isJump(false),
+	m_gauges()
+{
+	// モデルの設定
+	LoadModel();
+	// トランスフォームの初期化処理
+	m_transform.Reset();
+	// 移動時の角度の補間割合を設定
+	m_move.SetLerpSpeed(kLerpModelRadian);
+	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
+	// カプセルの初期化
+	m_capsule = Collision::Capsule(m_transform, kCapsuleRadius, kCapsuleLength);
+	// カプセルのオフセットを計算
+	m_capsule.SetOffset(kCapsuleOffset);
+	// ゲージの初期化
+	for (int i = 0; i < GaugeType::Max; i++) {
+		m_gauges.emplace_back(std::make_shared<Gauge>());
+	}
+
+
+	m_transform.position = position;
+	m_move.SetTransform(m_transform);
+}
+
 Player::~Player()
 {
 	// アニメーションハンドルの破棄
@@ -136,8 +172,6 @@ void Player::Init()
 
 void Player::LoadModel()
 {
-	// アニメーションの初期化
-	m_animation.Init(GameObject::m_modelHandle);
 	CsvLoader csv("PlayerModelPath.csv");
 	std::vector<std::vector<std::string>>path;
 	path = csv.GetLoadData();
@@ -216,6 +250,7 @@ void Player::Update(float deltaTime)
 	if(m_status!=Status::Player::Parry)
 	m_gauges[GaugeType::MP]->Increase(deltaTime);
 
+	m_animation.Debug();
 }
 
 void Player::UpdateAction()
@@ -315,6 +350,8 @@ void Player::UpdateTransform(float deltaTime)
 	Transform transform = m_move.GetTransform();
 	m_transform.position = transform.position;
 	m_transform.rotation = transform.rotation;
+	printfDx("m_transform position\n");
+	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
 }
 
 void Player::UpdateAnimation(float deltaTime)
@@ -359,7 +396,7 @@ void Player::UpdateFlag()
 		m_parry = false;
 }
 
-void Player::ChangeAnimation(Status::Player& status)
+void Player::ChangeAnimation(const Status::Player& status)
 {
 	// アニメーションの時間をリセット
 	m_animation.ResetPlayCount();
