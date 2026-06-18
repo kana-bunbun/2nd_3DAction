@@ -1,6 +1,8 @@
 #include "TileObject.h"
 #include "../../Utility/Color.h"
-
+namespace {
+	constexpr Vector3 kFloorSize = { MapConst::kFloorScale,MapConst::kFloorScale ,MapConst::kFloorScale };
+}
 TileObject::TileObject()
 {
 }
@@ -22,10 +24,18 @@ void TileObject::End()
 
 void TileObject::Update(float deltaTime)
 {
-	DrawSphere3D(m_transform.position.ToVECTOR(), 10, 10, Color::kYellow, Color::kYellow, TRUE);
 }
 
 void TileObject::ResolveCollision(GameObject& other, const Collision::Result& result)
 {}
+
+void TileObject::SetFloorModel(int modelHandle)
+{
+	m_modelHandle = modelHandle;
+	MV1SetScale(m_modelHandle, kFloorSize.ToVECTOR());
+	// 読み込んだ値を元にエミッシブカラーを設定
+	COLOR_F color = { 0.1f,0.1f,0.1f,1.0f };
+	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+}
 
 

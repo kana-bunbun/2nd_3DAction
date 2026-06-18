@@ -56,9 +56,7 @@ void Barrier::Update(float deltaTime)
 
 void Barrier::Draw()
 {
-	TimeManager::SetTimeScale(1.0f);
 	if (!m_alpha)return;
-	TimeManager::SetTimeScale(0.3f);
 	MATERIALPARAM Material;
 	// マテリアルの設定
 	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);

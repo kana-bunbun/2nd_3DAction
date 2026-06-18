@@ -171,6 +171,12 @@
     <ClCompile Include="World\Map\WallTile.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\GameObjectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Character\Guardian\DragonBreath.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -419,6 +425,12 @@
     <ClInclude Include="World\Map\WallTile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="World\GameObjectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Character\Guardian\DragonBreath.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -479,6 +491,8 @@
     <None Include="Resource\Enemy\Queen\Animation\JumpAttack.mv1" />
     <None Include="Resource\Enemy\Queen\Animation\TailAttack.mv1" />
     <None Include="Resource\Enemy\Queen\Model.mv1" />
+    <None Include="Resource\Map\floor.fbx" />
+    <None Include="Resource\Map\wall.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

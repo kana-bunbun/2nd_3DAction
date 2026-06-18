@@ -78,6 +78,11 @@ MapTile* MapManager::GetToDirSquare(int x, int y, MapConst::eDirectionFour direc
     MapTile* result = GetTile(x, y);
     return result;
 }
+MapTile* MapManager::GetToDirSquare(int ID, MapConst::eDirectionFour direction)
+{
+    int beforeX = IDToPosX(ID), beforeY = IDToPosY(ID);
+    return GetToDirSquare(beforeX,beforeY,direction);
+}
 
 void MapManager::ToDirPosition(int& x, int& y, MapConst::eDirectionFour direction)
 {

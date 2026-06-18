@@ -16,7 +16,7 @@ public:
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
 
 
-	void SetFloorModel(int modelHandle) { m_modelHandle=modelHandle; }
+	void SetFloorModel(int modelHandle);
 
 protected:
 	int m_ID;

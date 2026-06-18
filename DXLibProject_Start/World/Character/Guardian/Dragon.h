@@ -5,6 +5,7 @@
 #include"DragonAttack.h"
 #include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
+#include<array>
 namespace {
 	enum FollowState {
 		Normal,
@@ -13,6 +14,7 @@ namespace {
 }
 class Player;
 class DragonAttack;
+class DragonBreath;
 class Dragon:public GameObject
 {
 public:
@@ -53,6 +55,7 @@ private:
 	/// </summary>
 	void ChangeAnimation(const Status::Dragon& status);
 
+	void Breath();
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -79,5 +82,8 @@ private:
 	bool m_canAttackFlag;
 	float m_speed;
 	std::shared_ptr<Gauge> m_gauge;
+
+	std::array<std::unique_ptr<DragonBreath>,10> m_breath;
+
 };
 

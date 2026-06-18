@@ -24,4 +24,7 @@ namespace MapConst{
 		Max
 
 	};
+	constexpr float kTileSize = 300;
+	constexpr float kWallScale = 0.75f;
+	constexpr float kFloorScale = 1.498f;
 }

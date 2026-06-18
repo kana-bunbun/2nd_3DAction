@@ -7,7 +7,7 @@ public:
 	~FloorTile();
 
 	void ResolveCollision(GameObject& other, const Collision::Result& result);
-
+	void Draw()override;
 private:
 };
 

@@ -37,9 +37,14 @@ public:
 	/// </summary>
 	MapTile* GetTile(int posX, int posY);
 	/// <summary>
-	/// 指定座標のマスから見た指定方向マスのポインタ取得
+	/// 指定座標のマスから見た指定方向マスのポインタ取得(マス座標指定)
 	/// </summary>
 	MapTile* GetToDirSquare(int x, int y, MapConst::eDirectionFour direction);
+	/// <summary>
+	/// 指定座標のマスから見た指定方向マスのポインタ取得(ID指定)
+	/// </summary>
+	MapTile* GetToDirSquare(int ID, MapConst::eDirectionFour direction);
+
 		/// <summary>
 	/// 指定した座標から指定した方向にあるマスの座標取得
 	/// </summary>

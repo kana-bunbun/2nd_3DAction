@@ -149,6 +149,8 @@
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
+    <ClCompile Include="World\Character\Guardian\DragonBreath.cpp" />
+    <ClCompile Include="World\GameObjectManager.cpp" />
     <ClCompile Include="World\Map\WallTile.cpp" />
     <ClCompile Include="World\Map\FloorTile.cpp" />
     <ClCompile Include="World\Map\TileModelAssign.cpp" />
@@ -229,6 +231,8 @@
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
+    <ClInclude Include="World\Character\Guardian\DragonBreath.h" />
+    <ClInclude Include="World\GameObjectManager.h" />
     <ClInclude Include="World\Map\WallTile.h" />
     <ClInclude Include="World\Map\FloorTile.h" />
     <ClInclude Include="World\Map\TileModelAssign.h" />
@@ -336,6 +340,8 @@
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
+    <None Include="Resource\Map\floor.fbx" />
+    <None Include="Resource\Map\wall.fbx" />
     <None Include="Resource\UI\HPFrame.psd" />
     <None Include="Resource\UI\HPGauge.psd" />
     <None Include="Resource\UI\HPGaugeBody.psd" />

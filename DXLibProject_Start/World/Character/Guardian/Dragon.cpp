@@ -6,7 +6,9 @@
 #include"../AnimatioController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
+#include"DragonBreath.h"
 #include"../../../Utility/Input.h"
+
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
 	const char* const kModelPath = "Model.mv1";
@@ -81,7 +83,8 @@ Dragon::Dragon() :
 	m_attack(),
 	m_attackFlag(false),
 	m_canAttackFlag(false),
-	m_speed()
+	m_speed(),
+	m_breath()
 {
 	m_transform.Reset();
 
@@ -116,6 +119,11 @@ Dragon::Dragon() :
 	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
 	m_gauge = std::make_shared<Gauge>(300,300,0);
+
+	// ブレスの初期化
+	for (auto& breath : m_breath) {
+		breath = std::make_unique<DragonBreath>();
+	}
 }
 
 Dragon::~Dragon()
@@ -190,7 +198,10 @@ void Dragon::Update(float deltaTime)
 		printfDx("Dゲージ最大量 : %f\n", m_gauge->GetMax());
 		printfDx("Dゲージ割合 : %f\n", m_gauge->GetRate());
 	
-
+		for (auto& breath : m_breath) {
+			breath->Update(deltaTime);
+			breath->Draw();
+		}
 }
 
 void Dragon::FollowUpdate(float deltaTime)
@@ -217,6 +228,16 @@ void Dragon::AttackUpdate(float deltaTime)
 	if (m_animation.GetPlayCount() > 6) {
 		// アニメーション速度をゆっくりに
 		m_animation.SetAnimSpeed(0.3f);
+
+		if (m_animation.CheckOverMoment(9) ||
+			m_animation.CheckOverMoment(12) ||
+			m_animation.CheckOverMoment(15) ||
+			m_animation.CheckOverMoment(18) ||
+			m_animation.CheckOverMoment(21) ||
+			m_animation.CheckOverMoment(24)) {
+
+		}
+
 	}
 	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
@@ -394,5 +415,21 @@ void Dragon::ChangeAnimation(const Status::Dragon & status)
 	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
 	// ステータスの更新
 	m_status = status;
+}
+
+void Dragon::Breath()
+{
+	Vector3 pos1, pos2;
+	VECTOR POS1 = MV1GetFramePosition(m_modelHandle, 6), POS2 = MV1GetFramePosition(m_modelHandle, 11);
+	pos1 = { POS1.x,POS1.y,POS1.z };
+	pos2 = { POS2.x,POS2.y,POS2.z };
+	Vector3 rotation;
+	Vector3 differ = pos1 - pos2;
+	rotation.y = atan2(differ.x, differ.z);
+	float holizontalLength = Vector3(differ.x, 0, differ.z).GetLength();
+	rotation.x = atan2(holizontalLength, differ.y);
+	for (int i = 0; i < m_breath.size(); i++) {
+		//m_breath[i]->Init()
+	}
 }
 
