@@ -229,13 +229,33 @@ void Dragon::AttackUpdate(float deltaTime)
 		// アニメーション速度をゆっくりに
 		m_animation.SetAnimSpeed(0.3f);
 
-		if (m_animation.CheckOverMoment(9) ||
-			m_animation.CheckOverMoment(12) ||
-			m_animation.CheckOverMoment(15) ||
-			m_animation.CheckOverMoment(18) ||
-			m_animation.CheckOverMoment(21) ||
-			m_animation.CheckOverMoment(24)) {
-
+		if (m_animation.CheckOverMoment(12.0f) ||
+			m_animation.CheckOverMoment(12.5f) ||
+			m_animation.CheckOverMoment(13.0f) ||
+			m_animation.CheckOverMoment(13.5f) ||
+			m_animation.CheckOverMoment(14.0f) ||
+			m_animation.CheckOverMoment(14.5f) ||
+			m_animation.CheckOverMoment(15.0f) ||
+			m_animation.CheckOverMoment(15.5f) ||
+			m_animation.CheckOverMoment(16.0f) ||
+			m_animation.CheckOverMoment(16.5f) ||
+			m_animation.CheckOverMoment(17.0f) ||
+			m_animation.CheckOverMoment(17.5f) ||
+			m_animation.CheckOverMoment(18.0f) ||
+			m_animation.CheckOverMoment(18.5f) ||
+			m_animation.CheckOverMoment(19.0f) ||
+			m_animation.CheckOverMoment(19.5f) ||
+			m_animation.CheckOverMoment(20.0f) ||
+			m_animation.CheckOverMoment(20.5f) ||
+			m_animation.CheckOverMoment(21.0f) ||
+			m_animation.CheckOverMoment(21.5f) ||
+			m_animation.CheckOverMoment(22.0f) ||
+			m_animation.CheckOverMoment(22.5f) ||
+			m_animation.CheckOverMoment(23.0f) ||
+			m_animation.CheckOverMoment(23.5f) ||
+			m_animation.CheckOverMoment(24.0f) ||
+			m_animation.CheckOverMoment(24.5f)) {
+			Breath();
 		}
 
 	}
@@ -419,17 +439,20 @@ void Dragon::ChangeAnimation(const Status::Dragon & status)
 
 void Dragon::Breath()
 {
-	Vector3 pos1, pos2;
-	VECTOR POS1 = MV1GetFramePosition(m_modelHandle, 6), POS2 = MV1GetFramePosition(m_modelHandle, 11);
-	pos1 = { POS1.x,POS1.y,POS1.z };
-	pos2 = { POS2.x,POS2.y,POS2.z };
-	Vector3 rotation;
-	Vector3 differ = pos1 - pos2;
-	rotation.y = atan2(differ.x, differ.z);
-	float holizontalLength = Vector3(differ.x, 0, differ.z).GetLength();
-	rotation.x = atan2(holizontalLength, differ.y);
+	// VECTOR型の座標を取得
+	VECTOR headPos = MV1GetFramePosition(m_modelHandle, 6), firePos = MV1GetFramePosition(m_modelHandle, 11);
+	// Vector3型に変換
+	Vector3 head, fire;
+	head = { headPos.x,headPos.y,headPos.z };
+	fire = { firePos.x,firePos.y,firePos.z };
+	// 座標の差を求める
+	Vector3 differ = fire - head;
 	for (int i = 0; i < m_breath.size(); i++) {
-		//m_breath[i]->Init()
+		// 生成済みならスキップ
+		if (m_breath[i]->IsActive())continue;
+		// ブレスを1つ生成
+		m_breath[i]->Init(fire, differ);
+		break;
 	}
 }
 

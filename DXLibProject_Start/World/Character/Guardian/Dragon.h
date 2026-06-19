@@ -83,7 +83,7 @@ private:
 	float m_speed;
 	std::shared_ptr<Gauge> m_gauge;
 
-	std::array<std::unique_ptr<DragonBreath>,10> m_breath;
+	std::array<std::unique_ptr<DragonBreath>,30> m_breath;
 
 };
 

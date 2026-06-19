@@ -14,11 +14,12 @@
 
 namespace {
 	// モデルのファイルパス
-	const char* const kModelPath = "Resource\\Bee.mv1";
+	const char* const kModelPath = "Resource\\testbox.mv1";
 	// 初期座標
 	constexpr Vector3 kInitPos = { -200,0.0f,0.0f };
 	// モデルの大きさ
-	constexpr Vector3 kModelScale = { 1.0f,1.0f,1.0f };
+	constexpr Vector3 kModelScale = { 0.01f,0.01f,0.01f };
+	//constexpr Vector3 kModelScale = { 1.0f,1.0f,1.0f };
 	// 当たり判定の大きさ
 	constexpr Vector3 kCollisionSize = { 170.0f,170.0f,170.0f };
 	// 当たり判定の座標
@@ -73,6 +74,7 @@ void Bee::Init()
 		kCollisionOffset,
 		kCollisionSize
 	);
+	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 }
 
 void Bee::Update(float deltaTime)

@@ -84,6 +84,10 @@ void MapDraw::Draw()
 		tile->Draw();
 
 	}
+	int id=GetIDFromWorldPos(m_markPos.position);
+	Vector3 pos=GetTilePosFromID(id);
+	DrawSphere3D(pos.ToVECTOR(), 150, 10, 0xff00ff, 0xff00ff, TRUE);
+
 	DrawMiniMap();
 	DrawMark();
 }
@@ -194,4 +198,11 @@ Vector3 MapDraw::GetTilePosFromID(int ID)
 	int initPosZ = MapManager::GetInstance().IDToPosY(ID);
 	Vector3 pos(initPosX, 0, initPosZ);
 	return pos * MapConst::kTileSize *2;
+}
+
+int MapDraw::GetIDFromWorldPos(Vector3 position)
+{
+	int posX = (position.x-MapConst::kTileSize) / (MapConst::kTileSize*2);
+	int posZ = (position.z-MapConst::kTileSize) / (MapConst::kTileSize * 2);
+	return MapManager::GetInstance().PositionToID(posX,posZ);
 }

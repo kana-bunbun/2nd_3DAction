@@ -201,6 +201,7 @@
     <ClCompile Include="Utility\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\4限\Probuilder\Assets\GridBox_Default.png" />
     <Image Include="Image\Cloud.png" />
     <Image Include="Resource\ChaWitch\Textures\Cha_Witch.png" />
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_BaseColor.png" />

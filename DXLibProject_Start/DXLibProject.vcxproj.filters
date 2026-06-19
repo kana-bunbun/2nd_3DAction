@@ -249,6 +249,9 @@
     <Image Include="Resource\UI\MapPlayerCursor.png">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="..\..\4限\Probuilder\Assets\GridBox_Default.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\Game.h">

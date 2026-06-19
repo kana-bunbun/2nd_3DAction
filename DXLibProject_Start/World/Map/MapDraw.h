@@ -17,6 +17,7 @@ public:
 	void DrawMark();
 	void SetMarkPos(Transform markPos) { m_markPos = markPos; }
 	Vector3 GetTilePosFromID(int ID);
+	int GetIDFromWorldPos(Vector3 position);
 
 private:
 	Transform m_markPos;

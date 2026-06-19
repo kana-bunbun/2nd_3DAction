@@ -2,6 +2,7 @@
 #include "MapConst.h"
 #include "MapManager.h"
 #include "MapTile.h"
+#include "../Component/Collision.h"
 
 namespace {
 	constexpr float kWallDistance = MapConst::kTileSize * (0.5f);
@@ -24,6 +25,10 @@ WallTile::WallTile(int ID, Vector3 position) :
 		if(!tile||tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
 		RegistWallPos(direction);
 	}
+	Vector3 size = { MapConst::kTileSize,MapConst::kTileSize,MapConst::kTileSize };
+	size *= 0.5f;
+	m_collision = std::make_unique<Collision::AABB>(Vector3::zero, size);
+	m_collision->SetPosition(m_transform.position);
 }
 
 WallTile::~WallTile()
@@ -43,6 +48,13 @@ void WallTile::Draw()
 		MV1SetPosition(m_wallHandle, wallPos.position.ToVECTOR());
 		MV1DrawModel(m_wallHandle);
 	}
+	Vector3 ps = m_transform.position*0.5f;
+	m_collision->SetPosition(m_transform.position);
+	DrawSphere3D(m_transform.position.ToVECTOR(), 20, 10, 0xffff00, 0xffff00, TRUE);
+	m_collision->DebugDraw();
+	Vector3 colpos=m_collision->GetPos();
+	printfDx("      colPos X : %f | Y : %f | Z : %f\n", colpos.x, colpos.y, colpos.z);
+	printfDx("transformPos X : %f | Y : %f | Z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelHandle == -1)return;
 	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
