@@ -26,8 +26,9 @@ void MapCreate::CreateMap()
 
 	// 全部屋を連結
 	ConnectAllRoom();
-	// 階段を置く
-
+	// 通行可能マスを調べる
+	CheckPassableID();
+	// 余計な壁マスを空白マスにする
 	MapManager::GetInstance().SetInvalid();
 
 }
@@ -41,7 +42,6 @@ void MapCreate::CreateFirstArea()
 		};
 	// 全てのマスを壁にする
 	MapManager::GetInstance().ExecuteAllSquare(firstWall);
-	//MapManager::GetInstance().SetFirstWall();
 	AreaData* firstArea = new AreaData(2, 2, MapConst::MAP_SQUARE_WIDTH_COUNT - 4, MapConst::MAP_SQUARE_HEIGHT_COUNT - 4);
 	m_areas.push_back(firstArea);
 }
@@ -283,14 +283,24 @@ void MapCreate::ConnectDivideLine(int sartId, int goalId)
 	}
 }
 
+void MapCreate::CheckPassableID()
+{
+	// 配列をリセット
+	m_passableID.clear();
+	// タイルの最大数を取得
+	int tileNum = MapManager::GetInstance().GetTileMaxNum();
+	for (int i = 0; i < tileNum; i++) {
+		// タイルの種類を取得
+		MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(i)->GetSquareData()->GetTerrain();
+
+		// 通路マスまたは部屋マスの時のみ処理を行う
+		if (terrain != MapConst::eTerrain::Passage && terrain != MapConst::eTerrain::Room)continue;
+		// 配列に追加
+		m_passableID.push_back(i);
+	}
+}
+
 bool MapCreate::IsDivideLine(SquareData* tile)
 {
-
-	//for ( const auto& hoge: m_divideLines) {
-
-
-	//	hoge == 
-	//}
-
 	return std::find(m_divideLines.begin(), m_divideLines.end(), tile->GetID()) != m_divideLines.end();
 }

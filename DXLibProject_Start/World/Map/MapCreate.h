@@ -81,15 +81,25 @@ public:
 	/// 分割線上で指定した座標同士の経路をつなぐ
 	/// </summary>
 	void ConnectDivideLine(int sartId, int goalId);
-
-
+	/// <summary>
+	/// 通行可能マスを調べる
+	/// </summary>
+	void CheckPassableID();
 	const std::vector<AreaData*>& GetAreaData() { return m_areas; }
 
 	// 分割線のマスのIDリスト
 	const std::vector<int>& GetDivideLine(){ return m_divideLines; }
 	bool IsDivideLine(SquareData* tile);
-	// 部屋マスのIDの配列を取得GrassManager
-	std::vector<int> GetRooms() { return m_rooms; }
+
+public:
+	/// <summary>
+	/// 通行可能なマスの取得
+	/// </summary>
+	const std::vector<int>& GetPassable()const { return m_passableID; }
+	/// <summary>
+	/// 部屋マスのIDの配列を取得
+	/// </summary>
+	const std::vector<int>& GetRooms()const { return m_rooms; }
 
 private:
 
@@ -108,6 +118,8 @@ private:
 	std::vector<AreaData*> m_areas;
 	// 分割線のマスのIDリスト
 	std::vector<int> m_divideLines;
+	// 部屋マスのID
 	std::vector<int>m_rooms;
-
+	// 通行可能マスのID
+	std::vector<int>m_passableID;
 };
