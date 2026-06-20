@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\BillboardManager.cpp" />
     <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FollowCamera.cpp" />
@@ -211,6 +212,7 @@
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png" />
     <Image Include="Resource\main.png" />
     <Image Include="Resource\title.jpeg" />
+    <Image Include="Resource\UI\BillboardText_Stair.png" />
     <Image Include="Resource\UI\DoragonFace.png" />
     <Image Include="Resource\UI\FaceBack.png" />
     <Image Include="Resource\UI\GaugeBack.png" />
@@ -229,6 +231,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\UI\BillboardManager.h" />
     <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FollowCamera.h" />

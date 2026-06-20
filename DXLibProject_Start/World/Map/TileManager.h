@@ -4,6 +4,7 @@
 #include<memory>
 #include<vector>
 class TileObject;
+class Stair;
 class TileManager
 {
 public:
@@ -16,6 +17,8 @@ public:
 	void DrawMark();
 	void SetMarkPos(Transform markPos) { m_markPos = markPos; }
 
+	int RandomPassableID();
+	int RandomRoomID();
 
 private:
 	Transform m_markPos;
@@ -23,5 +26,6 @@ private:
 	std::vector<std::unique_ptr<TileObject>> m_pTiles;
 	int m_floorHandle;
 	int m_wallHandle;
+	std::unique_ptr<Stair>stair;
 };
 

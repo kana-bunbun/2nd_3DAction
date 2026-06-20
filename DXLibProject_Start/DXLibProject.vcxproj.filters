@@ -180,6 +180,9 @@
     <ClCompile Include="World\Object\Stair.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\UI\BillboardManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -253,6 +256,9 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="..\..\4限\Probuilder\Assets\GridBox_Default.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\BillboardText_Stair.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -438,6 +444,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Object\Stair.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\BillboardManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

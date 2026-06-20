@@ -5,6 +5,7 @@
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
 #include"System/TimeManager.h"
+#include"World/UI/BillboardManager.h"
 #include<memory>
 
 
@@ -33,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MyRandom::Init();
 	Input::Init();
 	TimeManager::Init();
-
+	BillboardManager::GetInstance().Init();
 
 	// シーン制御のポインタを生成
 	std::unique_ptr<SceneManager> pSceneMgr;

@@ -23,7 +23,7 @@ private:
 	};
 public:
 	static MapCreate& GetInstance();
-	/// <summary>
+	~MapCreate();
 	/// マップ生成処理
 	/// </summary>
 	void CreateMap();
@@ -115,7 +115,7 @@ private:
 	MapCreate& operator=(const MapCreate&&) = delete;
 private:
 	// エリアの配列
-	std::vector<AreaData*> m_areas;
+	std::vector < AreaData* > m_areas;
 	// 分割線のマスのIDリスト
 	std::vector<int> m_divideLines;
 	// 部屋マスのID

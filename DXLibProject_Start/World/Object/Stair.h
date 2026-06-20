@@ -5,6 +5,7 @@
 /// </summary>
 class Stair:public GameObject
 {
+public:
 	Stair();
 	~Stair();
 
@@ -17,6 +18,6 @@ class Stair:public GameObject
 	/// </summary>
 	/// <param name="tileID">タイルのID</param>
 	void SetTile(int tileID);
-
+private:
 };
 

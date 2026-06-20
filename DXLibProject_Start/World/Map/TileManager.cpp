@@ -7,6 +7,8 @@
 #include"WallTile.h"
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
+#include"../../Utility/MyRandom.h"
+#include"../Object/Stair.h"
 #include<DxLib.h>
 #include<vector>
 
@@ -33,7 +35,8 @@ namespace {
 TileManager::TileManager():
 	m_markPos(),
 	m_cursorHandle(-1),
-	m_pTiles()
+	m_pTiles(),
+	stair(nullptr)
 {
 	
 	m_markPos.Reset();
@@ -71,6 +74,8 @@ TileManager::TileManager():
 			continue;
 		}
 	}
+	stair = std::make_unique<Stair>();
+	stair->SetTile(RandomRoomID());
 }
 
 TileManager::~TileManager()
@@ -86,11 +91,14 @@ void TileManager::Draw()
 	for (auto& tile : m_pTiles) {
 		tile->Draw();
 	}
+	if (stair) {
+		stair->Update(0);
+	}
 
 	// デバッグでプレイヤーのいるマスを取得・描画=====
 	int id=MapManager::GetInstance().GetIDFromWorldPos(m_markPos.position);
 	Vector3 pos= MapManager::GetInstance().GetWorldPosFromID(id);
-	DrawSphere3D(pos.ToVECTOR(), 150, 10, 0xff00ff, 0xff00ff, TRUE);
+	DrawSphere3D(pos.ToVECTOR(), 30, 10, 0xff00ff, 0xff00ff, TRUE);
 	// =================================================
 
 	// ミニマップ描画
@@ -155,4 +163,18 @@ void TileManager::DrawMark()
 	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
 	toMapPos += drawStart;
 	DrawRotaGraph(toMapPos.x, toMapPos.y, 0.20f, m_markPos.rotation.y, m_cursorHandle, TRUE);
+}
+
+int TileManager::RandomPassableID()
+{
+	std::vector<int> passableID = MapCreate::GetInstance().GetPassable();
+	int random = MyRandom::Int(0, passableID.size() - 1);
+	return passableID[random];
+}
+
+int TileManager::RandomRoomID()
+{
+	std::vector<int> roomID = MapCreate::GetInstance().GetRooms();
+	int random = MyRandom::Int(0, roomID.size() - 1);
+	return roomID[random];
 }

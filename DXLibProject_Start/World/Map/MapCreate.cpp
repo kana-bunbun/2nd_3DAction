@@ -15,6 +15,15 @@ MapCreate& MapCreate::GetInstance()
 	return instance;
 }
 
+MapCreate::~MapCreate()
+{
+	for (auto& area : m_areas) {
+		if (!area)continue;
+		delete area;
+		area = nullptr;
+	}
+}
+
 void MapCreate::CreateMap()
 {
 	// 最初のエリアを生成
