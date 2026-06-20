@@ -53,8 +53,6 @@ void WallTile::Draw()
 	DrawSphere3D(m_transform.position.ToVECTOR(), 20, 10, 0xffff00, 0xffff00, TRUE);
 	m_collision->DebugDraw();
 	Vector3 colpos=m_collision->GetPos();
-	printfDx("      colPos X : %f | Y : %f | Z : %f\n", colpos.x, colpos.y, colpos.z);
-	printfDx("transformPos X : %f | Y : %f | Z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelHandle == -1)return;
 	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
