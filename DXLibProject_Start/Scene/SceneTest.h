@@ -26,7 +26,7 @@ class EnemyManager;
 class Bee;
 class Barrier;
 class UIManager;
-class MapDraw;
+class TileManager;
 class FloorBlock;
 //
 //namespace Collision {
@@ -109,7 +109,7 @@ private:
 	std::unique_ptr<Barrier>m_pBarrier;
 	std::unique_ptr<UIManager>m_pUiManager;
 
-	std::unique_ptr<MapDraw>m_pMapdraw;
+	std::unique_ptr<TileManager>m_pTileManager;
 	std::unique_ptr<FloorBlock>m_pFloor;
 	int randomID;
 };

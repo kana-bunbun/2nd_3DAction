@@ -71,9 +71,24 @@ public:
 	/// 部屋の破棄
 	/// </summary>
 	void RemoveAllRoom();
-
-	//void SetFirstWall();
+	/// <summary>
+	/// 余計な壁マスを空白マスにする
+	/// </summary>
 	void SetInvalid();
+	/// <summary>
+	/// 指定したIDマスのワールド座標を取得
+	/// </summary>
+	Vector3 GetWorldPosFromID(int ID);
+	/// <summary>
+	/// ワールド座標からマスのIDに変換する
+	/// </summary>
+	int GetIDFromWorldPos(Vector3 position);
+
+public:
+	/// <summary>
+	/// タイルの最大数を取得
+	/// </summary>
+	int GetTileMaxNum() { return m_mapData.size(); }
 private:
 	// シングルトンにするのでprivate
 	MapManager() = default;

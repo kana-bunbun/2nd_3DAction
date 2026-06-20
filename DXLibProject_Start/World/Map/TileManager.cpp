@@ -1,4 +1,4 @@
-#include "MapDraw.h"
+#include "TileManager.h"
 #include"MapConst.h"
 #include"MapCreate.h"
 #include"MapManager.h"
@@ -30,16 +30,19 @@ namespace {
 	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
 }
 
-MapDraw::MapDraw():
+TileManager::TileManager():
 	m_markPos(),
 	m_cursorHandle(-1),
 	m_pTiles()
 {
+	
 	m_markPos.Reset();
-	MapManager::GetInstance().Initialize();
-	MapCreate::GetInstance().CreateMap();
-	m_cursorHandle = LoadGraph(kCursorPath);
 	m_pTiles.clear();
+	MapManager::GetInstance().Initialize();
+	
+	MapCreate::GetInstance().CreateMap();
+	
+	m_cursorHandle = LoadGraph(kCursorPath);
 
 	m_wallHandle = MV1LoadModel(kWallPath);
 	m_floorHandle = MV1LoadModel(kFloorPath);
@@ -50,13 +53,13 @@ MapDraw::MapDraw():
 		case MapConst::eTerrain::Passage:
 		case MapConst::eTerrain::Room:
 		{
-			std::unique_ptr<FloorTile> floor = std::make_unique<FloorTile>(i, GetTilePosFromID(i));
+			std::unique_ptr<FloorTile> floor = std::make_unique<FloorTile>(i, MapManager::GetInstance().GetWorldPosFromID(i));
 			floor->SetFloorModel(MV1DuplicateModel(m_floorHandle));
 			m_pTiles.push_back(std::move(floor));
 			break;
 		}
 		case MapConst::eTerrain::Wall: {
-			std::unique_ptr<WallTile> wall = std::make_unique<WallTile>(i, GetTilePosFromID(i));
+			std::unique_ptr<WallTile> wall = std::make_unique<WallTile>(i, MapManager::GetInstance().GetWorldPosFromID(i));
 			wall->SetWallHandle(MV1DuplicateModel(m_wallHandle));
 			wall->SetFloorModel(MV1DuplicateModel(m_floorHandle));
 			//wall->SetPillerHandle(m_pillerHandle);
@@ -70,71 +73,35 @@ MapDraw::MapDraw():
 	}
 }
 
-MapDraw::~MapDraw()
+TileManager::~TileManager()
 {
 	DeleteGraph(m_cursorHandle);
 	MV1DeleteModel(m_floorHandle);
 	MV1DeleteModel(m_wallHandle);
 }
 
-void MapDraw::Draw()
+void TileManager::Draw()
 {
+	// マップの描画処理
 	for (auto& tile : m_pTiles) {
-		tile->Update(0);
 		tile->Draw();
-
 	}
-	int id=GetIDFromWorldPos(m_markPos.position);
-	Vector3 pos=GetTilePosFromID(id);
-	DrawSphere3D(pos.ToVECTOR(), 150, 10, 0xff00ff, 0xff00ff, TRUE);
 
+	// デバッグでプレイヤーのいるマスを取得・描画=====
+	int id=MapManager::GetInstance().GetIDFromWorldPos(m_markPos.position);
+	Vector3 pos= MapManager::GetInstance().GetWorldPosFromID(id);
+	DrawSphere3D(pos.ToVECTOR(), 150, 10, 0xff00ff, 0xff00ff, TRUE);
+	// =================================================
+
+	// ミニマップ描画
 	DrawMiniMap();
+	// ミニマップ上のプレイヤー位置の描画
 	DrawMark();
 }
 
-void MapDraw::DrawMap()
+
+void TileManager::DrawMiniMap()
 {
-	Vector3 pos;
-
-	for (int y = 0; y < MapConst::MAP_SQUARE_HEIGHT_COUNT; y++) {
-		for (int x = 0; x < MapConst::MAP_SQUARE_WIDTH_COUNT; x++) {
-			pos.x = x * MapConst::kTileSize  * 2;
-			pos.y = -MapConst::kTileSize ;
-			pos.z = y * MapConst::kTileSize  * 2;
-			int color = Color::kWhite;
-			MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(MapManager::GetInstance().PositionToID(x, y))->GetSquareData()->GetTerrain();
-			switch (terrain) {
-			case::MapConst::eTerrain::Invalid:
-				continue;
-			case::MapConst::eTerrain::Passage:
-				color = Color::kCyan;
-				break;
-			case::MapConst::eTerrain::Room:
-				color = Color::kBlue;
-				break;
-			case::MapConst::eTerrain::Wall:
-				color = Color::kRed;
-				break;
-			default:
-				color = Color::kBlack;
-
-				break;
-			}
-		
-			DrawSphere3D(pos.ToVECTOR(), MapConst::kTileSize , 10, color, color, true);
-
-		}
-	}
-}
-
-void MapDraw::DrawMiniMap()
-{
-
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	//DrawBox(drawCenter.x - (drawSize.x * 0.5f), drawCenter.y - (drawSize.y * 0.5f),
-	//drawCenter.x + (drawSize.x * 0.5f), drawCenter.y + (drawSize.y * 0.5f),
-	//0x000000, TRUE);
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	for (int y = 0; y < MapConst::MAP_SQUARE_HEIGHT_COUNT; y++) {
 		for (int x = 0; x < MapConst::MAP_SQUARE_WIDTH_COUNT; x++) {
@@ -156,9 +123,7 @@ void MapDraw::DrawMiniMap()
 				color = Color::kBlack;
 				break;
 			}
-	/*		if (InDevideList(MapManager::GetInstance().PositionToID(x, y))) {
-				color = Color::kCyan;
-			}*/
+	
 			int id = MapManager::GetInstance().PositionToID(x, y);
 
 			Vector3 drawBox = kDrawCenter + Vector3(-blockInterval.x * x, blockInterval.y * y, 0.0f) - kDrawBlockStart;
@@ -173,7 +138,7 @@ void MapDraw::DrawMiniMap()
 
 }
 
-bool MapDraw::InDevideList(size_t id)
+bool TileManager::InDevideList(size_t id)
 {
 	std::vector<int >devideLine = MapCreate::GetInstance().GetDivideLine();
 	for (int i = 0; i < devideLine.size(); i++) {
@@ -182,7 +147,7 @@ bool MapDraw::InDevideList(size_t id)
 	return false;
 }
 
-void MapDraw::DrawMark()
+void TileManager::DrawMark()
 {
 	Vector3 drawStart = kDrawCenter - kDrawBlockStart;
 	Vector3 toMapPos=Vector3::zero;
@@ -190,19 +155,4 @@ void MapDraw::DrawMark()
 	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
 	toMapPos += drawStart;
 	DrawRotaGraph(toMapPos.x, toMapPos.y, 0.20f, m_markPos.rotation.y, m_cursorHandle, TRUE);
-}
-
-Vector3 MapDraw::GetTilePosFromID(int ID)
-{
-	int initPosX = MapManager::GetInstance().IDToPosX(ID);
-	int initPosZ = MapManager::GetInstance().IDToPosY(ID);
-	Vector3 pos(initPosX, 0, initPosZ);
-	return pos * MapConst::kTileSize *2;
-}
-
-int MapDraw::GetIDFromWorldPos(Vector3 position)
-{
-	int posX = (position.x-MapConst::kTileSize) / (MapConst::kTileSize*2);
-	int posZ = (position.z-MapConst::kTileSize) / (MapConst::kTileSize * 2);
-	return MapManager::GetInstance().PositionToID(posX,posZ);
 }

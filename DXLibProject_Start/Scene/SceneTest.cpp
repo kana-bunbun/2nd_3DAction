@@ -21,12 +21,11 @@
 #include"../World/UI/UIManager.h"
 #include"../World/Character/CharaGaugeManager.h"
 #include"../World/Character/Enemy/EnemyManager.h"
-#include"../World/Map/MapDraw.h"
+#include"../World/Map/TileManager.h"
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
 #include<cassert>
-#include <math.h>
 #include<memory>
 #include<DxLib.h>
 
@@ -80,14 +79,14 @@ SceneTest::SceneTest() :
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 	m_pEnemyManager = std::make_unique<EnemyManager>();
-	m_pMapdraw = std::make_unique<MapDraw>();
+	m_pTileManager = std::make_unique<TileManager>();
 	m_pFloor = std::make_unique<FloorBlock>();
 
 	// 部屋マスの中でランダムなIDを取得
 	std::vector<int>roomID = MapCreate::GetInstance().GetRooms();
 	randomID = roomID[MyRandom::Int(0, roomID.size() - 1)];
 	//取得したマスのIDからマスの座標を計算
-	Vector3 initPos = m_pMapdraw->GetTilePosFromID(randomID);
+	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 	// ランダムな部屋マスにプレイヤーを生成
 	m_pPlayer = std::make_unique<Player>(initPos);
 }
@@ -124,7 +123,7 @@ void SceneTest::Init() {
 	m_pFloor->Init();
 
 	//Transform* pos = m_pPlayer->GetTransform();
-	m_pMapdraw->SetMarkPos(m_pPlayer->GetTransform());
+	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
@@ -196,7 +195,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	}
 
 
-	m_pMapdraw->SetMarkPos(m_pPlayer->GetTransform());
+	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 
 	// シーン遷移処理
 	//if (シーン切り替えの条件) {
@@ -226,7 +225,7 @@ void SceneTest::Draw() {
 		m_pPlayer->Draw();
 		m_pBarrier->Draw();
 		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
-		m_pMapdraw->Draw();
+		m_pTileManager->Draw();
 		m_pUiManager->Draw();
 	}
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);

@@ -4,20 +4,18 @@
 #include<memory>
 #include<vector>
 class TileObject;
-class MapDraw
+class TileManager
 {
 public:
-	MapDraw();
-	~MapDraw();
+	TileManager();
+	~TileManager();
 
 	void Draw();
-	void DrawMap();
 	void DrawMiniMap();
 	bool InDevideList(size_t id);
 	void DrawMark();
 	void SetMarkPos(Transform markPos) { m_markPos = markPos; }
-	Vector3 GetTilePosFromID(int ID);
-	int GetIDFromWorldPos(Vector3 position);
+
 
 private:
 	Transform m_markPos;
