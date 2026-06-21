@@ -3,8 +3,6 @@
 #include"MapCreate.h"
 #include"MapManager.h"
 #include"TileObject.h"
-#include"FloorTile.h"
-#include"WallTile.h"
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
@@ -38,44 +36,12 @@ TileManager::TileManager():
 	m_pTiles(),
 	stair(nullptr)
 {
-	
-	m_markPos.Reset();
-	m_pTiles.clear();
-	MapManager::GetInstance().Initialize();
-	
-	MapCreate::GetInstance().CreateMap();
-	
 	m_cursorHandle = LoadGraph(kCursorPath);
 
 	m_wallHandle = MV1LoadModel(kWallPath);
 	m_floorHandle = MV1LoadModel(kFloorPath);
-	for (int i = 0; i < MapConst::MAP_SQUARE_HEIGHT_COUNT * MapConst::MAP_SQUARE_HEIGHT_COUNT; i++) {
-		MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(i)->GetSquareData()->GetTerrain();
-		switch (terrain)
-		{
-		case MapConst::eTerrain::Passage:
-		case MapConst::eTerrain::Room:
-		{
-			std::unique_ptr<FloorTile> floor = std::make_unique<FloorTile>(i, MapManager::GetInstance().GetWorldPosFromID(i));
-			floor->SetFloorModel(MV1DuplicateModel(m_floorHandle));
-			m_pTiles.push_back(std::move(floor));
-			break;
-		}
-		case MapConst::eTerrain::Wall: {
-			std::unique_ptr<WallTile> wall = std::make_unique<WallTile>(i, MapManager::GetInstance().GetWorldPosFromID(i));
-			wall->SetWallHandle(MV1DuplicateModel(m_wallHandle));
-			wall->SetFloorModel(MV1DuplicateModel(m_floorHandle));
-			//wall->SetPillerHandle(m_pillerHandle);
-			m_pTiles.push_back(std::move(wall));
-			break;
-		}
-		case MapConst::eTerrain::Invalid:
-		default:
-			continue;
-		}
-	}
 	stair = std::make_unique<Stair>();
-	stair->SetTile(RandomRoomID());
+	SetUpFloor();
 }
 
 TileManager::~TileManager()
@@ -83,6 +49,48 @@ TileManager::~TileManager()
 	DeleteGraph(m_cursorHandle);
 	MV1DeleteModel(m_floorHandle);
 	MV1DeleteModel(m_wallHandle);
+}
+
+void TileManager::SetUpFloor()
+{
+	// 部屋情報の初期化
+	MapManager::GetInstance().Initialize();
+	// マップ生成
+	MapCreate::GetInstance().CreateMap();
+
+	// 
+	for (int i = 0; i < MapConst::MAP_SQUARE_HEIGHT_COUNT * MapConst::MAP_SQUARE_HEIGHT_COUNT; i++) {
+		// タイルの種類によって分岐
+		MapConst::eTerrain terrain = MapManager::GetInstance().GetTile(i)->GetSquareData()->GetTerrain();
+		switch (terrain)
+		{
+		case MapConst::eTerrain::Passage:
+		case MapConst::eTerrain::Room:
+		case MapConst::eTerrain::Wall: 
+		case MapConst::eTerrain::Invalid:
+		{
+			// 生成されていなければ
+			if (i>=m_pTiles.size()) {
+			// タイルを生成
+			std::unique_ptr<TileObject> tile = std::make_unique<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
+			// モデルハンドルを設定
+			tile->SetFloorModel(MV1DuplicateModel(m_floorHandle));
+			tile->SetWallHandle(MV1DuplicateModel(m_wallHandle));
+			// 配列に追加
+			m_pTiles.push_back(std::move(tile));
+			}
+			// タイルが生成されていたら
+			else {
+				// タイル情報の変更をする
+				m_pTiles[i]->ChangeTile(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
+			}
+			break;
+		}
+		default:
+			continue;
+		}
+	}
+	stair->SetTile(RandomRoomID());
 }
 
 void TileManager::Draw()

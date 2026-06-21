@@ -28,6 +28,10 @@ public:
 	/// </summary>
 	void CreateMap();
 	/// <summary>
+	/// データのリセット処理
+	/// </summary>
+	void ResetData();
+	/// <summary>
 	/// 最初の大枠を作る
 	/// </summary>
 	void CreateFirstArea();

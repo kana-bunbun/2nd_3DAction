@@ -26,6 +26,7 @@ MapCreate::~MapCreate()
 
 void MapCreate::CreateMap()
 {
+	ResetData();
 	// 最初のエリアを生成
 	CreateFirstArea();
 	// エリアを分割
@@ -40,6 +41,14 @@ void MapCreate::CreateMap()
 	// 余計な壁マスを空白マスにする
 	MapManager::GetInstance().SetInvalid();
 
+}
+
+void MapCreate::ResetData()
+{
+	m_areas.clear();
+	m_divideLines.clear();
+	m_rooms.clear();
+	m_passableID.clear();
 }
 
 void MapCreate::CreateFirstArea()

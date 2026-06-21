@@ -13,6 +13,10 @@ MapManager& MapManager::GetInstance()
 
 void MapManager::Initialize()
 {
+    // 部屋情報を初期化
+    ResetRoomData();
+    // マスが生成されていたら処理しない
+    if (!m_mapData.empty())return;
     // マスオブジェクトを必要数生成
     int squareCount = MapConst::MAP_SQUARE_HEIGHT_COUNT * MapConst::MAP_SQUARE_WIDTH_COUNT;
     for (int i = 0; i < squareCount; i++) {
@@ -22,9 +26,6 @@ void MapManager::Initialize()
         // オブジェクト生成
         m_mapData.emplace_back(std::make_unique<MapTile>(generatePosX,generatePosY,i));
     }
-    // 部屋情報の初期化
-    m_rooms.clear();
-    m_unUseRooms.clear();
 }
 
 int MapManager::PositionToID(int posX,int posY)
@@ -122,6 +123,13 @@ void MapManager::AddRoom(std::vector<int> idList)
     int addId = m_rooms.size();
     m_rooms.emplace_back(GetCanUseRoom());
     m_rooms[m_rooms.size() - 1]->SetUp(addId, idList);
+}
+
+void MapManager::ResetRoomData()
+{
+    // 部屋情報の初期化
+    m_rooms.clear();
+    m_unUseRooms.clear();
 }
 
 

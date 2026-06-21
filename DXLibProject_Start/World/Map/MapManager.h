@@ -60,7 +60,10 @@ public:
 	/// 部屋の追加
 	/// </summary>
 	void AddRoom(std::vector<int> idList);
-
+	/// <summary>
+	/// 部屋情報の初期化
+	/// </summary>
+	void ResetRoomData();
 	/// <summary>
 	/// 使用可能な部屋取得
 	/// </summary>

@@ -11,6 +11,8 @@ public:
 	TileManager();
 	~TileManager();
 
+	void SetUpFloor();
+
 	void Draw();
 	void DrawMiniMap();
 	bool InDevideList(size_t id);

@@ -153,8 +153,6 @@
     <ClCompile Include="World\Object\Stair.cpp" />
     <ClCompile Include="World\Character\Guardian\DragonBreath.cpp" />
     <ClCompile Include="World\GameObjectManager.cpp" />
-    <ClCompile Include="World\Map\WallTile.cpp" />
-    <ClCompile Include="World\Map\FloorTile.cpp" />
     <ClCompile Include="World\Map\TileModelAssign.cpp" />
     <ClCompile Include="World\Map\TileObject.cpp" />
     <ClCompile Include="World\Object\FloorBlock.cpp" />
@@ -239,8 +237,6 @@
     <ClInclude Include="World\Object\Stair.h" />
     <ClInclude Include="World\Character\Guardian\DragonBreath.h" />
     <ClInclude Include="World\GameObjectManager.h" />
-    <ClInclude Include="World\Map\WallTile.h" />
-    <ClInclude Include="World\Map\FloorTile.h" />
     <ClInclude Include="World\Map\TileModelAssign.h" />
     <ClInclude Include="World\Map\TileObject.h" />
     <ClInclude Include="World\Object\FloorBlock.h" />
