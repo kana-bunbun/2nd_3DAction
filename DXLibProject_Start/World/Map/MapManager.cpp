@@ -165,11 +165,13 @@ void MapManager::SetInvalid()
     for (int i = 0; i < m_mapData.size(); i++) {
         id = m_mapData[i]->GetId();
         std::vector<int>chebyshevList = CheckChebyshevID(id);
-        bool isWall = false;
+        bool isWall = true;
         for (int& chebyshevID : chebyshevList) {
             MapTile* tile = GetTile(chebyshevID);
-            if (!tile ||tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-            isWall = true;
+            if (tile && tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall) {
+            isWall = false;
+            break;
+            }
         }
         if(isWall)
         openTile.push_back(GetTile(id));
