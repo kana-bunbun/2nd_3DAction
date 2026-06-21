@@ -164,22 +164,14 @@ void MapManager::SetInvalid()
     std::vector<MapTile*>openTile;
     for (int i = 0; i < m_mapData.size(); i++) {
         id = m_mapData[i]->GetId();
-        MapTile* checkTile = GetTile(id + 1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id - 1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id + MapConst::MAP_SQUARE_WIDTH_COUNT);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id - MapConst::MAP_SQUARE_WIDTH_COUNT);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id + MapConst::MAP_SQUARE_WIDTH_COUNT-1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id + MapConst::MAP_SQUARE_WIDTH_COUNT+1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id - MapConst::MAP_SQUARE_WIDTH_COUNT-1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
-        checkTile = GetTile(id - MapConst::MAP_SQUARE_WIDTH_COUNT+1);
-        if (checkTile && checkTile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
+        std::vector<int>chebyshevList = CheckChebyshevID(id);
+        bool isWall = false;
+        for (int& chebyshevID : chebyshevList) {
+            MapTile* tile = GetTile(chebyshevID);
+            if (!tile ||tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
+            isWall = true;
+        }
+        if(isWall)
         openTile.push_back(GetTile(id));
     }
     for(auto& checkTile:openTile)
@@ -199,4 +191,66 @@ int MapManager::GetIDFromWorldPos(Vector3 position)
     int posX = (position.x + MapConst::kTileSize) / (MapConst::kTileSize * 2);
     int posZ = (position.z + MapConst::kTileSize) / (MapConst::kTileSize * 2);
     return PositionToID(posX, posZ);
+}
+
+std::vector<int> MapManager::CheckChebyshevID(int centerID)
+{
+    std::vector<int>result;
+
+    for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
+        // 方向のキャッシュ
+        MapConst::eDirectionEight direction = static_cast<MapConst::eDirectionEight>(i);
+        // 指定方向マスのIDを取得
+        int ID = DirectionToPosition(centerID, direction);
+        if (ID == -1)continue;
+        // マスIDが不正値でないとき配列に追加
+        result.push_back(ID);
+    }
+
+    return result;
+
+}
+
+int MapManager::DirectionToPosition(int ID, MapConst::eDirectionEight direction)
+{
+    int result=-1;
+    int centerX = IDToPosX(ID);
+    int centerY = IDToPosY(ID);
+    switch (direction)
+    {
+    case MapConst::eDirectionEight::Up:
+        centerY++;
+        break;
+    case MapConst::eDirectionEight::UpRight:
+        centerX++;
+        centerY++;
+        break;
+    case MapConst::eDirectionEight::Right:
+        centerX++;
+        break;
+    case MapConst::eDirectionEight::DownRight:
+        centerX++;
+        centerY--;
+        break;
+    case MapConst::eDirectionEight::Down:
+        centerY--;
+        break;
+    case MapConst::eDirectionEight::DownLeft:
+        centerX--;
+        centerY--;
+        break;
+    case MapConst::eDirectionEight::Left:
+        centerX--;
+        break;
+    case MapConst::eDirectionEight::UpLeft:
+        centerX--;
+        centerY++;
+        break;
+    case MapConst::eDirectionEight::Invalid:
+    case MapConst::eDirectionEight::Max:
+    default:
+        break;
+    }
+    result = PositionToID(centerX, centerY);
+    return result;
 }

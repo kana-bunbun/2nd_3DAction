@@ -201,7 +201,9 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//if (シーン切り替えの条件) {
 	// return std::make_unique<遷移させたいシーン>();
 	//}
+	m_pTileManager->CheckCollision(m_pPlayer.get());
 	if (Input::IsPressed(Input::Button::Back, Pad::Player::P1)) {
+		if(m_pTileManager->IsUpStair())
 		m_pTileManager->SetUpFloor();
 	}
 

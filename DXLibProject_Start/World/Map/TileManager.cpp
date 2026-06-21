@@ -30,11 +30,12 @@ namespace {
 	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
 }
 
-TileManager::TileManager():
+TileManager::TileManager() :
 	m_markPos(),
 	m_cursorHandle(-1),
 	m_pTiles(),
-	stair(nullptr)
+	stair(nullptr),
+	m_upStair(false)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 
@@ -57,7 +58,8 @@ void TileManager::SetUpFloor()
 	MapManager::GetInstance().Initialize();
 	// マップ生成
 	MapCreate::GetInstance().CreateMap();
-
+	// 階段に登れるかどうかを初期化
+	m_upStair = false;
 	// 
 	for (int i = 0; i < MapConst::MAP_SQUARE_HEIGHT_COUNT * MapConst::MAP_SQUARE_HEIGHT_COUNT; i++) {
 		// タイルの種類によって分岐
@@ -185,4 +187,23 @@ int TileManager::RandomRoomID()
 	std::vector<int> roomID = MapCreate::GetInstance().GetRooms();
 	int random = MyRandom::Int(0, roomID.size() - 1);
 	return roomID[random];
+}
+
+Collision::Result TileManager::CheckCollision(GameObject* object)
+{
+	Collision::Result result;
+	int targetTileID = MapManager::GetInstance().GetIDFromWorldPos(object->GetTransform().position);
+	if (targetTileID == -1)return result;
+
+	std::vector<int>chebyshevID = MapManager::GetInstance().CheckChebyshevID(targetTileID);
+	/*for (int& tileID:chebyshevID) {
+		result=m_pTiles[tileID]->CheckCollision(object);
+		if (result.isHit)
+			return result;
+	}*/
+	if (object->GetCollisionTag() == GameObject::CollisionTag::Player) {
+		result = stair->GetCollision().CheckCollision(object->GetCollision());
+		m_upStair = result.isHit;
+	}
+	return result;
 }

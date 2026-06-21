@@ -24,7 +24,23 @@ namespace MapConst{
 		Max
 
 	};
+	enum class eDirectionEight {
+		Invalid = -1,	// 無効な値
+		Up,
+		UpRight,
+		Right,
+		DownRight,
+		Down,
+		DownLeft,
+		Left,
+		UpLeft,
+		Max
+
+	};
+	// タイル1つの大きさ
 	constexpr float kTileSize = 300;
+	// 壁モデルのスケール
 	constexpr float kWallScale = 0.75f;
+	// 床モデルのスケール
 	constexpr float kFloorScale = 1.498f;
 }

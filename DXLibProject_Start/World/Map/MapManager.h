@@ -86,7 +86,11 @@ public:
 	/// ワールド座標からマスのIDに変換する
 	/// </summary>
 	int GetIDFromWorldPos(Vector3 position);
-
+	/// <summary>
+	/// 8方向のマスIDを取得
+	/// </summary>
+	std::vector<int>CheckChebyshevID(int centerID);
+	int DirectionToPosition(int ID, MapConst::eDirectionEight direction);
 public:
 	/// <summary>
 	/// タイルの最大数を取得
