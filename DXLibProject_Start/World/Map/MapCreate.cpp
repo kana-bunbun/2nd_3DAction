@@ -178,6 +178,8 @@ MapCreate::AreaData* MapCreate::GetMaxSizeArea()
 
 void MapCreate::CreateAllRoom()
 {
+	// 部屋の生成
+	m_rooms.clear();
 	for (int i = 0; i < m_areas.size(); i++)
 	{
 		CreateRoom(m_areas[i]);
@@ -197,8 +199,7 @@ void MapCreate::CreateRoom(AreaData* area)
 	int yRandomRange = area->sizeY - roomheight;
 	int startX = area->startX + MyRandom::Int(1, xRandomRange-1);
 	int startY = area->startY + MyRandom::Int(1, yRandomRange-1);
-	// 部屋の生成
-	m_rooms.clear();
+	
 	for (int y = 0; y < roomheight; y++)
 	{
 		for (int x = 0; x < roomWidth; x++)

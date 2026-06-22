@@ -3,7 +3,7 @@
 #include"../UI/BillboardManager.h"
 namespace {
 	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
-	constexpr Vector3 kCollisionSize = { MapConst::kTileSize,MapConst::kTileSize,MapConst::kTileSize };
+	constexpr Vector3 kCollisionSize = { MapConst::kTileSize*2,MapConst::kTileSize,MapConst::kTileSize * 2 };
 	constexpr Vector3 kModelOffset = { 0.0f,-MapConst::kFloorScale* kCollisionSize.y,0.0f };
 
 	const char* const kFilePath = "Resource\\Map\\stairs.mv1";
