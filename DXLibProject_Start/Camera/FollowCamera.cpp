@@ -67,8 +67,8 @@ void FollowCamera::UpdateDistance(float deltaTime)
 void FollowCamera::UpdateAngle(float deltaTime)
 {
 
-    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1)*MyMath::ToRadian;
-    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
+    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1)*MyMath::ToRadian;
+    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1);
     float pitchRad = m_transform.rotation.x;
     float yawRad = m_transform.rotation.y;
     // 計算用のVECTOR
@@ -79,7 +79,7 @@ void FollowCamera::UpdateAngle(float deltaTime)
     // 正規化
     m_moveVector = m_moveVector.Normalize();
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1) * kAngleSpeed;
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * kAngleSpeed;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
     pitchRad += m_moveVector.y * deltaTime;

@@ -68,7 +68,7 @@ SceneTest::SceneTest() :
 	// std::make_unique<クラス名>(コンストラクタの引数)
 	for (int i = 0; i < m_playerNum; i++) {
 		//m_pCamera[i] = std::make_unique<CameraOld>();
-		Pad::Player pp = static_cast<Pad::Player>(i);
+		//Input::Pad pp = static_cast<Pad::Player>(i);
 		//m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
 
 	}
@@ -176,15 +176,15 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	Collision::Result hitFloor = m_pFloor->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	m_pPlayer->ResolveCollision(*m_pFloor, result);
 
-	if (Input::IsPressed(Input::Button::RT, Pad::Player::P1)) {
-	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
+	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
+	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
 		m_pDragon->Call(m_pBee.get());
 	else
 		m_pDragon->CallBack();
 	}
-	if (Input::IsDown(Input::Button::LT, Pad::Player::P1))
+	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
 		m_pPlayer->SetCameraAngle(m_pBee->GetTransform().position);
-	if (Input::IsPressed(Input::Button::RThumb, Pad::Player::P1)) {
+	if (Input::IsPressed(Input::Button::RThumb, Input::Pad::P1)) {
 		m_pCameraMgr->NextCamera();
 		bool isDebug = m_pCameraMgr->GetActiveCameraType() == Camera::CameraType::Follow;
 		m_pPlayer->SetActive(isDebug);
@@ -206,7 +206,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//}
 	result = m_pTileManager->CheckCollision(m_pPlayer.get());
 	m_pPlayer->ResolveCollision(GameObject::CollisionTag::Wall, result);
-	if (Input::IsPressed(Input::Button::B, Pad::Player::P1)) {
+	if (Input::IsPressed(Input::Button::B, Input::Pad::P1)) {
 		if (m_pTileManager->IsUpStair()) {
 		m_pTileManager->SetUpFloor();
 		// 部屋マスの中でランダムなIDを取得
@@ -218,8 +218,14 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 		}
 	}
 
-
-
+	if (Input::IsPressed(Input::Button::Y, Input::Pad::P1)) {
+		if (m_pPlayer->m_pad == Input::Pad::Invalid) {
+			m_pPlayer->m_pad = Input::Pad::P1;
+		}
+		else {
+			m_pPlayer->m_pad = Input::Pad::Invalid;
+		}
+	}
 	return nullptr;
 }
 

@@ -262,7 +262,7 @@ void Player::UpdateAction()
 		break;
 	case Status::Player::Walk: {
 		// 歩き状態の時にボタンを押すとダッシュ
-		if (Input::IsPressed(Input::Button::LThumb, Pad::Player::P1)) {
+		if (Input::IsPressed(Input::Button::LThumb, m_pad)) {
 			m_dashFlag ^= 1;
 		}
 		// 移動速度の速さに応じてアニメーションの再生速度を計算
@@ -291,7 +291,7 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if (Input::IsReleased(Input::Button::A, Pad::Player::P1)||
+	if (Input::IsReleased(Input::Button::A, m_pad)||
 		!m_gauges[GaugeType::MP]->GetRate()) {
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
@@ -302,7 +302,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::Button::A, Pad::Player::P1)) {
+	if (Input::IsDown(Input::Button::A, Input::Pad::P1)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -319,9 +319,9 @@ void Player::Parry()
 void Player::UpdateTransform(float deltaTime)
 {
 	// 入力量を取得
-	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1);
+	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, m_pad);
 	// 入力角度を取得
-	float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Pad::Player::P1);
+	float analogAngle = Input::AnalogAngle(Input::Joystick::Left, m_pad);
 	// 角度をラジアン角に変更
 	analogAngle *= MyMath::ToRadian;
 	// カメラの角度で回転するように
@@ -367,12 +367,12 @@ void Player::UpdateAnimation(float deltaTime)
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
 	// パリィ時またはボタンを押した瞬間
-	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::A, Pad::Player::P1))) {
+	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::A, m_pad))) {
 		// パリィ状態に
 		nextStatus = Status::Player::Parry;
 	}
 	// 移動の入力があるとき
-	else if (Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1)) {
+	else if (Input::PadAnalogAmount(Input::Joystick::Left, m_pad)) {
 		// 移動ステータスに
 		nextStatus = Status::Player::Walk;
 	}
@@ -524,6 +524,12 @@ float Player::CameraRotaY()
 	yawRad = atan2(forwaard.x,forwaard.z);
 
 	return yawRad;
+}
+
+void Player::SetFirstPos(const Vector3& pos)
+{
+	m_transform.position = pos;
+	m_move.SetTransform(m_transform);
 }
 
 Vector3 Player::GetCollisionCenterPos()

@@ -47,7 +47,7 @@ public:
 	/// </summary>
 	/// <param name="padNum">コントローラーの番号</param>
 	/// <returns></returns>
-	void SetPad(const Pad::Player padNum) { m_pad = padNum; }
+	void SetPad(const Input::Pad padNum) { m_pad = padNum; }
 	/// <summary>
 	/// カメラの水平方向(ヨー)のラジアン角を取得する関数
 	/// </summary>
@@ -132,7 +132,7 @@ private:
 	/// <summary>
 	/// 自身を操作するコントローラー
 	/// </summary>
-	Pad::Player m_pad;
+	Input::Pad m_pad;
 	/// <summary>
 	/// 入力に基づいた角度の更新処理をするかどうかのフラグ
 	/// </summary>

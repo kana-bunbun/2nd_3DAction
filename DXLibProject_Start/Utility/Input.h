@@ -1,16 +1,6 @@
 #pragma once
 #include"../Utility/Vector3.h"
 
-namespace Pad{
-	// プレイヤーの数
-	enum class Player {
-		P1, // プレイヤー1
-		P2, // プレイヤー2
-		P3, // プレイヤー3
-		P4, // プレイヤー4
-		Max
-	};
-}
 
 /// <summary>
 /// 入力情報の取得・更新をする
@@ -18,6 +8,15 @@ namespace Pad{
 
 // 名前空間
 namespace Input {
+
+	enum class Pad {
+		Invalid=-1,
+		P1, // プレイヤー1
+		P2, // プレイヤー2
+		P3, // プレイヤー3
+		P4, // プレイヤー4
+		Max
+	};
 	
 	//// 使用するボタン
 	enum class Button {	
@@ -55,39 +54,39 @@ namespace Input {
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 押されていたらtrue</returns>
-	bool IsDown(Input::Button key, const Pad::Player padNum);
+	bool IsDown(Input::Button key, const Pad padNum);
 
 	/// <summary>
 	/// キーが押されているかどうかを調べる
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 押された瞬間だったらtrue</returns>
-	bool IsPressed(Input::Button key, const Pad::Player padNum);
+	bool IsPressed(Input::Button key, const Pad padNum);
 
 	/// <summary>
 	/// キーが押されているかどうかを調べる
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 離された瞬間だったらtrue</returns>
-	bool IsReleased(Input::Button key, const Pad::Player padNum);
+	bool IsReleased(Input::Button key, const Pad padNum);
 
 	/// <summary>
 	/// キーが長押しされているかどうか調べる
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 長押しされていたらtrue</returns>
-	bool Hold(Input::Button key, const Pad::Player padNum);
+	bool Hold(Input::Button key, const Pad padNum);
 
 	/// <summary>
 	/// アナログレバーの入力角度を調べる
 	/// </summary>
 	/// <returns>入力角度のデグリー角</returns>
-	float AnalogAngle(const Input::Joystick stick, const Pad::Player padNum);
+	float AnalogAngle(const Input::Joystick stick, const Pad padNum);
 	/// <summary>
 	/// アナログレバーの入力量を調べる
 	/// </summary>
 	/// <returns>レバーをどれだけ倒しているか,0～1</returns>
-	float PadAnalogAmount(const Input::Joystick stick, const Pad::Player padNum);
+	float PadAnalogAmount(const Input::Joystick stick, const Pad padNum);
 
 	/// <summary>
 	/// デバッグ処理

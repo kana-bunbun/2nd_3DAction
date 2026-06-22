@@ -26,7 +26,7 @@ void CharaGaugeManager::Init()
 
 void CharaGaugeManager::Update()
 {
-	if (Input::IsDown(Input::Button::LB, Pad::Player::P1)) {
+	if (Input::IsDown(Input::Button::LB, Input::Pad::P1)) {
 		for (std::shared_ptr<Gauge>& gauge : m_PlayerGauges) {
 			gauge->Increase(1);
 			gauge->Clamp();
@@ -37,7 +37,7 @@ void CharaGaugeManager::Update()
 		}
 
 	}
-	if (Input::IsDown(Input::Button::RB, Pad::Player::P1)) {
+	if (Input::IsDown(Input::Button::RB, Input::Pad::P1)) {
 		for (std::shared_ptr<Gauge>& gauge : m_PlayerGauges) {
 			gauge->Decrease(1);
 			gauge->Clamp();

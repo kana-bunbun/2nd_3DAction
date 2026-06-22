@@ -38,8 +38,8 @@ DebugCamera::~DebugCamera()
 void DebugCamera::Update(float deltaTime)
 {
  
-    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Pad::Player::P1) * MyMath::ToRadian;
-    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1);
+    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1) * MyMath::ToRadian;
+    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1);
     float pitchRad = m_transform.rotation.x;
     float yawRad = m_transform.rotation.y;
     // 計算用のVECTOR
@@ -50,7 +50,7 @@ void DebugCamera::Update(float deltaTime)
     // 正規化
     m_moveVector = m_moveVector.Normalize();
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Pad::Player::P1) * m_rotSpeed;
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_rotSpeed;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
     pitchRad += m_moveVector.y * deltaTime;
@@ -75,9 +75,9 @@ void DebugCamera::Update(float deltaTime)
     Vector3 move=Vector3::zero;
 
     // 入力量を取得
-    float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Pad::Player::P1);
+    float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Input::Pad::P1);
     // 入力角度を取得
-    float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Pad::Player::P1);
+    float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Input::Pad::P1);
     // 角度をラジアン角に変更
     analogAngle *= MyMath::ToRadian;
     // カメラの角度で回転するように

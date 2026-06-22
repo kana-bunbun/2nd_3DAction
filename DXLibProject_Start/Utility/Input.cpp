@@ -12,7 +12,7 @@ namespace {
 	// 入力を保存する期間
 	constexpr int kLogNum = 60;
 	// コントローラーの最大個数
-	constexpr int kPadNum = static_cast<int>(Pad::Player::Max);
+	constexpr int kPadNum = static_cast<int>(Input::Pad::Max);
 
 	// 長押ししていると判定する時間
 	constexpr int HoldTime = 30;
@@ -49,6 +49,8 @@ namespace Input {
 	{
 		// コントローラーの数を取得
 		padNum = GetJoypadNum();
+
+	
 	}
 
 	void Update() {
@@ -85,8 +87,8 @@ namespace Input {
 
 	}
 
-	bool IsDown(Button key, const Pad::Player padNum) {
-		
+	bool IsDown(Button key, const Pad padNum) {
+
 		// トリガーの場合は倒した割合でとる
 		if (key == Button::RT) {
 			// 一定量倒していたら
@@ -102,8 +104,7 @@ namespace Input {
 		return (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 	}
 
-	bool IsPressed(Button key, const Pad::Player padNum) {
-
+	bool IsPressed(Button key, const Pad padNum) {
 		// 現在の入力情報
 		bool isNow = static_cast<bool>(ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 		// 1回前の入力情報
@@ -126,7 +127,7 @@ namespace Input {
 
 	}
 
-	bool IsReleased(Button key, const Pad::Player padNum) {
+	bool IsReleased(Button key, const Pad padNum) {
 
 		// 現在の入力情報
 		bool isNow = (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
@@ -149,7 +150,7 @@ namespace Input {
 	}
 
 	// 長押しを判定する関数
-	bool Hold(Button key, const Pad::Player padNum) {
+	bool Hold(Button key, const Pad padNum) {
 
 		for (int i = 0; i < HoldTime; i++) {
 			// 押してたらスキップ
@@ -165,7 +166,7 @@ namespace Input {
 	// コントローラーのアナログのレバー入力を調べる
 
 	// レバーの角度
-	float AnalogAngle(Input::Joystick stick, const Pad::Player padNum) {
+	float AnalogAngle(Input::Joystick stick, const Pad padNum) {
 		int Stick = static_cast<int>(stick);
 		// 入力量を保存する変数を用意
 		Vector3 checkVec;
@@ -194,7 +195,7 @@ namespace Input {
 	}
 
 	// レバーの入力量
-	float PadAnalogAmount(Input::Joystick stick, const Pad::Player padNum) {
+	float PadAnalogAmount(Input::Joystick stick, const Pad padNum) {
 		int Stick = static_cast<int>(stick);
 		// 入力量を保存する変数を用意
 		Vector3 checkVec;
@@ -227,7 +228,7 @@ namespace Input {
 	void Debug() {
 		// 画面に XINPUT_STATE の中身を描画
 		int Color = GetColor(255, 255, 255);
-		for (int i = 0; i < static_cast<int>(Pad::Player::Max); i++) {
+		for (int i = 0; i < static_cast<int>(Pad::Max); i++) {
 		DrawFormatString(0, 184, Color, "ThumbLX:%d度 ThumbLX:%d",
 			ButtonsLog[i][0].ThumbLX, ButtonsLog[i][0].ThumbLY);
 		DrawFormatString(0, 200, Color, "LeftTrigger:%d RightTrigger:%d",

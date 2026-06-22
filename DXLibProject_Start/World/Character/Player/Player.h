@@ -3,6 +3,7 @@
 #include"../CharacterMove.h"
 #include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
+#include"../../../Utility/Input.h"
 #include"../../../Camera/Camera.h"
 #include<array>
 class CameraOld;
@@ -67,7 +68,7 @@ public:
 	void SetCameraAngle(const Vector3& position);
 
 	float CameraRotaY();
-	void SetFirstPos(const Vector3& pos) { m_transform.position = pos; }
+	void SetFirstPos(const Vector3& pos);
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>
@@ -80,6 +81,7 @@ public:
 	void SetBarrier(Barrier* barrier);
 	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
 	bool GetIsGround() { return m_isGroud; }
+	Input::Pad m_pad;
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
