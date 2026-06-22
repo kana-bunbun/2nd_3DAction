@@ -32,6 +32,7 @@ public:
 	/// </summary>
 	void AttackUpdate(float deltaTime);
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
+	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	/// <summary>
 	/// ターゲットを設定して追いかける処理
 	/// </summary>

@@ -126,6 +126,9 @@ void Enemy::Update(float deltaTime)
 void Enemy::ResolveCollision(GameObject& other, const Collision::Result & result)
 {}
 
+void Enemy::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result & result)
+{}
+
 void Enemy::SetTarget(GameObject* target)
 {
 	m_target = target;

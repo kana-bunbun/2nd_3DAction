@@ -23,6 +23,7 @@ public:
 	/// </summary>
 	/// <param name="result"></param>
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
+	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	/// <summary>
 	/// 透明度の計算をする関数
 	/// </summary>

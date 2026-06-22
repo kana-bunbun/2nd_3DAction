@@ -30,3 +30,6 @@ void FloorBlock::ResolveCollision(GameObject & other, const Collision::Result & 
 {
 
 }
+
+void FloorBlock::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{}

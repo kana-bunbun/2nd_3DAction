@@ -23,7 +23,7 @@ namespace {
 	// 当たり判定の大きさ
 	constexpr Vector3 kCollisionSize = { 170.0f,170.0f,170.0f };
 	// 当たり判定の座標
-	constexpr Vector3 kCollisionOffset = { 0.0f,90.0f,0.0f };
+	constexpr Vector3 kModelOffset = { 0.0f,90.0f,0.0f };
 	// アニメーションの名前
 	const char* const kAnimationName[static_cast<int>(Status::Bee::Max)] = {
 		"MonsterArmature|Bite_Front",
@@ -71,7 +71,7 @@ void Bee::Init()
 
 	// AABBのコリジョンの生成
 	GameObject::m_collision = std::make_unique<Collision::AABB>(
-		kCollisionOffset,
+		kModelOffset,
 		kCollisionSize
 	);
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
@@ -94,6 +94,9 @@ void Bee::ResolveCollision(GameObject& other, const Collision::Result& result)
 {
 
 }
+
+void Bee::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{}
 
 Vector3 Bee::GetCollisionCenterPos() const
 {

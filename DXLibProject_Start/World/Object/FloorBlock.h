@@ -12,6 +12,7 @@ public:
 	void Init()override;
 	void Update(float deltaTime)override;
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
+	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 
 
 private:

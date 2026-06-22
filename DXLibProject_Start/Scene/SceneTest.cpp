@@ -83,8 +83,7 @@ SceneTest::SceneTest() :
 	m_pFloor = std::make_unique<FloorBlock>();
 
 	// 部屋マスの中でランダムなIDを取得
-	std::vector<int>roomID = MapCreate::GetInstance().GetRooms();
-	randomID = roomID[MyRandom::Int(0, roomID.size() - 1)];
+	randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
 	//取得したマスのIDからマスの座標を計算
 	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 	// ランダムな部屋マスにプレイヤーを生成
@@ -168,7 +167,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pGaugeManager->Update();
 	m_pEnemyManager->Update(deltaTime);
 	m_pFloor->Update(deltaTime);
-
+	m_pTileManager->Update(deltaTime);
 	// 敵と当たっているかどうかを調べる
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
@@ -194,6 +193,10 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 		m_pBee->SetActive(isDebug);
 	}
 
+	Collision::AABB aabb = Collision::AABB(Vector3::zero, Vector3(300, 300, 300));
+	aabb.DebugDraw();
+	result = aabb.CheckCollision(m_pPlayer->GetCollision());
+	//m_pPlayer->ResolveCollision(GameObject::CollisionTag::Wall, result);
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 
@@ -201,10 +204,18 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//if (シーン切り替えの条件) {
 	// return std::make_unique<遷移させたいシーン>();
 	//}
-	m_pTileManager->CheckCollision(m_pPlayer.get());
-	if (Input::IsPressed(Input::Button::Back, Pad::Player::P1)) {
-		if(m_pTileManager->IsUpStair())
+	result = m_pTileManager->CheckCollision(m_pPlayer.get());
+	m_pPlayer->ResolveCollision(GameObject::CollisionTag::Wall, result);
+	if (Input::IsPressed(Input::Button::B, Pad::Player::P1)) {
+		if (m_pTileManager->IsUpStair()) {
 		m_pTileManager->SetUpFloor();
+		// 部屋マスの中でランダムなIDを取得
+		randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
+		//取得したマスのIDからマスの座標を計算
+		Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
+		// ランダムな部屋マスにプレイヤーを生成
+		m_pPlayer ->SetFirstPos(initPos);
+		}
 	}
 
 

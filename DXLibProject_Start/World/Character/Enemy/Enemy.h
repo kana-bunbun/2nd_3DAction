@@ -25,6 +25,7 @@ public:
 	/// </summary>
 	/// <param name="result"></param>
 	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
+	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 
 	void SetModelHandle(int modelHandle);
 	void SetTarget(GameObject* target);

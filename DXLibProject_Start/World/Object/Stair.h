@@ -11,13 +11,18 @@ public:
 
 	void Init()override;
 	void Update(float deltaTime)override;
-	void ResolveCollision(GameObject& other, const Collision::Result& result);
+	void Draw()override;
 
+	void ResolveCollision(GameObject& other, const Collision::Result& result);
+	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result);
+	void SetIsHit(bool isHit) { m_isHit = isHit; }
 	/// <summary>
 	/// 自身の座標を指定したタイルの座標に設定する
 	/// </summary>
 	/// <param name="tileID">タイルのID</param>
 	void SetTile(int tileID);
 private:
+	bool m_isHit;
+	float m_alpha;
 };
 

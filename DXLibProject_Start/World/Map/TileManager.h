@@ -13,7 +13,7 @@ public:
 	~TileManager();
 
 	void SetUpFloor();
-
+	void Update(float deltaTime);
 	void Draw();
 	void DrawMiniMap();
 	bool InDevideList(size_t id);
@@ -24,6 +24,7 @@ public:
 	int RandomRoomID();
 	Collision::Result CheckCollision(GameObject* object);
 	bool IsUpStair() { return m_upStair; }
+	TileObject* GetObj() { return m_pTiles[0].get(); }
 private:
 	Transform m_markPos;
 	int m_cursorHandle;
@@ -33,5 +34,6 @@ private:
 	std::unique_ptr<Stair>stair;
 	// 階段を登れるかどうか
 	bool m_upStair;
+	int m_stairID;
 };
 

@@ -275,6 +275,9 @@ void Dragon::ResolveCollision(GameObject & other, const Collision::Result & resu
 
 }
 
+void Dragon::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{}
+
 void Dragon::Call(GameObject* target)
 {
 

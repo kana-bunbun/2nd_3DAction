@@ -42,7 +42,7 @@ namespace {
 	// モデルの大きさ
 	constexpr Vector3 kModelScale = { 2.0f,2.0f,2.0f };
 	// 当たり判定のオフセット
-	constexpr Vector3 kCollisionOffset = { 0.0f,30.0f*kModelScale.y,0.0f };
+	constexpr Vector3 kModelOffset = { 0.0f,30.0f*kModelScale.y,0.0f };
 	// 当たり判定の大きさ
 	constexpr Vector3 kCollisionSize = { 100.0f,200.0f,100.0f };
 	// バリアのオフセット
@@ -159,7 +159,7 @@ void Player::Init()
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
 	// AABBの初期化
 	m_collision = std::make_unique<Collision::AABB>(
-		kCollisionOffset,
+		kModelOffset,
 		kCollisionSize
 	);
 	// タグをプレイヤーに設定
@@ -455,6 +455,55 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 
 }
 
+void Player::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{
+	if (!result.isHit)return;
+	// 押し戻しベクトルを生成
+	Vector3 revertVec = result.normal * result.penetration;
+	switch (tag)
+	{
+	case GameObject::CollisionTag::None:
+		break;
+	case GameObject::CollisionTag::Player:
+		break;
+	case GameObject::CollisionTag::Enemy:
+	{
+		// 押し戻し量を保存
+		Vector3 pendingPush = result.normal * result.penetration * 30;
+		m_move.AddPendingPush(pendingPush);
+		break;
+	}
+	case GameObject::CollisionTag::Wall:
+		// 座標を補正
+		m_transform.position += revertVec;
+		m_move.SetTransform(m_transform);
+		// 衝突判定の更新
+		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+		break;
+	case GameObject::CollisionTag::Floor:
+		// 座標を補正
+		m_transform.position += revertVec;
+		m_move.SetTransform(m_transform);
+		// 衝突判定の更新
+		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
+
+		if (result.normal.y > 0.0f) {
+			m_isGroud = true;
+			m_isJump = false;
+		}
+
+		break;
+	case GameObject::CollisionTag::Barrier:
+		break;
+	default:
+		break;
+	}
+	// 当たり判定のトランスフォームを更新
+	m_capsule.SetTransform(m_transform);
+
+
+}
+
 void Player::SetCameraAngle(const Vector3& position)
 {
 	Vector3 vec=position - m_transform.position;
@@ -479,7 +528,7 @@ float Player::CameraRotaY()
 
 Vector3 Player::GetCollisionCenterPos()
 {
-	return m_transform.position + kCollisionOffset;
+	return m_transform.position + kModelOffset;
 }
 
 

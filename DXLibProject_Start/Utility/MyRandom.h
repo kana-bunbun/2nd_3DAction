@@ -1,5 +1,7 @@
 #pragma once
 #include<random>
+#include<vector>
+#include<array>
 /// <summary>
 /// 乱数を生成するクラス
 /// 以下のページを参考に作成
@@ -37,8 +39,17 @@ public:
 	/// <param name="min">確率</param>
 	/// <returns>確率内ならtrue
 	static bool Judge(float percent);
+	template<typename T>
+	static T ArrayRandom(std::vector<T> vector);
 private:
 	static std::mt19937& Engine();
 
 };
 
+template<typename T>
+inline T MyRandom::ArrayRandom(std::vector<T> vector)
+{
+	int randomNum = MyRandom::Int(0, vector.size() - 1);
+
+	return vector[randomNum];
+}

@@ -168,7 +168,7 @@ void MapManager::SetInvalid()
         bool isWall = true;
         for (int& chebyshevID : chebyshevList) {
             MapTile* tile = GetTile(chebyshevID);
-            if (tile && tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall) {
+            if (tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall) {
             isWall = false;
             break;
             }
@@ -185,13 +185,13 @@ Vector3 MapManager::GetWorldPosFromID(int ID)
     int initPosX = IDToPosX(ID);
     int initPosZ = IDToPosY(ID);
     Vector3 pos(initPosX, 0, initPosZ);
-    return pos * MapConst::kTileSize * 2;
+    return pos * MapConst::kTileUnscaledSize * 2;
 }
 
 int MapManager::GetIDFromWorldPos(Vector3 position)
 {
-    int posX = (position.x + MapConst::kTileSize) / (MapConst::kTileSize * 2);
-    int posZ = (position.z + MapConst::kTileSize) / (MapConst::kTileSize * 2);
+    int posX = (position.x + MapConst::kTileUnscaledSize) / (MapConst::kTileUnscaledSize * 2);
+    int posZ = (position.z + MapConst::kTileUnscaledSize) / (MapConst::kTileUnscaledSize * 2);
     return PositionToID(posX, posZ);
 }
 
@@ -199,7 +199,7 @@ std::vector<int> MapManager::CheckChebyshevID(int centerID)
 {
     std::vector<int>result;
 
-    for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
+    for (int i = 0; i < static_cast<int>(MapConst::eDirectionEight::Max); i++) {
         // 方向のキャッシュ
         MapConst::eDirectionEight direction = static_cast<MapConst::eDirectionEight>(i);
         // 指定方向マスのIDを取得

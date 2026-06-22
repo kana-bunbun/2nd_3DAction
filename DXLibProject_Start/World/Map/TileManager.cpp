@@ -24,7 +24,7 @@ namespace {
 		0.0f
 	};
 	constexpr Vector3 kDrawSize = { 250.0f,250.0f,0.0f };
-	constexpr Vector3 kMapSize = { MapConst::kTileSize * MapConst::MAP_SQUARE_WIDTH_COUNT,MapConst::kTileSize  * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
+	constexpr Vector3 kMapSize = { MapConst::kTileUnscaledSize * MapConst::MAP_SQUARE_WIDTH_COUNT,MapConst::kTileUnscaledSize  * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
 	const char* const kCursorPath = "Resource\\UI\\MapPlayerCursor.png";
 	const char* const kWallPath = "Resource\\Map\\wall.mv1";
 	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
@@ -42,6 +42,7 @@ TileManager::TileManager() :
 	m_wallHandle = MV1LoadModel(kWallPath);
 	m_floorHandle = MV1LoadModel(kFloorPath);
 	stair = std::make_unique<Stair>();
+	// フロア生成
 	SetUpFloor();
 }
 
@@ -92,17 +93,32 @@ void TileManager::SetUpFloor()
 			continue;
 		}
 	}
-	stair->SetTile(RandomRoomID());
+	m_stairID = RandomRoomID();
+	stair->SetTile(m_stairID);
+}
+
+void TileManager::Update(float deltaTime)
+{
+	// マップの描画処理
+	for (auto& tile : m_pTiles) {
+		tile->Update(deltaTime);
+	}
+	if (stair) {
+		stair->Update(deltaTime);
+	}
 }
 
 void TileManager::Draw()
 {
 	// マップの描画処理
-	for (auto& tile : m_pTiles) {
-		tile->Draw();
+	for (int i = 0; i < m_pTiles.size();i++) {
+		if (i == m_stairID) {
+			continue;
+		}
+		m_pTiles[i]->Draw();
 	}
 	if (stair) {
-		stair->Update(0);
+		stair->Draw();
 	}
 
 	// デバッグでプレイヤーのいるマスを取得・描画=====
@@ -192,18 +208,28 @@ int TileManager::RandomRoomID()
 Collision::Result TileManager::CheckCollision(GameObject* object)
 {
 	Collision::Result result;
+	// 引数オブジェクトの座標から現在いるマスを取得
 	int targetTileID = MapManager::GetInstance().GetIDFromWorldPos(object->GetTransform().position);
 	if (targetTileID == -1)return result;
-
+	// 現在いるマスの周囲マスを取得
 	std::vector<int>chebyshevID = MapManager::GetInstance().CheckChebyshevID(targetTileID);
-	/*for (int& tileID:chebyshevID) {
-		result=m_pTiles[tileID]->CheckCollision(object);
-		if (result.isHit)
-			return result;
-	}*/
+	// 現在のマスを追加
+	chebyshevID.push_back(targetTileID);
+	// 引数オブジェクトの周囲8マスだけ当たり判定をチェック
+	for (int& tileID:chebyshevID) {
+		result = m_pTiles[tileID]->CheckCollision(object->GetCollision());
+			object->ResolveCollision(GameObject::CollisionTag::Wall, result);
+		if (result.isHit) {
+			//return result;
+		}
+
+	}
+
+
 	if (object->GetCollisionTag() == GameObject::CollisionTag::Player) {
-		result = stair->GetCollision().CheckCollision(object->GetCollision());
-		m_upStair = result.isHit;
+		Collision::Result stairResult= stair->GetCollision().CheckCollision(object->GetCollision());
+		m_upStair = stairResult.isHit;
+		stair->SetIsHit(m_upStair);
 	}
 	return result;
 }

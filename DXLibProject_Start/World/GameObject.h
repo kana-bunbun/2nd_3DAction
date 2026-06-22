@@ -65,6 +65,7 @@ public:
 	/// </summary>
 	/// <param name="result"></param>
 	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
+	virtual void ResolveCollision(GameObject::CollisionTag tag,const Collision::Result& result) = 0;
 
 	bool IsActive()const { return m_isActive; }
 	void SetActive(const bool active) { m_isActive = active; }

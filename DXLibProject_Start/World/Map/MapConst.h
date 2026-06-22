@@ -37,10 +37,12 @@ namespace MapConst{
 		Max
 
 	};
-	// タイル1つの大きさ
-	constexpr float kTileSize = 300;
+	// タイル1つの大きさスケール無視
+	constexpr float kTileUnscaledSize = 300;
 	// 壁モデルのスケール
 	constexpr float kWallScale = 0.75f;
 	// 床モデルのスケール
 	constexpr float kFloorScale = 1.498f;
+	// タイルの大きさ
+	constexpr float kTileSize = MapConst::kTileUnscaledSize * MapConst::kFloorScale;
 }
