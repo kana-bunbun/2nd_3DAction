@@ -3,7 +3,7 @@
 #include"MapTile.h"
 #include"MapManager.h"
 namespace {
-	constexpr Vector3 kFloorSize = { MapConst::kFloorScale,MapConst::kFloorScale*20 ,MapConst::kFloorScale };
+	constexpr Vector3 kFloorSize = { MapConst::kFloorScale,MapConst::kFloorScale*25 ,MapConst::kFloorScale };
 	constexpr float kWallDistance = MapConst::kTileUnscaledSize * (0.5f);
 	constexpr Vector3 kWallSize = { MapConst::kWallScale ,MapConst::kWallScale ,MapConst::kWallScale };
 	constexpr Vector3 kModelOffset = { 0,-kFloorSize.y*5 ,0};
@@ -175,15 +175,15 @@ void TileObject::CheckWall()
 
 }
 
-Collision::Result TileObject::CheckCollision(const Collision::Shape& collision)
+Collision::Result TileObject::CheckCollision(GameObject* object)
 {
 	Collision::Result result;
 	Vector3 resolve = Vector3::zero;
 	for (int i = 0; i < m_collisions.size();i++) {
 		if (!m_wallDirection[i])continue;
-		result=m_collisions[i]->CheckCollision(collision);
+		result=m_collisions[i]->CheckCollision(object->GetCollision());
+		object->ResolveCollision(GameObject::CollisionTag::Wall, result);
 		if (!result.isHit)continue;
-		return result;
 	}
 	return result;
 }

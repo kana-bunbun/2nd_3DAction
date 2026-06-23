@@ -7,7 +7,7 @@
 namespace {
 
 	// フェード速度
-	constexpr int kFadeSpeed = 5;
+	constexpr int kFadeSpeed = 1;
 	constexpr int kFadeMax = 255;
 }
 

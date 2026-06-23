@@ -11,7 +11,9 @@ namespace {
 }
 Stair::Stair():
 	m_isHit(false),
-	m_alpha(0)
+	m_alpha(0),
+	m_pad(Input::Pad::Invalid),
+	m_billboardPos(Vector3::zero)
 {
 	m_transform.Reset();
 	m_collision = std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize);
@@ -58,7 +60,7 @@ void Stair::Update(float deltaTime)
 
 void Stair::Draw()
 {
-	Vector3 billboardPos = m_transform.position + kBillboardOffset;
+	Vector3 billboardPos = m_billboardPos + kBillboardOffset;
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelHandle != -1) {
 		Vector3 position = m_transform.position + kModelOffset;
@@ -69,7 +71,7 @@ void Stair::Draw()
 	// 透明度を操作して描画
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
 	// ビルボードで描画
-	BillboardManager::GetInstance().DrawBillboard(billboardPos, 0, 0, 300, 0, BillboardManager::eBillboard::Stair);
+	BillboardManager::GetInstance().DrawBillboard(billboardPos, -0.2f, 0, 300, 0, BillboardManager::eBillboard::Stair);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 

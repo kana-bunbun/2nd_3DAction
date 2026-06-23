@@ -26,7 +26,7 @@ public:
 	void ChangeTile(int ID, const Vector3& position, const MapConst::eTerrain& terrain);
 	void CheckWall();
 
-	Collision::Result CheckCollision(const Collision::Shape& collision);
+	Collision::Result CheckCollision(GameObject* object);
 protected:
 	// マスのID
 	int m_ID;

@@ -54,13 +54,13 @@ void CharaGaugeManager::End()
 
 }
 
-void CharaGaugeManager::SetPlayer(std::shared_ptr<Player> pPlayer)
+void CharaGaugeManager::SetPlayer(Player* pPlayer)
 {
 	m_pPlayer = pPlayer;
 	m_PlayerGauges = m_pPlayer->GetGauge();
 }
 
-void CharaGaugeManager::SetDragon(std::shared_ptr<Dragon> pDragon)
+void CharaGaugeManager::SetDragon(Dragon* pDragon)
 {
 	m_pDragon = pDragon;
 	m_DragonGauges.push_back(m_pDragon->GetGauge());

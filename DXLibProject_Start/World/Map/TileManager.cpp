@@ -217,12 +217,7 @@ Collision::Result TileManager::CheckCollision(GameObject* object)
 	chebyshevID.push_back(targetTileID);
 	// 引数オブジェクトの周囲8マスだけ当たり判定をチェック
 	for (int& tileID:chebyshevID) {
-		result = m_pTiles[tileID]->CheckCollision(object->GetCollision());
-			object->ResolveCollision(GameObject::CollisionTag::Wall, result);
-		if (result.isHit) {
-			//return result;
-		}
-
+		result = m_pTiles[tileID]->CheckCollision(object);
 	}
 
 
@@ -230,6 +225,7 @@ Collision::Result TileManager::CheckCollision(GameObject* object)
 		Collision::Result stairResult= stair->GetCollision().CheckCollision(object->GetCollision());
 		m_upStair = stairResult.isHit;
 		stair->SetIsHit(m_upStair);
+		stair->SetBillboardPos(object->GetTransform().position);
 	}
 	return result;
 }

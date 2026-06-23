@@ -28,6 +28,7 @@ class Barrier;
 class UIManager;
 class TileManager;
 class FloorBlock;
+class GameObjectManager;
 //
 //namespace Collision {
 //	class AABB;
@@ -91,12 +92,17 @@ private:
 	/// Cameraクラスのポインタ
 	/// </summary>
 	//std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
+	//std::unique_ptr<CameraManager> m_pCameraMgr;
+	//std::shared_ptr<Player> m_pPlayer;
+	//std::shared_ptr<Dragon> m_pDragon;
+	//std::shared_ptr<CharaGaugeManager> m_pGaugeManager;
+	//std::shared_ptr<EnemyManager> m_pEnemyManager;
 	std::unique_ptr<CameraManager> m_pCameraMgr;
-	std::shared_ptr<Player> m_pPlayer;
-	std::shared_ptr<Dragon> m_pDragon;
-	std::shared_ptr<CharaGaugeManager> m_pGaugeManager;
-	std::shared_ptr<EnemyManager> m_pEnemyManager;
-
+	Player* m_pPlayer;
+	Dragon* m_pDragon;
+	std::unique_ptr<CharaGaugeManager> m_pGaugeManager;
+	std::unique_ptr<EnemyManager> m_pEnemyManager;
+	std::unique_ptr<GameObjectManager>m_pGameObjectManager;
 	/// <summary>
 	/// プレイヤーの数
 	/// </summary>
@@ -105,11 +111,10 @@ private:
 	/// <summary>
 	/// Beeのポインタ
 	/// </summary>
-	std::unique_ptr<Bee>m_pBee;
-	std::unique_ptr<Barrier>m_pBarrier;
-	std::unique_ptr<UIManager>m_pUiManager;
+	Bee* m_pBee;
+	Barrier* m_pBarrier;
+	std::unique_ptr<UIManager> m_pUiManager;
 
 	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<FloorBlock>m_pFloor;
 	int randomID;
 };

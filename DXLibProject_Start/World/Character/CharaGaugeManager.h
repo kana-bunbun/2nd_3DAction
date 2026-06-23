@@ -17,14 +17,15 @@ public:
 	void Update();
 	void End();
 
-	void SetPlayer(std::shared_ptr<Player> pPlayer);
-	void SetDragon(std::shared_ptr<Dragon> pDragon);
+	void SetPlayer(Player* pPlayer);
+	void SetDragon(Dragon* pDragon);
 	std::vector<std::shared_ptr<Gauge>>GetPlayerGauges() { return m_PlayerGauges; }
 	std::vector<std::shared_ptr<Gauge>>GetDragonGauges() { return m_DragonGauges; }
 
+
 private:
-	std::shared_ptr<Player>m_pPlayer;
-	std::shared_ptr<Dragon>m_pDragon;
+	Player* m_pPlayer;
+	Dragon* m_pDragon;
 	std::vector<std::shared_ptr<Gauge>>m_PlayerGauges;
 	std::vector<std::shared_ptr<Gauge>>m_DragonGauges;
 

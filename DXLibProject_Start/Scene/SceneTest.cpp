@@ -25,6 +25,7 @@
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
+#include"../world/GameObjectManager.h"
 #include<cassert>
 #include<memory>
 #include<DxLib.h>
@@ -45,6 +46,16 @@ namespace {
 }
 
 SceneTest::SceneTest() :
+	m_pGameObjectManager(nullptr),
+	m_pBarrier(nullptr),
+	m_pBee(nullptr),
+	m_pCameraMgr(nullptr),
+	m_pDragon(nullptr),
+	m_pEnemyManager(nullptr),
+	m_pGaugeManager(nullptr),
+	m_pPlayer(nullptr),
+	m_pTileManager(nullptr),
+	m_pUiManager(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -72,22 +83,22 @@ SceneTest::SceneTest() :
 		//m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
 
 	}
-	m_pBee = std::make_unique<Bee>();
-	m_pBarrier = std::make_unique<Barrier>();
-	m_pUiManager = std::make_unique<UIManager>();
-	m_pDragon = std::make_unique<Dragon>();
+	m_pGameObjectManager = std::make_unique<GameObjectManager>();
+	m_pBee = m_pGameObjectManager->CreateObject<Bee>();
+	m_pBarrier = m_pGameObjectManager->CreateObject<Barrier>();
+	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
+	m_pUiManager = std::make_unique<UIManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 	m_pEnemyManager = std::make_unique<EnemyManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pFloor = std::make_unique<FloorBlock>();
-
+	//m_pFloor = std::make_unique<FloorBlock>();
 	// 部屋マスの中でランダムなIDを取得
 	randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
 	//取得したマスのIDからマスの座標を計算
 	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 	// ランダムな部屋マスにプレイヤーを生成
-	m_pPlayer = std::make_unique<Player>(initPos);
+	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
 }
 
 SceneTest::~SceneTest() {}
@@ -101,7 +112,7 @@ void SceneTest::Init() {
 	m_pCameraMgr->AddCamera(Camera::CameraType::Follow,std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
 	m_pCameraMgr->AddCamera(Camera::CameraType::Debug, std::make_unique<DebugCamera>());
 	//m_pCameraMgr->SetActiveCamera(1);
-	m_pDragon->SetPlayer(m_pPlayer.get());
+	m_pDragon->SetPlayer(m_pPlayer);
 	// シングルトンのSoundManagerでの読み込み
 	SoundManager::GetInstance().LoadBGM();
 	SoundManager::GetInstance().LoadSe();
@@ -109,17 +120,15 @@ void SceneTest::Init() {
 	// m_pSound->PlayBGM(Sound::BGM::Title);
 	//SoundManager::GetInstance().PlayBGM(Sound::BGM::Menu);
 	m_pBee->Init();
-	m_pPlayer->SetBarrier(m_pBarrier.get());
+	m_pPlayer->SetBarrier(m_pBarrier);
 	m_pDragon->Init();
-	m_pUiManager->SetPlayer(m_pPlayer.get());
-	m_pUiManager->SetDragon(m_pDragon.get());
+	m_pUiManager->SetPlayer(m_pPlayer);
+	m_pUiManager->SetDragon(m_pDragon);
 	m_pGaugeManager->Init();
 	m_pGaugeManager->SetPlayer(m_pPlayer);
 	m_pGaugeManager->SetDragon(m_pDragon);
 	m_pEnemyManager->Init();
-	m_pEnemyManager->SetTarget(m_pPlayer.get());
-
-	m_pFloor->Init();
+	m_pEnemyManager->SetTarget(m_pPlayer);
 
 	//Transform* pos = m_pPlayer->GetTransform();
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
@@ -136,7 +145,6 @@ void SceneTest::End() {
 		//m_pCamera = nullptr;
 
 	}
-	m_pDragon->End();
 
 
 	//delete m_pGrassMgr.get();			// ポインタの削除
@@ -147,11 +155,16 @@ void SceneTest::End() {
 	//m_pSound->Release();
 	//delete m_pSound;
 	//m_pSound = nullptr;
-	m_pBee->End();
-	m_pUiManager->End();
-	m_pGaugeManager->End();
-	m_pEnemyManager->End();
-	m_pFloor->End();
+	if (m_pGameObjectManager) {
+		m_pGameObjectManager->End();
+	}
+
+	//m_pDragon->End();
+	//m_pBee->End();
+	//m_pUiManager->End();
+	//m_pGaugeManager->End();
+	//m_pEnemyManager->End();
+	//m_pFloor->End();
 
 }
 
@@ -159,26 +172,27 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//m_pCameraMgr->SetTarget(m_pPlayer->GetTransform());
 	m_pCameraMgr->Update(deltaTime);
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pPlayer->Update(deltaTime);
-	m_pBee->Update(deltaTime);
-	m_pBarrier->Update(deltaTime);
+	//m_pPlayer->Update(deltaTime);
+	//m_pBee->Update(deltaTime);
+	//m_pBarrier->Update(deltaTime);
 	m_pUiManager->Update(deltaTime);
-	m_pDragon->Update(deltaTime);
+	//m_pDragon->Update(deltaTime);
 	m_pGaugeManager->Update();
-	m_pEnemyManager->Update(deltaTime);
-	m_pFloor->Update(deltaTime);
+	//m_pEnemyManager->Update(deltaTime);
+	//m_pFloor->Update(deltaTime);
 	m_pTileManager->Update(deltaTime);
+	if (m_pGameObjectManager) {
+		m_pGameObjectManager->Update(deltaTime);
+	}
 	// 敵と当たっているかどうかを調べる
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
 	m_pPlayer->ResolveCollision(*m_pBee, result);
 
-	Collision::Result hitFloor = m_pFloor->GetCollision().CheckCollision(m_pPlayer->GetCollision());
-	m_pPlayer->ResolveCollision(*m_pFloor, result);
 
 	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
 	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
-		m_pDragon->Call(m_pBee.get());
+		m_pDragon->Call(m_pBee);
 	else
 		m_pDragon->CallBack();
 	}
@@ -204,8 +218,8 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//if (シーン切り替えの条件) {
 	// return std::make_unique<遷移させたいシーン>();
 	//}
-	result = m_pTileManager->CheckCollision(m_pPlayer.get());
-	m_pPlayer->ResolveCollision(GameObject::CollisionTag::Wall, result);
+	result = m_pTileManager->CheckCollision(m_pPlayer);
+	//m_pPlayer->ResolveCollision(GameObject::CollisionTag::Wall, result);
 	if (Input::IsPressed(Input::Button::B, Input::Pad::P1)) {
 		if (m_pTileManager->IsUpStair()) {
 		m_pTileManager->SetUpFloor();
@@ -218,7 +232,10 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 		}
 	}
 
-	if (Input::IsPressed(Input::Button::Y, Input::Pad::P1)) {
+	if (IsFading()) {
+			m_pPlayer->m_pad = Input::Pad::Invalid;
+	}
+	else if (Input::IsPressed(Input::Button::Y, Input::Pad::P1)) {
 		if (m_pPlayer->m_pad == Input::Pad::Invalid) {
 			m_pPlayer->m_pad = Input::Pad::P1;
 		}
@@ -226,30 +243,31 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 			m_pPlayer->m_pad = Input::Pad::Invalid;
 		}
 	}
+	else {
+			m_pPlayer->m_pad = Input::Pad::P1;
+	}
+
+	if (m_pGameObjectManager) {
+	}
 	return nullptr;
 }
 
 void SceneTest::Draw() {
-	printfDx("パッドの数：%d\n", m_playerNum);
-	// プレイヤーの数だけ繰り返す
-	for (int i = 0; i < m_playerNum; i++) {
-		DrawGround();
-		SetDrawArea(Game::kScreenWidth / m_playerNum*i, 0, Game::kScreenWidth / m_playerNum * (i+1), Game::kScreenHeight);
-		printfDx("Pad::Player->%d\n",i);
-		SetCameraScreenCenter(Game::kScreenWidth / (m_playerNum * 2) * ((i * 2)+1), Game::kScreenHeight / 2);
-	
-		m_pCameraMgr->Apply();
-		m_pFloor->Draw();
+	DrawGround();
 
-		m_pEnemyManager->Draw();
-		m_pBee->Draw();
-		m_pDragon->Draw();
-		m_pPlayer->Draw();
-		m_pBarrier->Draw();
-		DrawBox(Game::kScreenWidth / m_playerNum * i - 1, 0, Game::kScreenWidth / m_playerNum * i + 1, Game::kScreenHeight, Color::kBlack, TRUE);
-		m_pTileManager->Draw();
-		m_pUiManager->Draw();
+	m_pCameraMgr->Apply();
+	if (m_pGameObjectManager) {
+		m_pGameObjectManager->Draw();
+		// m_pFloor->Draw();
+		// m_pBee->Draw();
+		// m_pDragon->Draw();
+		// m_pPlayer->Draw();
+		// m_pBarrier->Draw();
 	}
+		 m_pEnemyManager->Draw();
+		 m_pUiManager->Draw();
+		 m_pTileManager->Draw();
+
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 	printfDx("randomID : %d\n", randomID);
 
