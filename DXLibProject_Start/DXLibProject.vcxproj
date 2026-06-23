@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\ItemCursor.cpp" />
     <ClCompile Include="World\UI\BillboardManager.cpp" />
     <ClCompile Include="Camera\CameraManager.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
@@ -219,6 +220,7 @@
     <Image Include="Resource\UI\HPGauge.png" />
     <Image Include="Resource\UI\HPGaugeBody.png" />
     <Image Include="Resource\UI\HPGaugeHead.png" />
+    <Image Include="Resource\UI\Icon Background.png" />
     <Image Include="Resource\UI\MapPlayerCursor.png" />
     <Image Include="Resource\UI\MPFrame.png" />
     <Image Include="Resource\UI\MPFront.png" />
@@ -229,6 +231,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\UI\ItemCursor.h" />
     <ClInclude Include="World\UI\BillboardManager.h" />
     <ClInclude Include="Camera\CameraManager.h" />
     <ClInclude Include="Camera\Camera.h" />

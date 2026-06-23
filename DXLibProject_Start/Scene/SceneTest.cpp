@@ -19,6 +19,7 @@
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
+#include"../World/UI/ItemCursor.h"
 #include"../World/Character/CharaGaugeManager.h"
 #include"../World/Character/Enemy/EnemyManager.h"
 #include"../World/Map/TileManager.h"
@@ -56,6 +57,7 @@ SceneTest::SceneTest() :
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
 	m_pUiManager(nullptr),
+	m_itemCursor(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -99,6 +101,8 @@ SceneTest::SceneTest() :
 	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 	// ランダムな部屋マスにプレイヤーを生成
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
+
+	m_itemCursor = std::make_unique<ItemCursor>();
 }
 
 SceneTest::~SceneTest() {}
@@ -132,10 +136,10 @@ void SceneTest::Init() {
 
 	//Transform* pos = m_pPlayer->GetTransform();
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
+	m_itemCursor->Init();
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
-
 }
 
 void SceneTest::End() {
@@ -165,6 +169,7 @@ void SceneTest::End() {
 	//m_pGaugeManager->End();
 	//m_pEnemyManager->End();
 	//m_pFloor->End();
+	m_itemCursor->End();
 
 }
 
@@ -184,6 +189,8 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Update(deltaTime);
 	}
+	m_itemCursor->Update(deltaTime);
+
 	// 敵と当たっているかどうかを調べる
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
@@ -264,9 +271,11 @@ void SceneTest::Draw() {
 		// m_pPlayer->Draw();
 		// m_pBarrier->Draw();
 	}
+
 		 m_pEnemyManager->Draw();
-		 m_pUiManager->Draw();
 		 m_pTileManager->Draw();
+		 m_pUiManager->Draw();
+		 m_itemCursor->Draw();
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 	printfDx("randomID : %d\n", randomID);

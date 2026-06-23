@@ -28,6 +28,7 @@ class Barrier;
 class UIManager;
 class TileManager;
 class FloorBlock;
+class ItemCursor;
 class GameObjectManager;
 //
 //namespace Collision {
@@ -116,5 +117,6 @@ private:
 	std::unique_ptr<UIManager> m_pUiManager;
 
 	std::unique_ptr<TileManager>m_pTileManager;
+	std::unique_ptr<ItemCursor> m_itemCursor;
 	int randomID;
 };

@@ -177,6 +177,9 @@
     <ClCompile Include="World\UI\BillboardManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="World\UI\ItemCursor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -253,6 +256,9 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="Resource\UI\BillboardText_Stair.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\Icon Background.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -435,6 +441,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\UI\BillboardManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\ItemCursor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
