@@ -41,7 +41,6 @@ Barrier::~Barrier()
 
 void Barrier::Init()
 {
-	m_time = kMaxTime;
 }
 
 void Barrier::Update(float deltaTime)
@@ -72,6 +71,11 @@ void Barrier::Draw()
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 	Material.Emissive = GetColorF(0.0f, 0.0f, 0.0f, 0.0f);
 	SetMaterialParam(Material);
+}
+
+void Barrier::Action()
+{
+	m_time = kMaxTime;
 }
 
 void Barrier::ResolveCollision(GameObject& other, const Collision::Result & result)

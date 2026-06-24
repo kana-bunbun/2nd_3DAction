@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Utility\PadManager.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
     <ClCompile Include="World\UI\BillboardManager.cpp" />
     <ClCompile Include="Camera\CameraManager.cpp" />
@@ -221,6 +222,11 @@
     <Image Include="Resource\UI\HPGaugeBody.png" />
     <Image Include="Resource\UI\HPGaugeHead.png" />
     <Image Include="Resource\UI\Icon Background.png" />
+    <Image Include="Resource\UI\ItemCursor.png" />
+    <Image Include="Resource\UI\Item_Apple.png" />
+    <Image Include="Resource\UI\Item_Beer.png" />
+    <Image Include="Resource\UI\Item_Bread.png" />
+    <Image Include="Resource\UI\Item_Cheese.png" />
     <Image Include="Resource\UI\MapPlayerCursor.png" />
     <Image Include="Resource\UI\MPFrame.png" />
     <Image Include="Resource\UI\MPFront.png" />
@@ -231,6 +237,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utility\PadManager.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
     <ClInclude Include="World\UI\BillboardManager.h" />
     <ClInclude Include="Camera\CameraManager.h" />
@@ -350,6 +357,7 @@
     <None Include="Resource\UI\HPFrame.psd" />
     <None Include="Resource\UI\HPGauge.psd" />
     <None Include="Resource\UI\HPGaugeBody.psd" />
+    <None Include="Resource\UI\Icon Background.psd" />
     <None Include="Resource\UI\MapPlayerCursor.psd" />
     <None Include="Resource\UI\MPFrame.psd" />
     <None Include="Resource\UI\MPGauge.psd" />

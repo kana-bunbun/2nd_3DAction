@@ -29,6 +29,7 @@ class UIManager;
 class TileManager;
 class FloorBlock;
 class ItemCursor;
+class PadManager;
 class GameObjectManager;
 //
 //namespace Collision {
@@ -117,6 +118,7 @@ private:
 	std::unique_ptr<UIManager> m_pUiManager;
 
 	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<ItemCursor> m_itemCursor;
+	std::unique_ptr<ItemCursor> m_pItemCursor;
+	std::unique_ptr<PadManager> m_pPadManager;
 	int randomID;
 };

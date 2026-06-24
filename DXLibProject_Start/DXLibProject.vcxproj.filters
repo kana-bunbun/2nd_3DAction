@@ -180,6 +180,9 @@
     <ClCompile Include="World\UI\ItemCursor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\PadManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Image\Cloud.png">
@@ -259,6 +262,21 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="Resource\UI\Icon Background.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\ItemCursor.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\Item_Apple.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\Item_Beer.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\Item_Bread.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="Resource\UI\Item_Cheese.png">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -446,6 +464,9 @@
     <ClInclude Include="World\UI\ItemCursor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\PadManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Bee.mv1" />
@@ -508,6 +529,7 @@
     <None Include="Resource\Enemy\Queen\Model.mv1" />
     <None Include="Resource\Map\floor.fbx" />
     <None Include="Resource\Map\wall.fbx" />
+    <None Include="Resource\UI\Icon Background.psd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

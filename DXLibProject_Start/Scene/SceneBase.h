@@ -76,6 +76,8 @@ public:
 	/// </summary>
 	/// <returns>フェード中ならtrue</returns>
 	bool IsFading() const;
+	bool IsFadeStart() const { return m_isFading && !m_isFadingOld; }
+	bool IsFadeEnd() const { return !m_isFading && m_isFadingOld; }
 
 	/// <summary>
 	/// フェードアウト開始
@@ -93,7 +95,9 @@ protected:
 	int m_fadeBright;
 	// フェードのスピード
 	int m_fadeSpeed;
-	// フェードアウトを行っているかどうか
+	// フェード処理を行っているかどうか
 	bool m_isFading;
+	// 前回のフレームでフェードを行っているかどうか
+	bool m_isFadingOld;
 
 };

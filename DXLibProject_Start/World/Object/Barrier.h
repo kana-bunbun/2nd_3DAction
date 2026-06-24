@@ -19,6 +19,10 @@ public:
 	/// </summary>
 	void Draw()override;
 	/// <summary>
+	/// 発動処理
+	/// </summary>
+	void Action();
+	/// <summary>
 	/// 衝突処理
 	/// </summary>
 	/// <param name="result"></param>

@@ -6,12 +6,14 @@
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
+#include"../../Utility/Game.h"
+#include"../Character/Player/Player.h"
 #include"../Object/Stair.h"
 #include<DxLib.h>
 #include<vector>
 
 namespace {
-	constexpr Vector3 blockSize = { 5.0f,5.0f,0.0f };
+	constexpr Vector3 blockSize = { 5.0f,5.0f ,0.0f };
 	constexpr Vector3 blockInterval = { blockSize.x,blockSize.y,0.0f };
 	constexpr Vector3 kDrawBlockStart ={
 		-(blockInterval.x* (static_cast<float>(MapConst::MAP_SQUARE_WIDTH_COUNT) * 0.5f) - (blockInterval.x * 0.5f) * (MapConst::MAP_SQUARE_WIDTH_COUNT % 2)),
@@ -25,6 +27,7 @@ namespace {
 	};
 	constexpr Vector3 kDrawSize = { 250.0f,250.0f,0.0f };
 	constexpr Vector3 kMapSize = { MapConst::kTileUnscaledSize * MapConst::MAP_SQUARE_WIDTH_COUNT,MapConst::kTileUnscaledSize  * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
+	constexpr float kCursorScale = 0.20f;
 	const char* const kCursorPath = "Resource\\UI\\MapPlayerCursor.png";
 	const char* const kWallPath = "Resource\\Map\\wall.mv1";
 	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
@@ -35,7 +38,9 @@ TileManager::TileManager() :
 	m_cursorHandle(-1),
 	m_pTiles(),
 	stair(nullptr),
-	m_upStair(false)
+	m_upStair(false),
+	m_pPlayer(nullptr),
+	m_pad(Input::Pad::Invalid)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 
@@ -105,6 +110,19 @@ void TileManager::Update(float deltaTime)
 	}
 	if (stair) {
 		stair->Update(deltaTime);
+	}
+
+	if (Input::IsPressed(Input::Button::B, m_pad)) {
+		if (IsUpStair()) {
+			// フロア生成
+			SetUpFloor();
+			// 部屋マスの中でランダムなIDを取得
+			int randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
+			//取得したマスのIDからマスの座標を計算
+			Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
+			// ランダムな部屋マスにプレイヤーを生成
+			m_pPlayer->SetFirstPos(initPos);
+		}
 	}
 }
 
@@ -188,7 +206,7 @@ void TileManager::DrawMark()
 	toMapPos.x= m_markPos.position.x / kMapSize.x* kDrawBlockStart.x;
 	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
 	toMapPos += drawStart;
-	DrawRotaGraph(toMapPos.x, toMapPos.y, 0.20f, m_markPos.rotation.y, m_cursorHandle, TRUE);
+	DrawRotaGraph(toMapPos.x, toMapPos.y, kCursorScale, m_markPos.rotation.y, m_cursorHandle, TRUE);
 }
 
 int TileManager::RandomPassableID()

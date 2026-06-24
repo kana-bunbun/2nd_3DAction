@@ -1,11 +1,13 @@
 #pragma once
 #include"../Component/Transform.h"
 #include"../../Utility/Vector3.h"
+#include"../../Utility/Input.h"
 #include"../GameObject.h"
 #include<memory>
 #include<vector>
 class TileObject;
 class Stair;
+class Player;
 class TileManager
 {
 public:
@@ -23,6 +25,9 @@ public:
 	int RandomPassableID();
 	int RandomRoomID();
 	Collision::Result CheckCollision(GameObject* object);
+public:
+	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
+	void SetPad(Input::Pad pad) { m_pad = pad; }
 	bool IsUpStair() { return m_upStair; }
 	TileObject* GetObj() { return m_pTiles[0].get(); }
 private:
@@ -35,5 +40,7 @@ private:
 	// 階段を登れるかどうか
 	bool m_upStair;
 	int m_stairID;
+	Player* m_pPlayer;
+	Input::Pad m_pad;
 };
 

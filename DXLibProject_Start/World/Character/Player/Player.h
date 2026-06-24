@@ -120,6 +120,8 @@ private:
 	/// パリィを行ったかどうか
 	/// </summary>
 	bool m_parry;
+	bool m_charge;
+
 	/// <summary>
 	/// バリア
 	/// </summary>

@@ -65,6 +65,7 @@ Player::Player() :
 	m_desireRad(0),
 	m_move(),
 	m_parry(false),
+	m_charge(false),
 	m_pBarrier(nullptr),
 	m_dashFlag(false),
 	m_isGroud(true),
@@ -291,14 +292,15 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if (Input::IsReleased(Input::Button::A, m_pad)||
+	if ((!Input::IsDown(Input::Button::A, m_pad)&&m_charge) ||
 		!m_gauges[GaugeType::MP]->GetRate()) {
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
 		m_parry = true;
 		// バリアの開始
-		m_pBarrier->Init();
+		m_pBarrier->Action();
+		m_charge = false;
 		return;
 	}
 	// 押している間
@@ -313,6 +315,7 @@ void Player::Parry()
 		// アニメーションのカウントが一定以上いかないようにする(一応)
 		if (m_animation.GetPlayCount() > kParryStopTime)
 			m_animation.ResetPlayCount(kParryStopTime);
+		m_charge = true;
 	}
 }
 
