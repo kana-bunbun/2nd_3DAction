@@ -48,11 +48,25 @@ namespace {
 	// バリアのオフセット
 	constexpr Vector3 kBarrierOffset = { 0.0f,50.0f*kModelScale.y,0.0f };
 	// カプセルの半径
-	constexpr float kCapsuleRadius = 70;
+	constexpr float kCapsuleRadius = 50;
 	// カプセルのオフセット
 	constexpr float kCapsuleOffset = 55 * kModelScale.y;
 	// カプセルの長さ
 	constexpr float kCapsuleLength = 20 * kModelScale.y;
+
+	// 本体コリジョンのデータ
+	constexpr float kBodyCollisionOffsetY = 98.0f;
+	constexpr Vector3 kBodyCollisionSize = { 78.0f,195.0f,78.0f };
+
+	// 接地判定(足元)のコリジョンデータ
+	constexpr float kFootCollisionHeight = 20.0f;
+	constexpr Vector3 kFootCollisionSize = { 70.0f,kFootCollisionHeight,70.0f };
+	constexpr float kFootCollisionOffsetY = -90.0f;
+
+	constexpr int kHeadFrameIndex = 6;
+	constexpr int kHatRightFrameIndex = 11;
+	constexpr int kHatLeftFrameIndex = 12;
+	constexpr int kWaistFrameIndex = 3;
 
 }
 
@@ -80,7 +94,7 @@ Player::Player() :
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
-	m_capsule = Collision::Capsule(m_transform, kCapsuleRadius, kCapsuleLength);
+	m_capsule = Collision::Capsule(kCapsuleRadius);
 	// カプセルのオフセットを計算
 	m_capsule.SetOffset(kCapsuleOffset);
 	// ゲージの初期化
@@ -115,14 +129,15 @@ Player::Player(Vector3 position) :
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
-	m_capsule = Collision::Capsule(m_transform, kCapsuleRadius, kCapsuleLength);
+	m_capsule = Collision::Capsule(kCapsuleRadius);
 	// カプセルのオフセットを計算
 	m_capsule.SetOffset(kCapsuleOffset);
 	// ゲージの初期化
 	for (int i = 0; i < GaugeType::Max; i++) {
 		m_gauges.emplace_back(std::make_shared<Gauge>());
 	}
-
+	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kBodyCollisionOffsetY, 0.0f), kBodyCollisionSize), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kFootCollisionOffsetY, 0.0f), kFootCollisionSize), CollisionType::Foot);
 
 	m_transform.position = position;
 	m_move.SetTransform(m_transform);
@@ -222,8 +237,6 @@ void Player::Update(float deltaTime)
 	m_animation.SetAnimSpeed(1);
 	// 当たり判定の中心座標を設定
 	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-	// カプセルの中心座標を設定
-	m_capsule.SetTransform(m_transform);
 
 	// ステータスに応じた更新処理
 	UpdateAction();
@@ -233,15 +246,20 @@ void Player::Update(float deltaTime)
 	UpdateTransform(deltaTime);
 	// アニメーションの更新
 	UpdateAnimation(deltaTime);
-
+	// コリジョンの更新処理
+	CollisionUpdate();
 	// バリアの座標を設定
 	if (m_pBarrier) {
 		m_pBarrier->SetPosition(m_transform.position);
 	}
 	// 当たり判定のデバッグ表示
-	m_collision->DebugDraw();
+	//m_collision->DebugDraw();
 	// カプセルのデバッグ表示
 	m_capsule.DebugDraw();
+
+	for (const auto& collision : m_collisions) {
+		collision.shape->SetPosition(m_transform.position);
+	}
 
 	// ゲージが上限・下限を超えないようにする
 	for (auto& gauge : m_gauges)
@@ -452,8 +470,6 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 	default:
 		break;
 	}
-	// 当たり判定のトランスフォームを更新
-	m_capsule.SetTransform(m_transform);
 
 
 }
@@ -501,8 +517,6 @@ void Player::ResolveCollision(GameObject::CollisionTag tag, const Collision::Res
 	default:
 		break;
 	}
-	// 当たり判定のトランスフォームを更新
-	m_capsule.SetTransform(m_transform);
 
 
 }
@@ -518,6 +532,19 @@ void Player::SetCameraAngle(const Vector3& position)
 	printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
 	printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
 	//m_pCamera->SetCameraAngle(rotate);
+}
+
+void Player::CollisionUpdate()
+{
+	VECTOR hatRightFrame = MV1GetFramePosition(m_modelHandle, kHatRightFrameIndex);
+	VECTOR HatLeftFrame = MV1GetFramePosition(m_modelHandle, kHatLeftFrameIndex);
+	VECTOR headFrame = MV1GetFramePosition(m_modelHandle, kHeadFrameIndex);
+	headFrame = VScale(VAdd(headFrame, VScale(VAdd(hatRightFrame, HatLeftFrame),0.5f)), 0.5f);
+	VECTOR waistFrame = MV1GetFramePosition(m_modelHandle, kWaistFrameIndex);
+	/*Vector3 hatCenter={(headPos1.x + headPos2.x)*0.5f,(headPos1.y + headPos2.y) * 0.5f,(headPos1.z + headPos2.z) * 0.5f };
+	Vector3 get = { (hatCenter.x + headPos.x) * 0.5f,(hatCenter.y + headPos.y) * 0.5f ,(hatCenter.z + headPos.z) * 0.5f };*/
+	m_capsule.SetMaxPosition({ headFrame.x, headFrame.y, headFrame.z });
+	m_capsule.SetMinPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
 }
 
 float Player::CameraRotaY()

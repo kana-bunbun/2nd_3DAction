@@ -1,5 +1,5 @@
 #include "GameObjectManager.h"
-
+#include"Object/Barrier.h"
 #include<memory>
 #include<vector>
 
@@ -43,10 +43,16 @@ void GameObjectManager::LateUpdate(float deltaTime)
 
 void GameObjectManager::Draw()
 {
-	for (auto& obj : m_objects) {
-		if (!obj->IsActive())continue;
-		obj->Draw();
+	std::vector<GameObject*>transparentIndex;
+	for (auto& object:m_objects) {
+		if (!object->IsActive())continue;
+		if (object->IsTransparent()) {
+			transparentIndex.push_back(object.get());
+			continue;
+		}
+		object->Draw();
 	}
+	// 透明になるオブジェクトは後に描画する
 }
 
 void GameObjectManager::CheckCollision()

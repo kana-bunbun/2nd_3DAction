@@ -94,10 +94,10 @@ namespace Collision {
 		return result;
 	}
 
-	void Sphere::DebugDraw() const
+	void Sphere::DebugDraw(int color) const
 	{
 
-		DrawSphere3D(GetPos().ToVECTOR(), m_radius, 10, Color::kWhite, Color::kWhite, false);
+		DrawSphere3D(GetPos().ToVECTOR(), m_radius, 10, color, color, false);
 	}
 	// 球-----------------------------------------------------------------------------------
 
@@ -238,7 +238,7 @@ namespace Collision {
 		// 中心座標から半分の大きさを引いた値
 		m_minPos = pos - m_halfSize + m_offSet;
 	}
-	void AABB::DebugDraw() const
+	void AABB::DebugDraw(int color) const
 	{
 		Vector3 vertexs[8];
 		// 下の面の座標
@@ -254,20 +254,20 @@ namespace Collision {
 		vertexs[7] = { m_minPos.x,m_maxPos.y,m_maxPos.z };
 
 		// 
-		DrawLine3D(vertexs[0].ToVECTOR(), vertexs[1].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[1].ToVECTOR(), vertexs[2].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[2].ToVECTOR(), vertexs[3].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[3].ToVECTOR(), vertexs[0].ToVECTOR(), Color::kWhite);
-
-		DrawLine3D(vertexs[4].ToVECTOR(), vertexs[5].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[5].ToVECTOR(), vertexs[6].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[6].ToVECTOR(), vertexs[7].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[7].ToVECTOR(), vertexs[4].ToVECTOR(), Color::kWhite);
-
-		DrawLine3D(vertexs[0].ToVECTOR(), vertexs[4].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[1].ToVECTOR(), vertexs[5].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[2].ToVECTOR(), vertexs[6].ToVECTOR(), Color::kWhite);
-		DrawLine3D(vertexs[3].ToVECTOR(), vertexs[7].ToVECTOR(), Color::kWhite);
+		DrawLine3D(vertexs[0].ToVECTOR(), vertexs[1].ToVECTOR(), color);
+		DrawLine3D(vertexs[1].ToVECTOR(), vertexs[2].ToVECTOR(), color);
+		DrawLine3D(vertexs[2].ToVECTOR(), vertexs[3].ToVECTOR(), color);
+		DrawLine3D(vertexs[3].ToVECTOR(), vertexs[0].ToVECTOR(), color);
+																 
+		DrawLine3D(vertexs[4].ToVECTOR(), vertexs[5].ToVECTOR(), color);
+		DrawLine3D(vertexs[5].ToVECTOR(), vertexs[6].ToVECTOR(), color);
+		DrawLine3D(vertexs[6].ToVECTOR(), vertexs[7].ToVECTOR(), color);
+		DrawLine3D(vertexs[7].ToVECTOR(), vertexs[4].ToVECTOR(), color);
+																 
+		DrawLine3D(vertexs[0].ToVECTOR(), vertexs[4].ToVECTOR(), color);
+		DrawLine3D(vertexs[1].ToVECTOR(), vertexs[5].ToVECTOR(), color);
+		DrawLine3D(vertexs[2].ToVECTOR(), vertexs[6].ToVECTOR(), color);
+		DrawLine3D(vertexs[3].ToVECTOR(), vertexs[7].ToVECTOR(), color);
 	}
 	void AABB::SetSize(const Vector3& size)
 	{
@@ -286,16 +286,12 @@ namespace Collision {
 
 
 
-	Capsule::Capsule(const Transform& transform, float radius, float length) :
+	Capsule::Capsule(float radius) :
 		m_minPos(),
 		m_maxPos(),
 		m_radius(radius),
-		m_length(length),
-		m_transform(transform),
 		m_offset(0)
 	{
-		SetTransform(m_transform);
-
 	}
 	Collision::Result Capsule::CheckCollision(const Shape & other) const
 	{
@@ -335,49 +331,23 @@ namespace Collision {
 	}
 	void Capsule::SetPosition(const Vector3& pos)
 	{
-		m_transform.position = pos;
 	}
-	void Capsule::DebugDraw() const
+	void Capsule::SetMaxPosition(const Vector3& pos)
 	{
-		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, Color::kWhite, Color::kWhite, FALSE);
-		DrawSphere3D(m_maxPos.ToVECTOR(), 20, 10, Color::kRed, Color::kRed, TRUE);
-		DrawSphere3D(m_minPos.ToVECTOR(), 20, 10, Color::kBlue, Color::kBlue, TRUE);
+		m_minPos = pos;
 	}
-	void Capsule::SetTransform(const Transform& transform)
+	void Capsule::SetMinPosition(const Vector3 & pos)
 	{
-		m_transform = transform;
-		CheckEndPos();
+		m_maxPos = pos;
+	}
+	void Capsule::DebugDraw(int color) const
+	{
+		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, color, color, FALSE);
+		DrawSphere3D(m_maxPos.ToVECTOR(), 20, 10, Color::kRed, color, TRUE);
+		DrawSphere3D(m_minPos.ToVECTOR(), 20, 10, Color::kBlue, color, TRUE);
 	}
 	void Capsule::SetRadius(float radius)
 	{
 		m_radius = radius;
-		CheckEndPos();
-	}
-	void Capsule::SetLength(float length)
-	{
-		m_length = length;
-		CheckEndPos();
-	}
-	void Capsule::CheckEndPos()
-	{
-		// 水平方向の成分
-		float sinHol = -sinf(m_transform.rotation.y);
-		float cosHol = -cosf(m_transform.rotation.y);
-		// 垂直方向の成分
-		float sinVer = -sinf(m_transform.rotation.x+DX_PI_F*0.5f);
-		float cosVer = -cosf(m_transform.rotation.x + DX_PI_F * 0.5f);
-
-		// ベクトルの計算
-		Vector3 rotate;
-		rotate.x = cosVer * sinHol;
-		rotate.y = sinVer;
-		rotate.z = cosVer * cosHol;
-
-		Vector3 offsetVec = rotate * m_offset;
-		// オフセットを考慮したカプセルの二点を計算
-		m_maxPos = (m_transform.position - rotate*m_length) - offsetVec;
-		m_minPos = (m_transform.position + rotate*m_length) - offsetVec;
-
-
 	}
 }

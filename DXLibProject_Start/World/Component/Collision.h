@@ -1,5 +1,6 @@
 #pragma once
 #include"../../Utility/Vector3.h"
+#include"../../Utility/Color.h"
 #include"Transform.h"
 /// <summary>
 /// 衝突判定関連のデータや処理
@@ -65,7 +66,7 @@ namespace Collision {
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
-		virtual void DebugDraw()const = 0;
+		virtual void DebugDraw(int color = Color::kWhite)const = 0;
 	};
 	class Sphere :public Shape {
 	public:
@@ -101,7 +102,7 @@ namespace Collision {
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
-		void DebugDraw()const  override;
+		void DebugDraw(int color = Color::kWhite)const  override;
 	private:
 		/// <summary>
 		/// 球の中心座標
@@ -140,7 +141,7 @@ namespace Collision {
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
-		void DebugDraw()const  override;
+		void DebugDraw(int color = Color::kWhite)const  override;
 	private:
 		void SetSize(const Vector3& size);
 	private:
@@ -153,7 +154,7 @@ namespace Collision {
 	class Capsule :public Shape {
 	public:
 		Capsule() = default;
-		Capsule(const Transform& transform, float radius,float length);
+		Capsule(float radius);
 		~Capsule() = default;
 		/// <summary>
 		/// 形状データを取得する
@@ -170,30 +171,24 @@ namespace Collision {
 		/// </summary>
 		/// <param name="pos"></param>
 		void SetPosition(const Vector3& pos) override;
+		void SetMaxPosition(const Vector3& pos);
+		void SetMinPosition(const Vector3& pos);
 		/// <summary>
 		/// 座標の取得
 		/// </summary>
 		/// <returns></returns>
-		Vector3 GetPos()const override { return m_transform.position; }
+		Vector3 GetPos()const override { return (m_maxPos + m_minPos) * 0.5f; }
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
-		void DebugDraw()const  override;
-		/// <summary>
-		/// トランスフォームを設定する関数
-		/// </summary>
-		/// <param name="transform"></param>
-		void SetTransform(const Transform& transform);
+		void DebugDraw(int color = Color::kWhite)const  override;
+
 		/// <summary>
 		/// カプセルの半径を設定する関数
 		/// </summary>
 		/// <param name="radius"></param>
 		void SetRadius(float radius);
-		/// <summary>
-		/// カプセルの長さを設定する関数
-		/// </summary>
-		/// <param name="length"></param>
-		void SetLength(float length);
+
 		/// <summary>
 		/// オフセットを設定する関数
 		/// </summary>
@@ -206,8 +201,6 @@ namespace Collision {
 		Vector3 m_maxPos;
 		float m_offset;
 		float m_radius;
-		float m_length;
-		Transform m_transform;
 	};
 
 	/// <summary>

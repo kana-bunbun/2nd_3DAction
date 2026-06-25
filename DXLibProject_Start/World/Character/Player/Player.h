@@ -66,7 +66,7 @@ public:
 	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 
 	void SetCameraAngle(const Vector3& position);
-
+	void CollisionUpdate();
 	float CameraRotaY();
 	void SetFirstPos(const Vector3& pos);
 public:

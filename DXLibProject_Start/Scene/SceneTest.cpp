@@ -179,7 +179,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Update(deltaTime);
 	}
-	m_pItemCursor->Update(deltaTime);
+	m_pItemCursor->Update();
 	m_pPadManager->Update();
 
 	// “G‚Æ“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é

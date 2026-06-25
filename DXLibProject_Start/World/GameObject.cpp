@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include<DxLib.h>
+#include<cassert>
 
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
@@ -32,4 +33,27 @@ void GameObject::Draw()
 	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
 	MV1SetPosition(m_modelHandle, m_transform.position.ToVECTOR());
 	MV1DrawModel(m_modelHandle);
+
+	if (m_collision)m_collision->DebugDraw();
+	for (const auto& collision : m_collisions) {
+		if (collision.shape)collision.shape->DebugDraw(Color::kGreen);
+	}
+}
+
+const Collision::Shape& GameObject::GetCollision() const
+{
+	for (const auto& collision : m_collisions) {
+		if (collision.type == CollisionType::Body) {
+			return *collision.shape;
+		}
+	}
+	return *m_collision;
+	return *m_collisions.front().shape;
+}
+
+void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, CollisionType type)
+{
+	assert(shape && "GameCbject::AddCOllision : shape null");
+
+	m_collisions.push_back({ std::move(shape),type });
 }

@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Utility\PadManager.cpp" />
+    <ClCompile Include="World\Object\Item\ItemType.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
     <ClCompile Include="World\UI\BillboardManager.cpp" />
     <ClCompile Include="Camera\CameraManager.cpp" />
@@ -238,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\PadManager.h" />
+    <ClInclude Include="World\Object\Item\ItemType.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
     <ClInclude Include="World\UI\BillboardManager.h" />
     <ClInclude Include="Camera\CameraManager.h" />

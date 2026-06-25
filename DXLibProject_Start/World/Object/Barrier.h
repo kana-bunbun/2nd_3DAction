@@ -18,6 +18,7 @@ public:
 	/// 描画処理
 	/// </summary>
 	void Draw()override;
+	bool IsTransparent()override { return true; }
 	/// <summary>
 	/// 発動処理
 	/// </summary>

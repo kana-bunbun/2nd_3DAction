@@ -1,5 +1,6 @@
 #pragma once
 #include<memory>
+#include<vector>
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
 #include"../World/Component/Collision.h"
@@ -21,6 +22,16 @@ public:
 		Wall,
 		Floor,
 		Barrier,
+	};
+	enum class CollisionType {
+		Body,
+		Foot,
+		Trigger,
+	};
+	struct CollisionData {
+	public:
+		std::unique_ptr<Collision::Shape>shape;
+		CollisionType type;
 	};
 
 public:
@@ -58,7 +69,8 @@ public:
 	/// 当たり判定の取得
 	/// </summary>
 	/// <returns></returns>
-	const Collision::Shape& GetCollision()const { return *m_collision; }
+	//const Collision::Shape& GetCollision()const { return *m_collision; }
+	const Collision::Shape& GetCollision()const;
 	const CollisionTag& GetCollisionTag()const { return m_collisionTag; }
 	/// <summary>
 	/// 衝突後の処理
@@ -67,9 +79,16 @@ public:
 	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
 	virtual void ResolveCollision(GameObject::CollisionTag tag,const Collision::Result& result) = 0;
 
+	/// <summary>
+	/// コリジョンの追加
+	/// </summary>
+	/// <param name="shape"></param>
+	/// <param name="type"></param>
+	void AddCollision(std::unique_ptr<Collision::Shape> shape,CollisionType type);
+
 	bool IsActive()const { return m_isActive; }
 	void SetActive(const bool active) { m_isActive = active; }
-
+	virtual bool IsTransparent() { return false; }
 protected:
 	/// <summary>
 	/// 座標・回転・拡縮
@@ -90,6 +109,7 @@ protected:
 	/// nullptrにしたら持たないことも選択できる(積極的には使用しない)
 	/// </summary>
 	std::unique_ptr<Collision::Shape>m_collision;
+	std::vector<CollisionData>m_collisions;
 	/// <summary>
 	/// 衝突時のオブジェクトの属性
 	/// </summary>

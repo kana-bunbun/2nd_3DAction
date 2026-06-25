@@ -5,6 +5,8 @@
 #include"../../System/FontManager.h"
 #include<string>
 #include"../../Utility/Color.h"
+#include"../../System/TimeManager.h"
+#include"../Object/Item/ItemType.h"
 namespace {
 
 	// スロット表示する際の中心座標
@@ -17,7 +19,7 @@ namespace {
 	constexpr float kCursorLerpSpeed = 30.0f;
 	const char* const kBackGroundPath = "Resource\\UI\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\UI\\ItemCursor.png";
-	const char* const kItemPath[static_cast<int>(ItemCursor::ItemType::Max)] =
+	const char* const kItemPath[static_cast<int>(ItemBase::Type::Max)] =
 	{
 		"Resource\\UI\\Item_Apple.png",
 		"Resource\\UI\\Item_Beer.png",
@@ -47,9 +49,9 @@ ItemCursor::ItemCursor():
 	m_itemArray.fill(nullptr);
 	for (int i = 0; i < m_itemArray.size(); i++) {
 		int num = (m_itemArray.size() + i) % m_itemArray.size();
-		int type = (static_cast<int>(ItemType::Max) + i) % static_cast<int>(ItemType::Max);
+		int type = (static_cast<int>(ItemBase::Type::Max) + i) % static_cast<int>(ItemBase::Type::Max);
 		for (int j = 0; j < type * i * i+1; j++) {
-		AddItem(static_cast<ItemType>(type));
+		AddItem(static_cast<ItemBase::Type>(type));
 		}
 	}
 	m_itemHandles.fill(-1);
@@ -80,11 +82,11 @@ void ItemCursor::End()
 
 }
 
-void ItemCursor::Update(float deltaTime)
+void ItemCursor::Update()
 {
 
 	// カーソル座標の更新処理
-	UpdateCursor(deltaTime);
+	UpdateCursor();
 	// 入力による更新処理
 	UpdateToInput();
 	// 選択中インデックスの更新処理
@@ -92,11 +94,12 @@ void ItemCursor::Update(float deltaTime)
 
 }
 
-void ItemCursor::UpdateCursor(float deltaTime)
+void ItemCursor::UpdateCursor()
 {
 	// 目標のスロット座標までカーソルの位置を補間
 	Vector3 desirePos = GetSelectPos(m_showSelectIndex);
 	Vector3 differ = desirePos - m_cursorPosition;
+	float deltaTime = TimeManager::GetRawDeltaTime();
 	float lerpValue = MyMath::Clamp(deltaTime * kCursorLerpSpeed, 0.0f, 1.0f);
 	if (differ.GetSqLength() < MyMath::Epsilon) {
 		m_cursorPosition = desirePos;
@@ -118,8 +121,24 @@ void ItemCursor::UpdateToInput()
 	if (Input::IsPressed(Input::Button::Right, m_pad)) {
 		m_selectIndex++;
 	}
+	if (!m_isBlendMenu)return;
+	if (Input::IsPressed(Input::Button::Y, m_pad)) {
+		if (m_isBlendMenu) {
+			//ChangePadState(PadManager::PadState::Player);
+			UseItem();
+		}
+		else {
+			//ChangePadState(PadManager::PadState::ItemMenu);
+		}
+		m_isBlendMenu ^= 1;
+	}
 
-	if (Input::IsPressed(Input::Button::B, m_pad)) {
+	if (Input::IsPressed(Input::Button::A, m_pad) && m_isBlendMenu) {
+		Cancel();
+		m_isBlendMenu = false;
+	}
+
+	if (Input::IsPressed(Input::Button::B, m_pad)&&m_isBlendMenu) {
 
 		if (m_itemArray[m_selectIndex])
 		if (m_itemArray[m_selectIndex]->m_holdNum > 0)
@@ -200,7 +219,7 @@ Vector3 ItemCursor::GetSelectPos(int selectIndex)
 	return result;
 }
 
-bool ItemCursor::AddItem(const ItemType& type)
+bool ItemCursor::AddItem(const ItemBase::Type& type)
 {
 	// 同じアイテムをすでに所持しているときは所持数に加算する
 	for (int i = 0; i < m_itemArray.size(); i++) {
@@ -224,4 +243,13 @@ bool ItemCursor::AddItem(const ItemType& type)
 
 	// 追加できなかったのでfalse
 	return false;
+}
+
+void ItemCursor::Cancel()
+{
+	for (int i = 0; i < m_itemArray.size(); i++) {
+		if (!m_itemArray[i])continue;
+		// 選択フラグをfalse
+		m_itemArray[i]->m_select = false;
+	}
 }
