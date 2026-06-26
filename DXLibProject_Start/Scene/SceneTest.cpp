@@ -230,14 +230,14 @@ void SceneTest::Draw() {
 	DrawGround();
 	// カメラの描画
 	m_pCameraMgr->Apply();
+	m_pEnemyManager->Draw();
+	// マップの描画処理
+	m_pTileManager->Draw();
 	// ゲームオブジェクトの描画処理
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Draw();
 	}
 
-	m_pEnemyManager->Draw();
-	// マップの描画処理
-	m_pTileManager->Draw();
 	// アイテムメニュー中は画面を少し暗くする
 	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);

@@ -31,7 +31,8 @@ namespace {
 
 	constexpr Vector3 kHoldNumOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
 	constexpr Vector3 kSelectIconOffset = { 0.0f,-70 * Game::kWindowScale,0.0f };
-	const char* const kFontName = "Bauhaus 93";
+	const char* const kFontName = "OCRB";
+	//const char* const kFontName = "Bauhaus 93";
 	constexpr int kThickness = 5*Game::kWindowScale;
 	constexpr int kSize = 20 * Game::kWindowScale;
 }

@@ -53,6 +53,10 @@ void GameObjectManager::Draw()
 		object->Draw();
 	}
 	// 透明になるオブジェクトは後に描画する
+	for (auto& object : transparentIndex) {
+		if (!object->IsActive())continue;
+		object->Draw();
+	}
 }
 
 void GameObjectManager::CheckCollision()
