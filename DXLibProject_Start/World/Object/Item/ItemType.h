@@ -1,4 +1,5 @@
 #pragma once
+#include<array>
 class ItemBase {
 public:
 	enum class Type {
@@ -10,8 +11,9 @@ public:
 		CheeseBread,
 		Max,
 	};
-	const ItemBase::Type& Blend(ItemBase::Type base, ItemBase::Type add)const;
-	ItemBase::Type type;
-	ItemBase::Type operator+(ItemBase::Type add);	// アイテムの加算
-	ItemBase::Type& operator+=(ItemBase::Type add);	// ベクトルの加算代入演算子
+
+public:
+	static const ItemBase::Type& Blend(const ItemBase::Type& base, const ItemBase::Type& add);
+
+	static std::array <std::array<int, static_cast<int>(ItemBase::Type::Max)>, static_cast<int>(ItemBase::Type::Max)> ItemRecipe;
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include<vector>
 #include<string>
-#include"Vector3.h"
+#include<unordered_map>
 /// <summary>
 /// ファイル名を指定しCSVのデータを読み込む
 /// </summary>
@@ -39,5 +39,7 @@ public:
 
 private:
 	std::vector<std::vector<std::string>> m_loadData;
+	std::unordered_map<int, int> umap;
+
 };
 

@@ -12,7 +12,7 @@ namespace {
 	};
 }
 
-const ItemBase::Type& ItemBase::Blend(ItemBase::Type base, ItemBase::Type add)const
+const ItemBase::Type& ItemBase::Blend(const ItemBase::Type& base, const ItemBase::Type& add)
 {
 	ItemBase::Type result = ItemBase::Type::Invalid;
 
