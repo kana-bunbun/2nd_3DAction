@@ -27,6 +27,7 @@
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
+#include"../World/Object/Item/ItemType.h"
 #include"../world/GameObjectManager.h"
 #include<cassert>
 #include<memory>
@@ -106,6 +107,7 @@ SceneTest::SceneTest() :
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
+	m_pItemBase = std::make_unique<ItemBase>();
 }
 
 SceneTest::~SceneTest() {}
@@ -251,7 +253,7 @@ void SceneTest::Draw() {
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 	printfDx("randomID : %d\n", randomID);
-
+	m_pItemBase->Debug();
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意
 	Vector3 billboardTarget = Vector3(400.0f, 50.0f, -400.0f);

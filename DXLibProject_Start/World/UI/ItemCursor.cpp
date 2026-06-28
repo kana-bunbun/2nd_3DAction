@@ -31,8 +31,8 @@ namespace {
 
 	constexpr Vector3 kHoldNumOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
 	constexpr Vector3 kSelectIconOffset = { 0.0f,-70 * Game::kWindowScale,0.0f };
-	const char* const kFontName = "OCRB";
-	//const char* const kFontName = "Bauhaus 93";
+	//const char* const kFontName = "OCRB";
+	const char* const kFontName = "Bauhaus 93";
 	constexpr int kThickness = 5*Game::kWindowScale;
 	constexpr int kSize = 20 * Game::kWindowScale;
 }
@@ -47,7 +47,7 @@ ItemCursor::ItemCursor():
 {
 	m_backGroundHandle = LoadGraph(kBackGroundPath);
 	m_cursorHandle = LoadGraph(kCursorPath);
-	m_itemArray.fill(nullptr);
+	m_itemArray.fill(Item(ItemBase::Type::Invalid));
 	for (int i = 0; i < m_itemArray.size(); i++) {
 		int num = (m_itemArray.size() + i) % m_itemArray.size();
 		int type = (static_cast<int>(ItemBase::Type::Max) + i) % static_cast<int>(ItemBase::Type::Max);
@@ -59,6 +59,8 @@ ItemCursor::ItemCursor():
 	for (int i = 0; i < m_itemHandles.size(); i++) {
 		m_itemHandles[i] = LoadGraph(kItemPath[i]);
 	}
+
+	m_itemBase = ItemBase();
 }
 
 ItemCursor::~ItemCursor()
@@ -126,7 +128,7 @@ void ItemCursor::UpdateToInput()
 	if (Input::IsPressed(Input::Button::Y, m_pad)) {
 		if (m_isBlendMenu) {
 			//ChangePadState(PadManager::PadState::Player);
-			UseItem();
+			Select(m_itemArray[m_selectIndex].m_type);
 		}
 		else {
 			//ChangePadState(PadManager::PadState::ItemMenu);
@@ -141,9 +143,10 @@ void ItemCursor::UpdateToInput()
 
 	if (Input::IsPressed(Input::Button::B, m_pad)&&m_isBlendMenu) {
 
-		if (m_itemArray[m_selectIndex])
-		if (m_itemArray[m_selectIndex]->m_holdNum > 0)
-		m_itemArray[m_selectIndex]->m_select ^= 1;
+		if (m_itemArray[m_selectIndex].m_type!= ItemBase::Type::Invalid)
+		if (m_itemArray[m_selectIndex].m_holdNum > 0)
+		m_itemArray[m_selectIndex].m_select ^= 1;
+
 	}
 }
 
@@ -163,17 +166,18 @@ void ItemCursor::NormalizeIndex()
 void ItemCursor::UseItem()
 {
 	std::vector<int> selected;
+	// 選択中のアイテムの配列を取得
 	for (int i = 0; i < m_itemArray.size();i++) {
-		if (!m_itemArray[i])continue;
-		if (!m_itemArray[i]->m_select)continue;
-		if (m_itemArray[i]->m_holdNum<=0)continue;
+		if (!m_itemArray[i].m_type == ItemBase::Type::Invalid)continue;
+		if (!m_itemArray[i].m_select)continue;
+		if (m_itemArray[i].m_holdNum<=0)continue;
 		selected.push_back(i);
 	}
 	// 何も選択していなければreturn
 	if (selected.empty())return;
 	for (int& select : selected) {
-		m_itemArray[select]->m_holdNum--;
-		m_itemArray[select]->m_select = false;
+		m_itemArray[select].m_holdNum--;
+		m_itemArray[select].m_select = false;
 	}
 }
 
@@ -186,16 +190,16 @@ void ItemCursor::Draw()
 		Vector3 backGroundPosition = GetSelectPos(i);
 		DrawRotaGraph(backGroundPosition.x, backGroundPosition.y, kSlotScale, 0, m_backGroundHandle, TRUE);
 
-		if (!m_itemArray[i])continue;
-		int holdNum = m_itemArray[i]->m_holdNum;
+		if (m_itemArray[i].m_type==ItemBase::Type::Invalid)continue;
+		int holdNum = m_itemArray[i].m_holdNum;
 		if (!holdNum)continue;
 		Vector3 graphPos = backGroundPosition;
-		if (m_itemArray[i]->m_select) {
+		if (m_itemArray[i].m_select) {
 			graphPos += kSelectIconOffset;
-			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i]->m_type)], TRUE);
+			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i].m_type)], TRUE);
 			continue;
 		}
-			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i]->m_type)], TRUE);
+			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i].m_type)], TRUE);
 		
 		Vector3 textPos = backGroundPosition + kHoldNumOffset;
 		// 所持数のテキストを用意
@@ -224,19 +228,18 @@ bool ItemCursor::AddItem(const ItemBase::Type& type)
 {
 	// 同じアイテムをすでに所持しているときは所持数に加算する
 	for (int i = 0; i < m_itemArray.size(); i++) {
-		if (!m_itemArray[i])continue;
-		if (m_itemArray[i]->m_type != type)continue;
+		if (m_itemArray[i].m_type != type)continue;
 		// 所持数に加算
-		m_itemArray[i]->m_holdNum++;
+		m_itemArray[i].m_holdNum++;
 		// 追加できたのでtrue
 		return true;
 	}
 	// 同じアイテムを所持していないとき
 	// nullptrの要素を探して追加
 	for (int i = 0; i < m_itemArray.size(); i++) {
-		if (m_itemArray[i])continue;
+		if (m_itemArray[i].m_type==ItemBase::Type::Invalid)continue;
 		// アイテム情報を生成し追加
-		m_itemArray[i] = new Item(type);
+		m_itemArray[i] = Item(type);
 		
 		// 追加できたのでtrue
 		return true;
@@ -246,11 +249,64 @@ bool ItemCursor::AddItem(const ItemBase::Type& type)
 	return false;
 }
 
+bool ItemCursor::Select(const ItemBase::Type& type)
+{
+	// すでに選択済みなら
+	if (IsSelected()) {
+		bool selected = false;
+
+		selected = BlendItem(m_selected[0], m_selected[1]);
+
+	}
+
+	for (int i = 0; i < kSelectMax; i++) {
+		if (m_selected[i] != ItemBase::Type::Invalid)continue;
+		m_selected[i] = type;
+		return true;
+	}
+
+	return false;
+}
+
+bool ItemCursor::IsSelected()
+{
+	bool selected = true;
+	for (int i = 0; i < kSelectMax; i++) {
+		if (m_selected[i] != ItemBase::Type::Invalid)continue;
+		selected = false;
+		break;
+	}
+
+	return selected;
+}
+
+bool ItemCursor::CheckEmptySlot()
+{
+	for (int i = 0; i < kSelectMax; i++) {
+		if (m_itemArray[i].m_type != ItemBase::Type::Invalid)continue;
+		return true;
+	}
+
+	return false;
+}
+
 void ItemCursor::Cancel()
 {
 	for (int i = 0; i < m_itemArray.size(); i++) {
-		if (!m_itemArray[i])continue;
 		// 選択フラグをfalse
-		m_itemArray[i]->m_select = false;
+		m_itemArray[i].m_select = false;
 	}
+}
+
+bool ItemCursor::BlendItem(const ItemBase::Type& base, const ItemBase::Type& add)
+{
+	ItemBase::Type blendResult = m_itemBase.Blend(base, add);
+	// 合成結果が不正値なら処理しない
+	if (blendResult == ItemBase::Type::Invalid) {
+
+		m_selected.fill(ItemBase::Type::Invalid);
+		return false;
+	}
+
+	return true;
 }

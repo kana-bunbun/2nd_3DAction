@@ -6,14 +6,15 @@
 namespace {
 	// スロットの個数
 	constexpr int kSlotMax = 10;
+	constexpr int kSelectMax = 2;
 }
 class ItemCursor
 {
 public:
 
-	class Item {
+	struct Item {
 	public:
-		Item(const ItemBase::Type& type):m_type(type),m_holdNum(1),m_select(false){}
+		Item(ItemBase::Type type) :m_type(type),m_holdNum(0),m_select(false){}
 		ItemBase::Type m_type;
 		int m_holdNum;
 		bool m_select;
@@ -38,11 +39,24 @@ public:
 	Vector3 GetSelectPos(int selectIndex);
 
 	bool AddItem(const ItemBase::Type& type);
+	bool Select(const ItemBase::Type& type);
+	/// <summary>
+	/// アイテム選択をしているかどうかを調べる
+	/// </summary>
+	/// <returns>選択しているときtrue</returns>
+	bool IsSelected();
+	/// <summary>
+	/// 空きスロットがあるかどうか調べる
+	/// </summary>
+	/// <returns>空きスロットがあるときtrue</returns>
+	bool CheckEmptySlot();
 	void Cancel();
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
+private:
+	bool BlendItem(const ItemBase::Type& base, const ItemBase::Type& add);
 private:
 	// 背景画像のグラフィックハンドル
 	int m_backGroundHandle;
@@ -57,9 +71,11 @@ private:
 	// 割り当てられたコントローラー
 	Input::Pad m_pad;
 	// 所持しているアイテムの種類
-	std::array<Item*, kSlotMax> m_itemArray;
+	std::array<Item, kSlotMax> m_itemArray;
 	// アイテムのグラフィックハンドル
 	std::array<int, static_cast<int>(ItemBase::Type::Max)>m_itemHandles;
 	bool m_isBlendMenu;
+	std::array<ItemBase::Type, kSelectMax>m_selected;
+	ItemBase m_itemBase;
 };
 

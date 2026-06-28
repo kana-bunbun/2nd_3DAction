@@ -39,7 +39,6 @@ public:
 
 private:
 	std::vector<std::vector<std::string>> m_loadData;
-	std::unordered_map<int, int> umap;
 
 };
 
