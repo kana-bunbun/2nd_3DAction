@@ -28,7 +28,7 @@ namespace {
 	constexpr Vector3 kDrawSize = { 250.0f,250.0f,0.0f };
 	constexpr Vector3 kMapSize = { MapConst::kTileUnscaledSize * MapConst::MAP_SQUARE_WIDTH_COUNT,MapConst::kTileUnscaledSize  * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
 	constexpr float kCursorScale = 0.20f;
-	const char* const kCursorPath = "Resource\\UI\\MapPlayerCursor.png";
+	const char* const kCursorPath = "Resource\\Graph\\MapPlayerCursor.png";
 	const char* const kWallPath = "Resource\\Map\\wall.mv1";
 	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
 }

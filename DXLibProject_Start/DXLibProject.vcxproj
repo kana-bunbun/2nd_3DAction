@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="Utility\PadManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemType.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
@@ -192,7 +193,7 @@
     <ClCompile Include="World\GameObject.cpp" />
     <ClCompile Include="World\Component\Collision.cpp" />
     <ClCompile Include="Utility\MyRandom.cpp" />
-    <ClCompile Include="World\Character\AnimatioController.cpp" />
+    <ClCompile Include="World\Character\AnimationController.cpp" />
     <ClCompile Include="Camera\CameraOld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
@@ -238,6 +239,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="Utility\PadManager.h" />
     <ClInclude Include="World\Object\Item\ItemType.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
@@ -289,7 +291,7 @@
     <ClInclude Include="World\Component\Transform.h" />
     <ClInclude Include="Utility\MyRandom.h" />
     <ClInclude Include="World\Character\Animation.h" />
-    <ClInclude Include="World\Character\AnimatioController.h" />
+    <ClInclude Include="World\Character\AnimationController.h" />
     <ClInclude Include="Camera\CameraOld.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -354,6 +356,7 @@
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
+    <None Include="Resource\Graph\HPGauge.psd" />
     <None Include="Resource\Map\floor.fbx" />
     <None Include="Resource\Map\wall.fbx" />
     <None Include="Resource\UI\HPFrame.psd" />

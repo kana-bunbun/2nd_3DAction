@@ -6,7 +6,7 @@ namespace GaugeParam {
 	constexpr float kPlayerGaugeScale = 0.3f * Game::kWindowScale;
 	constexpr float kDragonGaugeScale = kPlayerGaugeScale * 0.8f;
 
-	const char* const kFilePath = "Resource\\UI\\";
+	const char* const kFilePath = "Resource\\Graph\\";
 
 	const char* const kPlayer = "Player";
 	const char* const kDragon = "Doragon";

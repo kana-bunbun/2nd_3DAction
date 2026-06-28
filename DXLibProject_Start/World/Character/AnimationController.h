@@ -2,11 +2,14 @@
 #include"Animation.h"
 #include<vector>
 
-class AnimatioController
+class AnimationController
 {
 public:
-	AnimatioController();
-	~AnimatioController();
+	
+	
+	
+	AnimationController();
+	~AnimationController();
 
 	/// <summary>
 	/// 初期化処理
@@ -61,6 +64,7 @@ public:
 	/// <returns>割り込み不可能の時true</returns>
 	bool IsForcePlay() { return m_isForcePlay; }
 	void AddAnim(int animHandle, int index = -1);
+	void SetModelhandle(int modelHandle) { m_modelHandle = modelHandle; }
 private:
 	// モデルハンドル
 	int m_modelHandle;

@@ -2,7 +2,7 @@
 
 #include"../GameObject.h"
 #include"Animation.h"
-#include"AnimatioController.h"
+#include"AnimationController.h"
 
 #include<DxLib.h>
 #include<cassert>

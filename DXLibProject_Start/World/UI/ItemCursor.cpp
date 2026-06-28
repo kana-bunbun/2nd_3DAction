@@ -4,6 +4,7 @@
 #include"../../Utility/MyMath.h"
 #include"../../System/FontManager.h"
 #include<string>
+#include<array>
 #include"../../Utility/Color.h"
 #include"../../System/TimeManager.h"
 #include"../Object/Item/ItemType.h"
@@ -17,14 +18,14 @@ namespace {
 
 	constexpr float kCursorScale = 1.3f * Game::kWindowScale;
 	constexpr float kCursorLerpSpeed = 30.0f;
-	const char* const kBackGroundPath = "Resource\\UI\\Icon Background.png";
-	const char* const kCursorPath = "Resource\\UI\\ItemCursor.png";
+	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
+	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
 	const char* const kItemPath[static_cast<int>(ItemBase::Type::Max)] =
 	{
-		"Resource\\UI\\Item_Apple.png",
-		"Resource\\UI\\Item_Beer.png",
-		"Resource\\UI\\Item_Bread.png",
-		"Resource\\UI\\Item_Cheese.png",
+		"Resource\\Graph\\Item_Apple.png",
+		"Resource\\Graph\\Item_Beer.png",
+		"Resource\\Graph\\Item_Bread.png",
+		"Resource\\Graph\\Item_Cheese.png",
 	};
 
 
@@ -168,7 +169,7 @@ void ItemCursor::UseItem()
 	std::vector<int> selected;
 	// 選択中のアイテムの配列を取得
 	for (int i = 0; i < m_itemArray.size();i++) {
-		if (!m_itemArray[i].m_type == ItemBase::Type::Invalid)continue;
+		if (m_itemArray[i].m_type == ItemBase::Type::Invalid)continue;
 		if (!m_itemArray[i].m_select)continue;
 		if (m_itemArray[i].m_holdNum<=0)continue;
 		selected.push_back(i);

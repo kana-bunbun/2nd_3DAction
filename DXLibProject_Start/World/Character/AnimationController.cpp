@@ -1,4 +1,4 @@
-#include "AnimatioController.h"
+#include "AnimationController.h"
 #include"../../Utility/Vector3.h"
 
 namespace {
@@ -11,7 +11,7 @@ namespace {
 
 }
 
-AnimatioController::AnimatioController():
+AnimationController::AnimationController():
 	m_modelHandle(-1),
 	m_attachIndex(-1),
 	m_currentAnim(-1),
@@ -28,17 +28,17 @@ AnimatioController::AnimatioController():
 	m_animHandle.clear();
 }
 
-AnimatioController::~AnimatioController()
+AnimationController::~AnimationController()
 {
 }
 
-void AnimatioController::Init(int modelHandle)
+void AnimationController::Init(int modelHandle)
 {
 	m_modelHandle = modelHandle;
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnim, m_blendRate);
 }
 
-void AnimatioController::PlayAnimation(const Status::AnimData& data)
+void AnimationController::PlayAnimation(const Status::AnimData& data)
 {
 	// äÑÇËçûÇ›çƒê∂ïsâ¬î\Ç»ÇÁèàóùÇµÇ»Ç¢
 	if (m_isForcePlay && m_isPlaying)return;
@@ -68,7 +68,7 @@ void AnimatioController::PlayAnimation(const Status::AnimData& data)
 	m_isPlaying = true;
 }
 
-void AnimatioController::Update(float deltaTime)
+void AnimationController::Update(float deltaTime)
 {
 	m_playCountOld = m_playCount;
 	// çƒê∂ÇµÇƒÇ¢Ç»ÇØÇÍÇŒë¶éûrturn;
@@ -96,7 +96,7 @@ void AnimatioController::Update(float deltaTime)
 	MV1SetAttachAnimTime(m_modelHandle, m_attachIndex, m_playCount);
 }
 
-void AnimatioController::Debug()
+void AnimationController::Debug()
 {
 	printfDx("animation |    modeel   : %d\n", m_modelHandle);
 	printfDx("animation | currentAnim : %d\n", m_currentAnim);
@@ -109,14 +109,14 @@ void AnimatioController::Debug()
 	printfDx("animation |    blend    : %f\n", m_blendRate);
 }
 
-bool AnimatioController::CheckOverMoment(float time)
+bool AnimationController::CheckOverMoment(float time)
 {
 	if (m_playCount < time)return false;
 	if (m_playCountOld > time)return false;
 	return true;
 }
 
-void AnimatioController::AddAnim(int animHandle, int index)
+void AnimationController::AddAnim(int animHandle, int index)
 {
 	m_animHandle.push_back(animHandle);
 }

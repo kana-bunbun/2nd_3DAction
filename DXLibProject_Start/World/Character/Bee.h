@@ -1,6 +1,6 @@
 #pragma once
 #include"../GameObject.h"
-#include"AnimatioController.h"
+#include"../Character/AnimationController.h"
 #include"../../Utility/Vector3.h"
 class Bee:public GameObject
 {
@@ -26,7 +26,7 @@ private:
 	/// <summary>
 	/// アニメーションの管理を行う
 	/// </summary>
-	AnimatioController m_animation;
+	AnimationController m_animation;
 	/// <summary>
 	/// 再生中のアニメーション
 	/// </summary>

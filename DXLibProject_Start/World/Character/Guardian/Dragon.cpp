@@ -3,7 +3,7 @@
 #include<string>
 #include<math.h>
 #include<cassert>
-#include"../AnimatioController.h"
+#include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
 #include"DragonBreath.h"

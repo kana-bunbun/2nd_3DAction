@@ -2,7 +2,7 @@
 #include<DxLib.h>
 namespace {
 	const char* const kGraphPath[BillboardManager::eBillboard::Max] = {
-		"Resource\\UI\\BillboardText_Stair.png",
+		"Resource\\Graph\\BillboardText_Stair.png",
 	};
 }
 BillboardManager& BillboardManager::GetInstance()

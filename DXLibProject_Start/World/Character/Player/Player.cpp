@@ -5,7 +5,7 @@
 #include"../Animation.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/CameraOld.h"
-#include"../AnimatioController.h"
+#include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"

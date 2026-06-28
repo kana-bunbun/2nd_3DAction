@@ -1,6 +1,6 @@
 #pragma once
 #include"../../GameObject.h"
-#include"../AnimatioController.h"
+#include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
 #include"../../UI/Gauge.h"
@@ -61,7 +61,7 @@ private:
 	/// <summary>
 	/// アニメーションの管理を行う
 	/// </summary>
-	AnimatioController m_animation;
+	AnimationController m_animation;
 	/// <summary>
 	/// アニメーションデータの配列
 	/// </summary>

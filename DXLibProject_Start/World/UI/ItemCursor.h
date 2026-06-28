@@ -8,6 +8,7 @@ namespace {
 	constexpr int kSlotMax = 10;
 	constexpr int kSelectMax = 2;
 }
+struct Item;
 class ItemCursor
 {
 public:

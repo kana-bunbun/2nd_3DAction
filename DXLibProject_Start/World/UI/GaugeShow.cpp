@@ -6,7 +6,7 @@
 #include"GaugeParam.h"
 namespace {
 	// ファイルパス
-	const char* const kFilePath = "Resource\\UI\\";
+	const char* const kFilePath = "Resource\\Graph\\";
 	const char* const kTypePath[static_cast<int>(GaugeType::Max)] = {
 	 "HP",
 	 "MP",

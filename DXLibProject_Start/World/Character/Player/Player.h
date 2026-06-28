@@ -1,5 +1,5 @@
 #include"../../GameObject.h"
-#include"../AnimatioController.h"
+#include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
@@ -86,7 +86,8 @@ private:
 	/// <summary>
 	/// アニメーションの管理を行う
 	/// </summary>
-	AnimatioController m_animation;
+
+	AnimationController m_animation;
 	/// <summary>
 	/// アニメーションデータの配列
 	/// </summary>
