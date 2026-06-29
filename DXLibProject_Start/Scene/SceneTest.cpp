@@ -138,6 +138,7 @@ void SceneTest::Init() {
 	m_pPadManager->Init();
 	//Transform* pos = m_pPlayer->GetTransform();
 	m_pTileManager->SetPlayer(m_pPlayer);
+	m_pTileManager->SetEnemyManager(m_pEnemyManager.get());
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pItemCursor->Init();
 

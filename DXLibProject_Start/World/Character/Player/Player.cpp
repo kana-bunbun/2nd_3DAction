@@ -601,6 +601,7 @@ float Player::CameraRotaY()
 void Player::SetFirstPos(const Vector3& pos)
 {
 	m_transform.position = pos;
+	m_transform.position = Vector3::zero;
 	m_move.SetTransform(m_transform);
 }
 

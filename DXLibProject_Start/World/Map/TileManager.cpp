@@ -8,6 +8,7 @@
 #include"../../Utility/MyRandom.h"
 #include"../../Utility/Game.h"
 #include"../Character/Player/Player.h"
+#include"../Character/Enemy/EnemyManager.h"
 #include"../Object/Stair.h"
 #include<DxLib.h>
 #include<vector>
@@ -40,6 +41,7 @@ TileManager::TileManager() :
 	stair(nullptr),
 	m_upStair(false),
 	m_pPlayer(nullptr),
+	m_pEnemyManager(nullptr),
 	m_pad(Input::Pad::Invalid)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
@@ -122,6 +124,7 @@ void TileManager::Update(float deltaTime)
 			Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 			// ランダムな部屋マスにプレイヤーを生成
 			m_pPlayer->SetFirstPos(initPos);
+			m_pEnemyManager->RegistRandomPos();
 		}
 	}
 }

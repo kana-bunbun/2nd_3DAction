@@ -8,6 +8,7 @@
 class TileObject;
 class Stair;
 class Player;
+class EnemyManager;
 class TileManager
 {
 public:
@@ -26,6 +27,7 @@ public:
 	int RandomRoomID();
 	Collision::Result CheckCollision(GameObject* object);
 public:
+	void SetEnemyManager(EnemyManager* pEnemyManager) { m_pEnemyManager = pEnemyManager; }
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 	bool IsUpStair() { return m_upStair; }
@@ -41,6 +43,7 @@ private:
 	bool m_upStair;
 	int m_stairID;
 	Player* m_pPlayer;
+	EnemyManager* m_pEnemyManager;
 	Input::Pad m_pad;
 };
 

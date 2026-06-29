@@ -43,6 +43,7 @@ void GameObject::Draw()
 void GameObject::SetPosition(const Vector3& position)
 {
 	m_transform.position = position;
+	if(m_collision)
 	m_collision->SetPosition(position);
 }
 
