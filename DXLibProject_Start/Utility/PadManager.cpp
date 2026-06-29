@@ -32,7 +32,7 @@ void PadManager::Update()
 	
 
 	if (Input::IsPressed(Input::Button::Y, Input::Pad::P1)) {
-		if (m_pPlayer->m_pad == Input::Pad::Invalid) {
+		if (m_pItemCursor->GetIsBlendMenu()) {
 			ChangePadState(PadManager::PadState::Player);
 		}
 		else {
@@ -70,7 +70,6 @@ void PadManager::ChangePadState(const PadState& padState)
 		
 		if (m_pItemCursor) {
 			m_pItemCursor->SetPad(Input::Pad::P1);
-			m_pItemCursor->SetIsBlendMenu(false);
 		}
 		if (m_pTileManager)
 			m_pTileManager->SetPad(Input::Pad::P1);
@@ -79,8 +78,8 @@ void PadManager::ChangePadState(const PadState& padState)
 	case PadManager::PadState::ItemMenu:
 		if (m_pItemCursor) {
 			m_pItemCursor->SetPad(Input::Pad::P1);
-			m_pItemCursor->SetIsBlendMenu(true);
 		TimeManager::SetTimeScale(0.0f);
+		//m_pItemCursor->SetIsBlendMenu(true);
 		}
 		
 		if (m_pPlayer)

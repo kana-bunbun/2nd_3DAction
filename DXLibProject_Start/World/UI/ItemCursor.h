@@ -41,6 +41,7 @@ public:
 	Vector3 GetSelectPos(int selectIndex);
 
 	bool AddItem(const BlendManager::Type& type);
+	bool SubItem(const BlendManager::Type& type);
 	bool Select(const BlendManager::Type& type);
 	/// <summary>
 	/// アイテム選択をしているかどうかを調べる

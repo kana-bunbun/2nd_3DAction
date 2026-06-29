@@ -6,7 +6,7 @@ namespace {
 	const char* const kMotionPath = "Animation\\";
 	const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
 	{
-		"GastaroidQueen@Idle.FBX",
+		"Idle.mv1",
 		"Roar.mv1",
 		"Run.mv1",
 		"Walk.mv1",

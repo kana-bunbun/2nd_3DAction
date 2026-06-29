@@ -16,6 +16,7 @@
 #include "../System/SoundManager.h"
 #include "../System/FontManager.h"
 #include"../World/Character/Bee.h"
+#include"../World/Character/Enemy/Enemy.h"
 #include"../World/Character/Player/Player.h"
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
@@ -181,6 +182,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Update(deltaTime);
 	}
+	m_pEnemyManager->Update(deltaTime);
 	m_pItemCursor->Update();
 	m_pPadManager->Update();
 
@@ -192,8 +194,9 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 
 	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
-	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
-		m_pDragon->Call(m_pBee);
+		if (Input::IsDown(Input::Button::LT, Input::Pad::P1)) {
+		m_pDragon->Call(m_pEnemyManager->GetEnemy());
+		}
 	else
 		m_pDragon->CallBack();
 	}

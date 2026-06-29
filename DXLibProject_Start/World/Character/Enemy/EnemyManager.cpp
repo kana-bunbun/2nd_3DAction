@@ -61,3 +61,9 @@ void EnemyManager::RegistRandomPos()
 	}
 }
 
+Enemy* EnemyManager::GetEnemy(int num)
+{
+	if (num < 0 || num >= m_enemys.size())num = 0;
+	return m_enemys[num].get();
+}
+

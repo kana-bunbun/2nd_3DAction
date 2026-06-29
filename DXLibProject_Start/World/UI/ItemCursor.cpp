@@ -122,9 +122,8 @@ void ItemCursor::UpdateToInput()
 			Select(m_slots[m_selectIndex]->m_type);
 		}
 		else {
-			//ChangePadState(PadManager::PadState::ItemMenu);
+			m_isBlendMenu = true;
 		}
-		m_isBlendMenu ^= 1;
 	}
 
 	if (Input::IsPressed(Input::Button::A, m_pad) && m_isBlendMenu) {
@@ -235,6 +234,21 @@ bool ItemCursor::AddItem(const BlendManager::Type& type)
 	return false;
 }
 
+bool ItemCursor::SubItem(const BlendManager::Type& type)
+{
+
+	// そのアイテムをすでに所持しているときは所持数を減らす
+	for (int i = 0; i < m_slots.size(); i++) {
+		if (m_slots[i]->m_type != type)continue;
+		// 所持数に加算
+		m_slots[i]->Sub();
+		// 減少できたのでtrue
+		return true;
+	}
+	// 同じアイテムを所持していないときfalse
+	return false;
+}
+
 bool ItemCursor::Select(const BlendManager::Type& type)
 {
 	// すでに選択済みなら
@@ -293,6 +307,12 @@ bool ItemCursor::BlendItem(const BlendManager::Type& base, const BlendManager::T
 		m_selected.fill(BlendManager::Type::Invalid);
 		return false;
 	}
+
+	// 合成材料のアイテムを1つ減らす
+	SubItem(base);
+	SubItem(add);
+	// 合成結果のアイテムを1つ増やす
+	AddItem(blendResult);
 
 	return true;
 }

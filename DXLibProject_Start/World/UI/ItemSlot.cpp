@@ -45,7 +45,7 @@ void ItemSlot::Draw()
 	if (m_type == BlendManager::Type::Invalid)return;
 	int itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_type)]);
 	Vector3 drawPos = m_drawPos;
-	if (m_select)m_drawPos += kSelectIconOffset;
+	if (m_select)drawPos += kSelectIconOffset;
 	DrawRotaGraph(drawPos.x, drawPos.y, kItemScale, 0, itemHandle, TRUE);
 
 }
