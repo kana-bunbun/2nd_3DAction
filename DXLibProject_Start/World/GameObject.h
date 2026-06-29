@@ -20,13 +20,13 @@ public:
 		Player,
 		Enemy,
 		Wall,
-		Floor,
+		Stage,
 		Barrier,
 	};
 	enum class CollisionType {
 		Body,
 		Foot,
-		Trigger,
+		Sensor,
 	};
 	struct CollisionData {
 	public:
@@ -65,6 +65,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Vector3& GetPosition()const { return m_transform.position; }
+	void SetPosition(const Vector3& position);
 	/// <summary>
 	/// 当たり判定の取得
 	/// </summary>
@@ -78,6 +79,12 @@ public:
 	/// <param name="result"></param>
 	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
 	virtual void ResolveCollision(GameObject::CollisionTag tag,const Collision::Result& result) = 0;
+	virtual void ResolveCollision(
+		GameObject& other,
+		const CollisionData& myData,
+		const CollisionData& otherData,
+		const Collision::Result& result
+		) = 0;
 
 	/// <summary>
 	/// コリジョンの追加

@@ -111,6 +111,7 @@ namespace Collision {
 	// AABB---------------------------------------------------------------------------------
 	Collision::Result AABB::CheckCollision(const Shape& other) const
 	{
+
 /*
 		// 形状がAABBなら
 		if (other.GetType() != Collision::Type::AABB)return false;
@@ -173,6 +174,7 @@ namespace Collision {
 			result.penetration = radiusSum - distance;
 			return result;
 			*/
+			break;
 		case Type::AABB: 
 		{
 			// 相手の座標を取得するためAABBクラスをdynamic_castで取得

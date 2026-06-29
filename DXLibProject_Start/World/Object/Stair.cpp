@@ -83,6 +83,9 @@ void Stair::ResolveCollision(GameObject & other, const Collision::Result & resul
 void Stair::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
 {}
 
+void Stair::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
+{}
+
 void Stair::SetTile(int tileID)
 {
 	m_transform.position = MapManager::GetInstance().GetWorldPosFromID(tileID);

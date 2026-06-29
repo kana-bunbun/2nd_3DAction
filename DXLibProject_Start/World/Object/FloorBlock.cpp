@@ -12,7 +12,7 @@ FloorBlock::FloorBlock()
 {
 	m_modelHandle = MV1LoadModel(kModelPath);
 	MV1SetScale(m_modelHandle, kInitSize.ToVECTOR());
-	m_collisionTag = GameObject::CollisionTag::Floor;
+	m_collisionTag = GameObject::CollisionTag::Stage;
 	m_collision = std::make_unique<Collision::AABB>(kOffsetPos, kCollisionSize);
 }
 
@@ -32,4 +32,7 @@ void FloorBlock::ResolveCollision(GameObject & other, const Collision::Result & 
 }
 
 void FloorBlock::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{}
+
+void FloorBlock::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}

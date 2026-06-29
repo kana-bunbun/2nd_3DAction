@@ -209,7 +209,7 @@ void Player::LoadModel()
 		// 読み込みができたら
 		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i], i);
+		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
@@ -452,7 +452,7 @@ void Player::ResolveCollision(GameObject& other, const Collision::Result& result
 		// 衝突判定の更新
 		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 		break;
-	case GameObject::CollisionTag::Floor:
+	case GameObject::CollisionTag::Stage:
 		// 座標を補正
 		m_transform.position += revertVec;
 		m_move.SetTransform(m_transform);
@@ -499,7 +499,7 @@ void Player::ResolveCollision(GameObject::CollisionTag tag, const Collision::Res
 		// 衝突判定の更新
 		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 		break;
-	case GameObject::CollisionTag::Floor:
+	case GameObject::CollisionTag::Stage:
 		// 座標を補正
 		m_transform.position += revertVec;
 		m_move.SetTransform(m_transform);
@@ -518,6 +518,48 @@ void Player::ResolveCollision(GameObject::CollisionTag tag, const Collision::Res
 		break;
 	}
 
+
+}
+
+void Player::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
+{
+
+	// 当たっていなければ即時return
+	if (!result.isHit)return;
+
+	// 衝突判定のフィルター
+	// 高頻度で呼ばれるため無駄な判定は無視する
+	if (myData.type == CollisionType::Sensor)return;
+	// 足判定は接地専用で使われる
+	bool isFoot = (myData.type == CollisionType::Foot);
+	if (isFoot) {
+		if (other.GetCollisionTag() == CollisionTag::Stage && result.normal.y > 0.0f) {
+			m_isGroud = true;
+		}
+	}
+
+	// 座標更新の計算処理
+
+
+	// 押し戻し量を一時保存する
+	Vector3 push = result.normal * result.penetration;
+	switch (other.GetCollisionTag())
+	{
+	case CollisionTag::None:
+		break;
+	case CollisionTag::Enemy:
+		if (myData.type == CollisionType::Body && otherData.type == CollisionType::Body) {
+			m_move.AddPendingPush(push);
+		}
+		break;
+	case CollisionTag::Stage:
+	case CollisionTag::Wall:
+		m_transform.position += push;
+		break;
+		break;
+	default:
+		break;
+	}
 
 }
 

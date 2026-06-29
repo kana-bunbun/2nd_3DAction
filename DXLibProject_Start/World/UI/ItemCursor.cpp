@@ -3,11 +3,12 @@
 #include"../../Utility/Vector3.h"
 #include"../../Utility/MyMath.h"
 #include"../../System/FontManager.h"
-#include<string>
-#include<array>
 #include"../../Utility/Color.h"
 #include"../../System/TimeManager.h"
-#include"../Object/Item/ItemType.h"
+#include"../Object/Item/BlendManager.h"
+#include"ItemSlot.h"
+#include<string>
+#include<array>
 namespace {
 
 	// スロット表示する際の中心座標
@@ -20,7 +21,7 @@ namespace {
 	constexpr float kCursorLerpSpeed = 30.0f;
 	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
-	const char* const kItemPath[static_cast<int>(ItemBase::Type::Max)] =
+	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] =
 	{
 		"Resource\\Graph\\Item_Apple.png",
 		"Resource\\Graph\\Item_Beer.png",
@@ -31,49 +32,38 @@ namespace {
 
 
 	constexpr Vector3 kHoldNumOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
-	constexpr Vector3 kSelectIconOffset = { 0.0f,-70 * Game::kWindowScale,0.0f };
 	//const char* const kFontName = "OCRB";
 	const char* const kFontName = "Bauhaus 93";
 	constexpr int kThickness = 5*Game::kWindowScale;
 	constexpr int kSize = 20 * Game::kWindowScale;
 }
 ItemCursor::ItemCursor():
-	m_backGroundHandle(-1),
 	m_selectIndex(0),
 	m_showSelectIndex(m_selectIndex),
 	m_cursorHandle(-1),
 	m_cursorPosition(GetSelectPos(0)),
-	m_pad(Input::Pad::Invalid),
-	m_itemHandles()
+	m_pad(Input::Pad::Invalid)
 {
-	m_backGroundHandle = LoadGraph(kBackGroundPath);
 	m_cursorHandle = LoadGraph(kCursorPath);
-	m_itemArray.fill(Item(ItemBase::Type::Invalid));
-	for (int i = 0; i < m_itemArray.size(); i++) {
-		int num = (m_itemArray.size() + i) % m_itemArray.size();
-		int type = (static_cast<int>(ItemBase::Type::Max) + i) % static_cast<int>(ItemBase::Type::Max);
+	m_slots.fill(nullptr);
+	for (int i = 0; i < m_slots.size(); i++) {
+		m_slots[i] = new ItemSlot();
+		m_slots[i]->SetPosition(GetSelectPos(i));
+	}
+	for (int i = 0; i < m_slots.size(); i++) {
+		int num = (m_slots.size() + i) % m_slots.size();
+		int type = (static_cast<int>(BlendManager::Type::Max) + i) % static_cast<int>(BlendManager::Type::Max);
 		for (int j = 0; j < type * i * i+1; j++) {
-		AddItem(static_cast<ItemBase::Type>(type));
+		AddItem(static_cast<BlendManager::Type>(type));
 		}
 	}
-	m_itemHandles.fill(-1);
-	for (int i = 0; i < m_itemHandles.size(); i++) {
-		m_itemHandles[i] = LoadGraph(kItemPath[i]);
-	}
-
-	m_itemBase = ItemBase();
+	m_itemBase = BlendManager();
 }
 
 ItemCursor::~ItemCursor()
 {
-	DeleteGraph(m_backGroundHandle);
-	m_backGroundHandle = -1;
 	DeleteGraph(m_cursorHandle);
 	m_cursorHandle = -1;
-	for (int& handle:m_itemHandles) {
-		DeleteGraph(handle);
-		handle = -1;
-	}
 }
 
 void ItemCursor::Init()
@@ -129,7 +119,7 @@ void ItemCursor::UpdateToInput()
 	if (Input::IsPressed(Input::Button::Y, m_pad)) {
 		if (m_isBlendMenu) {
 			//ChangePadState(PadManager::PadState::Player);
-			Select(m_itemArray[m_selectIndex].m_type);
+			Select(m_slots[m_selectIndex]->m_type);
 		}
 		else {
 			//ChangePadState(PadManager::PadState::ItemMenu);
@@ -144,9 +134,9 @@ void ItemCursor::UpdateToInput()
 
 	if (Input::IsPressed(Input::Button::B, m_pad)&&m_isBlendMenu) {
 
-		if (m_itemArray[m_selectIndex].m_type!= ItemBase::Type::Invalid)
-		if (m_itemArray[m_selectIndex].m_holdNum > 0)
-		m_itemArray[m_selectIndex].m_select ^= 1;
+		if (m_slots[m_selectIndex]->m_type!= BlendManager::Type::Invalid)
+		if (m_slots[m_selectIndex]->GetHoldNum() > 0)
+		m_slots[m_selectIndex]->m_select ^= 1;
 
 	}
 }
@@ -168,17 +158,17 @@ void ItemCursor::UseItem()
 {
 	std::vector<int> selected;
 	// 選択中のアイテムの配列を取得
-	for (int i = 0; i < m_itemArray.size();i++) {
-		if (m_itemArray[i].m_type == ItemBase::Type::Invalid)continue;
-		if (!m_itemArray[i].m_select)continue;
-		if (m_itemArray[i].m_holdNum<=0)continue;
+	for (int i = 0; i < m_slots.size();i++) {
+		if (m_slots[i]->m_type == BlendManager::Type::Invalid)continue;
+		if (!m_slots[i]->m_select)continue;
+		if (m_slots[i]->GetHoldNum()<=0)continue;
 		selected.push_back(i);
 	}
 	// 何も選択していなければreturn
 	if (selected.empty())return;
 	for (int& select : selected) {
-		m_itemArray[select].m_holdNum--;
-		m_itemArray[select].m_select = false;
+		m_slots[select]->Sub();
+		m_slots[select]->m_select = false;
 	}
 }
 
@@ -188,21 +178,16 @@ void ItemCursor::Draw()
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 
 	for (int i = 0; i < kSlotMax;i++) {
-		Vector3 backGroundPosition = GetSelectPos(i);
-		DrawRotaGraph(backGroundPosition.x, backGroundPosition.y, kSlotScale, 0, m_backGroundHandle, TRUE);
-
-		if (m_itemArray[i].m_type==ItemBase::Type::Invalid)continue;
-		int holdNum = m_itemArray[i].m_holdNum;
-		if (!holdNum)continue;
-		Vector3 graphPos = backGroundPosition;
-		if (m_itemArray[i].m_select) {
-			graphPos += kSelectIconOffset;
-			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i].m_type)], TRUE);
+		int holdNum = m_slots[i]->GetHoldNum();
+		// スロットの描画処理を行う
+		m_slots[i]->Draw();
+		if (m_slots[i]->m_select) {
 			continue;
 		}
-			DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_itemArray[i].m_type)], TRUE);
+			//DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_slots[i]->m_type)], TRUE);
+		if (!holdNum)continue;
 		
-		Vector3 textPos = backGroundPosition + kHoldNumOffset;
+		Vector3 textPos = GetSelectPos(i) + kHoldNumOffset;
 		// 所持数のテキストを用意
 		std::string numText = std::to_string(holdNum);
 		// 文字数を取得
@@ -225,23 +210,23 @@ Vector3 ItemCursor::GetSelectPos(int selectIndex)
 	return result;
 }
 
-bool ItemCursor::AddItem(const ItemBase::Type& type)
+bool ItemCursor::AddItem(const BlendManager::Type& type)
 {
 	// 同じアイテムをすでに所持しているときは所持数に加算する
-	for (int i = 0; i < m_itemArray.size(); i++) {
-		if (m_itemArray[i].m_type != type)continue;
+	for (int i = 0; i < m_slots.size(); i++) {
+		if (m_slots[i]->m_type != type)continue;
 		// 所持数に加算
-		m_itemArray[i].m_holdNum++;
+		m_slots[i]->Add();
 		// 追加できたのでtrue
 		return true;
 	}
 	// 同じアイテムを所持していないとき
 	// nullptrの要素を探して追加
-	for (int i = 0; i < m_itemArray.size(); i++) {
-		if (m_itemArray[i].m_type==ItemBase::Type::Invalid)continue;
+	for (int i = 0; i < m_slots.size(); i++) {
+		if (m_slots[i]->m_type!=BlendManager::Type::Invalid)continue;
 		// アイテム情報を生成し追加
-		m_itemArray[i] = Item(type);
-		
+		m_slots[i]->m_type = type;
+		m_slots[i]->Add();
 		// 追加できたのでtrue
 		return true;
 	}
@@ -250,7 +235,7 @@ bool ItemCursor::AddItem(const ItemBase::Type& type)
 	return false;
 }
 
-bool ItemCursor::Select(const ItemBase::Type& type)
+bool ItemCursor::Select(const BlendManager::Type& type)
 {
 	// すでに選択済みなら
 	if (IsSelected()) {
@@ -261,7 +246,7 @@ bool ItemCursor::Select(const ItemBase::Type& type)
 	}
 
 	for (int i = 0; i < kSelectMax; i++) {
-		if (m_selected[i] != ItemBase::Type::Invalid)continue;
+		if (m_selected[i] != BlendManager::Type::Invalid)continue;
 		m_selected[i] = type;
 		return true;
 	}
@@ -273,7 +258,7 @@ bool ItemCursor::IsSelected()
 {
 	bool selected = true;
 	for (int i = 0; i < kSelectMax; i++) {
-		if (m_selected[i] != ItemBase::Type::Invalid)continue;
+		if (m_selected[i] != BlendManager::Type::Invalid)continue;
 		selected = false;
 		break;
 	}
@@ -284,7 +269,7 @@ bool ItemCursor::IsSelected()
 bool ItemCursor::CheckEmptySlot()
 {
 	for (int i = 0; i < kSelectMax; i++) {
-		if (m_itemArray[i].m_type != ItemBase::Type::Invalid)continue;
+		if (m_slots[i]->m_type != BlendManager::Type::Invalid)continue;
 		return true;
 	}
 
@@ -293,19 +278,19 @@ bool ItemCursor::CheckEmptySlot()
 
 void ItemCursor::Cancel()
 {
-	for (int i = 0; i < m_itemArray.size(); i++) {
+	for (int i = 0; i < m_slots.size(); i++) {
 		// 選択フラグをfalse
-		m_itemArray[i].m_select = false;
+		m_slots[i]->m_select = false;
 	}
 }
 
-bool ItemCursor::BlendItem(const ItemBase::Type& base, const ItemBase::Type& add)
+bool ItemCursor::BlendItem(const BlendManager::Type& base, const BlendManager::Type& add)
 {
-	ItemBase::Type blendResult = m_itemBase.Blend(base, add);
+	BlendManager::Type blendResult = m_itemBase.Blend(base, add);
 	// 合成結果が不正値なら処理しない
-	if (blendResult == ItemBase::Type::Invalid) {
+	if (blendResult == BlendManager::Type::Invalid) {
 
-		m_selected.fill(ItemBase::Type::Invalid);
+		m_selected.fill(BlendManager::Type::Invalid);
 		return false;
 	}
 

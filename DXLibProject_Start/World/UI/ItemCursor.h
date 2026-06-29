@@ -1,25 +1,26 @@
 #pragma once
 #include"../../Utility/Input.h"
 #include"../../Utility/Vector3.h"
-#include"../Object/Item/ItemType.h"
+#include"../Object/Item/BlendManager.h"
 #include<array>
+#include<memory>
 namespace {
 	// スロットの個数
 	constexpr int kSlotMax = 10;
 	constexpr int kSelectMax = 2;
 }
-struct Item;
+class ItemSlot;
 class ItemCursor
 {
 public:
 
-	struct Item {
-	public:
-		Item(ItemBase::Type type) :m_type(type),m_holdNum(0),m_select(false){}
-		ItemBase::Type m_type;
-		int m_holdNum;
-		bool m_select;
-	};
+	//struct Item {
+	//public:
+	//	Item(ItemBase::Type type) :m_type(type),m_holdNum(0),m_select(false){}
+	//	ItemBase::Type m_type;
+	//	int m_holdNum;
+	//	bool m_select;
+	//};
 
 public:
 	ItemCursor();
@@ -39,8 +40,8 @@ public:
 
 	Vector3 GetSelectPos(int selectIndex);
 
-	bool AddItem(const ItemBase::Type& type);
-	bool Select(const ItemBase::Type& type);
+	bool AddItem(const BlendManager::Type& type);
+	bool Select(const BlendManager::Type& type);
 	/// <summary>
 	/// アイテム選択をしているかどうかを調べる
 	/// </summary>
@@ -57,10 +58,8 @@ public:
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 private:
-	bool BlendItem(const ItemBase::Type& base, const ItemBase::Type& add);
+	bool BlendItem(const BlendManager::Type& base, const BlendManager::Type& add);
 private:
-	// 背景画像のグラフィックハンドル
-	int m_backGroundHandle;
 	// 内部の選択中インデックス
 	int m_selectIndex;
 	// 見た目上の選択インデックス
@@ -72,11 +71,9 @@ private:
 	// 割り当てられたコントローラー
 	Input::Pad m_pad;
 	// 所持しているアイテムの種類
-	std::array<Item, kSlotMax> m_itemArray;
-	// アイテムのグラフィックハンドル
-	std::array<int, static_cast<int>(ItemBase::Type::Max)>m_itemHandles;
+	std::array < ItemSlot*, kSlotMax > m_slots;
 	bool m_isBlendMenu;
-	std::array<ItemBase::Type, kSelectMax>m_selected;
-	ItemBase m_itemBase;
+	std::array<BlendManager::Type, kSelectMax>m_selected;
+	BlendManager m_itemBase;
 };
 

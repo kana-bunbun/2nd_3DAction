@@ -86,6 +86,9 @@ void Barrier::ResolveCollision(GameObject& other, const Collision::Result & resu
 void Barrier::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
 {}
 
+void Barrier::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
+{}
+
 float Barrier::CheckAlpha()
 {
 	float res = 0;

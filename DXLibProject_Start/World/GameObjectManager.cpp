@@ -61,7 +61,39 @@ void GameObjectManager::Draw()
 
 void GameObjectManager::CheckCollision()
 {
+	// GameObjectManagerに登録されているオブジェクトを総当たりでチェックする
+	for (size_t i = 0; i < m_objects.size(); i++) {
+		// オブジェクトの取得
+		GameObject* objA = m_objects[i].get();
 
+		// アクティブになっていなければスルー
+		if (!objA->IsActive())continue;
+
+		for (size_t j = 0; j < m_objects.size(); j++) {
+			// オブジェクトの取得
+			GameObject* objB = m_objects[j].get();
+
+			// アクティブになっていなければスルー
+			if (!objB->IsActive())continue;
+
+			// コリジョンが未設定かどうか確認
+
+			const Collision::Shape& collisionA = objA->GetCollision();
+			const Collision::Shape& collisionB = objB->GetCollision();
+			
+			Collision::Result result = collisionA.CheckCollision(collisionB);
+			// 当たっていなければスルー
+			if (!result.isHit)continue;
+
+			// 当たっていたらそれぞれのオブジェクトに衝突結果を渡す
+			objA->ResolveCollision(*objB, result);
+			// 法線を反転させてから渡す
+			result.normal *= -1;
+			objB->ResolveCollision(*objA, result);
+
+		}
+
+	}
 }
 
 void GameObjectManager::Clear()

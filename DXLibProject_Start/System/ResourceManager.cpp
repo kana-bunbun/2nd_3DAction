@@ -6,12 +6,12 @@
 namespace {
 	const char* const kResourcePath = "Resource\\";
 	const char* const kFilePath[static_cast<int>(ResourceManager::FileName::Max)] = {
-		"Player",
-		"Doragon",
-		"Enemy",
-		"Map",
-		"Graph",
-		"CSV",
+		"Player\\",
+		"Doragon\\",
+		"Enemy\\",
+		"Map\\",
+		"Graph\\",
+		"CSV\\",
 	};
 	const char* const kAnimation = "Animation\\";
 	const char* const kPng = ".png";
@@ -21,6 +21,28 @@ namespace {
 	constexpr int kPathIndex = 1;
 	// csvデータのモデルパスが記されているインデックス(列)
 	constexpr int kModelIndex = 0;
+}
+
+void ResourceManager::End()
+{
+	for (auto& graph : m_graphData) {
+		DeleteGraph(graph.graphHandle);
+		graph.graphHandle = -1;
+		graph.graphName = "";
+	}
+	for (auto& modelData : m_modelData) {
+		MV1DeleteModel(modelData.modelHandle);
+		modelData.modelHandle = -1;
+		modelData.anim.End();
+		modelData.modelName = "";
+	}
+}
+
+ResourceManager& ResourceManager::GetInstance()
+{
+	static ResourceManager instance;
+	return instance;
+
 }
 
 int ResourceManager::GetGraph(std::string graphName)
@@ -82,30 +104,38 @@ ResourceManager::ModelData ResourceManager::GetModelCSV(std::string csvName)
 	// 総当たりして同じ名前のデータを探す
 	for (auto& model : m_modelData) {
 		if (model.modelName != csvName)continue;
+		ModelData result = model;
+		result.modelHandle = MV1DuplicateModel(model.modelHandle);
 		// モデルハンドルを複製して渡す
-		model.anim.SetModelhandle(MV1DuplicateModel(model.modelHandle));
+		result.anim=model.anim.Duplicate();
 		// モデルデータを返す
-		return model;
+		return result;
 	}
 
 	// 以下の処理は読み込んでいない判定
 
-	// パスを作成
+	// csvパスを作成
 	std::string path = kResourcePath;
 	path += kFilePath[static_cast<int>(ResourceManager::FileName::CSV)] + csvName + kCsv;
 	CsvLoader csvData = CsvLoader(path);
-
+	// モデルデータまでのパスを作成
 	std::string dataPath = kResourcePath;
 	ModelData modelData;
 	modelData.modelHandle = MV1LoadModel((dataPath + csvData.GetLoadData()[kPathIndex][kModelIndex]+kMv1).c_str());
+	// 読み込みができていなければ処理しない
 	if (modelData.modelHandle < 0)return modelData;
+	// アニメーションデータまでのパスを作成
 	dataPath += kAnimation;
 	for (int i = 0; i < csvData.GetLoadData()[0].size()-1; i++) {
+		// アニメーションデータのパスを使って読み込み
 		int animIndex = i + 1;
 		int animHandle = MV1LoadModel((dataPath + csvData.GetLoadData()[kPathIndex][animIndex] + kMv1).c_str());
 		modelData.anim.AddAnim(animHandle);
 	}
+	// データに名前を付ける
 	modelData.modelName = csvName;
+	// 配列に追加
 	m_modelData.push_back(modelData);
+
 	return modelData;
 }

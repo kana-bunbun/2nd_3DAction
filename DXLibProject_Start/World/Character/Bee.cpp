@@ -98,6 +98,24 @@ void Bee::ResolveCollision(GameObject& other, const Collision::Result& result)
 void Bee::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
 {}
 
+void Bee::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
+{
+	// 当たっていなければ即時return
+	if (!result.isHit)return;
+
+	// Playerでなければ即時return
+	if (other.GetCollisionTag() != GameObject::CollisionTag::Player)return;
+
+	// 押し戻しベクトルを生成
+	Vector3 revertVec = result.normal * result.penetration;
+
+	// 座標を移動
+	GameObject::m_transform.position += revertVec * 20.0f;
+
+	m_collision->SetPosition(m_transform.position);
+
+}
+
 Vector3 Bee::GetCollisionCenterPos() const
 {
 	return m_transform.position;

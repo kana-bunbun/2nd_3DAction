@@ -15,6 +15,10 @@ public:
 	/// 初期化処理
 	/// </summary>
 	void Init(int modelHandle);
+	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void End();
 
 	/// <summary>
 	/// アニメーションを再生する関数
@@ -29,6 +33,10 @@ public:
 	/// 更新処理
 	/// </summary>
 	void Update(float deltaTime);
+	/// <summary>
+	/// 自身の複製を返す関数
+	/// </summary>
+	AnimationController Duplicate();
 
 	/// <summary>
 	/// アニメーションを再生しているかどうかを返す関数
@@ -63,7 +71,7 @@ public:
 	/// </summary>
 	/// <returns>割り込み不可能の時true</returns>
 	bool IsForcePlay() { return m_isForcePlay; }
-	void AddAnim(int animHandle, int index = -1);
+	void AddAnim(int animHandle);
 	void SetModelhandle(int modelHandle) { m_modelHandle = modelHandle; }
 private:
 	// モデルハンドル

@@ -104,7 +104,7 @@ Dragon::Dragon() :
 		// 読み込みができたら
 		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i], i);
+		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
@@ -124,6 +124,7 @@ Dragon::Dragon() :
 	for (auto& breath : m_breath) {
 		breath = std::make_unique<DragonBreath>();
 	}
+	m_collision = std::make_unique<Collision::Sphere>(Vector3::zero, 0);
 }
 
 Dragon::~Dragon()
@@ -276,6 +277,9 @@ void Dragon::ResolveCollision(GameObject & other, const Collision::Result & resu
 }
 
 void Dragon::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+{}
+
+void Dragon::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}
 
 void Dragon::Call(GameObject* target)

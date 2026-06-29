@@ -14,7 +14,10 @@ void FontManager::Init()
 
 void FontManager::End()
 {
-
+	for (auto& font : m_fonts) {
+		DeleteFontToHandle(font.handle);
+		font.handle = -1;
+	}
 }
 
 int FontManager::GetFontHandle(const std::string & fontName, int size, int thickness)

@@ -58,6 +58,9 @@ void TileObject::ResolveCollision(GameObject& other, const Collision::Result& re
 void TileObject::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result & result)
 {}
 
+void TileObject::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
+{}
+
 void TileObject::Draw()
 {
 	if (m_terrain == MapConst::eTerrain::Invalid)return;

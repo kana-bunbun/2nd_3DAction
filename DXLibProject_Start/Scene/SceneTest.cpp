@@ -27,7 +27,7 @@
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
-#include"../World/Object/Item/ItemType.h"
+#include"../World/Object/Item/BlendManager.h"
 #include"../world/GameObjectManager.h"
 #include<cassert>
 #include<memory>
@@ -107,7 +107,7 @@ SceneTest::SceneTest() :
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
-	m_pItemBase = std::make_unique<ItemBase>();
+	m_pItemBase = std::make_unique<BlendManager>();
 }
 
 SceneTest::~SceneTest() {}
@@ -172,7 +172,6 @@ void SceneTest::End() {
 }
 
 std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
-
 	m_pCameraMgr->Update(deltaTime);
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pUiManager->Update(deltaTime);
@@ -184,6 +183,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pItemCursor->Update();
 	m_pPadManager->Update();
 
+	m_pGameObjectManager->CheckCollision();
 	// “G‚Æ“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é
 	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");

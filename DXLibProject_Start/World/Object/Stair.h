@@ -16,6 +16,12 @@ public:
 
 	void ResolveCollision(GameObject& other, const Collision::Result& result);
 	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result);
+	void ResolveCollision(
+		GameObject& other,
+		const CollisionData& myData,
+		const CollisionData& otherData,
+		const Collision::Result& result
+	);
 	void SetIsHit(bool isHit) { m_isHit = isHit; }
 	/// <summary>
 	/// 自身の座標を指定したタイルの座標に設定する

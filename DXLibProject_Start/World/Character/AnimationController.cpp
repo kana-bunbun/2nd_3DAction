@@ -30,12 +30,28 @@ AnimationController::AnimationController():
 
 AnimationController::~AnimationController()
 {
+	End();
 }
 
 void AnimationController::Init(int modelHandle)
 {
 	m_modelHandle = modelHandle;
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnim, m_blendRate);
+}
+
+void AnimationController::End()
+{
+	if (m_modelHandle != -1) {
+		MV1DeleteModel(m_modelHandle);
+		m_modelHandle = -1;
+	}
+
+	if (!m_animHandle.empty()) {
+		for (int i = m_animHandle.size() - 1; i >= 0; i--) {
+			MV1DeleteModel(m_animHandle[i]);
+		}
+		m_animHandle.clear();
+	}
 }
 
 void AnimationController::PlayAnimation(const Status::AnimData& data)
@@ -96,6 +112,18 @@ void AnimationController::Update(float deltaTime)
 	MV1SetAttachAnimTime(m_modelHandle, m_attachIndex, m_playCount);
 }
 
+AnimationController AnimationController::Duplicate()
+{
+	AnimationController duplicate;
+
+	duplicate.SetModelhandle(MV1DuplicateModel(m_modelHandle));
+	for (int i = 0; i < m_animHandle.size(); i++) {
+		duplicate.AddAnim(MV1DuplicateModel(m_animHandle[i]));
+	}
+
+	return duplicate;
+}
+
 void AnimationController::Debug()
 {
 	printfDx("animation |    modeel   : %d\n", m_modelHandle);
@@ -116,7 +144,7 @@ bool AnimationController::CheckOverMoment(float time)
 	return true;
 }
 
-void AnimationController::AddAnim(int animHandle, int index)
+void AnimationController::AddAnim(int animHandle)
 {
 	m_animHandle.push_back(animHandle);
 }

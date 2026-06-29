@@ -15,6 +15,7 @@ public:
 	void Draw();
 	void CreateEnemy(const Transform& createTransform=Transform());
 	void SetTarget(GameObject* target);
+	void RegistRandomPos();
 private:
 
 	std::vector <std::unique_ptr<Enemy>>m_enemys;

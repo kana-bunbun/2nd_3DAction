@@ -94,7 +94,7 @@ void Enemy::LoadModel()
 		// 読み込みができたら
 		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i], i);
+		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 		// アニメーションデータのループフラグを設定
@@ -127,6 +127,9 @@ void Enemy::ResolveCollision(GameObject& other, const Collision::Result & result
 {}
 
 void Enemy::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result & result)
+{}
+
+void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}
 
 void Enemy::SetTarget(GameObject* target)

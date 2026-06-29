@@ -23,17 +23,17 @@ public:
 public:
 	class GraphData {			// 画像のデータ
 	public:
-		int graphHandle;		// グラフィックハンドル
+		int graphHandle=-1;		// グラフィックハンドル
 		std::string graphName;	// データの名前
 	};
 	class ModelData {			// モデルのデータ
 	public:
-		int modelHandle;		// モデルハンドル
+		int modelHandle=-1;		// モデルハンドル
 		std::string modelName;	// データの名前
 		AnimationController anim;// アニメーション管理
 	};
 public:
-	
+	void End();
 	static ResourceManager& GetInstance();
 	/// <summary>
 	/// グラフィックハンドルを取得する関数
@@ -47,7 +47,7 @@ public:
 
 private:
 
-	ResourceManager() = delete;
+	ResourceManager() = default;
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager& operator=(const ResourceManager&)=delete;
 	ResourceManager(ResourceManager&&) = delete;

@@ -40,6 +40,12 @@ void GameObject::Draw()
 	}
 }
 
+void GameObject::SetPosition(const Vector3& position)
+{
+	m_transform.position = position;
+	m_collision->SetPosition(position);
+}
+
 const Collision::Shape& GameObject::GetCollision() const
 {
 	for (const auto& collision : m_collisions) {

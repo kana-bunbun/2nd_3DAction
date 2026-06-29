@@ -145,9 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\ItemSlot.cpp" />
     <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="Utility\PadManager.cpp" />
-    <ClCompile Include="World\Object\Item\ItemType.cpp" />
+    <ClCompile Include="World\Object\Item\BlendManager.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
     <ClCompile Include="World\UI\BillboardManager.cpp" />
     <ClCompile Include="Camera\CameraManager.cpp" />
@@ -239,9 +240,10 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\UI\ItemSlot.h" />
     <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="Utility\PadManager.h" />
-    <ClInclude Include="World\Object\Item\ItemType.h" />
+    <ClInclude Include="World\Object\Item\BlendManager.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
     <ClInclude Include="World\UI\BillboardManager.h" />
     <ClInclude Include="Camera\CameraManager.h" />

@@ -1,6 +1,8 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
-
+#include "../../Map/MapCreate.h"
+#include "../../Map/MapManager.h"
+#include "../../../Utility/MyRandom.h"
 EnemyManager::EnemyManager():
 	m_enemys()
 {
@@ -46,5 +48,16 @@ void EnemyManager::SetTarget(GameObject* target)
 {
 	for (auto& enemy : m_enemys)
 		enemy->SetTarget(target);
+}
+
+void EnemyManager::RegistRandomPos()
+{
+	std::vector<int>rooms = MapCreate::GetInstance().GetRooms();
+	int roomNum = MyRandom::Int(0, rooms.size() - 1);
+
+	Vector3 randomPos = MapManager::GetInstance().GetWorldPosFromID(rooms[roomNum]);
+	for (auto& enemy : m_enemys) {
+		enemy->SetPosition(randomPos);
+	}
 }
 
