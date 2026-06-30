@@ -55,7 +55,7 @@ public:
 	/// <returns></returns>
 	//size_t GetActiveCameraIndex()const { return m_activeIndex; }
 	Camera::CameraType GetActiveCameraType()const { return m_cameraType; }
-
+	void TakeShale(float power, float second);
 private:
 	/// <summary>
 	/// 現在適応しているカメラ

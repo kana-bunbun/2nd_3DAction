@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Utility\Data.cpp" />
     <ClCompile Include="World\UI\ItemSlot.cpp" />
     <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="Utility\PadManager.cpp" />
@@ -240,6 +241,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utility\Data.h" />
     <ClInclude Include="World\UI\ItemSlot.h" />
     <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="Utility\PadManager.h" />

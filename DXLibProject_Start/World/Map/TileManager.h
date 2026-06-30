@@ -5,6 +5,7 @@
 #include"../GameObject.h"
 #include<memory>
 #include<vector>
+class GameObjectManager;
 class TileObject;
 class Stair;
 class Player;
@@ -14,7 +15,7 @@ class TileManager
 public:
 	TileManager();
 	~TileManager();
-
+	void Init();
 	void SetUpFloor();
 	void Update(float deltaTime);
 	void Draw();
@@ -30,20 +31,22 @@ public:
 	void SetEnemyManager(EnemyManager* pEnemyManager) { m_pEnemyManager = pEnemyManager; }
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
+	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
 	bool IsUpStair() { return m_upStair; }
-	TileObject* GetObj() { return m_pTiles[0].get(); }
+	TileObject* GetObj() { return m_pTiles[0]; }
 private:
 	Transform m_markPos;
 	int m_cursorHandle;
-	std::vector<std::unique_ptr<TileObject>> m_pTiles;
+	std::vector<TileObject*> m_pTiles;
 	int m_floorHandle;
 	int m_wallHandle;
-	std::unique_ptr<Stair>stair;
+	Stair* stair;
 	// 階段を登れるかどうか
 	bool m_upStair;
 	int m_stairID;
 	Player* m_pPlayer;
 	EnemyManager* m_pEnemyManager;
 	Input::Pad m_pad;
+	GameObjectManager* m_pGameObjectManager;
 };
 

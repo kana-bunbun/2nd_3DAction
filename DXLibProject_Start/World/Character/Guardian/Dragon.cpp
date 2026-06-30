@@ -70,6 +70,14 @@ namespace {
 
 	// 移動速度の減衰量
 	constexpr float kAttenuationSpeed = 55;
+
+	// 攻撃開始カウント
+	constexpr float kAttackStartCount = 12.0f;
+	// 攻撃終了カウント
+	constexpr float kAttackEndCount = 22.0f;
+	// 攻撃間隔
+	constexpr float kAttackIntervalCount = 1.0f;
+
 }
 Dragon::Dragon() :
 	m_animation(),
@@ -229,36 +237,14 @@ void Dragon::AttackUpdate(float deltaTime)
 	if (m_animation.GetPlayCount() > 6) {
 		// アニメーション速度をゆっくりに
 		m_animation.SetAnimSpeed(0.3f);
-
-		if (m_animation.CheckOverMoment(12.0f) ||
-			m_animation.CheckOverMoment(12.5f) ||
-			m_animation.CheckOverMoment(13.0f) ||
-			m_animation.CheckOverMoment(13.5f) ||
-			m_animation.CheckOverMoment(14.0f) ||
-			m_animation.CheckOverMoment(14.5f) ||
-			m_animation.CheckOverMoment(15.0f) ||
-			m_animation.CheckOverMoment(15.5f) ||
-			m_animation.CheckOverMoment(16.0f) ||
-			m_animation.CheckOverMoment(16.5f) ||
-			m_animation.CheckOverMoment(17.0f) ||
-			m_animation.CheckOverMoment(17.5f) ||
-			m_animation.CheckOverMoment(18.0f) ||
-			m_animation.CheckOverMoment(18.5f) ||
-			m_animation.CheckOverMoment(19.0f) ||
-			m_animation.CheckOverMoment(19.5f) ||
-			m_animation.CheckOverMoment(20.0f) ||
-			m_animation.CheckOverMoment(20.5f) ||
-			m_animation.CheckOverMoment(21.0f) ||
-			m_animation.CheckOverMoment(21.5f) ||
-			m_animation.CheckOverMoment(22.0f) ||
-			m_animation.CheckOverMoment(22.5f) ||
-			m_animation.CheckOverMoment(23.0f) ||
-			m_animation.CheckOverMoment(23.5f) ||
-			m_animation.CheckOverMoment(24.0f) ||
-			m_animation.CheckOverMoment(24.5f)) {
+		for (int i = 0; i < kBleathCount; i++) {
+			float time = kAttackStartCount + (i * kAttackIntervalCount);
+			if (time > kAttackEndCount)break;
+			if (!m_animation.CheckOverMoment(time))continue;
 			Breath();
-		}
 
+		}
+		
 	}
 	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
@@ -267,8 +253,6 @@ void Dragon::AttackUpdate(float deltaTime)
 	// 移動速度を設定
 	m_move.SetSpeed(m_speed);
 
-	printfDx("Attack\n");
-	printfDx("canAttack : %d\n",m_canAttackFlag);
 }
 
 void Dragon::ResolveCollision(GameObject & other, const Collision::Result & result)
@@ -338,11 +322,10 @@ void Dragon::FollowPlayer()
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
 	Vector3  distancePlayer = myPos - m_pPlayer->GetTransform().position;
-	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.2f;
+	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.3f;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
 
-		printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
 		m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kFollowSqLength) {
 		//m_speed = 1;
@@ -356,7 +339,6 @@ void Dragon::FollowPlayer()
 		m_move.SetLerpSpeed(lerpSpeed);
 	}
 
-		printfDx("m_speed: %f\n", m_speed);
 	m_move.SetSpeed(kMoveSpeed*m_speed);
 
 }
@@ -368,7 +350,6 @@ void Dragon::FollowTarget(float deltaTime)
 	float angle = atan2(distance.x, distance.z);
 
 	m_speed *= kAttenuationSpeed*deltaTime;
-	printfDx("dddddddddd : %f\n", angle * MyMath::ToDegree);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
 		m_speed = distance.GetSqLength() * kFollowSqLengthRate;
@@ -386,9 +367,6 @@ void Dragon::FollowTarget(float deltaTime)
 		m_attackFlag = m_attack.GetAttackFlag();
 	}
 
-	printfDx("m_attack: %d\n", m_attack.GetAttackFlag());
-	printfDx("m_attackCount: %d\n", m_attack.GetCount());
-	printfDx("m_speed: %f\n", m_speed);
 	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
 	m_move.SetSpeed(m_speed*kMoveSpeed);
 

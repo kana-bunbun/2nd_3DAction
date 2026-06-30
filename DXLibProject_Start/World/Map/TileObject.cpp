@@ -9,7 +9,7 @@ namespace {
 	constexpr Vector3 kModelOffset = { 0,-kFloorSize.y*5 ,0};
 	constexpr Vector3 kCollisionOffset = { 0,200*MapConst::kWallScale ,0};
 
-	constexpr float kCollisionSIzeX = 400 * MapConst::kWallScale;
+	constexpr float kCollisionSIzeX = 396 * MapConst::kWallScale;
 	constexpr float kCollisionSIzeZ = 180 * MapConst::kWallScale;
 	constexpr Vector3 kWallCollisionX = { kCollisionSIzeX,kCollisionSIzeX,kCollisionSIzeZ };
 	constexpr Vector3 kWallCollisionZ = { kCollisionSIzeZ ,kCollisionSIzeX ,kCollisionSIzeX };
@@ -26,10 +26,13 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
 		// 方向を調べる
 		MapConst::eDirectionFour direction = static_cast<MapConst::eDirectionFour>(i);
-		m_collisions[i] = std::make_unique<Collision::AABB>();
+		m_collisions.push_back(CollisionData());
+		AddCollision(std::make_unique<Collision::AABB>(), GameObject::CollisionType::Invalid);
 		RegistWall(direction);
 	}
 	ChangeTile(ID, position, terrain);
+
+	m_isStair = false;
 }
 
 TileObject::~TileObject()
@@ -64,6 +67,9 @@ void TileObject::ResolveCollision(GameObject & other, const CollisionData & myDa
 void TileObject::Draw()
 {
 	if (m_terrain == MapConst::eTerrain::Invalid)return;
+
+	// 階段マスなら描画しない
+	if (m_isStair)return;
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelHandle != -1) {
 		Vector3 pos = m_transform.position + kModelOffset;
@@ -81,8 +87,9 @@ void TileObject::Draw()
 		MV1SetRotationXYZ(m_wallHandle, m_wallPos[i].rotation.ToVECTOR());
 		MV1SetPosition(m_wallHandle, m_wallPos[i].position.ToVECTOR());
 		MV1DrawModel(m_wallHandle);
-		if (m_collisions[i]) {
-			m_collisions[i]->DebugDraw();
+		if (i >= m_collisions.size())continue;
+		if (m_collisions[i].shape) {
+			m_collisions[i].shape->DebugDraw();
 		}
 	}
 	
@@ -112,7 +119,10 @@ void TileObject::SetWallHandle(int wallHandle)
 
 void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 {
+	m_wallPos.clear();
 	Transform regist;
+	regist.Reset();
+	regist.position.y -= 100;
 	int wallNum = static_cast<int>(direction);
 	Vector3 collisionSize = Vector3::zero;
 	switch (direction)
@@ -144,9 +154,8 @@ void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 		return;
 	}
 	regist.position += m_transform.position;
-	std::unique_ptr <Collision::AABB> collision = std::make_unique<Collision::AABB>(kCollisionOffset, collisionSize);
-	m_collisions[wallNum] = std::move(collision);
-	m_collisions[wallNum] ->SetPosition(regist.position);
+	AddCollision(std::make_unique<Collision::AABB>(kCollisionOffset, collisionSize), GameObject::CollisionType::Invalid);
+	m_collisions[wallNum].shape ->SetPosition(regist.position);
 	m_collisionTag = GameObject::CollisionTag::Wall;
 	// 自身の座標から見た壁の座標を追加
 	m_wallPos.push_back(regist);
@@ -184,7 +193,7 @@ Collision::Result TileObject::CheckCollision(GameObject* object)
 	Vector3 resolve = Vector3::zero;
 	for (int i = 0; i < m_collisions.size();i++) {
 		if (!m_wallDirection[i])continue;
-		result=m_collisions[i]->CheckCollision(object->GetCollision());
+		//result=m_collisions[i]->CheckCollision(object->GetCollision());
 		object->ResolveCollision(GameObject::CollisionTag::Wall, result);
 		if (!result.isHit)continue;
 	}

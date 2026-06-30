@@ -42,18 +42,10 @@ public:
 
 	bool AddItem(const BlendManager::Type& type);
 	bool SubItem(const BlendManager::Type& type);
-	bool Select(const BlendManager::Type& type);
-	/// <summary>
-	/// アイテム選択をしているかどうかを調べる
-	/// </summary>
-	/// <returns>選択しているときtrue</returns>
-	bool IsSelected();
-	/// <summary>
-	/// 空きスロットがあるかどうか調べる
-	/// </summary>
-	/// <returns>空きスロットがあるときtrue</returns>
-	bool CheckEmptySlot();
-	void Cancel();
+
+	// アイテムを選択する関数
+	void Select();
+	void ChangeSelectFlag(size_t index,bool select);
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
@@ -73,8 +65,8 @@ private:
 	Input::Pad m_pad;
 	// 所持しているアイテムの種類
 	std::array < ItemSlot*, kSlotMax > m_slots;
-	bool m_isBlendMenu;
 	std::array<BlendManager::Type, kSelectMax>m_selected;
-	BlendManager m_itemBase;
+	// アイテム合成メニュ―かどうか
+	bool m_isBlendMenu;
 };
 

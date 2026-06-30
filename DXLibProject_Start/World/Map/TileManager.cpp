@@ -10,6 +10,7 @@
 #include"../Character/Player/Player.h"
 #include"../Character/Enemy/EnemyManager.h"
 #include"../Object/Stair.h"
+#include"../GameObjectManager.h"
 #include<DxLib.h>
 #include<vector>
 
@@ -48,9 +49,7 @@ TileManager::TileManager() :
 
 	m_wallHandle = MV1LoadModel(kWallPath);
 	m_floorHandle = MV1LoadModel(kFloorPath);
-	stair = std::make_unique<Stair>();
-	// フロア生成
-	SetUpFloor();
+	
 }
 
 TileManager::~TileManager()
@@ -58,6 +57,12 @@ TileManager::~TileManager()
 	DeleteGraph(m_cursorHandle);
 	MV1DeleteModel(m_floorHandle);
 	MV1DeleteModel(m_wallHandle);
+}
+
+void TileManager::Init()
+{
+	// フロア生成
+	SetUpFloor();
 }
 
 void TileManager::SetUpFloor()
@@ -82,7 +87,7 @@ void TileManager::SetUpFloor()
 			// 生成されていなければ
 			if (i>=m_pTiles.size()) {
 			// タイルを生成
-			std::unique_ptr<TileObject> tile = std::make_unique<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
+			TileObject* tile = m_pGameObjectManager->CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
 			// モデルハンドルを設定
 			tile->SetFloorModel(MV1DuplicateModel(m_floorHandle));
 			tile->SetWallHandle(MV1DuplicateModel(m_wallHandle));
@@ -100,15 +105,23 @@ void TileManager::SetUpFloor()
 			continue;
 		}
 	}
+	if (!stair) {
+		stair = m_pGameObjectManager->CreateObject<Stair>();
+	}
+	else {
+		m_pTiles[m_stairID]->SetIsStair(false);
+	}
 	m_stairID = RandomRoomID();
 	stair->SetTile(m_stairID);
+	m_pTiles[m_stairID]->SetIsStair(true);
+
 }
 
 void TileManager::Update(float deltaTime)
 {
 	// マップの描画処理
 	for (auto& tile : m_pTiles) {
-		tile->Update(deltaTime);
+		//tile->Update(deltaTime);
 	}
 	if (stair) {
 		stair->Update(deltaTime);
@@ -136,7 +149,7 @@ void TileManager::Draw()
 		if (i == m_stairID) {
 			continue;
 		}
-		m_pTiles[i]->Draw();
+		//m_pTiles[i]->Draw();
 	}
 	if (stair) {
 		stair->Draw();
@@ -243,8 +256,8 @@ Collision::Result TileManager::CheckCollision(GameObject* object)
 
 
 	if (object->GetCollisionTag() == GameObject::CollisionTag::Player) {
-		Collision::Result stairResult= stair->GetCollision().CheckCollision(object->GetCollision());
-		m_upStair = stairResult.isHit;
+		//Collision::Result stairResult= stair->GetCollision().CheckCollision(object->GetCollision());
+		//m_upStair = stairResult.isHit;
 		stair->SetIsHit(m_upStair);
 		stair->SetBillboardPos(object->GetTransform().position);
 	}

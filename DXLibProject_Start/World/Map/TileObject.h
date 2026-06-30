@@ -32,6 +32,7 @@ public:
 	void CheckWall();
 
 	Collision::Result CheckCollision(GameObject* object);
+	void SetIsStair(bool isStair) { m_isStair = isStair; }
 protected:
 	// マスのID
 	int m_ID;
@@ -43,7 +44,7 @@ protected:
 	std::vector<Transform>m_wallPos;
 	// 壁のモデルハンドル
 	int m_wallHandle;
-	// 当たり判定の配列
-	std::array<std::unique_ptr<Collision::Shape>, static_cast<int>(MapConst::eDirectionFour::Max)>m_collisions;
+	// 階段マスかどうか
+	bool m_isStair;
 };
 

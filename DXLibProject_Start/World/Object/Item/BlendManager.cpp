@@ -19,10 +19,16 @@ namespace {
 		"CheeseBread",
 	};
 }
-BlendManager::BlendManager()
+BlendManager& BlendManager::GetInstnce()
 {
-	CsvLoader Ki = CsvLoader("ItemRecipe.csv");
-	LoadRecipe(Ki.GetLoadData());
+	static BlendManager instance;
+	return instance;
+}
+void BlendManager::Init()
+{
+	CsvLoader loadData = CsvLoader("ItemRecipe.csv");
+	LoadRecipe(loadData.GetLoadData());
+
 }
 
 BlendManager::~BlendManager()

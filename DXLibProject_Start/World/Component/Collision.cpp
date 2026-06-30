@@ -217,13 +217,13 @@ namespace Collision {
 
 			// ÇﬂÇËçûÇ›ó ÇÃè¨Ç≥Ç¢é≤Çí≤Ç◊ÇƒÅAå¸Ç´ÇÃ+-Çê›íË
 			if (normal == Vector3::XAxis) {
-				normal.x = (dir.x <= 0.0f) ? 1.0f : -1.0f;
+				normal.x = (dir.x >= 0.0f) ? 1.0f : -1.0f;
 			}
 			else if (normal == Vector3::YAxis) {
-				normal.y = (dir.y <= 0.0f) ? 1.0f : -1.0f;
+				normal.y = (dir.y >= 0.0f) ? 1.0f : -1.0f;
 			}
 			else if (normal == Vector3::ZAxis) {
-				normal.z = (dir.z <= 0.0f) ? 1.0f : -1.0f;
+				normal.z = (dir.z >= 0.0f) ? 1.0f : -1.0f;
 			}
 			// í≤Ç◊ÇΩñ@ê¸Ç≈ämíË
 			result.normal = normal;
@@ -344,9 +344,10 @@ namespace Collision {
 	}
 	void Capsule::DebugDraw(int color) const
 	{
+		float debugRadius = m_radius * 0.2f;
 		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, color, color, FALSE);
-		DrawSphere3D(m_maxPos.ToVECTOR(), 20, 10, Color::kRed, color, TRUE);
-		DrawSphere3D(m_minPos.ToVECTOR(), 20, 10, Color::kBlue, color, TRUE);
+		DrawSphere3D(m_maxPos.ToVECTOR(), debugRadius, 10, Color::kRed, color, TRUE);
+		DrawSphere3D(m_minPos.ToVECTOR(), debugRadius, 10, Color::kBlue, color, TRUE);
 	}
 	void Capsule::SetRadius(float radius)
 	{

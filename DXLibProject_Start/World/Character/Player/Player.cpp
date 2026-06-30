@@ -102,7 +102,7 @@ Player::Player() :
 		m_gauges.emplace_back(std::make_shared<Gauge>());
 	}
 
-
+	
 	
 }
 

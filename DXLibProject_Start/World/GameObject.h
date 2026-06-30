@@ -24,6 +24,7 @@ public:
 		Barrier,
 	};
 	enum class CollisionType {
+		Invalid,
 		Body,
 		Foot,
 		Sensor,
@@ -71,7 +72,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	//const Collision::Shape& GetCollision()const { return *m_collision; }
-	const Collision::Shape& GetCollision()const;
+	//const Collision::Shape& GetCollision()const;
+	const std::vector<CollisionData>&GetCollisions()const { return m_collisions; }
 	const CollisionTag& GetCollisionTag()const { return m_collisionTag; }
 	/// <summary>
 	/// 衝突後の処理

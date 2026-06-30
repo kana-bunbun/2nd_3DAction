@@ -9,6 +9,7 @@
 
 #include "../Utility/Input.h"
 #include "../Utility/MyMath.h"
+#include "../Utility/MyRandom.h"
 
 
 namespace {
@@ -103,13 +104,16 @@ void FollowCamera::UpdatePosition(float deltaTime)
 
     //assert(m_target);
     //if (m_target)return;
+    float randRange = DX_PI_F * 0.00f;
+    float rotateX = m_transform.rotation.x + (MyRandom::Float(-randRange, randRange));
+    float rotateY = m_transform.rotation.y + (MyRandom::Float(-randRange, randRange));
 
     // 水平方向の成分
-    float sinHol = sinf(m_transform.rotation.y);
-    float cosHol = cosf(m_transform.rotation.y);
+    float sinHol = sinf(rotateY);
+    float cosHol = cosf(rotateY);
     // 垂直方向の成分
-    float sinVer = sinf(m_transform.rotation.x);
-    float cosVer = cosf(m_transform.rotation.x);
+    float sinVer = sinf(rotateX);
+    float cosVer = cosf(rotateX);
     // ベクトルの計算
     Vector3 rotate;
     rotate.x = cosVer * sinHol;
@@ -126,6 +130,8 @@ void FollowCamera::UpdatePosition(float deltaTime)
     m_view.position = cameraPos;
     m_view.target = m_target->position;
     m_transform.position = cameraPos;
+
+
 
     m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
 }

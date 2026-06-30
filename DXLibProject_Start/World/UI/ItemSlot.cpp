@@ -1,6 +1,7 @@
 #include "ItemSlot.h"
 #include "../../System/ResourceManager.h"
 #include "../../Utility/Game.h"
+#include "../../Utility/MyMath.h"
 
 namespace {
 	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] = {
@@ -62,6 +63,12 @@ void ItemSlot::Add()
 void ItemSlot::Sub()
 {
 	m_holdNum--;
+	m_holdNum = MyMath::Clamp(m_holdNum, 0, m_holdNum);
+	if (m_holdNum)return;
+	// 所持数が0になったら
+
+	// アイテムの種類を不正値にする
+	m_type = BlendManager::Type::Invalid;
 }
 
 void ItemSlot::SetItemType(BlendManager::Type itemType)

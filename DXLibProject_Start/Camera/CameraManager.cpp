@@ -86,3 +86,8 @@ void CameraManager::NextCamera()
 	if (!m_cameras[index])return;
 
 }
+
+void CameraManager::TakeShale(float power, float second)
+{
+
+}

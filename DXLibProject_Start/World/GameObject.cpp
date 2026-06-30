@@ -47,16 +47,16 @@ void GameObject::SetPosition(const Vector3& position)
 	m_collision->SetPosition(position);
 }
 
-const Collision::Shape& GameObject::GetCollision() const
-{
-	for (const auto& collision : m_collisions) {
-		if (collision.type == CollisionType::Body) {
-			return *collision.shape;
-		}
-	}
-	return *m_collision;
-	return *m_collisions.front().shape;
-}
+//const Collision::Shape& GameObject::GetCollision() const
+//{
+//	for (const auto& collision : m_collisions) {
+//		if (collision.type == CollisionType::Body) {
+//			return *collision.shape;
+//		}
+//	}
+//	return *m_collision;
+//	return *m_collisions.front().shape;
+//}
 
 void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, CollisionType type)
 {

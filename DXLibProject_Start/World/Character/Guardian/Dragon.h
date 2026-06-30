@@ -11,6 +11,7 @@ namespace {
 		Normal,
 		Attack
 	};
+	constexpr int kBleathCount = 30;
 }
 class Player;
 class DragonAttack;
@@ -90,7 +91,7 @@ private:
 	float m_speed;
 	std::shared_ptr<Gauge> m_gauge;
 
-	std::array<std::unique_ptr<DragonBreath>,30> m_breath;
+	std::array<std::unique_ptr<DragonBreath>, kBleathCount> m_breath;
 
 };
 

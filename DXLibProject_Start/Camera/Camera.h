@@ -62,5 +62,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual Camera::CameraView GetView()const = 0;
+	/// <summary>
+	/// カメラシェイクをさせる関数
+	/// </summary>
+	/// <param name="power"></param>
+	/// <param name="second"></param>
+	virtual void TakeShake(float power, float second) {};
 };
 

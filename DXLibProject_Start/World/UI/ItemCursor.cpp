@@ -42,7 +42,8 @@ ItemCursor::ItemCursor():
 	m_showSelectIndex(m_selectIndex),
 	m_cursorHandle(-1),
 	m_cursorPosition(GetSelectPos(0)),
-	m_pad(Input::Pad::Invalid)
+	m_pad(Input::Pad::Invalid),
+	m_isBlendMenu(false)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 	m_slots.fill(nullptr);
@@ -57,7 +58,6 @@ ItemCursor::ItemCursor():
 		AddItem(static_cast<BlendManager::Type>(type));
 		}
 	}
-	m_itemBase = BlendManager();
 }
 
 ItemCursor::~ItemCursor()
@@ -115,28 +115,29 @@ void ItemCursor::UpdateToInput()
 	if (Input::IsPressed(Input::Button::Right, m_pad)) {
 		m_selectIndex++;
 	}
-	if (!m_isBlendMenu)return;
+	if (!m_isBlendMenu) {
+		if (Input::IsPressed(Input::Button::X, m_pad)) {
+			m_slots[m_selectIndex]->Sub();
+		}
+		return;
+	}
 	if (Input::IsPressed(Input::Button::Y, m_pad)) {
-		if (m_isBlendMenu) {
-			//ChangePadState(PadManager::PadState::Player);
-			Select(m_slots[m_selectIndex]->m_type);
-		}
-		else {
-			m_isBlendMenu = true;
-		}
+	
 	}
 
-	if (Input::IsPressed(Input::Button::A, m_pad) && m_isBlendMenu) {
-		Cancel();
-		m_isBlendMenu = false;
+	if (Input::IsPressed(Input::Button::A, m_pad)) {
+		
 	}
 
-	if (Input::IsPressed(Input::Button::B, m_pad)&&m_isBlendMenu) {
+	if (Input::IsPressed(Input::Button::B, m_pad)) {
 
-		if (m_slots[m_selectIndex]->m_type!= BlendManager::Type::Invalid)
-		if (m_slots[m_selectIndex]->GetHoldNum() > 0)
-		m_slots[m_selectIndex]->m_select ^= 1;
-
+		if (m_slots[m_selectIndex]->m_type != BlendManager::Type::Invalid)
+			if (m_slots[m_selectIndex]->GetHoldNum() > 0) {
+				m_slots[m_selectIndex]->m_select ^= 1;
+			}
+	}
+	if (Input::IsPressed(Input::Button::X, m_pad)) {
+		//BlendItem()
 	}
 }
 
@@ -249,58 +250,38 @@ bool ItemCursor::SubItem(const BlendManager::Type& type)
 	return false;
 }
 
-bool ItemCursor::Select(const BlendManager::Type& type)
+void ItemCursor::Select()
 {
-	// すでに選択済みなら
-	if (IsSelected()) {
-		bool selected = false;
+	// 選択しているスロットに格納されているアイテムの種類が不正値なら即時return
+	if (m_slots[m_selectIndex]->m_type == BlendManager::Type::Invalid)return;
 
-		selected = BlendItem(m_selected[0], m_selected[1]);
-
-	}
-
-	for (int i = 0; i < kSelectMax; i++) {
+	// 
+	int selectedIndex = -1;
+	for (int i = 0; i < m_selected.size(); i++) {
+		// 
 		if (m_selected[i] != BlendManager::Type::Invalid)continue;
-		m_selected[i] = type;
-		return true;
-	}
-
-	return false;
-}
-
-bool ItemCursor::IsSelected()
-{
-	bool selected = true;
-	for (int i = 0; i < kSelectMax; i++) {
-		if (m_selected[i] != BlendManager::Type::Invalid)continue;
-		selected = false;
+		selectedIndex = i;
 		break;
 	}
+	// 最大数選択済みなら処理しない
+	if (selectedIndex < 0)return;
 
-	return selected;
+	ChangeSelectFlag(selectedIndex,true);
 }
 
-bool ItemCursor::CheckEmptySlot()
+void ItemCursor::ChangeSelectFlag(size_t index, bool select)
 {
-	for (int i = 0; i < kSelectMax; i++) {
-		if (m_slots[i]->m_type != BlendManager::Type::Invalid)continue;
-		return true;
+	if (select) {
 	}
-
-	return false;
-}
-
-void ItemCursor::Cancel()
-{
-	for (int i = 0; i < m_slots.size(); i++) {
-		// 選択フラグをfalse
-		m_slots[i]->m_select = false;
+	else {
+		m_selected[index] = BlendManager::Type::Invalid;
 	}
+		m_slots[m_selectIndex]->m_select = select;
 }
 
 bool ItemCursor::BlendItem(const BlendManager::Type& base, const BlendManager::Type& add)
 {
-	BlendManager::Type blendResult = m_itemBase.Blend(base, add);
+	BlendManager::Type blendResult = BlendManager::GetInstnce().Blend(base, add);
 	// 合成結果が不正値なら処理しない
 	if (blendResult == BlendManager::Type::Invalid) {
 

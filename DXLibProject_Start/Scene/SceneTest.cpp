@@ -97,8 +97,10 @@ SceneTest::SceneTest() :
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 	m_pEnemyManager = std::make_unique<EnemyManager>();
-	m_pTileManager = std::make_unique<TileManager>();
 	m_pPadManager= std::make_unique<PadManager>();
+	m_pTileManager = std::make_unique<TileManager>();
+	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
+	m_pTileManager->Init();
 	//m_pFloor = std::make_unique<FloorBlock>();
 	// 部屋マスの中でランダムなIDを取得
 	randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
@@ -108,7 +110,6 @@ SceneTest::SceneTest() :
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
-	m_pItemBase = std::make_unique<BlendManager>();
 }
 
 SceneTest::~SceneTest() {}
@@ -139,7 +140,9 @@ void SceneTest::Init() {
 	m_pPadManager->Init();
 	//Transform* pos = m_pPlayer->GetTransform();
 	m_pTileManager->SetPlayer(m_pPlayer);
+	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
 	m_pTileManager->SetEnemyManager(m_pEnemyManager.get());
+	
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pItemCursor->Init();
 
@@ -188,9 +191,9 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 	m_pGameObjectManager->CheckCollision();
 	// 敵と当たっているかどうかを調べる
-	Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
-	printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
-	m_pPlayer->ResolveCollision(*m_pBee, result);
+	//Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
+	//printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
+	//m_pPlayer->ResolveCollision(*m_pBee, result);
 
 
 	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
@@ -201,7 +204,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 		m_pDragon->CallBack();
 	}
 	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
-		m_pPlayer->SetCameraAngle(m_pBee->GetTransform().position);
+		m_pPlayer->SetCameraAngle(m_pEnemyManager->GetEnemy()->GetTransform().position);
 
 	// カメラ切り替え処理
 	//if (Input::IsPressed(Input::Button::RThumb, Input::Pad::P1)) {
@@ -216,7 +219,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	
-	result = m_pTileManager->CheckCollision(m_pPlayer);
+	//result = m_pTileManager->CheckCollision(m_pPlayer);
 	
 	// フェード中はコントローラー入力情報をだれにも渡さない
 	if (IsFading()) {
@@ -238,11 +241,11 @@ void SceneTest::Draw() {
 	m_pCameraMgr->Apply();
 	m_pEnemyManager->Draw();
 	// マップの描画処理
-	m_pTileManager->Draw();
 	// ゲームオブジェクトの描画処理
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Draw();
 	}
+	m_pTileManager->Draw();
 
 	// アイテムメニュー中は画面を少し暗くする
 	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
@@ -257,7 +260,7 @@ void SceneTest::Draw() {
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
 	printfDx("randomID : %d\n", randomID);
-	m_pItemBase->Debug();
+	BlendManager::GetInstnce().Debug();
 	// ビルボードの描画
 	// ビルボードで描画する座標を用意
 	Vector3 billboardTarget = Vector3(400.0f, 50.0f, -400.0f);
