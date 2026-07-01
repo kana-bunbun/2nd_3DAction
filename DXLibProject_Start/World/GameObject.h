@@ -28,6 +28,7 @@ public:
 		Body,
 		Foot,
 		Sensor,
+		Null,		// 当たり判定をチェックしない
 	};
 	struct CollisionData {
 	public:
@@ -51,9 +52,11 @@ public:
 	virtual void Init() = 0;
 	virtual void End();
 	virtual void Update(float deltaTime) {};
-	virtual void LateUpdate(float deltaTime) {};
+	virtual void UpdateCollision();
+	virtual void LateUpdate(float deltaTime) {};	// 最後に行いたい更新処理
 	virtual void Draw();
-
+	virtual void LateDraw() {};	// 最後に行いたい描画処理
+	virtual void DebugCollision(int color=Color::kWhite);
 	/// <summary>
 	/// トランスフォームを取得
 	/// 値変更をしてほしくないため最初にconst
@@ -66,7 +69,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Vector3& GetPosition()const { return m_transform.position; }
-	void SetPosition(const Vector3& position);
+	virtual void SetPosition(const Vector3& position);
 	/// <summary>
 	/// 当たり判定の取得
 	/// </summary>
@@ -79,8 +82,6 @@ public:
 	/// 衝突後の処理
 	/// </summary>
 	/// <param name="result"></param>
-	virtual void ResolveCollision(GameObject& other,const Collision::Result& result) = 0;
-	virtual void ResolveCollision(GameObject::CollisionTag tag,const Collision::Result& result) = 0;
 	virtual void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,
@@ -117,7 +118,6 @@ protected:
 	/// ポリモーフィズムで異なる形状をクラスごとに持つ
 	/// nullptrにしたら持たないことも選択できる(積極的には使用しない)
 	/// </summary>
-	std::unique_ptr<Collision::Shape>m_collision;
 	std::vector<CollisionData>m_collisions;
 	/// <summary>
 	/// 衝突時のオブジェクトの属性

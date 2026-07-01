@@ -17,10 +17,10 @@ Barrier::Barrier(const Vector3& offset):
 	m_speed(1),
 	m_offset(offset)
 {
-	m_collision = std::make_unique<Collision::Sphere>(
+	AddCollision(std::make_unique<Collision::Sphere>(
 		m_transform.position,
 		kRadius
-	);
+	), GameObject::CollisionType::Body);
 
 	MATERIALPARAM Material;
 	// マテリアルの設定
@@ -77,14 +77,6 @@ void Barrier::Action()
 {
 	m_time = kMaxTime;
 }
-
-void Barrier::ResolveCollision(GameObject& other, const Collision::Result & result)
-{
-
-}
-
-void Barrier::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
-{}
 
 void Barrier::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}

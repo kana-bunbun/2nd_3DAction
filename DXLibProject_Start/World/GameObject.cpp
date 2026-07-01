@@ -11,7 +11,6 @@
 GameObject::GameObject():
 m_transform(),
 m_modelHandle(-1),
-m_collision(),
 m_isActive(true)
 {
 }
@@ -25,6 +24,13 @@ void GameObject::End()
 	}
 }
 
+void GameObject::UpdateCollision()
+{
+	for (auto& collision : m_collisions) {
+		collision.shape->SetPosition(m_transform.position);
+	}
+}
+
 
 void GameObject::Draw()
 {
@@ -34,17 +40,20 @@ void GameObject::Draw()
 	MV1SetPosition(m_modelHandle, m_transform.position.ToVECTOR());
 	MV1DrawModel(m_modelHandle);
 
-	if (m_collision)m_collision->DebugDraw();
-	for (const auto& collision : m_collisions) {
-		if (collision.shape)collision.shape->DebugDraw(Color::kGreen);
+}
+
+void GameObject::DebugCollision(int color)
+{
+	for (auto& collision : m_collisions) {
+		if (collision.type == GameObject::CollisionType::Null)continue;
+		collision.shape->DebugDraw();
 	}
 }
 
 void GameObject::SetPosition(const Vector3& position)
 {
 	m_transform.position = position;
-	if(m_collision)
-	m_collision->SetPosition(position);
+	UpdateCollision();
 }
 
 //const Collision::Shape& GameObject::GetCollision() const

@@ -16,6 +16,7 @@
 #include "../System/SoundManager.h"
 #include "../System/FontManager.h"
 #include"../World/Character/Bee.h"
+#include"../World/Character/CharacterManager.h"
 #include"../World/Character/Enemy/Enemy.h"
 #include"../World/Character/Player/Player.h"
 #include"../World/Character/Guardian/Dragon.h"
@@ -62,6 +63,7 @@ SceneTest::SceneTest() :
 	m_pUiManager(nullptr),
 	m_pItemCursor(nullptr),
 	m_pPadManager(nullptr),
+	m_pCharacterManager(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -101,13 +103,15 @@ SceneTest::SceneTest() :
 	m_pTileManager = std::make_unique<TileManager>();
 	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
 	m_pTileManager->Init();
+	m_pCharacterManager = std::make_unique<CharacterManager>();
+	m_pCharacterManager->SetGameObjectManager(m_pGameObjectManager.get());
 	//m_pFloor = std::make_unique<FloorBlock>();
 	// 部屋マスの中でランダムなIDを取得
 	randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
 	//取得したマスのIDからマスの座標を計算
 	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 	// ランダムな部屋マスにプレイヤーを生成
-	m_pPlayer = m_pGameObjectManager->CreateObject<Player>(initPos);
+	m_pPlayer = m_pCharacterManager->CreateCharacter<Player>(initPos);
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
 }
@@ -219,7 +223,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	
-	//result = m_pTileManager->CheckCollision(m_pPlayer);
 	
 	// フェード中はコントローラー入力情報をだれにも渡さない
 	if (IsFading()) {

@@ -58,11 +58,6 @@ namespace {
 	constexpr float kBodyCollisionOffsetY = 98.0f;
 	constexpr Vector3 kBodyCollisionSize = { 78.0f,195.0f,78.0f };
 
-	// 接地判定(足元)のコリジョンデータ
-	constexpr float kFootCollisionHeight = 20.0f;
-	constexpr Vector3 kFootCollisionSize = { 70.0f,kFootCollisionHeight,70.0f };
-	constexpr float kFootCollisionOffsetY = -90.0f;
-
 	constexpr int kHeadFrameIndex = 6;
 	constexpr int kHatRightFrameIndex = 11;
 	constexpr int kHatLeftFrameIndex = 12;
@@ -136,11 +131,10 @@ Player::Player(Vector3 position) :
 	for (int i = 0; i < GaugeType::Max; i++) {
 		m_gauges.emplace_back(std::make_shared<Gauge>());
 	}
+	// 当たり判定追加
 	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kBodyCollisionOffsetY, 0.0f), kBodyCollisionSize), CollisionType::Body);
-	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kFootCollisionOffsetY, 0.0f), kFootCollisionSize), CollisionType::Foot);
-
-	m_transform.position = position;
-	m_move.SetTransform(m_transform);
+	// 座標設定
+	SetPosition(position);
 }
 
 Player::~Player()
@@ -173,11 +167,7 @@ void Player::Init()
 	// 待機アニメーションを再生
 	m_status = Status::Player::Neutral;
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
-	// AABBの初期化
-	m_collision = std::make_unique<Collision::AABB>(
-		kModelOffset,
-		kCollisionSize
-	);
+
 	// タグをプレイヤーに設定
 	GameObject::m_collisionTag = CollisionTag::Player;
 
@@ -188,13 +178,12 @@ void Player::Init()
 
 void Player::LoadModel()
 {
+	// csvデータ読み込み
 	CsvLoader csv("PlayerModelPath.csv");
 	std::vector<std::vector<std::string>>path;
 	path = csv.GetLoadData();
 	// 組み立てたファイルパスで読みこむ
 	std::string str = (path[1][0] + path[3][0]);
-	//str = kFilePath;
-	//str += kModelPath;
 	m_modelHandle = MV1LoadModel(str.c_str());
 	// モデルの大きさを設定
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
@@ -235,8 +224,6 @@ void Player::Update(float deltaTime)
 
 	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
-	// 当たり判定の中心座標を設定
-	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 
 	// ステータスに応じた更新処理
 	UpdateAction();
@@ -246,20 +233,13 @@ void Player::Update(float deltaTime)
 	UpdateTransform(deltaTime);
 	// アニメーションの更新
 	UpdateAnimation(deltaTime);
-	// コリジョンの更新処理
-	CollisionUpdate();
+
 	// バリアの座標を設定
 	if (m_pBarrier) {
 		m_pBarrier->SetPosition(m_transform.position);
 	}
-	// 当たり判定のデバッグ表示
-	//m_collision->DebugDraw();
-	// カプセルのデバッグ表示
-	m_capsule.DebugDraw();
 
-	for (const auto& collision : m_collisions) {
-		collision.shape->SetPosition(m_transform.position);
-	}
+
 
 	// ゲージが上限・下限を超えないようにする
 	for (auto& gauge : m_gauges)
@@ -369,8 +349,9 @@ void Player::UpdateTransform(float deltaTime)
 
 	// トランスフォームを更新
 	Transform transform = m_move.GetTransform();
-	m_transform.position = transform.position;
-	m_transform.rotation = transform.rotation;
+	// 座標更新
+	m_transform = transform;
+	//SetPosition(transform.position);
 	printfDx("m_transform position\n");
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
 }
@@ -427,100 +408,6 @@ void Player::ChangeAnimation(const Status::Player& status)
 	m_status = status;
 }
 
-void Player::ResolveCollision(GameObject& other, const Collision::Result& result)
-{
-	if (!result.isHit)return;
-	// 押し戻しベクトルを生成
-	Vector3 revertVec = result.normal * result.penetration;
-	switch (other.GetCollisionTag())
-	{
-	case GameObject::CollisionTag::None:
-		break;
-	case GameObject::CollisionTag::Player:
-		break;
-	case GameObject::CollisionTag::Enemy:
-	{
-		// 押し戻し量を保存
-		Vector3 pendingPush = result.normal * result.penetration*30;
-		m_move.AddPendingPush(pendingPush);
-		break;
-	}
-	case GameObject::CollisionTag::Wall:
-		// 座標を補正
-		m_transform.position += revertVec;
-		m_move.SetTransform(m_transform);
-		// 衝突判定の更新
-		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-		break;
-	case GameObject::CollisionTag::Stage:
-		// 座標を補正
-		m_transform.position += revertVec;
-		m_move.SetTransform(m_transform);
-		// 衝突判定の更新
-		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-
-		if (result.normal.y > 0.0f) {
-			m_isGroud = true;
-			m_isJump = false;
-		}
-
-		break;
-	case GameObject::CollisionTag::Barrier:
-		break;
-	default:
-		break;
-	}
-
-
-}
-
-void Player::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
-{
-	if (!result.isHit)return;
-	// 押し戻しベクトルを生成
-	Vector3 revertVec = result.normal * result.penetration;
-	switch (tag)
-	{
-	case GameObject::CollisionTag::None:
-		break;
-	case GameObject::CollisionTag::Player:
-		break;
-	case GameObject::CollisionTag::Enemy:
-	{
-		// 押し戻し量を保存
-		Vector3 pendingPush = result.normal * result.penetration * 30;
-		m_move.AddPendingPush(pendingPush);
-		break;
-	}
-	case GameObject::CollisionTag::Wall:
-		// 座標を補正
-		m_transform.position += revertVec;
-		m_move.SetTransform(m_transform);
-		// 衝突判定の更新
-		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-		break;
-	case GameObject::CollisionTag::Stage:
-		// 座標を補正
-		m_transform.position += revertVec;
-		m_move.SetTransform(m_transform);
-		// 衝突判定の更新
-		if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
-
-		if (result.normal.y > 0.0f) {
-			m_isGroud = true;
-			m_isJump = false;
-		}
-
-		break;
-	case GameObject::CollisionTag::Barrier:
-		break;
-	default:
-		break;
-	}
-
-
-}
-
 void Player::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
 {
 
@@ -553,10 +440,11 @@ void Player::ResolveCollision(GameObject& other, const CollisionData& myData, co
 		}
 		break;
 	case CollisionTag::Stage:
-	case CollisionTag::Wall:
-		m_transform.position += push;
+	case CollisionTag::Wall: {
+		Vector3 pushResult = m_transform.position + push;
+		SetPosition(pushResult);
 		break;
-		break;
+	}
 	default:
 		break;
 	}
@@ -576,8 +464,9 @@ void Player::SetCameraAngle(const Vector3& position)
 	//m_pCamera->SetCameraAngle(rotate);
 }
 
-void Player::CollisionUpdate()
+void Player::UpdateCollision()
 {
+	// 当たり判定の更新
 	VECTOR hatRightFrame = MV1GetFramePosition(m_modelHandle, kHatRightFrameIndex);
 	VECTOR HatLeftFrame = MV1GetFramePosition(m_modelHandle, kHatLeftFrameIndex);
 	VECTOR headFrame = MV1GetFramePosition(m_modelHandle, kHeadFrameIndex);
@@ -587,6 +476,13 @@ void Player::CollisionUpdate()
 	Vector3 get = { (hatCenter.x + headPos.x) * 0.5f,(hatCenter.y + headPos.y) * 0.5f ,(hatCenter.z + headPos.z) * 0.5f };*/
 	m_capsule.SetMaxPosition({ headFrame.x, headFrame.y, headFrame.z });
 	m_capsule.SetMinPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
+
+	for (auto& collision : m_collisions) {
+		collision.shape->SetPosition(m_transform.position);
+	}
+
+	// カプセルのデバッグ表示
+	m_capsule.DebugDraw();
 }
 
 float Player::CameraRotaY()
@@ -598,10 +494,14 @@ float Player::CameraRotaY()
 	return yawRad;
 }
 
-void Player::SetFirstPos(const Vector3& pos)
+void Player::SetPosition(const Vector3& pos)
 {
 	m_transform.position = pos;
 	m_move.SetTransform(m_transform);
+
+	for (auto& collision : m_collisions) {
+		collision.shape->SetPosition(m_transform.position);
+	}
 }
 
 Vector3 Player::GetCollisionCenterPos()

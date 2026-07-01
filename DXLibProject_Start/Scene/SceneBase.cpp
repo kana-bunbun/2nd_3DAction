@@ -24,7 +24,7 @@ SceneBase::SceneBase() :
 void SceneBase::UpdateFade(float deltaTime) {
 	m_isFadingOld = m_isFading;
 	if (m_fadeSpeed == 0)return;
-	m_fadeBright += kFadeMax * m_fadeSpeed * deltaTime;
+	m_fadeBright += static_cast<int>(kFadeMax * m_fadeSpeed * deltaTime);
 	// ’l‚ð’nˆæ“à‚ÉŽû‚ß‚é
 	m_fadeBright = MyMath::Clamp(m_fadeBright, 0, kFadeMax);
 

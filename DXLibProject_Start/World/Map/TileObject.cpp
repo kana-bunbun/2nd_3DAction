@@ -26,7 +26,6 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
 		// 方向を調べる
 		MapConst::eDirectionFour direction = static_cast<MapConst::eDirectionFour>(i);
-		m_collisions.push_back(CollisionData());
 		AddCollision(std::make_unique<Collision::AABB>(), GameObject::CollisionType::Invalid);
 		RegistWall(direction);
 	}
@@ -55,12 +54,6 @@ void TileObject::Update(float deltaTime)
 {
 }
 
-void TileObject::ResolveCollision(GameObject& other, const Collision::Result& result)
-{}
-
-void TileObject::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result & result)
-{}
-
 void TileObject::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}
 
@@ -79,7 +72,7 @@ void TileObject::Draw()
 	}
 
 	// 壁マスでなければ処理しない
-	if (m_terrain != MapConst::eTerrain::Wall)return;
+	//if (m_terrain != MapConst::eTerrain::Wall)return;
 	// 隣接する壁の方向だけ描画
 	for (int i = 0; i < m_wallPos.size();i++) {
 		if (m_wallHandle == -1||
@@ -87,13 +80,7 @@ void TileObject::Draw()
 		MV1SetRotationXYZ(m_wallHandle, m_wallPos[i].rotation.ToVECTOR());
 		MV1SetPosition(m_wallHandle, m_wallPos[i].position.ToVECTOR());
 		MV1DrawModel(m_wallHandle);
-		if (i >= m_collisions.size())continue;
-		if (m_collisions[i].shape) {
-			m_collisions[i].shape->DebugDraw();
-		}
 	}
-	
-
 }
 
 void TileObject::SetFloorModel(int modelHandle)
@@ -119,7 +106,6 @@ void TileObject::SetWallHandle(int wallHandle)
 
 void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 {
-	m_wallPos.clear();
 	Transform regist;
 	regist.Reset();
 	regist.position.y -= 100;
@@ -153,8 +139,9 @@ void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 	default:
 		return;
 	}
+	std::unique_ptr<Collision::Shape> shape = std::make_unique<Collision::AABB>(kCollisionOffset+regist.position, collisionSize);
 	regist.position += m_transform.position;
-	AddCollision(std::make_unique<Collision::AABB>(kCollisionOffset, collisionSize), GameObject::CollisionType::Invalid);
+	m_collisions[wallNum].shape = std::move(shape);
 	m_collisions[wallNum].shape ->SetPosition(regist.position);
 	m_collisionTag = GameObject::CollisionTag::Wall;
 	// 自身の座標から見た壁の座標を追加
@@ -175,27 +162,21 @@ void TileObject::CheckWall()
 	// 壁方向を初期化
 	m_wallDirection.fill(false); 
 
-	if (m_terrain != MapConst::eTerrain::Wall)return;
 	// 4方向を調べ隣接している壁の方向を取得
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
+		m_collisions[i].type = CollisionType::Null;
+		if (m_terrain != MapConst::eTerrain::Wall)continue;
 		// 方向を調べる
 		MapConst::eDirectionFour direction = static_cast<MapConst::eDirectionFour>(i);
 		MapTile* tile = MapManager::GetInstance().GetToDirSquare(m_ID, direction);
-		if (!tile || tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)continue;
+		if (!tile || tile->GetSquareData()->GetTerrain() != MapConst::eTerrain::Wall)
+		{
+			continue;
+		}
 		m_wallDirection[i] = true;
+		m_collisions[i].type = CollisionType::Invalid;
+
 	}
 
 }
 
-Collision::Result TileObject::CheckCollision(GameObject* object)
-{
-	Collision::Result result;
-	Vector3 resolve = Vector3::zero;
-	for (int i = 0; i < m_collisions.size();i++) {
-		if (!m_wallDirection[i])continue;
-		//result=m_collisions[i]->CheckCollision(object->GetCollision());
-		object->ResolveCollision(GameObject::CollisionTag::Wall, result);
-		if (!result.isHit)continue;
-	}
-	return result;
-}

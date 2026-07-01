@@ -123,13 +123,10 @@ void Enemy::Update(float deltaTime)
 	m_animation.Debug();
 }
 
-void Enemy::ResolveCollision(GameObject& other, const Collision::Result & result)
-{}
-
-void Enemy::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result & result)
-{}
-
 void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
+{}
+
+void Enemy::SetModelHandle(int modelHandle)
 {}
 
 void Enemy::SetTarget(GameObject* target)

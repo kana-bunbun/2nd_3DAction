@@ -32,8 +32,6 @@ public:
 	/// 攻撃時の更新処理　
 	/// </summary>
 	void AttackUpdate(float deltaTime);
-	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
-	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

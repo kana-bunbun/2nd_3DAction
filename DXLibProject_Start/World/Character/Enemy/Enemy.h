@@ -2,7 +2,8 @@
 #include"../../GameObject.h"
 #include"../AnimationController.h"
 #include"../../Component/Transform.h"
-class Enemy :public GameObject
+#include"../Character.h"
+class Enemy :public Character
 {
 public:
 	Enemy();
@@ -24,8 +25,6 @@ public:
 	/// 衝突処理
 	/// </summary>
 	/// <param name="result"></param>
-	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
-	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

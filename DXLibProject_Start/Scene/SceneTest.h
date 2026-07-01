@@ -22,6 +22,7 @@ class CameraManager;
 class Player;
 class Dragon;
 class CharaGaugeManager;
+class CharacterManager;
 class EnemyManager;
 class Bee;
 class Barrier;
@@ -120,5 +121,6 @@ private:
 	std::unique_ptr<TileManager>m_pTileManager;
 	std::unique_ptr<ItemCursor> m_pItemCursor;
 	std::unique_ptr<PadManager> m_pPadManager;
+	std::unique_ptr<CharacterManager> m_pCharacterManager;
 	int randomID;
 };

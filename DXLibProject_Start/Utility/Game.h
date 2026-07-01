@@ -10,8 +10,8 @@ namespace Game {
 
 	// ウィンドウサイズ
 	constexpr float kWindowScale = 1.0f;
-	constexpr int kScreenWidth = 1920 * kWindowScale;
-	constexpr int kScreenHeight = 1080 * kWindowScale;
+	constexpr int kScreenWidth = static_cast<int>(1920 * kWindowScale);
+	constexpr int kScreenHeight = static_cast <int>(1080 * kWindowScale);
 
 	// ウィンドウのカラーモード
 	constexpr int kColorBit = 32;

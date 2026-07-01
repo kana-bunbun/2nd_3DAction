@@ -31,6 +31,7 @@ void GameObjectManager::Update(float deltaTime)
 		if (!obj->IsActive())continue;
 	
 		obj->Update(deltaTime);
+		obj->UpdateCollision();
 	}
 }
 
@@ -58,6 +59,17 @@ void GameObjectManager::Draw()
 		if (!object->IsActive())continue;
 		object->Draw();
 	}
+	// 当たり判定のデバッグ表示
+	for (auto& object : m_objects) {
+		if (!object->IsActive())continue;
+		object->DebugCollision();
+	}
+	// 後描画処理
+	for (auto& object : m_objects) {
+		if (!object->IsActive())continue;
+		object->LateDraw();
+	}
+
 }
 
 void GameObjectManager::CheckCollision()
@@ -125,9 +137,12 @@ void GameObjectManager::CheckCollision()
 			for (auto& collisionA : collisionsA) {
 				// コリジョンがなければスルー
 				if (!collisionA.shape)continue;
+				if (collisionA.type == GameObject::CollisionType::Null)continue;
+
 				for (auto& collisionB : collisionsB) {
 					// コリジョンがなければスルー
 					if (!collisionB.shape)continue;
+					if (collisionB.type == GameObject::CollisionType::Null)continue;
 					// 衝突判定
 					Collision::Result resultA = collisionA.shape->CheckCollision(*collisionB.shape);
 

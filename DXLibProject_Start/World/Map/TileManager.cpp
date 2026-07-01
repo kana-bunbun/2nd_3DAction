@@ -6,7 +6,6 @@
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
-#include"../../Utility/Game.h"
 #include"../Character/Player/Player.h"
 #include"../Character/Enemy/EnemyManager.h"
 #include"../Object/Stair.h"
@@ -39,11 +38,13 @@ TileManager::TileManager() :
 	m_markPos(),
 	m_cursorHandle(-1),
 	m_pTiles(),
-	stair(nullptr),
+	m_pStair(nullptr),
 	m_upStair(false),
 	m_pPlayer(nullptr),
 	m_pEnemyManager(nullptr),
-	m_pad(Input::Pad::Invalid)
+	m_pad(Input::Pad::Invalid),
+	m_pGameObjectManager(nullptr),
+	m_stairID(-1)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 
@@ -105,14 +106,14 @@ void TileManager::SetUpFloor()
 			continue;
 		}
 	}
-	if (!stair) {
-		stair = m_pGameObjectManager->CreateObject<Stair>();
+	if (!m_pStair) {
+		m_pStair = m_pGameObjectManager->CreateObject<Stair>();
 	}
 	else {
 		m_pTiles[m_stairID]->SetIsStair(false);
 	}
 	m_stairID = RandomRoomID();
-	stair->SetTile(m_stairID);
+	m_pStair->SetTile(m_stairID);
 	m_pTiles[m_stairID]->SetIsStair(true);
 
 }
@@ -123,12 +124,10 @@ void TileManager::Update(float deltaTime)
 	for (auto& tile : m_pTiles) {
 		//tile->Update(deltaTime);
 	}
-	if (stair) {
-		stair->Update(deltaTime);
-	}
+
 
 	if (Input::IsPressed(Input::Button::B, m_pad)) {
-		if (IsUpStair()) {
+		if (m_pStair->IsHit()) {
 			// フロア生成
 			SetUpFloor();
 			// 部屋マスの中でランダムなIDを取得
@@ -136,7 +135,7 @@ void TileManager::Update(float deltaTime)
 			//取得したマスのIDからマスの座標を計算
 			Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
 			// ランダムな部屋マスにプレイヤーを生成
-			m_pPlayer->SetFirstPos(initPos);
+			m_pPlayer->SetPosition(initPos);
 			m_pEnemyManager->RegistRandomPos();
 		}
 	}
@@ -150,9 +149,6 @@ void TileManager::Draw()
 			continue;
 		}
 		//m_pTiles[i]->Draw();
-	}
-	if (stair) {
-		stair->Draw();
 	}
 
 	// デバッグでプレイヤーのいるマスを取得・描画=====
@@ -239,27 +235,3 @@ int TileManager::RandomRoomID()
 	return roomID[random];
 }
 
-Collision::Result TileManager::CheckCollision(GameObject* object)
-{
-	Collision::Result result;
-	// 引数オブジェクトの座標から現在いるマスを取得
-	int targetTileID = MapManager::GetInstance().GetIDFromWorldPos(object->GetTransform().position);
-	if (targetTileID == -1)return result;
-	// 現在いるマスの周囲マスを取得
-	std::vector<int>chebyshevID = MapManager::GetInstance().CheckChebyshevID(targetTileID);
-	// 現在のマスを追加
-	chebyshevID.push_back(targetTileID);
-	// 引数オブジェクトの周囲8マスだけ当たり判定をチェック
-	for (int& tileID:chebyshevID) {
-		result = m_pTiles[tileID]->CheckCollision(object);
-	}
-
-
-	if (object->GetCollisionTag() == GameObject::CollisionTag::Player) {
-		//Collision::Result stairResult= stair->GetCollision().CheckCollision(object->GetCollision());
-		//m_upStair = stairResult.isHit;
-		stair->SetIsHit(m_upStair);
-		stair->SetBillboardPos(object->GetTransform().position);
-	}
-	return result;
-}

@@ -15,8 +15,6 @@ public:
 	void Init()override;
 	void End()override;
 	void Update(float deltaTime)override;
-	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
-	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,
@@ -31,7 +29,6 @@ public:
 	void ChangeTile(int ID, const Vector3& position, const MapConst::eTerrain& terrain);
 	void CheckWall();
 
-	Collision::Result CheckCollision(GameObject* object);
 	void SetIsStair(bool isStair) { m_isStair = isStair; }
 protected:
 	// マスのID
@@ -46,5 +43,7 @@ protected:
 	int m_wallHandle;
 	// 階段マスかどうか
 	bool m_isStair;
+	// 壁の当たり判定
+	std::vector < std::unique_ptr<Collision::Shape>>m_walls;
 };
 

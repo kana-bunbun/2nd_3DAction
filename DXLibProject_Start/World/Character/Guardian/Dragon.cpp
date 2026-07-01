@@ -132,7 +132,7 @@ Dragon::Dragon() :
 	for (auto& breath : m_breath) {
 		breath = std::make_unique<DragonBreath>();
 	}
-	m_collision = std::make_unique<Collision::Sphere>(Vector3::zero, 0);
+	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 0), GameObject::CollisionType::Body);
 }
 
 Dragon::~Dragon()
@@ -254,14 +254,6 @@ void Dragon::AttackUpdate(float deltaTime)
 	m_move.SetSpeed(m_speed);
 
 }
-
-void Dragon::ResolveCollision(GameObject & other, const Collision::Result & result)
-{
-
-}
-
-void Dragon::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
-{}
 
 void Dragon::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}

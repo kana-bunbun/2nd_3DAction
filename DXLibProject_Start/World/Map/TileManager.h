@@ -26,7 +26,6 @@ public:
 
 	int RandomPassableID();
 	int RandomRoomID();
-	Collision::Result CheckCollision(GameObject* object);
 public:
 	void SetEnemyManager(EnemyManager* pEnemyManager) { m_pEnemyManager = pEnemyManager; }
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
@@ -40,7 +39,7 @@ private:
 	std::vector<TileObject*> m_pTiles;
 	int m_floorHandle;
 	int m_wallHandle;
-	Stair* stair;
+	Stair* m_pStair;
 	// 階段を登れるかどうか
 	bool m_upStair;
 	int m_stairID;

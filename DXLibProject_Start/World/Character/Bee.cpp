@@ -68,12 +68,11 @@ void Bee::Init()
 {
 	GameObject::m_transform.position += kInitPos;
 	GameObject::m_transform.scale = kModelScale;
-
 	// AABBのコリジョンの生成
-	GameObject::m_collision = std::make_unique<Collision::AABB>(
+	AddCollision(std::make_unique<Collision::AABB>(
 		kModelOffset,
 		kCollisionSize
-	);
+	), GameObject::CollisionType::Body);
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 }
 
@@ -82,21 +81,11 @@ void Bee::Update(float deltaTime)
 	// アクティブ状態で時実行しない
 	if (!m_isActive)return;
 
-	// 衝突判定の更新処理
-	if (GameObject::m_collision)GameObject::m_collision->SetPosition(GetCollisionCenterPos());
 	// アニメーションの更新処理
 	UpdateAnimation(deltaTime);
 	m_transform.position.z--;
-	m_collision->DebugDraw();
-}
-
-void Bee::ResolveCollision(GameObject& other, const Collision::Result& result)
-{
 
 }
-
-void Bee::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
-{}
 
 void Bee::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {
@@ -110,9 +99,9 @@ void Bee::ResolveCollision(GameObject & other, const CollisionData & myData, con
 	Vector3 revertVec = result.normal * result.penetration;
 
 	// 座標を移動
-	GameObject::m_transform.position += revertVec * 20.0f;
-
-	m_collision->SetPosition(m_transform.position);
+	Vector3 resultPush = m_transform.position + (revertVec * 20.0f);
+	SetPosition(resultPush);
+	
 
 }
 

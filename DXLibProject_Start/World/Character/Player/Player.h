@@ -5,12 +5,13 @@
 #include"../../UI/GaugeShow.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/Camera.h"
+#include"../Character.h"
 #include<array>
 class CameraOld;
 class Barrier;
 
 
-class Player : public GameObject 
+class Player : public Character 
 {
 public:
 	/// <summary>
@@ -62,8 +63,6 @@ public:
 	/// 衝突処理
 	/// </summary>
 	/// <param name="result"></param>
-	void ResolveCollision(GameObject& other, const Collision::Result& result)override;
-	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,
@@ -71,9 +70,9 @@ public:
 		const Collision::Result& result
 	);
 	void SetCameraAngle(const Vector3& position);
-	void CollisionUpdate();
+	void UpdateCollision()override;
 	float CameraRotaY();
-	void SetFirstPos(const Vector3& pos);
+	void SetPosition(const Vector3& pos)override;
 public:
 	Vector3 GetCollisionCenterPos();
 	/// <summary>
@@ -85,7 +84,7 @@ public:
 
 	void SetBarrier(Barrier* barrier);
 	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
-	bool GetIsGround() { return m_isGroud; }
+	 bool GetIsGround()const { return m_isGroud; }
 	Input::Pad m_pad;
 private:
 	/// <summary>
