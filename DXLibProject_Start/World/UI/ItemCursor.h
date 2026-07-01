@@ -45,7 +45,7 @@ public:
 
 	// アイテムを選択する関数
 	void Select();
-	void ChangeSelectFlag(size_t index,bool select);
+	void ChangeSelectFlag(size_t index);
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
