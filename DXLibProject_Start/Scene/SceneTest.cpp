@@ -24,7 +24,6 @@
 #include"../World/UI/UIManager.h"
 #include"../World/UI/ItemCursor.h"
 #include"../World/Character/CharaGaugeManager.h"
-#include"../World/Character/Enemy/EnemyManager.h"
 #include"../World/Map/TileManager.h"
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
@@ -56,7 +55,6 @@ SceneTest::SceneTest() :
 	m_pBee(nullptr),
 	m_pCameraMgr(nullptr),
 	m_pDragon(nullptr),
-	m_pEnemyManager(nullptr),
 	m_pGaugeManager(nullptr),
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
@@ -76,42 +74,24 @@ SceneTest::SceneTest() :
 
 		assert(false && "コントローラー 接続失敗");
 	}
-	//m_pPlayer = new Player();
-	//m_pCamera = new Camera();
-	//m_pGrassMgr = new GrassManagerV();
-	//for (int i = 0; i < m_playerNum; i++) {
-	//	m_pCamera[i] = nullptr;
-	//}
-	// スマートポインタのインスタンス生成
-	// スマートポインタの生成
-	// std::make_unique<クラス名>(コンストラクタの引数)
-	for (int i = 0; i < m_playerNum; i++) {
-		//m_pCamera[i] = std::make_unique<CameraOld>();
-		//Input::Pad pp = static_cast<Pad::Player>(i);
-		//m_pCamera[i]->SetPad(static_cast<Pad::Player>(i));
-
-	}
+	
 	m_pGameObjectManager = std::make_unique<GameObjectManager>();
 	m_pBee = m_pGameObjectManager->CreateObject<Bee>();
 	m_pBarrier = m_pGameObjectManager->CreateObject<Barrier>();
 	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>();
+	m_pGameObjectManager->CreateObject<Enemy>();
+	m_pGameObjectManager->CreateObject<Enemy>();
+	m_pGameObjectManager->CreateObject<Enemy>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
-	m_pEnemyManager = std::make_unique<EnemyManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
-	m_pTileManager->Init();
 	m_pCharacterManager = std::make_unique<CharacterManager>();
+	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
+	m_pTileManager->SetCharacterManager(m_pCharacterManager.get());
 	m_pCharacterManager->SetGameObjectManager(m_pGameObjectManager.get());
-	//m_pFloor = std::make_unique<FloorBlock>();
-	// 部屋マスの中でランダムなIDを取得
-	randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
-	//取得したマスのIDからマスの座標を計算
-	Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
-	// ランダムな部屋マスにプレイヤーを生成
-	m_pPlayer = m_pCharacterManager->CreateCharacter<Player>(initPos);
+	m_pPlayer = m_pGameObjectManager->CreateObject<Player>();
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
 }
@@ -119,6 +99,7 @@ SceneTest::SceneTest() :
 SceneTest::~SceneTest() {}
 
 void SceneTest::Init() {
+	m_pTileManager->Init();
 	//m_pPlayer->SetCamera(m_pCamera[0].get());
 	//m_pSound->LoadSe();
 	//m_pSound->LoadBGM();
@@ -136,19 +117,15 @@ void SceneTest::Init() {
 	m_pGaugeManager->Init();
 	m_pGaugeManager->SetPlayer(m_pPlayer);
 	m_pGaugeManager->SetDragon(m_pDragon);
-	m_pEnemyManager->Init();
-	m_pEnemyManager->SetTarget(m_pPlayer);
 	m_pPadManager->SetPlayer(m_pPlayer);
 	m_pPadManager->SetItemCursor(m_pItemCursor.get());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
-	//Transform* pos = m_pPlayer->GetTransform();
 	m_pTileManager->SetPlayer(m_pPlayer);
-	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
-	m_pTileManager->SetEnemyManager(m_pEnemyManager.get());
-	
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pItemCursor->Init();
+
+
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
@@ -189,7 +166,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Update(deltaTime);
 	}
-	m_pEnemyManager->Update(deltaTime);
 	m_pItemCursor->Update();
 	m_pPadManager->Update();
 
@@ -202,14 +178,11 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
 		if (Input::IsDown(Input::Button::LT, Input::Pad::P1)) {
-		m_pDragon->Call(m_pEnemyManager->GetEnemy());
+		//m_pDragon->Call(m_pGameObjectManager->FindObject<Enemy>());
 		}
 	else
 		m_pDragon->CallBack();
 	}
-	if (Input::IsDown(Input::Button::LT, Input::Pad::P1))
-		m_pPlayer->SetCameraAngle(m_pEnemyManager->GetEnemy()->GetTransform().position);
-
 	// カメラ切り替え処理
 	//if (Input::IsPressed(Input::Button::RThumb, Input::Pad::P1)) {
 	//	m_pCameraMgr->NextCamera();
@@ -242,7 +215,6 @@ void SceneTest::Draw() {
 	DrawGround();
 	// カメラの描画
 	m_pCameraMgr->Apply();
-	m_pEnemyManager->Draw();
 	// マップの描画処理
 	// ゲームオブジェクトの描画処理
 	if (m_pGameObjectManager) {

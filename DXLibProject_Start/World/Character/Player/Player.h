@@ -17,8 +17,7 @@ public:
 	/// <summary>
 	/// プレイヤーのコンストラクタ
 	/// </summary>
-	Player();
-	Player(Vector3 position);
+	Player(Vector3 position=Vector3::zero);
 	/// <summary>
 	/// プレイヤーのデストラクタ
 	/// </summary>

@@ -47,6 +47,7 @@ public:
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	Vector3 CheckFollowOffset();
 	std::shared_ptr<Gauge> GetGauge() { return m_gauge; }
+	void SetPosition(const Vector3& pos)override;
 
 private:
 	void FollowPlayer();

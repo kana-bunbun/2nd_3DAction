@@ -65,42 +65,6 @@ namespace {
 
 }
 
-Player::Player() :
-	m_animation(),
-	m_animData(),
-	m_status(),
-	m_animHandle(),
-	m_speed(0),
-	m_desireRad(0),
-	m_move(),
-	m_parry(false),
-	m_charge(false),
-	m_pBarrier(nullptr),
-	m_dashFlag(false),
-	m_isGroud(true),
-	m_isJump(false),
-	m_gauges()
-{
-	// モデルの設定
-	LoadModel();
-	// トランスフォームの初期化処理
-	m_transform.Reset();
-	// 移動時の角度の補間割合を設定
-	m_move.SetLerpSpeed(kLerpModelRadian);
-	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
-	// カプセルの初期化
-	m_capsule = Collision::Capsule(kCapsuleRadius);
-	// カプセルのオフセットを計算
-	m_capsule.SetOffset(kCapsuleOffset);
-	// ゲージの初期化
-	for (int i = 0; i < GaugeType::Max; i++) {
-		m_gauges.emplace_back(std::make_shared<Gauge>());
-	}
-
-	
-	
-}
-
 Player::Player(Vector3 position) :
 	m_animation(),
 	m_animData(),
@@ -110,6 +74,7 @@ Player::Player(Vector3 position) :
 	m_desireRad(0),
 	m_move(),
 	m_parry(false),
+	m_charge(false),
 	m_pBarrier(nullptr),
 	m_dashFlag(false),
 	m_isGroud(true),

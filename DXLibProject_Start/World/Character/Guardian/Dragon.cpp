@@ -307,6 +307,17 @@ Vector3 Dragon::CheckFollowOffset()
 	return result;
 }
 
+void Dragon::SetPosition(const Vector3& pos)
+{
+	m_transform.position = pos;
+	m_move.SetTransform(m_transform);
+
+	for (auto& collision : m_collisions) {
+		collision.shape->SetPosition(m_transform.position);
+	}
+}
+
+
 void Dragon::FollowPlayer()
 {
 	assert(m_pPlayer);

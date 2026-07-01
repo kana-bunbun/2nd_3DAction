@@ -23,7 +23,6 @@ class Player;
 class Dragon;
 class CharaGaugeManager;
 class CharacterManager;
-class EnemyManager;
 class Bee;
 class Barrier;
 class UIManager;
@@ -104,7 +103,6 @@ private:
 	Player* m_pPlayer;
 	Dragon* m_pDragon;
 	std::unique_ptr<CharaGaugeManager> m_pGaugeManager;
-	std::unique_ptr<EnemyManager> m_pEnemyManager;
 	std::unique_ptr<GameObjectManager>m_pGameObjectManager;
 	/// <summary>
 	/// ƒvƒŒƒCƒ„[‚Ì”

@@ -9,7 +9,7 @@ class GameObjectManager;
 class TileObject;
 class Stair;
 class Player;
-class EnemyManager;
+class CharacterManager;
 class TileManager
 {
 public:
@@ -27,7 +27,7 @@ public:
 	int RandomPassableID();
 	int RandomRoomID();
 public:
-	void SetEnemyManager(EnemyManager* pEnemyManager) { m_pEnemyManager = pEnemyManager; }
+	void SetCharacterManager(CharacterManager* pCharacterManager) { m_pCharacterManager = pCharacterManager; }
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
@@ -44,7 +44,7 @@ private:
 	bool m_upStair;
 	int m_stairID;
 	Player* m_pPlayer;
-	EnemyManager* m_pEnemyManager;
+	CharacterManager* m_pCharacterManager;
 	Input::Pad m_pad;
 	GameObjectManager* m_pGameObjectManager;
 };

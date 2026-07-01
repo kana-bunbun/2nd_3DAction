@@ -183,7 +183,6 @@
     <ClCompile Include="World\UI\CharaGauge.cpp" />
     <ClCompile Include="World\Character\Guardian\DragonAttack.cpp" />
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
-    <ClCompile Include="World\Character\Enemy\EnemyManager.cpp" />
     <ClCompile Include="World\UI\GaugePlayer.cpp" />
     <ClCompile Include="Utility\CsvLoader.cpp" />
     <ClCompile Include="World\UI\UIManager.cpp" />
@@ -282,7 +281,6 @@
     <ClInclude Include="World\UI\CharaGauge.h" />
     <ClInclude Include="World\Character\Guardian\DragonAttack.h" />
     <ClInclude Include="World\Character\Guardian\Dragon.h" />
-    <ClInclude Include="World\Character\Enemy\EnemyManager.h" />
     <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
     <ClInclude Include="Utility\CsvLoader.h" />

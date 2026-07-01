@@ -7,7 +7,7 @@
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
 #include"../Character/Player/Player.h"
-#include"../Character/Enemy/EnemyManager.h"
+#include"../Character/CharacterManager.h"
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"
 #include<DxLib.h>
@@ -41,7 +41,7 @@ TileManager::TileManager() :
 	m_pStair(nullptr),
 	m_upStair(false),
 	m_pPlayer(nullptr),
-	m_pEnemyManager(nullptr),
+	m_pCharacterManager(nullptr),
 	m_pad(Input::Pad::Invalid),
 	m_pGameObjectManager(nullptr),
 	m_stairID(-1)
@@ -116,6 +116,10 @@ void TileManager::SetUpFloor()
 	m_pStair->SetTile(m_stairID);
 	m_pTiles[m_stairID]->SetIsStair(true);
 
+	if(m_pCharacterManager)
+	// キャラクターランダム配置
+	m_pCharacterManager->SetRandomPos();
+
 }
 
 void TileManager::Update(float deltaTime)
@@ -130,13 +134,7 @@ void TileManager::Update(float deltaTime)
 		if (m_pStair->IsHit()) {
 			// フロア生成
 			SetUpFloor();
-			// 部屋マスの中でランダムなIDを取得
-			int randomID = MyRandom::ArrayRandom(MapCreate::GetInstance().GetRooms());
-			//取得したマスのIDからマスの座標を計算
-			Vector3 initPos = MapManager::GetInstance().GetWorldPosFromID(randomID);
-			// ランダムな部屋マスにプレイヤーを生成
-			m_pPlayer->SetPosition(initPos);
-			m_pEnemyManager->RegistRandomPos();
+			
 		}
 	}
 }
