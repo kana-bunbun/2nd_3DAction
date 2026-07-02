@@ -15,10 +15,13 @@ namespace {
 	constexpr Vector3 kSlotCenterPos = { Game::kScreenWidth /  3.0f,Game::kScreenHeight * 0.9f,0.0f };
 	// スロットのスケール
 	constexpr float kSlotScale = 0.05f * Game::kWindowScale;
+	// スロット1つ1つの間隔
 	constexpr float kSlotDistance = 100.0f * Game::kWindowScale;
-
+	// カーソル画像の大きさ
 	constexpr float kCursorScale = 1.3f * Game::kWindowScale;
+	// カーソルの補間スピード
 	constexpr float kCursorLerpSpeed = 30.0f;
+
 	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
 	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] =
@@ -28,14 +31,17 @@ namespace {
 		"Resource\\Graph\\Item_Bread.png",
 		"Resource\\Graph\\Item_Cheese.png",
 	};
-
-
-
-	constexpr Vector3 kHoldNumOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
+	// 所持数テキストの表示オフセット
+	constexpr Vector3 kHoldNumTextOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
+	// フォント関連
 	//const char* const kFontName = "OCRB";
 	const char* const kFontName = "Bauhaus 93";
-	constexpr int kThickness = 5*Game::kWindowScale;
-	constexpr int kSize = 20 * Game::kWindowScale;
+	constexpr int kFontThickness = 5*Game::kWindowScale;
+	constexpr int kFontSize = 20 * Game::kWindowScale;
+	
+	// 長押しで連続的にカーソル移動する際のインターバル
+	constexpr float kHoldArrowInterval = 0.04f;
+
 }
 ItemCursor::ItemCursor():
 	m_selectIndex(0),
@@ -43,7 +49,9 @@ ItemCursor::ItemCursor():
 	m_cursorHandle(-1),
 	m_cursorPosition(GetSelectPos(0)),
 	m_pad(Input::Pad::Invalid),
-	m_isBlendMenu(false)
+	m_isBlendMenu(false),
+	m_holdLeftCount(0.0f),
+	m_holdRightCount(0.0f)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 	m_slots.fill(nullptr);
@@ -84,22 +92,26 @@ void ItemCursor::Update()
 	UpdateCursor();
 	// 入力による更新処理
 	UpdateToInput();
-	// 選択中インデックスの更新処理
-	NormalizeIndex();
+
 
 }
 
 void ItemCursor::UpdateCursor()
 {
+	// カーソルとスロットの座標の差からカーソル座標の補間をする
+
 	// 目標のスロット座標までカーソルの位置を補間
 	Vector3 desirePos = GetSelectPos(m_showSelectIndex);
 	Vector3 differ = desirePos - m_cursorPosition;
 	float deltaTime = TimeManager::GetRawDeltaTime();
+	// 補間での移動割合を値域内で収める
 	float lerpValue = MyMath::Clamp(deltaTime * kCursorLerpSpeed, 0.0f, 1.0f);
-	if (differ.GetSqLength() < MyMath::Epsilon) {
+	// 誤差の範囲内なら同じ座標にする
+	if (differ.GetSqLength() < MyMath::Epsilon* MyMath::Epsilon) {
 		m_cursorPosition = desirePos;
 	}
 	else {
+		// 誤差の範囲外なら補間による座標移動
 		m_cursorPosition += differ * lerpValue;
 	}
 
@@ -109,13 +121,28 @@ void ItemCursor::UpdateToInput()
 {
 	// コントローラーが割り当てられているとき処理を行う
 	if (m_pad == Input::Pad::Invalid)return;
+
+	if (Input::Hold(Input::Button::Left, m_pad)) {
+		m_holdLeftCount += TimeManager::GetDeltaTime();
+	}
+	if (Input::Hold(Input::Button::Right, m_pad)) {
+		m_holdRightCount += TimeManager::GetDeltaTime();
+	}
+
 	// 入力に応じて選択中のインデックスを更新
-	if (Input::IsPressed(Input::Button::Left, m_pad)) {
+	if (Input::IsPressed(Input::Button::Left, m_pad)||
+		m_holdLeftCount>=kHoldArrowInterval) {
 		m_selectIndex--;
+		m_holdLeftCount = 0.0f;
 	}
-	if (Input::IsPressed(Input::Button::Right, m_pad)) {
+	if (Input::IsPressed(Input::Button::Right, m_pad) ||
+		m_holdRightCount >= kHoldArrowInterval) {
 		m_selectIndex++;
+		m_holdRightCount = 0.0f;
 	}
+	// 選択中インデックスの更新処理
+	NormalizeIndex();
+	// メニュー選択状態でなければ
 	if (!m_isBlendMenu) {
 		if (Input::IsPressed(Input::Button::X, m_pad)) {
 			m_slots[m_selectIndex]->Sub();
@@ -123,14 +150,11 @@ void ItemCursor::UpdateToInput()
 		return;
 	}
 	if (Input::IsPressed(Input::Button::Y, m_pad)) {
-	
+		Cancel();
 	}
 
 	if (Input::IsPressed(Input::Button::A, m_pad)) {
-		for (auto& slot : m_slots) {
-			slot->m_select = false;
-		}
-		m_selected.fill(BlendManager::Type::Invalid);
+		Cancel();
 	}
 
 	if (Input::IsPressed(Input::Button::B, m_pad)) {
@@ -142,7 +166,7 @@ void ItemCursor::UpdateToInput()
 			}
 	}
 	if (Input::IsPressed(Input::Button::X, m_pad)) {
-		//BlendItem()
+		BlendItem();
 	}
 }
 
@@ -150,6 +174,7 @@ void ItemCursor::NormalizeIndex()
 {
 	// 見た目上の選択インデックスを更新
 	m_showSelectIndex = m_selectIndex;
+	
 	// 内部の選択インデックスをクランプ
 	m_selectIndex = MyMath::Clamp(m_selectIndex, 0, kSlotMax - 1);
 
@@ -180,7 +205,7 @@ void ItemCursor::UseItem()
 void ItemCursor::Draw()
 {
 
-	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
+	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 
 	for (int i = 0; i < kSlotMax;i++) {
 		int holdNum = m_slots[i]->GetHoldNum();
@@ -192,12 +217,12 @@ void ItemCursor::Draw()
 			//DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_slots[i]->m_type)], TRUE);
 		if (!holdNum)continue;
 		
-		Vector3 textPos = GetSelectPos(i) + kHoldNumOffset;
+		Vector3 textPos = GetSelectPos(i) + kHoldNumTextOffset;
 		// 所持数のテキストを用意
 		std::string numText = std::to_string(holdNum);
 		// 文字数を取得
 		int length=numText.length();
-		textPos.x -= kHoldNumOffset.x * length;
+		textPos.x -= kHoldNumTextOffset.x * length;
 		std::string holdText = "x"+numText;
 
 		DrawStringToHandle(textPos.x, textPos.y, holdText.c_str(), Color::kWhite, handle);
@@ -261,18 +286,18 @@ void ItemCursor::Select()
 {
 	// 選択しているスロットに格納されているアイテムの種類が不正値なら即時return
 	if (m_slots[m_selectIndex]->m_type == BlendManager::Type::Invalid)return;
-	bool selectFrag = true;
-	if (m_slots[m_selectIndex]->m_select) {
-		selectFrag = false;
-	}
+
 	// 
 	int selectedIndex = -1;
 	for (int i = 0; i < m_selected.size(); i++) {
-		// 
-	/*	if (m_selected[i] == m_slots[m_selectIndex]->m_type) {
+		if (m_selected[i] == m_slots[m_selectIndex]->m_type) {
 			selectedIndex = i;
 			break;
-		}*/
+		}
+	}
+	if(selectedIndex<0)
+	for (int i = 0; i < m_selected.size(); i++) {
+		 
 		if (m_selected[i] != BlendManager::Type::Invalid)continue;
 
 		selectedIndex = i;
@@ -296,9 +321,18 @@ void ItemCursor::ChangeSelectFlag(size_t index)
 	m_slots[m_selectIndex]->m_select ^= 1;
 }
 
-bool ItemCursor::BlendItem(const BlendManager::Type& base, const BlendManager::Type& add)
+void ItemCursor::Cancel()
 {
-	BlendManager::Type blendResult = BlendManager::GetInstnce().Blend(base, add);
+	// 無選択状態にする
+	m_selected.fill(BlendManager::Type::Invalid);
+	for (auto& slot : m_slots) {
+		slot->m_select = false;
+	}
+}
+
+bool ItemCursor::BlendItem()
+{
+	BlendManager::Type blendResult = BlendManager::GetInstnce().Blend(m_selected[0], m_selected[1]);
 	// 合成結果が不正値なら処理しない
 	if (blendResult == BlendManager::Type::Invalid) {
 
@@ -307,8 +341,8 @@ bool ItemCursor::BlendItem(const BlendManager::Type& base, const BlendManager::T
 	}
 
 	// 合成材料のアイテムを1つ減らす
-	SubItem(base);
-	SubItem(add);
+	SubItem(m_selected[0]);
+	SubItem(m_selected[1]);
 	// 合成結果のアイテムを1つ増やす
 	AddItem(blendResult);
 

@@ -7,6 +7,7 @@
 #include "../Utility/GameSetting.h"
 #include "../Utility/MyRandom.h"
 #include "../Utility/PadManager.h"
+#include "../Utility/Data.h"
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
 #include "../Camera/CameraOld.h"
@@ -45,8 +46,10 @@ namespace {
 	constexpr Vector3 kInitGrassPos = { 0.0f, 0.0f, -400.0f };	// 草の初期座標
 
 	const char* const kFontName = "Ink Free";
-	constexpr int kSize = 50;
-	constexpr int kThickness = 50;
+	constexpr int kFontSize = 50;
+	constexpr int kFontThickness = 50;
+
+	const char* const kTestPath = "Data\\test.csv";
 }
 
 SceneTest::SceneTest() :
@@ -124,7 +127,6 @@ void SceneTest::Init() {
 	m_pTileManager->SetPlayer(m_pPlayer);
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pItemCursor->Init();
-
 
 
 	// フェード処理開始
@@ -233,13 +235,9 @@ void SceneTest::Draw() {
 	// アイテムスロットの更新処理
 	m_pItemCursor->Draw();
 
-	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kSize, kThickness);
+	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 	printfDx("randomID : %d\n", randomID);
 	BlendManager::GetInstnce().Debug();
-	// ビルボードの描画
-	// ビルボードで描画する座標を用意
-	Vector3 billboardTarget = Vector3(400.0f, 50.0f, -400.0f);
-
 }
 
 void SceneTest::DrawGround()

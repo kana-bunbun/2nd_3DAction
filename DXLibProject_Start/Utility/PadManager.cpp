@@ -70,6 +70,7 @@ void PadManager::ChangePadState(const PadState& padState)
 		
 		if (m_pItemCursor) {
 			m_pItemCursor->SetPad(Input::Pad::P1);
+		m_pItemCursor->SetIsBlendMenu(false);
 		}
 		if (m_pTileManager)
 			m_pTileManager->SetPad(Input::Pad::P1);

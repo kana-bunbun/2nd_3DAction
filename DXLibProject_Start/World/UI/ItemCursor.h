@@ -45,13 +45,16 @@ public:
 
 	// アイテムを選択する関数
 	void Select();
+	// カーソルがあっているスロットの選択状況を変更する関数
 	void ChangeSelectFlag(size_t index);
+	// キャンセルする関数
+	void Cancel();
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 private:
-	bool BlendItem(const BlendManager::Type& base, const BlendManager::Type& add);
+	bool BlendItem();
 private:
 	// 内部の選択中インデックス
 	int m_selectIndex;
@@ -68,5 +71,8 @@ private:
 	std::array<BlendManager::Type, kSelectMax>m_selected;
 	// アイテム合成メニュ―かどうか
 	bool m_isBlendMenu;
+
+	float m_holdLeftCount;
+	float m_holdRightCount;
 };
 
