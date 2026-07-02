@@ -3,6 +3,8 @@
 #include<vector>
 #include<string>
 #include<unordered_map>
+
+#include"CsvConvert.h"
 /// <summary>
 /// 外部データに関する処理
 /// </summary>
@@ -26,6 +28,31 @@ namespace Data
 	/// CSVデータに関する処理
 	/// </summary>
 	namespace Csv {
+
+		// エイリアスの作成
+
+		// エイリアスの作成とは、既存の型に対して新しい名前を付けること
+		// 複雑な糧に安易な名前をつけることで可読性を向上させるために使用することが一般的
+		// 構文
+		// using 新しい方の名前 = 既存の型名
+
+		// CSVで取り込んだ際の全体のデータ(生データ)
+		// 読み込んだ型は文字列、データ量が不定であるため可変長配列で受け取る
+
+		// 今回はvectorの2次元配列にTableという名前を付けている
+		using Table = std::vector <std::vector<std::string>>;
+
+		// CSVをそのまま読み込む
+		// データの中身は気にせず読み込む
+		Table LoadRawCSV(const std::string& path);
+
+		// 1行分の文字列を指定した文字で分割する
+		// 分割した文字列を返す
+		std::vector<std::string>Split(const std::string& str, char separate = ',');
+		/// <summary>
+		/// 読み込んだデータをint型に変更する
+		/// </summary>
+		std::vector<std::vector<int>>TiIntTable(const Table& table);
 
 	}
 
