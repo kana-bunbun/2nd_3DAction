@@ -2,6 +2,7 @@
 #include<math.h>
 #include"Input.h"
 #include"MyMath.h"
+#include"../System/TimeManager.h"
 //#include<vector>
 
 // 無名名前空間
@@ -32,7 +33,9 @@ namespace {
 
 	// 入力情報
 	tagXINPUT_STATE ButtonsLog[kPadNum][kLogNum];
-
+	constexpr int kButtonNum = 16;
+	// 長押し情報
+	float HoldLog[kPadNum][kButtonNum];
 	/// <summary>
 	/// 接続されているコントローラーの数
 	/// </summary>
@@ -49,7 +52,11 @@ namespace Input {
 	{
 		// コントローラーの数を取得
 		padNum = GetJoypadNum();
-
+		for (int i = 0; i < kPadNum; i++) {
+			for (int j = 0; j < kButtonNum; j++) {
+				HoldLog[i][j] = 0.0f;
+			}
+		}
 	
 	}
 
@@ -83,6 +90,15 @@ namespace Input {
 			}
 			// コントローラーの入力状況を保存
 			GetJoypadXInputState(pad, &ButtonsLog[i][0]);
+			for (int button=0; button < kButtonNum; button++) {
+				Input::Button buttonIndex = static_cast<Input::Button>(button);
+				if (IsDown(buttonIndex, static_cast<Input::Pad>(i))) {
+					HoldLog[i][button] += TimeManager::GetDeltaTime();
+				}
+				else {
+					HoldLog[i][button] = 0.0f;
+				}
+			}
 		}
 
 	}
@@ -150,21 +166,15 @@ namespace Input {
 	}
 
 	// 長押しを判定する関数
-	bool Hold(Button key, const Pad padNum) {
-
-		for (int i = 0; i < HoldTime; i++) {
-			// 押してたらスキップ
-			if (ButtonsLog[static_cast<int>(padNum)][i].Buttons[static_cast<int>(key)])continue;
-			// 長押ししていない判定
-			return false;
-		}
-
+	bool Hold(Input::Button key, const Pad padNum, float holdCount)
+	{
+		bool result = HoldLog[static_cast<int>(padNum)][static_cast<int>(key)] >= holdCount;
 		// 長押ししている判定
-		return true;
+		return result;
 	}
 
-	// コントローラーのアナログのレバー入力を調べる
 
+	// コントローラーのアナログのレバー入力を調べる
 	// レバーの角度
 	float AnalogAngle(Input::Joystick stick, const Pad padNum) {
 		int Stick = static_cast<int>(stick);

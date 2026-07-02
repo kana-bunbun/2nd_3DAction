@@ -75,7 +75,8 @@ namespace Input {
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 長押しされていたらtrue</returns>
-	bool Hold(Input::Button key, const Pad padNum);
+	constexpr float kHoldCount = 0.3f;
+	bool Hold(Input::Button key, const Pad padNum,float holdCount=kHoldCount);
 
 	/// <summary>
 	/// アナログレバーの入力角度を調べる
