@@ -7,7 +7,9 @@
 #include "../../Utility/MyRandom.h"
 CharacterManager::CharacterManager():
 	m_pGameObjectManager(nullptr),
-	m_characters()
+	m_characters(),
+	m_pPlayer(nullptr),
+	m_pDragon(nullptr)
 {
 	m_characters.clear();
 }
@@ -30,8 +32,8 @@ void CharacterManager::SetRandomPos()
 	// 部屋マスのIDの配列を取得
 	std::vector<int>rooms = MapCreate::GetInstance().GetRooms();
 
-	GameObject* pDragon = m_pGameObjectManager->FindObject<Dragon>();
-	GameObject* pPlayer = m_pGameObjectManager->FindObject<Player>();
+	m_pDragon = m_pGameObjectManager->FindObject<Dragon>();
+	m_pPlayer = m_pGameObjectManager->FindObject<Player>();
 	Vector3 playerPos = Vector3::zero;
 	for (auto& character : m_characters) {
 		// 部屋マスの配列のインデックスをランダムで取得
@@ -44,8 +46,14 @@ void CharacterManager::SetRandomPos()
 		rooms.erase(rooms.begin() + roomID);
 
 		// プレイヤーの場合、生成座標を保持しておく
-		if (character!=pPlayer)continue;
+		if (character!=m_pPlayer)continue;
 		playerPos = randomPos;
 	}
-	pDragon->SetPosition(playerPos);
+	m_pDragon->SetPosition(playerPos);
+}
+
+void CharacterManager::SetPad(Input::Pad pad)
+{
+	if (m_pPlayer)
+		m_pPlayer->SetPad(pad);
 }

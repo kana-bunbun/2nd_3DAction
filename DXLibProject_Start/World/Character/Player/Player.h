@@ -84,8 +84,9 @@ public:
 	void SetBarrier(Barrier* barrier);
 	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
 	 bool GetIsGround()const { return m_isGroud; }
-	Input::Pad m_pad;
+	 void SetPad(Input::Pad pad) { m_pad = pad; }
 private:
+	Input::Pad m_pad;
 	/// <summary>
 	/// アニメーションの管理を行う
 	/// </summary>

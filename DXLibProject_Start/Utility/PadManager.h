@@ -1,5 +1,5 @@
 #pragma once
-class Player;
+class CharacterManager;
 class ItemCursor;
 class TileManager;
 
@@ -28,12 +28,12 @@ public:
 	void ChangePadState(const PadState& padState);
 
 public:
-	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
+	void SetCharacterManager(CharacterManager* pCharacterManager) { m_pCharacterManager = pCharacterManager; }
 	void SetItemCursor(ItemCursor* pItemCursor) { m_pItemCursor = pItemCursor; }
 	void SetTileManager(TileManager* pTileManager) { m_pTileManager = pTileManager; }
 	const PadState& GetPadState() { return m_padState; }
 private:
-	Player* m_pPlayer;
+	CharacterManager* m_pCharacterManager;
 	ItemCursor* m_pItemCursor;
 	TileManager* m_pTileManager;
 	PadState m_padState;

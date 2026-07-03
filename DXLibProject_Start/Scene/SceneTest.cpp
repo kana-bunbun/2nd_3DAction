@@ -97,6 +97,8 @@ SceneTest::SceneTest() :
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>();
 
 	m_pItemCursor = std::make_unique<ItemCursor>();
+
+	obj = m_pGameObjectManager->FindObject<Enemy>();
 }
 
 SceneTest::~SceneTest() {}
@@ -113,14 +115,14 @@ void SceneTest::Init() {
 	SoundManager::GetInstance().LoadSe();
 
 	m_pGameObjectManager->Init();
-	m_pDragon->SetPlayer(m_pPlayer);
+	m_pDragon->SetMaster(m_pPlayer);
 	m_pPlayer->SetBarrier(m_pBarrier);
 	m_pUiManager->SetPlayer(m_pPlayer);
 	m_pUiManager->SetDragon(m_pDragon);
 	m_pGaugeManager->Init();
 	m_pGaugeManager->SetPlayer(m_pPlayer);
 	m_pGaugeManager->SetDragon(m_pDragon);
-	m_pPadManager->SetPlayer(m_pPlayer);
+	m_pPadManager->SetCharacterManager(m_pCharacterManager.get());
 	m_pPadManager->SetItemCursor(m_pItemCursor.get());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
@@ -128,6 +130,7 @@ void SceneTest::Init() {
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pItemCursor->Init();
 
+	m_pDragon->SetTarget(obj);
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
@@ -178,13 +181,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	//m_pPlayer->ResolveCollision(*m_pBee, result);
 
 
-	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
-		if (Input::IsDown(Input::Button::LT, Input::Pad::P1)) {
-		//m_pDragon->Call(m_pGameObjectManager->FindObject<Enemy>());
-		}
-	else
-		m_pDragon->CallBack();
-	}
 	// カメラ切り替え処理
 	//if (Input::IsPressed(Input::Button::RThumb, Input::Pad::P1)) {
 	//	m_pCameraMgr->NextCamera();

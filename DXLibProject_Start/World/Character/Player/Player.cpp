@@ -214,7 +214,7 @@ void Player::Update(float deltaTime)
 	if(m_status!=Status::Player::Parry)
 	m_gauges[GaugeType::MP]->Increase(deltaTime);
 
-	m_animation.Debug();
+	//m_animation.Debug();
 }
 
 void Player::UpdateAction()
@@ -316,9 +316,9 @@ void Player::UpdateTransform(float deltaTime)
 	Transform transform = m_move.GetTransform();
 	// 座標更新
 	m_transform = transform;
-	//SetPosition(transform.position);
-	printfDx("m_transform position\n");
-	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
+	SetPosition(transform.position);
+	/*printfDx("m_transform position\n");
+	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);*/
 }
 
 void Player::UpdateAnimation(float deltaTime)
@@ -423,9 +423,9 @@ void Player::SetCameraAngle(const Vector3& position)
 	rotate.z = 0;
 	rotate.y = -atan2(vec.z, vec.x) - DX_PI_F * 0.5f;
 	rotate.x = CameraRotaY();
-	printfDx("rotation.x : %d\n", static_cast<int>(rotate.x * MyMath::ToDegree));
-	printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
-	printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
+	//printfDx("rotation.x : %d\n", static_cast<int>(rotate.x * MyMath::ToDegree));
+	//printfDx("rotation.y : %d\n", static_cast<int>(rotate.y * MyMath::ToDegree));
+	//printfDx("rotation.z : %d\n", static_cast<int>(rotate.z * MyMath::ToDegree));
 	//m_pCamera->SetCameraAngle(rotate);
 }
 
@@ -466,6 +466,10 @@ void Player::SetPosition(const Vector3& pos)
 
 	for (auto& collision : m_collisions) {
 		collision.shape->SetPosition(m_transform.position);
+	}
+	// バリアの座標を設定
+	if (m_pBarrier) {
+		m_pBarrier->SetPosition(m_transform.position);
 	}
 }
 

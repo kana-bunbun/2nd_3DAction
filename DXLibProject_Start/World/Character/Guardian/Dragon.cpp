@@ -70,6 +70,7 @@ namespace {
 
 	// 移動速度の減衰量
 	constexpr float kAttenuationSpeed = 55;
+	constexpr float kAttenuationMax = 0.9f;
 
 	// 攻撃開始カウント
 	constexpr float kAttackStartCount = 12.0f;
@@ -85,14 +86,15 @@ Dragon::Dragon() :
 	m_status(Status::Dragon::Neutral),
 	m_animHandle(),
 	m_pTarget(nullptr),
-	m_pPlayer(nullptr),
+	m_pMaster(nullptr),
 	m_followState(FollowState::Normal),
 	m_move(),
 	m_attack(),
 	m_attackFlag(false),
 	m_canAttackFlag(false),
 	m_speed(),
-	m_breath()
+	m_breath(),
+	m_pad(Input::Pad::Invalid)
 {
 	m_transform.Reset();
 
@@ -143,9 +145,9 @@ Dragon::~Dragon()
 	for (int& anim : m_animHandle)
 		MV1DeleteModel(anim);
 	// ポインタの破棄
-	if (m_pPlayer) {
-		m_pPlayer = nullptr;
-		delete m_pPlayer;
+	if (m_pMaster) {
+		m_pMaster = nullptr;
+		delete m_pMaster;
 	}
 }
 
@@ -170,7 +172,8 @@ void Dragon::Update(float deltaTime)
 {
 	// アクティブ状態でない時実行しない
 	if (!m_isActive)return;
-
+	// 入力による更新処理
+	UpdateFromInput();
 
 	// アニメーション速度を初期化
 	m_animation.SetAnimSpeed();
@@ -202,15 +205,28 @@ void Dragon::Update(float deltaTime)
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
 
-		m_gauge->Clamp();
-		printfDx("Dゲージ量 : %f\n", m_gauge->GetValue());
-		printfDx("Dゲージ最大量 : %f\n", m_gauge->GetMax());
-		printfDx("Dゲージ割合 : %f\n", m_gauge->GetRate());
-	
-		for (auto& breath : m_breath) {
-			breath->Update(deltaTime);
-			breath->Draw();
+	m_gauge->Clamp();
+
+	for (auto& breath : m_breath) {
+		breath->Update(deltaTime);
+		breath->Draw();
+	}
+	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
+	printfDx("m_speed : %f\n", m_speed);
+
+	//DrawSphere3D(m_transform.position.ToVECTOR(), 500, 10, 0xff0000, 0xff0000, TRUE);
+}
+
+void Dragon::UpdateFromInput()
+{
+
+	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
+		if (Input::IsDown(Input::Button::LT, Input::Pad::P1)) {
+			Call();
 		}
+		else
+			CallBack();
+	}
 }
 
 void Dragon::FollowUpdate(float deltaTime)
@@ -249,7 +265,7 @@ void Dragon::AttackUpdate(float deltaTime)
 	// 角度の補間速度を設定
 	m_move.SetLerpSpeed(kLerpRad);
 	// 移動速度の減衰
-	m_speed *= kAttenuationSpeed*deltaTime;
+	m_speed *= MyMath::Clamp(kAttenuationSpeed * deltaTime,0.0f,1.0f);
 	// 移動速度を設定
 	m_move.SetSpeed(m_speed);
 
@@ -258,11 +274,12 @@ void Dragon::AttackUpdate(float deltaTime)
 void Dragon::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {}
 
-void Dragon::Call(GameObject* target)
+void Dragon::Call()
 {
+	if (!m_target)return;
 
 	m_followState = FollowState::Attack;
-	m_pTarget = target;
+	m_pTarget = m_target;
 }
 
 void Dragon::CallBack()
@@ -272,7 +289,7 @@ void Dragon::CallBack()
 
 Vector3 Dragon::CheckFollowOffset()
 {
-	Transform targetTransform = m_pPlayer->GetTransform();
+	Transform targetTransform = m_pMaster->GetTransform();
 	Vector3 OffsetLeft = Vector3::zero;
 	Vector3 OffsetRight = Vector3::zero;
 	Vector3 myPos = m_transform.position-kPosOffset;
@@ -291,7 +308,7 @@ Vector3 Dragon::CheckFollowOffset()
 
 	float distanceRight = (myPos - OffsetRight).GetSqLength();
 	float distanceLeft = (myPos - OffsetLeft).GetSqLength();
-	float distancePlayer = (myPos - m_pPlayer->GetTransform().position).GetSqLength();
+	float distancePlayer = (myPos - m_pMaster->GetTransform().position).GetSqLength();
 
 	float resultDistance = distanceRight;
 	Vector3  result= OffsetRight;
@@ -320,11 +337,11 @@ void Dragon::SetPosition(const Vector3& pos)
 
 void Dragon::FollowPlayer()
 {
-	assert(m_pPlayer);
+	assert(m_pMaster);
 	Vector3 myPos = m_transform.position;
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
-	Vector3  distancePlayer = myPos - m_pPlayer->GetTransform().position;
+	Vector3  distancePlayer = myPos - m_pMaster->GetTransform().position;
 	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.3f;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
@@ -351,8 +368,8 @@ void Dragon::FollowTarget(float deltaTime)
 	Vector3 myPos = m_transform.position- kPosOffset;
 	Vector3  distance = myPos - m_pTarget->GetTransform().position;
 	float angle = atan2(distance.x, distance.z);
-
-	m_speed *= kAttenuationSpeed*deltaTime;
+	float speed = kAttenuationSpeed * deltaTime - 0.3f;
+	m_speed *= MyMath::Clamp(speed,0.0f, kAttenuationMax);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
 		m_speed = distance.GetSqLength() * kFollowSqLengthRate;

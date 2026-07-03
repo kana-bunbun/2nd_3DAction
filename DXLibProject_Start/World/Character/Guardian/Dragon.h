@@ -5,6 +5,7 @@
 #include"DragonAttack.h"
 #include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
+#include"../../../Utility/Input.h"
 #include<array>
 namespace {
 	enum FollowState {
@@ -24,6 +25,7 @@ public:
 
 	void Init()override;
 	void Update(float deltaTime)override;
+	void UpdateFromInput();
 	/// <summary>
 	/// 追従時の更新処理
 	/// </summary>
@@ -39,16 +41,22 @@ public:
 		const Collision::Result& result
 	);
 	/// <summary>
-	/// ターゲットを設定して追いかける処理
+	/// ターゲットを追いかける処理
 	/// </summary>
-	/// <param name="target"></param>
-	void Call(GameObject* target);
+	void Call();
+	/// <summary>
+	/// マスターの元へ戻る
+	/// </summary>
 	void CallBack();
-	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
+	/// <summary>
+	/// マスターを設定
+	/// </summary>
+	void SetMaster(GameObject* pMaster) { m_pMaster = pMaster; }
 	Vector3 CheckFollowOffset();
 	std::shared_ptr<Gauge> GetGauge() { return m_gauge; }
 	void SetPosition(const Vector3& pos)override;
-
+	void SetPad(Input::Pad pad) { m_pad = pad; }
+	void SetTarget(GameObject* target) { m_target = target; }
 private:
 	void FollowPlayer();
 	void FollowTarget(float deltaTime);
@@ -81,7 +89,7 @@ private:
 	/// </summary>
 	int m_animHandle[static_cast<int>(Status::Dragon::Max)];
 	GameObject* m_pTarget;
-	Player* m_pPlayer;
+	GameObject* m_pMaster;
 	FollowState m_followState;
 	CharacterMove m_move;
 	DragonAttack m_attack;
@@ -92,5 +100,8 @@ private:
 
 	std::array<std::unique_ptr<DragonBreath>, kBleathCount> m_breath;
 
+	Input::Pad m_pad;
+
+	GameObject* m_target;
 };
 

@@ -31,6 +31,7 @@ class FloorBlock;
 class ItemCursor;
 class PadManager;
 class GameObjectManager;
+class GameObject;
 //
 //namespace Collision {
 //	class AABB;
@@ -121,4 +122,6 @@ private:
 	std::unique_ptr<PadManager> m_pPadManager;
 	std::unique_ptr<CharacterManager> m_pCharacterManager;
 	int randomID;
+	GameObject* obj;
+
 };

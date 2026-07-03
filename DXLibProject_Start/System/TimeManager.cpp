@@ -51,8 +51,10 @@ void TimeManager::Update()
 	// 経過時間を1秒に変換
 	float deltaTime = differ * kCountPerSecond;
 	// デバッグ等の確認環境による異常値を制限
-	if (deltaTime > kMaxDeltaTime)
+	if (deltaTime > kMaxDeltaTime) {
+
 		deltaTime = kMaxDeltaTime;
+	}
 	// 時間倍率適応前に更新
 	m_rawdeltaTime = deltaTime;
 	m_deltaTime = deltaTime* m_timeScale;

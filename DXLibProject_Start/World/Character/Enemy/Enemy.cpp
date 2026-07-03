@@ -118,9 +118,9 @@ void Enemy::Update(float deltaTime)
 	UpdateAnimation(deltaTime);
 
 	m_animation.Update(deltaTime);
-	printfDx("Queen\n");
-	printfDx("status : %d\n",m_status);
-	m_animation.Debug();
+	//printfDx("Queen\n");
+	//printfDx("status : %d\n",m_status);
+	//m_animation.Debug();
 }
 
 void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

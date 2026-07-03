@@ -42,10 +42,10 @@ void FollowCamera::Update(float deltaTime)
     UpdateDistance(deltaTime);
     UpdateAngle(deltaTime);
     UpdatePosition(deltaTime);
-    printfDx("/////transform/////\n");
-    printfDx("rotation  X : %f\n",m_transform.rotation.x * MyMath::ToDegree);
-    printfDx("rotation  Y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
-    printfDx("rotation  Z : %f\n", m_transform.rotation.z * MyMath::ToDegree);
+    //printfDx("/////transform/////\n");
+    //printfDx("rotation  X : %f\n",m_transform.rotation.x * MyMath::ToDegree);
+    //printfDx("rotation  Y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
+    //printfDx("rotation  Z : %f\n", m_transform.rotation.z * MyMath::ToDegree);
 }
 
 Camera::CameraView FollowCamera::GetView() const

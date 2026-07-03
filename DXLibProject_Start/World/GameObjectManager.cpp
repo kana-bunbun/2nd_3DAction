@@ -179,7 +179,7 @@ void GameObjectManager::Clear()
 	m_destrpyObjects.clear();
 }
 
-void GameObjectManager::DestroObject(GameObject* obj)
+void GameObjectManager::DestroyObject(GameObject* obj)
 {
 	if (!obj)return;
 	m_destrpyObjects.push_back(obj);

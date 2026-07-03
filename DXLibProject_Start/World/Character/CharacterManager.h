@@ -3,7 +3,10 @@
 #include<vector>
 #include"../GameObject.h"
 #include"../GameObjectManager.h"
+#include"../../Utility/Input.h"
 class Character;
+class Player;
+class Dragon;
 class CharacterManager
 {
 public:
@@ -11,13 +14,17 @@ public:
 	~CharacterManager();
 	void Init();
 	void SetRandomPos();
+	void SetPad(Input::Pad pad);
 
 public:
 	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
-	//const std::vector<Character*> GetCharacters() { return m_characters; }
 private:
 	// GameObjectのマネージャー
 	GameObjectManager* m_pGameObjectManager;
 	// キャラクターの配列
 	std::vector<Character*> m_characters;
+	// プレイヤーのポインタ
+	Player* m_pPlayer;
+	// ドラゴンのポインタ
+	Dragon* m_pDragon;
 };
