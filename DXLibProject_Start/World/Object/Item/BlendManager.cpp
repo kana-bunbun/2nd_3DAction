@@ -41,7 +41,7 @@ BlendManager::~BlendManager()
 const BlendManager::Type& BlendManager::Blend(const BlendManager::Type& base, const BlendManager::Type& add)
 {
 	if (static_cast<int>(base) < 0 || static_cast<int>(base) > static_cast<int>(BlendManager::Type::Max))return BlendManager::Type::Invalid;
-	if (static_cast<int>(base) < 0 || static_cast<int>(base) > static_cast<int>(BlendManager::Type::Max))return BlendManager::Type::Invalid;
+	if (static_cast<int>(add) < 0 || static_cast<int>(add) > static_cast<int>(BlendManager::Type::Max))return BlendManager::Type::Invalid;
 	int castValue = ItemRecipe[static_cast<int>(base)][static_cast<int>(add)];
 	if (castValue<0 || castValue>kTypeMax)return BlendManager::Type::Invalid;
 		BlendManager::Type result = static_cast<BlendManager::Type>(castValue);
@@ -53,8 +53,8 @@ const BlendManager::Type& BlendManager::Blend(const BlendManager::Type& base, co
 void BlendManager::Debug()
 {
 	for (int i = 0; i < kTypeMax; i++) {
-		for (int j = 0; j < kTypeMax; j++) {
 			BlendManager::Type base = static_cast<BlendManager::Type>(i);
+		for (int j = 0; j < kTypeMax; j++) {
 			BlendManager::Type add = static_cast<BlendManager::Type>(j);
 			BlendManager::Type result = Blend(base, add);
 

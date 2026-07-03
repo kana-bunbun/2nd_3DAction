@@ -1,6 +1,6 @@
-﻿,Apple,,,Beer,,,Bread,,,Cheese,,,CheeseBread
-Apple,Apple,,Apple,Apple,,Apple,Bread,,Apple,Apple,,Apple,Beer
-Beer,Apple,,Beer,Apple,,Beer,Bread,,Beer,Apple,,Beer,Beer
-Bread,Apple,,Bread,Apple,,Bread,Bread,,Bread,Apple,,Bread,Beer
-Cheese,Apple,,Cheese,Apple,,Cheese,Bread,,Cheese,Apple,,Cheese,Beer
-CheeseBread,Apple,,CheeseBread,Apple,,CheeseBread,Bread,,CheeseBread,Apple,,CheeseBread,Beer
+,Apple,,,Beer,,,Bread,,,Cheese,,,CheeseBread
+Apple,Beer,,Apple,Apple,,Apple,Bread,,Apple,CheeseBread,,Apple,Cheese
+Beer,Beer,,Beer,Apple,,Beer,Bread,,Beer,CheeseBread,,Beer,Cheese
+Bread,Beer,,Bread,Apple,,Bread,Bread,,Bread,CheeseBread,,Bread,Cheese
+Cheese,Beer,,Cheese,Apple,,Cheese,Bread,,Cheese,CheeseBread,,Cheese,Cheese
+CheeseBread,Beer,,CheeseBread,Apple,,CheeseBread,Bread,,CheeseBread,CheeseBread,,CheeseBread,Cheese

@@ -273,8 +273,12 @@ bool ItemCursor::SubItem(const BlendManager::Type& type)
 	// そのアイテムをすでに所持しているときは所持数を減らす
 	for (int i = 0; i < m_slots.size(); i++) {
 		if (m_slots[i]->m_type != type)continue;
-		// 所持数に加算
+		// 所持数を減らす
 		m_slots[i]->Sub();
+
+		if (m_slots[i]->GetHoldNum() <= 0) {
+			Cancel(type);
+		}
 		// 減少できたのでtrue
 		return true;
 	}
@@ -330,12 +334,21 @@ void ItemCursor::Cancel()
 	}
 }
 
+void ItemCursor::Cancel(const BlendManager::Type& type)
+{
+	for (auto& select : m_selected) {
+		if (select != type)continue;
+		select = BlendManager::Type::Invalid;
+		return;
+	}
+}
+
 bool ItemCursor::BlendItem()
 {
 	BlendManager::Type blendResult = BlendManager::GetInstnce().Blend(m_selected[0], m_selected[1]);
 	// 合成結果が不正値なら処理しない
 	if (blendResult == BlendManager::Type::Invalid) {
-
+		Cancel();
 		m_selected.fill(BlendManager::Type::Invalid);
 		return false;
 	}

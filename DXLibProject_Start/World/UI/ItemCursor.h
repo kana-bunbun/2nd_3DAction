@@ -49,6 +49,7 @@ public:
 	void ChangeSelectFlag(size_t index);
 	// キャンセルする関数
 	void Cancel();
+	void Cancel(const BlendManager::Type& type);
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
