@@ -6,7 +6,6 @@
 #include"../../Utility/Game.h"
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
-#include"../Character/Player/Player.h"
 #include"../Character/CharacterManager.h"
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"

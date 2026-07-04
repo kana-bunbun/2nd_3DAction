@@ -1,5 +1,6 @@
 #include "GameObjectManager.h"
 #include"Object/Barrier.h"
+#include"Character/Character.h"
 #include<memory>
 #include<vector>
 
@@ -216,6 +217,17 @@ void GameObjectManager::ProcessDestroy()
 
 	// 削除対応が終わったので削除予定リストをクリア
 	m_destrpyObjects.clear();
+}
+
+void GameObjectManager::StrageObject(GameObject* obj)
+{
+	// キャラクタークラスにキャストができたら
+	Character* castToCharacter = dynamic_cast<Character*>(obj);
+	if (castToCharacter) {
+		// キャラクタークラスの配列に追加
+		m_characters.push_back(castToCharacter);
+		return;
+	}
 }
 
 const std::vector<std::unique_ptr<GameObject>>& GameObjectManager::GetObjects() const
