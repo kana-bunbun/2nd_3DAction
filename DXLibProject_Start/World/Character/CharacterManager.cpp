@@ -28,7 +28,7 @@ void CharacterManager::SetRandomPos()
 {
 	//m_characters.clear();
 	// キャラクターの配列を取得
-	m_characters = m_pGameObjectManager->FindObjects<Character>();
+	m_characters = m_pGameObjectManager->GetCharacters();
 	// 部屋マスのIDの配列を取得
 	std::vector<int>rooms = MapCreate::GetInstance().GetRooms();
 

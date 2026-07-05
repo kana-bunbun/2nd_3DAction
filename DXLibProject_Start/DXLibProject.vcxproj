@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Object\Item\ItemManager.cpp" />
+    <ClCompile Include="World\Object\Item\ItemObjectManager.cpp" />
+    <ClCompile Include="World\Object\Item\ItemObject.cpp" />
+    <ClCompile Include="World\Object\Item\HealBottle.cpp" />
     <ClCompile Include="Utility\CsvConvert.cpp" />
     <ClCompile Include="World\Character\Character.cpp" />
     <ClCompile Include="World\Character\CharacterManager.cpp" />
@@ -216,6 +220,7 @@
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_MetallicSmoothness.tga" />
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png" />
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png" />
+    <Image Include="Resource\Item\props_base_color.png" />
     <Image Include="Resource\main.png" />
     <Image Include="Resource\title.jpeg" />
     <Image Include="Resource\UI\BillboardText_Stair.png" />
@@ -243,6 +248,10 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\Object\Item\ItemManager.h" />
+    <ClInclude Include="World\Object\Item\ItemObjectManager.h" />
+    <ClInclude Include="World\Object\Item\ItemObject.h" />
+    <ClInclude Include="World\Object\Item\HealBottle.h" />
     <ClInclude Include="Utility\CsvConvert.h" />
     <ClInclude Include="World\Character\Character.h" />
     <ClInclude Include="World\Character\CharacterManager.h" />
@@ -367,6 +376,9 @@
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Normal.png.meta" />
     <None Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png.meta" />
     <None Include="Resource\Graph\HPGauge.psd" />
+    <None Include="Resource\Item\bottlePotionHealth.mv1" />
+    <None Include="Resource\Item\bottlePotionMana.mv1" />
+    <None Include="Resource\Item\bottlePotionPoison.mv1" />
     <None Include="Resource\Map\floor.fbx" />
     <None Include="Resource\Map\wall.fbx" />
     <None Include="Resource\UI\HPFrame.psd" />
@@ -381,6 +393,7 @@
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />
     <Text Include="Resource\Enemy\Queen\Log.txt" />
+    <Text Include="Resource\Item\Log.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,10 +28,10 @@ class Barrier;
 class UIManager;
 class TileManager;
 class FloorBlock;
-class ItemCursor;
 class PadManager;
 class GameObjectManager;
 class GameObject;
+class ItemManager;
 //
 //namespace Collision {
 //	class AABB;
@@ -118,9 +118,9 @@ private:
 	std::unique_ptr<UIManager> m_pUiManager;
 
 	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<ItemCursor> m_pItemCursor;
 	std::unique_ptr<PadManager> m_pPadManager;
 	std::unique_ptr<CharacterManager> m_pCharacterManager;
+	std::unique_ptr<ItemManager> m_pItemManager;
 	GameObject* obj;
 
 };

@@ -23,13 +23,14 @@
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
-#include"../World/UI/ItemCursor.h"
 #include"../World/Character/CharaGaugeManager.h"
 #include"../World/Map/TileManager.h"
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
 #include"../World/Object/FloorBlock.h"
 #include"../World/Object/Item/BlendManager.h"
+#include"../World/Object/Item/ItemManager.h"
+#include"../World/Object/Item/ItemObjectManager.h"
 #include"../world/GameObjectManager.h"
 #include<cassert>
 #include<memory>
@@ -62,9 +63,9 @@ SceneTest::SceneTest() :
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
 	m_pUiManager(nullptr),
-	m_pItemCursor(nullptr),
 	m_pPadManager(nullptr),
 	m_pCharacterManager(nullptr),
+	m_pItemManager(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -94,9 +95,10 @@ SceneTest::SceneTest() :
 	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
 	m_pTileManager->SetCharacterManager(m_pCharacterManager.get());
 	m_pCharacterManager->SetGameObjectManager(m_pGameObjectManager.get());
+	m_pItemManager = std::make_unique<ItemManager>();
+	m_pItemManager->SetGameObjectManager(m_pGameObjectManager.get());
 	m_pPlayer = m_pGameObjectManager->CreateObject<Player>();
 
-	m_pItemCursor = std::make_unique<ItemCursor>();
 
 	obj = m_pGameObjectManager->FindObject<Enemy>();
 }
@@ -123,12 +125,11 @@ void SceneTest::Init() {
 	m_pGaugeManager->SetPlayer(m_pPlayer);
 	m_pGaugeManager->SetDragon(m_pDragon);
 	m_pPadManager->SetCharacterManager(m_pCharacterManager.get());
-	m_pPadManager->SetItemCursor(m_pItemCursor.get());
+	m_pPadManager->SetItemCursor(m_pItemManager->GetItemCursor());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
 	m_pTileManager->SetPlayer(m_pPlayer);
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	m_pItemCursor->Init();
 
 	m_pDragon->SetTarget(obj);
 
@@ -156,8 +157,7 @@ void SceneTest::End() {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->End();
 	}
-
-	m_pItemCursor->End();
+	m_pItemManager->End();
 	m_pPadManager->End();
 
 }
@@ -171,7 +171,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	if (m_pGameObjectManager) {
 		m_pGameObjectManager->Update(deltaTime);
 	}
-	m_pItemCursor->Update();
+	m_pItemManager->Update();
 	m_pPadManager->Update();
 
 	m_pGameObjectManager->CheckCollision();
@@ -228,8 +228,7 @@ void SceneTest::Draw() {
 	}
 	// ゲージ関連の描画処理
 	m_pUiManager->Draw();
-	// アイテムスロットの更新処理
-	m_pItemCursor->Draw();
+
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 	BlendManager::GetInstnce().Debug();

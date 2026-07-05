@@ -124,9 +124,9 @@ void TileManager::SetUpFloor()
 void TileManager::Update(float deltaTime)
 {
 	// マップの描画処理
-	for (auto& tile : m_pTiles) {
-		//tile->Update(deltaTime);
-	}
+	//for (auto& tile : m_pTiles) {
+	//	tile->Update(deltaTime);
+	//}
 
 
 	if (Input::IsPressed(Input::Button::B, m_pad)) {

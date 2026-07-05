@@ -6,6 +6,9 @@
 #include"../../Utility/Color.h"
 #include"../../System/TimeManager.h"
 #include"../Object/Item/BlendManager.h"
+#include"../Character/Player/Player.h"
+#include"../Object/Item/ItemObjectManager.h"
+#include"../Object/Item/HealBottle.h"
 #include"ItemSlot.h"
 #include<string>
 #include<array>
@@ -51,7 +54,9 @@ ItemCursor::ItemCursor():
 	m_pad(Input::Pad::Invalid),
 	m_isBlendMenu(false),
 	m_holdLeftCount(0.0f),
-	m_holdRightCount(0.0f)
+	m_holdRightCount(0.0f),
+	m_pPlayer(nullptr),
+	m_pItemObjectManager(nullptr)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 	m_slots.fill(nullptr);
@@ -145,7 +150,7 @@ void ItemCursor::UpdateToInput()
 	// メニュー選択状態でなければ
 	if (!m_isBlendMenu) {
 		if (Input::IsPressed(Input::Button::X, m_pad)) {
-			m_slots[m_selectIndex]->Sub();
+			UseItem();
 		}
 		return;
 	}
@@ -186,19 +191,22 @@ void ItemCursor::NormalizeIndex()
 
 void ItemCursor::UseItem()
 {
-	std::vector<int> selected;
-	// 選択中のアイテムの配列を取得
-	for (int i = 0; i < m_slots.size();i++) {
-		if (m_slots[i]->m_type == BlendManager::Type::Invalid)continue;
-		if (!m_slots[i]->m_select)continue;
-		if (m_slots[i]->GetHoldNum()<=0)continue;
-		selected.push_back(i);
-	}
-	// 何も選択していなければreturn
-	if (selected.empty())return;
-	for (int& select : selected) {
-		m_slots[select]->Sub();
-		m_slots[select]->m_select = false;
+	// 選択中のアイテムを1つ減らす
+	m_slots[m_selectIndex]->Sub();
+	switch (m_slots[m_selectIndex]->m_type)
+	{
+	case BlendManager::Type::Apple:
+	m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		break;
+	case BlendManager::Type::Beer:
+		break;
+	case BlendManager::Type::Bread:
+		break;
+	case BlendManager::Type::Cheese:
+		break;
+	case BlendManager::Type::CheeseBread:
+	default:
+		break;
 	}
 }
 
