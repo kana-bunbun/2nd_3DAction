@@ -98,6 +98,11 @@ public:
 
 	bool IsActive()const { return m_isActive; }
 	void SetActive(const bool active) { m_isActive = active; }
+	/// <summary>
+	/// モデルを透明・半透明にして描画するかどうか
+	/// 派生先のオブジェクトによって是非が変わる
+	/// </summary>
+	/// <returns></returns>
 	virtual bool IsTransparent() { return false; }
 protected:
 	/// <summary>
