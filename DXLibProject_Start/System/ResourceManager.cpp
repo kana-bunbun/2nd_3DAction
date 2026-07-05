@@ -9,6 +9,7 @@ namespace {
 		"Player\\",
 		"Doragon\\",
 		"Enemy\\",
+		"Item\\",
 		"Map\\",
 		"Graph\\",
 		"CSV\\",
