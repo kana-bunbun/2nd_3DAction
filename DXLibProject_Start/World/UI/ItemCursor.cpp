@@ -196,7 +196,8 @@ void ItemCursor::UseItem()
 	switch (m_slots[m_selectIndex]->m_type)
 	{
 	case BlendManager::Type::Apple:
-	m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+	//m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>();
 		break;
 	case BlendManager::Type::Beer:
 		break;

@@ -18,11 +18,14 @@ public:
 	void Draw();
 	// アイテム生成
 	template<class T>
-	T* CreateItem(GameObject* obj);
+	T* CreateItem();
 	// アイテム呼び出し
 	template<class T>
-	T* CallItem(GameObject* obj);
+	void CallItem();
 	void SetupItem(ItemObject* item, GameObject* obj);
+
+	template<class T1,class T2>
+	bool CheckClass(T1* class1, T2 class2);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
 	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
@@ -36,37 +39,42 @@ private:
 };
 
 template<class T>
-inline T* ItemObjectManager::CreateItem(GameObject* obj)
+inline T* ItemObjectManager::CreateItem()
 {
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム生成:アイテムの基底クラスを未継承");
 	// オブジェクト生成
-	auto item = m_pGameObjectManager->CreateObject<T>(obj);
+	auto item = m_pGameObjectManager->CreateObject<T>();
 	return item;
 }
 
 template<class T>
-inline T* ItemObjectManager::CallItem(GameObject* obj)
+inline void ItemObjectManager::CallItem()
 {
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム呼び出し:アイテムの基底クラスを未継承");
-	
 	// 再利用できるオブジェクトを探す
 	for (auto& item : m_items) {
 		// nullチェック
-		if (item)continue;	
+		if (!item)continue;	
 		// アクティブ状態でないオブジェクトを探す
 		if (item->IsActive())continue; 
 		// 同じクラスかどうかチェック
-		if (!dynamic_cast<T>(item))continue;	
+		if (!std::is_same(T,std::type_identity_v))continue;
 		// アイテムのセットアップ
-		SetupItem(item, obj);
-		// アイテムのポインタを返す
-		return item;
+		item->Setup();
+		return;
 	}
 
 	// 再利用できるオブジェクトがなければ
-	auto item = CreateItem<T>(obj);
+	CreateItem<T>();
 
-	return item;
+	return;
+}
+
+template<class T1, class T2>
+inline bool ItemObjectManager::CheckClass(T1* class1, T2 class2)
+{
+
+	return std::is_same<T1,T2>::value;
 }

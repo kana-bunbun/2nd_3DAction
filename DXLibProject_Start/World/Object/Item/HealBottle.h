@@ -17,7 +17,7 @@ public:
 		const Collision::Result& result
 	)override;
 
-	virtual bool IsTransparent() { return true; }
+	bool IsTransparent()override { return true; }
 
 };
 
