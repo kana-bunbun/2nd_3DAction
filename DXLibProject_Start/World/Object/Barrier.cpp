@@ -45,8 +45,6 @@ void Barrier::Init()
 
 void Barrier::Update(float deltaTime)
 {
-	// アクティブ状態で時実行しない
-	if (!m_isActive)return;
 
 	m_alpha = CheckAlpha();
 	m_time -= kSpeed * m_speed*deltaTime;

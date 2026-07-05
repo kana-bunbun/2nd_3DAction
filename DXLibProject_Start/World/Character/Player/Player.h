@@ -67,7 +67,7 @@ public:
 		const CollisionData& myData,
 		const CollisionData& otherData,
 		const Collision::Result& result
-	);
+	)override;
 	void SetCameraAngle(const Vector3& position);
 	void UpdateCollision()override;
 	float CameraRotaY();

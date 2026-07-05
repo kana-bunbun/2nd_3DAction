@@ -170,8 +170,7 @@ void Dragon::Init()
 
 void Dragon::Update(float deltaTime)
 {
-	// アクティブ状態でない時実行しない
-	if (!m_isActive)return;
+
 	// 入力による更新処理
 	UpdateFromInput();
 

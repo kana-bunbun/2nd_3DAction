@@ -78,8 +78,6 @@ void Bee::Init()
 
 void Bee::Update(float deltaTime)
 {
-	// アクティブ状態で時実行しない
-	if (!m_isActive)return;
 
 	// アニメーションの更新処理
 	UpdateAnimation(deltaTime);

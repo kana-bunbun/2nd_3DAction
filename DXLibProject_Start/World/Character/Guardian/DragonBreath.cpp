@@ -33,7 +33,6 @@ void DragonBreath::End()
 
 void DragonBreath::Update(float deltaTime)
 {
-	if (!m_isActive)return;
 	m_transform.position += m_moveVec * kMoveSpeed * deltaTime;
 	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
 	m_lifeCount += deltaTime;
@@ -46,6 +45,5 @@ void DragonBreath::Update(float deltaTime)
 
 void DragonBreath::Draw()
 {
-	if (!m_isActive)return;
 	DrawSphere3D(m_transform.position.ToVECTOR(), 30, 10, Color::kMagenta, Color::kMagenta, TRUE);
 }

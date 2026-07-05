@@ -184,8 +184,6 @@ void Player::LoadModel()
 
 void Player::Update(float deltaTime)
 {
-	// アクティブ状態で時実行しない
-	if (!m_isActive)return;
 
 	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
