@@ -121,7 +121,6 @@ private:
 	std::unique_ptr<ItemCursor> m_pItemCursor;
 	std::unique_ptr<PadManager> m_pPadManager;
 	std::unique_ptr<CharacterManager> m_pCharacterManager;
-	int randomID;
 	GameObject* obj;
 
 };

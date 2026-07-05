@@ -232,7 +232,6 @@ void SceneTest::Draw() {
 	m_pItemCursor->Draw();
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
-	printfDx("randomID : %d\n", randomID);
 	BlendManager::GetInstnce().Debug();
 }
 
