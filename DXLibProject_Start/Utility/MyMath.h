@@ -9,6 +9,11 @@ namespace MyMath {
 	/// 小数の誤差
 	/// </summary>
 	constexpr float Epsilon = 0.00001f;
+	/// <summary>
+	/// 小数の誤差の2乗
+	/// 2乗した値の誤差判定を行うときに使う
+	/// </summary>
+	constexpr float SquareEpsilon = Epsilon * Epsilon;
 
 	// ラジアン角に変更する定数
 	constexpr float ToRadian = DX_PI_F / 180.0f;

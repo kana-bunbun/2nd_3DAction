@@ -3,7 +3,8 @@
 #include"Character/Character.h"
 #include<memory>
 #include<vector>
-
+#include"../Utility/MyMath.h"
+#include"Map/MapConst.h"
 #include"GameObject.h"
 
 GameObjectManager::GameObjectManager()
@@ -131,9 +132,11 @@ void GameObjectManager::CheckCollision()
 			const auto& collisionsB = objB->GetCollisions();
 			// コリジョンがなければスルー
 			if (collisionsB.empty())continue;
-
+			// 壁同士の当たり判定は調べない
 			if (objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
 				objB->GetCollisionTag() == GameObject::CollisionTag::Wall)continue;
+			// 現在いるマスが隣り合っていない場合スルー
+			if (!IsChebyishevTile(objA, objB))continue;
 
 			for (auto& collisionA : collisionsA) {
 				// コリジョンがなければスルー
@@ -233,4 +236,20 @@ void GameObjectManager::StrageObject(GameObject* obj)
 const std::vector<std::unique_ptr<GameObject>>& GameObjectManager::GetObjects() const
 {
 	return m_objects;
+}
+
+bool GameObjectManager::IsChebyishevTile(GameObject* baseObj, GameObject* checkObj)
+{
+	// 2つのオブジェクトのマスIDを取得
+	int baseID = baseObj->GetOnTileID();
+	int checkID = checkObj->GetOnTileID();
+	// 2つのオブジェクトのマスIDの差を取得
+	int differ = MyMath::Abs(baseID - checkID);
+	// IDの差が 1 以下の時(同じマスまたは左右に隣り合っている時)または
+	// 差が横幅-1 以上かつ横幅+1 以下の時(斜めまたは上下に隣り合っている時)true
+	if (differ <= 1||
+		(differ <= MapConst::MAP_SQUARE_WIDTH_COUNT - 1 &&
+		differ >= MapConst::MAP_SQUARE_WIDTH_COUNT + 1))return true;
+	// それ以外はfalse
+	return false;
 }

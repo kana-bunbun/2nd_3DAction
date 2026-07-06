@@ -6,6 +6,7 @@
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
 #include"../World/Component/Collision.h"
+#include"Map/MapManager.h"
 
 
 GameObject::GameObject():
@@ -72,4 +73,19 @@ void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, Collision
 	assert(shape && "GameCbject::AddCOllision : shape null");
 
 	m_collisions.push_back({ std::move(shape),type });
+}
+
+int GameObject::GetOnTileID()
+{
+	// 前回の衝突判定チェック時からの移動量を調べる
+	float moveValue = (m_oldPos - m_transform.position).GetSqLength();
+	// 前回更新時から移動していたら
+	if (moveValue>MyMath::SquareEpsilon) {
+		// 現在自身がいるマスIDを更新
+		m_onTileID = MapManager::GetInstance().GetIDFromWorldPos(m_transform.position);
+		// 座標更新
+		m_oldPos = m_transform.position;
+	}
+	// マスIDを返す
+	return m_onTileID;
 }

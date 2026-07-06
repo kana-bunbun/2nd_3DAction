@@ -96,6 +96,11 @@ public:
 	/// <param name="type"></param>
 	void AddCollision(std::unique_ptr<Collision::Shape> shape,CollisionType type);
 
+	/// <summary>
+	/// 現在いるマスのIDを取得
+	/// </summary>
+	int GetOnTileID();
+
 	bool IsActive()const { return m_isActive; }
 	void SetActive(const bool active) { m_isActive = active; }
 	/// <summary>
@@ -129,6 +134,18 @@ protected:
 	/// </summary>
 	CollisionTag m_collisionTag = CollisionTag::None;
 
+	/// <summary>
+	/// アクティブかどうか
+	/// </summary>
 	bool m_isActive=true;
+
+	/// <summary>
+	/// 現在いるマスのID
+	/// </summary>
+	int m_onTileID;
+	/// <summary>
+	/// 前回当たり判定チェック時の座標
+	/// </summary>
+	Vector3 m_oldPos;
 };
 
