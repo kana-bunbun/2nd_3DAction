@@ -130,7 +130,7 @@ void SceneTest::Init() {
 	m_pPadManager->Init();
 	m_pTileManager->SetPlayer(m_pPlayer);
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-
+	m_pItemManager->SetPlayer(m_pPlayer);
 	m_pDragon->SetTarget(obj);
 
 	// フェード処理開始
@@ -219,7 +219,7 @@ void SceneTest::Draw() {
 		m_pGameObjectManager->Draw();
 	}
 	m_pTileManager->Draw();
-
+	m_pItemManager->Draw();
 	// アイテムメニュー中は画面を少し暗くする
 	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);

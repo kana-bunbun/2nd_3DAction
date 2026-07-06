@@ -197,15 +197,19 @@ void ItemCursor::UseItem()
 	{
 	case BlendManager::Type::Apple:
 	//m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
-		m_pItemObjectManager->CallItem<HealBottle>();
+		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
 	case BlendManager::Type::Beer:
+		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
 	case BlendManager::Type::Bread:
+		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
 	case BlendManager::Type::Cheese:
+		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
 	case BlendManager::Type::CheeseBread:
+		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 	default:
 		break;
 	}

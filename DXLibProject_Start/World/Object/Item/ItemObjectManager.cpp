@@ -6,7 +6,7 @@
 ItemObjectManager::ItemObjectManager():
 	m_pGameObjectManager(nullptr)
 {
-
+	
 }
 
 ItemObjectManager::~ItemObjectManager()
