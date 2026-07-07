@@ -110,10 +110,6 @@ private:
 	/// </summary>
 	int m_playerNum;
 
-	/// <summary>
-	/// Bee‚Ìƒ|ƒCƒ“ƒ^
-	/// </summary>
-	Bee* m_pBee;
 	Barrier* m_pBarrier;
 	std::unique_ptr<UIManager> m_pUiManager;
 

@@ -302,8 +302,8 @@ Vector3 Dragon::CheckFollowOffset()
 	OffsetRight = targetTransform.position - OffsetLeft;
 	OffsetLeft += targetTransform.position;
 
-	DrawSphere3D(OffsetLeft.ToVECTOR(), 8, 10, 0xff0000, 0xff0000, FALSE);
-	DrawSphere3D(OffsetRight.ToVECTOR(), 8, 10, 0x0000ff, 0x0000ff, FALSE);
+	//DrawSphere3D(OffsetLeft.ToVECTOR(), 8, 10, 0xff0000, 0xff0000, FALSE);
+	//DrawSphere3D(OffsetRight.ToVECTOR(), 8, 10, 0x0000ff, 0x0000ff, FALSE);
 
 
 

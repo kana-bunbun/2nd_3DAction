@@ -56,7 +56,6 @@ namespace {
 SceneTest::SceneTest() :
 	m_pGameObjectManager(nullptr),
 	m_pBarrier(nullptr),
-	m_pBee(nullptr),
 	m_pCameraMgr(nullptr),
 	m_pDragon(nullptr),
 	m_pGaugeManager(nullptr),
@@ -80,7 +79,6 @@ SceneTest::SceneTest() :
 	}
 	
 	m_pGameObjectManager = std::make_unique<GameObjectManager>();
-	m_pBee = m_pGameObjectManager->CreateObject<Bee>();
 	m_pBarrier = m_pGameObjectManager->CreateObject<Barrier>();
 	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>(m_pGameObjectManager.get());
 	
@@ -211,7 +209,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 }
 
 void SceneTest::Draw() {
-	DrawGround();
+	//DrawGround();
 	// カメラの描画
 	m_pCameraMgr->Apply();
 	// マップの描画処理

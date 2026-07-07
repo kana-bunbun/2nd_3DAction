@@ -148,12 +148,6 @@ void TileManager::Draw()
 		//m_pTiles[i]->Draw();
 	}
 
-	// デバッグでプレイヤーのいるマスを取得・描画=====
-	int id=MapManager::GetInstance().GetIDFromWorldPos(m_markPos.position);
-	Vector3 pos= MapManager::GetInstance().GetWorldPosFromID(id);
-	DrawSphere3D(pos.ToVECTOR(), 30, 10, 0xff00ff, 0xff00ff, TRUE);
-	// =================================================
-
 	// ミニマップ描画
 	DrawMiniMap();
 	// ミニマップ上のプレイヤー位置の描画

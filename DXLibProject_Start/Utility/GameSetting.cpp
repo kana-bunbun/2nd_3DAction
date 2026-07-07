@@ -3,6 +3,9 @@
 #include "../Utility/Vector3.h"
 #include "Game.h"
 namespace {
+	constexpr int BackGroundR=112/*128*/;
+	constexpr int BackGroundG=128/*229*/;
+	constexpr int BackGroundB=128/*256*/;
 }
 
 void GameSetting::InitWindow()
@@ -28,6 +31,6 @@ void GameSetting::InitDxLib3D()
 	SetUseBackCulling(true);
 
 	// 確認用に背景色を設定
-	SetBackgroundColor(112, 128, 128);
+	SetBackgroundColor(BackGroundR, BackGroundG, BackGroundB);
 }
 

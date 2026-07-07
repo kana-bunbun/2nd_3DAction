@@ -445,7 +445,7 @@ void Player::UpdateCollision()
 	}
 
 	// カプセルのデバッグ表示
-	m_capsule.DebugDraw();
+	//m_capsule.DebugDraw();
 }
 
 float Player::CameraRotaY()

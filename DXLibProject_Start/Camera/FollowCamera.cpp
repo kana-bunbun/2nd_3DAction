@@ -22,9 +22,11 @@ FollowCamera::FollowCamera(const Transform* target):
     m_distance(),
     m_param()
 {
-    m_distance = 600;
+    m_param = FollowCameraParam();
+    m_distance = m_param.distanceToTarget;
     m_transform.Reset();
-    m_view.fov = 60.0f;
+    m_transform.rotation.x = (m_param.highAngle+m_param.lowAngle)*0.5f * MyMath::ToRadian;
+    m_view.fov = m_param.fieldOfView;
 }
 
 FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& param) :
@@ -33,9 +35,10 @@ FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& par
     m_distance(),
     m_param()
 {
-    m_distance = 600;
+    m_distance = m_param.distanceToTarget;
     m_transform.Reset();
-    m_view.fov = param.fieldOfView;
+    m_transform.rotation.x = (m_param.highAngle+m_param.lowAngle)*0.5f * MyMath::ToRadian;
+    m_view.fov = m_param.fieldOfView;
 }
 
 FollowCamera::~FollowCamera()
@@ -110,7 +113,7 @@ void FollowCamera::UpdatePosition(float deltaTime)
 
     //assert(m_target);
     //if (m_target)return;
-    float randRange = DX_PI_F * 0.00f;
+    float randRange = DX_PI_F * 0.0f;
     float rotateX = m_transform.rotation.x + (MyRandom::Float(-randRange, randRange));
     float rotateY = m_transform.rotation.y + (MyRandom::Float(-randRange, randRange));
 
