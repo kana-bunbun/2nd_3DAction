@@ -29,10 +29,11 @@ namespace {
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
 	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] =
 	{
-		"Resource\\Graph\\Item_Apple.png",
+		"Resource\\Graph\\HealBottleIcon.png",
 		"Resource\\Graph\\Item_Beer.png",
 		"Resource\\Graph\\Item_Bread.png",
 		"Resource\\Graph\\Item_Cheese.png",
+		"Resource\\Graph\\Item_Apple.png",
 	};
 	// 所持数テキストの表示オフセット
 	constexpr Vector3 kHoldNumTextOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
@@ -191,8 +192,6 @@ void ItemCursor::NormalizeIndex()
 
 void ItemCursor::UseItem()
 {
-	// 選択中のアイテムを1つ減らす
-	m_slots[m_selectIndex]->Sub();
 	switch (m_slots[m_selectIndex]->m_type)
 	{
 	case BlendManager::Type::Apple:
@@ -213,6 +212,8 @@ void ItemCursor::UseItem()
 	default:
 		break;
 	}
+	// 選択中のアイテムを1つ減らす
+	m_slots[m_selectIndex]->Sub();
 }
 
 void ItemCursor::Draw()

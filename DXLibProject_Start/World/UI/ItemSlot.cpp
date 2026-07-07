@@ -5,17 +5,17 @@
 
 namespace {
 	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] = {
-		"Item_Apple",
+		"HealBottleIcon",
 		"Item_Beer",
 		"Item_Bread",
 		"Item_Cheese",
-		"Item_CheeseBread",
+		"Item_Apple",
 	};
 	const char* const kBackGroundPath = "Icon Background";
 	constexpr float kSlotScale = 0.05f * Game::kWindowScale;
 	constexpr float kItemScale = 1.2f * Game::kWindowScale;
 	constexpr Vector3 kSelectIconOffset = { 0.0f,-70 * Game::kWindowScale,0.0f };
-	
+	constexpr int kNormalIconSize = 32;
 }
 
 ItemSlot::ItemSlot():
@@ -47,7 +47,7 @@ void ItemSlot::Draw()
 	int itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_type)]);
 	Vector3 drawPos = m_drawPos;
 	if (m_select)drawPos += kSelectIconOffset;
-	DrawRotaGraph(drawPos.x, drawPos.y, kItemScale, 0, itemHandle, TRUE);
+	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemHandle), 0, itemHandle, TRUE);
 
 }
 
@@ -74,4 +74,14 @@ void ItemSlot::Sub()
 void ItemSlot::SetItemType(BlendManager::Type itemType)
 {
 
+}
+
+float ItemSlot::NormalizeGraphScale(int graphHandle)
+{
+	int sizeX, sizeY;
+	GetGraphSize(graphHandle, &sizeX, &sizeY);
+	// 横の大きさと縦の大きさのうち大きい方を取得
+	int max = (sizeX > sizeY) ? sizeX : sizeY;
+	float scale = static_cast<float>(kNormalIconSize) / static_cast<float>(max);
+	return scale* kItemScale;
 }

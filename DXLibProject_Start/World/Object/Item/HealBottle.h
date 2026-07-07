@@ -17,7 +17,15 @@ public:
 		const Collision::Result& result
 	)override;
 
+
 	bool IsTransparent()override { return true; }
+
+
+public:
+	// 落下速度
+	float m_fallSpeed;
+	// 回転速度
+	Vector3 m_rotateSpeed;
 
 };
 

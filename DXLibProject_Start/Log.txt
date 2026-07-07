@@ -1,698 +1,180 @@
 ﻿0:ChangeWindowMode実行 
-6:ウインドウモードフラグが立てられました
-6:ＤＸライブラリの初期化処理開始
-6:	システムの情報を出力します
-6:		ＤＸライブラリ Ver3.24d
-6:		論理プロセッサの数 : 6
-6:		ＯＳ  Windows11 ( Build 26200  )
-112:		現時点のＣＰＵ動作速度：大体3.57GHz
-112:		ＭＭＸ命令を使用します
-113:		ＳＳＥ命令が使用可能です
-113:		ＳＳＥ２命令が使用可能です
-114:		ＣＰＵベンダ：AuthenticAMD
-116:		ＣＰＵ名：AMD Ryzen 5 3500 6-Core Processor              
-116:	ＣＯＭの初期化... 成功
-120:	非同期読み込み処理の初期化...成功
-121:	ファイルアクセス処理の初期化...成功
-122:	メモリ総量:16314.37MB  空きメモリ領域:8703.83MB 
-123:	タイマーの精度を検査します
-123:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
-123:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-124:	 
-124:	ソフトの二重起動検査... 二重起動はされていませんでした
-125:	ウインドウクラスを登録します... 登録に成功しました
-126:	ウインドウモード起動用のウインドウを作成します
-126:	ディスプレイ情報のセットアップ開始
-127:		モニターの数：1  ディスプレイデバイスの数：4
-128:		No.0  モニター名：\\.\DISPLAY1　1920x1080　32bit　60Hz  96x96dpi
-168:	ディスプレイ情報のセットアップ完了
-169:	ウインドウ矩形 ( -16, -50 )-( 1920, 1069 )
-173:	ウインドウの作成に成功しました
-174:	ウインドウを表示します
-201:	ＩＭＥを無効にしました
-203:	ウインドウスタイルをウインドウモード用に変更します... 完了
-235:	XInput DLL の読み込み中... 成功
-239:	DirectInput関係初期化処理
-239:		DirectInput8 の取得を試みます...成功
-326:			引き続き初期化処理... 初期化成功
-328:		ジョイパッドの初期化... 
-329:			XInput 対応コントローラーのチェックを開始します
-329:				XInput 対応コントローラー No.0 をチェック
-333:				XInput 対応コントローラー No.0 の接続を確認しました
-334:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
-334:				XInput 対応コントローラー No.1 をチェック
-335:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-335:				XInput 対応コントローラー No.2 をチェック
-337:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-337:				XInput 対応コントローラー No.3 をチェック
-338:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-338:			XInput 対応コントローラーのチェック完了
-338:			DirectInput 対応ジョイパッドの列挙を開始します
-384:				DirectInput 対応入力装置を検出しました
-385:						Device Product GUID  : c21d046d,0000,0000,00,00,50,49,44,56,49,44
-385:						Device Instance GUID : d61f0020,c81f,11ec,80,01,44,45,53,54,00,00
-386:					DirectInputDevice8 の作成... 成功
-387:					DirectInputDevice の情報を取得します... 成功
-388:						Device Product Name  : Controller (Gamepad F310)
-389:						Device Instance Name : Controller (Gamepad F310)
-389:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-390:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-391:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
-744:				検出した DirectInput 対応入力装置の初期化を中断します
-791:			DirectInput 対応ジョイパッドの列挙終了
-791:		ジョイパッドの初期化は正常に終了しました
-792:		マウスデバイスの初期化... 初期化成功
-793:		キーボードデバイスの初期化... 初期化成功
-796:	DirectInput 関連の初期化は正常に終了しました
-800:	WASAPI の初期化を行います
-806:		デバイス名 : スピーカー (Realtek(R) Audio)
-812:		デフォルト遅延時間 : 10.000 ms
-813:		最小遅延時間       : 3.000 ms
-813:		遅延時間           : 10.000 ms
-814:		チャンネル数  　   : 2 ch
-815:		量子化ビット深度   : 32 bit
-815:		有効ビット深度　   : 32 bit
-816:		サンプリングレート : 48000 Hz
-816:		データ形式         : 浮動小数点型
-866:		動作モード         : 共有モード
-867:	WASAPI の初期化は正常に終了しました
-872:	d3d11.dll の読み込み.... 成功
-876:	dxgi.dll の読み込み.... 成功
-876:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
-877:	IDXGIFactory2 を作成します.... 成功
-890:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
-890:	IDXGIAdapter を列挙
-891:		Adapter No.0 Desc:NVIDIA GeForce RTX 3060  VRAM:12113MB
-891:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 1920, 1080 )
-892:		Adapter No.1 Desc:Microsoft Basic Render Driver  VRAM:0MB
-892:	API D3D11CreateDevice のアドレスを取得します.... 成功
-893:	IDXGIAdapter を取得します.... 成功
-893:	IDXGIAdapter1 を取得します.... 成功
-895:	IDXGIAdapter2 を取得します.... 成功
-896:	IDXGIAdapter3 を取得します.... 成功
-896:	IDXGIAdapter4 を取得します.... 成功
-897:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
-897:	ID3D11Device オブジェクトを取得します.... 成功
-1104:	IDXGIDevice1 を取得します.... 成功
-1105:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-1105:	[ウインドウモード 1920x1080 ( 0, 0 )-( 1920, 1080 )]
-1106:	IDXGISwapChain2 を作成します.... 成功
-1107:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-1108:	IDXGIOutput を取得します.... 成功
-1109:	Graphics Device:NVIDIA GeForce RTX 3060
-1109:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1109:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-1109:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-1110:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-1110:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-1110:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-1110:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-1111:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1111:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-1111:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1112:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-1112:	ＤＸＴ２テクスチャフォーマットは使えません
-1112:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-1112:	ＤＸＴ４テクスチャフォーマットは使えません
-1113:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-1113:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-1113:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-1114:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-1114:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-1115:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-1115:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-1115:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-1116:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-1116:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-1116:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-1117:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-1117:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-1117:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-1117:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-1118:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-1118:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1119:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-1119:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-1119:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-1120:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-1120:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-1120:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-1126:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-1127:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-1127:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-1129:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-1129:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-1129:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-1130:	同時にレンダリングできるバッファの数:8
-1130:	最大テクスチャサイズ　幅:16384 高さ:16384
-1130:	標準描画用の頂点バッファの作成.... 成功
-1132:	シェーダーコード関係の初期化.... 成功
-1143:	各種シェーダー用定数バッファの作成.... 成功
-1144:	各種 ID3D11InputLayout の作成.... 成功
-1168:	画像の単純転送処理の初期化... 成功
-1170:	深度バッファを作成します.... 成功
-1173:	フォントの初期化を行います
-1176:	フォントの初期化は正常に終了しました
-1250:	文字コードバッファの初期化を行います... 完了しました
-1267:ＤＸライブラリの初期化処理終了
-1865:Model File Open Error : C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
-2233:Model File Open Error : C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
-2583:Model File Open Error : C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
-3786:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-3842:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-3894:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-3944:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-3997:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4048:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4096:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4146:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4195:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4245:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4294:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4345:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4395:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4444:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4493:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4542:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4592:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4641:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4689:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4738:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4787:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4838:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4888:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4937:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-4986:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5036:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5087:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5136:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5186:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5234:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5284:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5334:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5384:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5434:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5484:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5533:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5583:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5633:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5683:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5732:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5783:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5832:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5881:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5932:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-5982:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6031:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6082:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6134:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6184:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6235:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6284:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6334:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6385:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6436:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6488:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6537:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6586:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6637:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6687:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6737:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6786:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6836:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6886:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6937:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-6986:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7036:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7086:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7136:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7187:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7237:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7286:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7335:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7386:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7436:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7485:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7536:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7585:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7636:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7685:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7736:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7787:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7837:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7889:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7939:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-7988:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8039:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8089:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8140:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8191:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8240:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8291:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8341:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8391:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8441:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8491:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8541:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8591:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8641:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8692:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8742:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8791:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8841:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8891:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8941:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-8992:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9041:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9090:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9140:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9192:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9242:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9291:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9340:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9390:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9441:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9492:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9542:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9592:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9643:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9693:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9744:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9793:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9843:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9894:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9944:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-9993:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10045:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10094:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10145:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10195:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10243:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10293:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10342:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10393:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10443:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10493:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10544:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10593:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10643:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10693:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10742:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10792:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10842:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10891:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10941:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-10989:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11040:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11089:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11138:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11188:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11237:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11287:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11337:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11387:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11437:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11487:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11537:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11587:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11637:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11688:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11737:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11786:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11837:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11887:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11937:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-11986:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12036:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12086:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12136:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12187:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12236:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12287:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12337:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12387:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12438:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12488:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12538:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12588:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12638:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12688:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12739:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12787:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12838:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12888:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12939:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-12989:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13039:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13089:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13139:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13190:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13239:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13290:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13340:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13390:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13441:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13491:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13541:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13590:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13639:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13690:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13739:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13790:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13839:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13888:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13938:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-13988:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14038:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14087:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14136:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14186:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14235:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14285:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14334:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14384:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14434:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14484:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14533:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14583:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14634:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14683:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14733:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14783:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14833:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14883:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14935:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-14984:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15034:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15083:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15134:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15183:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15233:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15283:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15333:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15383:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15433:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15483:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15532:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15582:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15632:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15682:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15731:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15780:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15829:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15880:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15930:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-15981:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16032:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16082:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16130:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16181:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16230:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16280:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16328:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16378:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16428:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16477:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16527:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16576:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16626:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16675:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16724:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16773:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16822:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16871:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16920:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-16970:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17021:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17069:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17120:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17169:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17217:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17267:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17317:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17367:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17416:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17465:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17514:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17564:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17613:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17663:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17713:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17763:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17812:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17862:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17911:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-17961:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18010:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18061:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18111:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18162:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18211:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18260:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18311:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18360:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18409:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18459:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18508:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18557:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18607:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18656:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18705:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18756:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18806:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18856:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18905:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-18953:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19004:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19053:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19103:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19153:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19202:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19253:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19302:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19351:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19402:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19451:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19501:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19550:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19601:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19650:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19700:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19749:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19799:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19850:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19900:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19949:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-19999:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20049:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20099:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20148:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20197:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20247:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20297:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20347:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20396:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20445:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20496:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20545:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20596:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20645:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20694:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20743:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20793:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20842:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20892:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20941:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-20991:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21041:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21091:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21140:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21189:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21241:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21290:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21340:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21390:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21440:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21490:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21541:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21591:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21641:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21690:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21739:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21789:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21839:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21888:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21937:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-21987:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22036:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22085:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22136:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22184:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22234:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22283:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22333:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22383:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22433:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22482:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22533:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22582:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22632:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22681:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22731:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22780:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22830:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22880:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22930:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-22979:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23027:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23077:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23126:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23175:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23224:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23273:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23322:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23373:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23421:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23471:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23523:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23572:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23621:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23672:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23722:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23771:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23821:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23871:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23921:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-23971:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24022:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24071:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24122:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24171:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24222:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24272:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24321:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24370:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24419:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24470:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24520:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24570:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24620:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24670:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24721:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24770:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24820:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24870:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24920:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-24970:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25019:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25068:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25118:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25169:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25218:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25267:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25318:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25369:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25418:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25468:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25518:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25568:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25620:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25670:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25719:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25770:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25820:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25869:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25920:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-25971:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26021:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26070:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26120:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26170:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26221:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26270:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26321:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26369:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26421:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26471:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26519:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26568:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26618:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26667:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26717:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26767:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26816:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26867:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26915:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-26966:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27016:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27065:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27115:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27163:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27213:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27262:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27313:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27362:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27413:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27462:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27511:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27561:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27612:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27660:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27709:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27759:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27807:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27856:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27907:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-27958:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28007:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28058:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28108:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28158:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28208:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28258:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28309:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28359:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28409:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28457:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28507:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28560:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28609:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28658:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28708:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28757:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28807:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28857:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28907:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-28956:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29005:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29055:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29104:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29153:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29203:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29253:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29302:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29352:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29401:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29450:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29500:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29549:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29598:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29649:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29699:画像ファイル C:\Users\PC_User\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Graph\Item_CheeseBread.png がありません
-29701:ウインドウを閉じようとしています
-29704:ウインドウが破棄されようとしています
-29706:ソフトを終了する準備が整いました
-29737:フォントの初期化を行います
-29742:フォントの初期化は正常に終了しました
-29792:d3d11.dll の解放 1
-29793:dxgi.dll の解放 1
-29793:Direct3D11 のオブジェクト数を出力
-29794:Direct3D11 のオブジェクト合計数 : 0
-29803:DirectInput 関連の終了処理... 完了
-29805:サウンド関連の終了処理... 完了
-29810:ウィンドウ関連の終了処理... 完了
-29850:ＣＯＭを終了... 完了
-29851:
-29851:Alloc memory dump
-29851:	Total size:0(0.000kb)  Alloc num:0
-29852:
+0:ウインドウモードフラグが立てられました
+0:ＤＸライブラリの初期化処理開始
+0:	システムの情報を出力します
+0:		ＤＸライブラリ Ver3.24d
+0:		論理プロセッサの数 : 24
+0:		ＯＳ  Windows11 ( Build 26200  )
+107:		現時点のＣＰＵ動作速度：大体3.40GHz
+107:		ＭＭＸ命令を使用します
+107:		ＳＳＥ命令が使用可能です
+107:		ＳＳＥ２命令が使用可能です
+107:		ＣＰＵベンダ：GenuineIntel
+109:		ＣＰＵ名：13th Gen Intel(R) Core(TM) i7-13700K
+109:	ＣＯＭの初期化... 成功
+113:	非同期読み込み処理の初期化...成功
+113:	ファイルアクセス処理の初期化...成功
+114:	メモリ総量:32452.17MB  空きメモリ領域:18651.39MB 
+114:	タイマーの精度を検査します
+114:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
+114:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
+115:	 
+115:	ソフトの二重起動検査... 二重起動はされていませんでした
+115:	ウインドウクラスを登録します... 登録に成功しました
+116:	ウインドウモード起動用のウインドウを作成します
+116:	ディスプレイ情報のセットアップ開始
+117:		モニターの数：2  ディスプレイデバイスの数：8
+117:		No.0  モニター名：\\.\DISPLAY2　1920x1080　32bit　60Hz  96x96dpi
+117:		No.1  モニター名：\\.\DISPLAY1　1920x1080　32bit　60Hz  96x96dpi
+124:	ディスプレイ情報のセットアップ完了
+125:	ウインドウ矩形 ( -16, -50 )-( 1920, 1069 )
+127:	ウインドウの作成に成功しました
+127:	ウインドウを表示します
+141:	ＩＭＥを無効にしました
+142:	ウインドウスタイルをウインドウモード用に変更します... 完了
+167:	XInput DLL の読み込み中... 成功
+170:	DirectInput関係初期化処理
+171:		DirectInput8 の取得を試みます...成功
+245:			引き続き初期化処理... 初期化成功
+248:		ジョイパッドの初期化... 
+248:			XInput 対応コントローラーのチェックを開始します
+248:				XInput 対応コントローラー No.0 をチェック
+251:				XInput 対応コントローラー No.0 の接続を確認しました
+252:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+252:				XInput 対応コントローラー No.1 をチェック
+252:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+252:				XInput 対応コントローラー No.2 をチェック
+253:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+253:				XInput 対応コントローラー No.3 をチェック
+253:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+254:			XInput 対応コントローラーのチェック完了
+254:			DirectInput 対応ジョイパッドの列挙を開始します
+355:				DirectInput 対応入力装置を検出しました
+355:						Device Product GUID  : 2012056e,0000,0000,00,00,50,49,44,56,49,44
+355:						Device Instance GUID : 00567040,336e,11f1,80,01,44,45,53,54,00,00
+355:					DirectInputDevice8 の作成... 成功
+356:					DirectInputDevice の情報を取得します... 成功
+357:						Device Product Name  : Controller (JC-U4013S XInput Mode)
+357:						Device Instance Name : Controller (JC-U4013S XInput Mode)
+357:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+357:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+358:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 一致
+614:				検出した DirectInput 対応入力装置の初期化を中断します
+651:			DirectInput 対応ジョイパッドの列挙終了
+652:		ジョイパッドの初期化は正常に終了しました
+652:		マウスデバイスの初期化... 初期化成功
+652:		キーボードデバイスの初期化... 初期化成功
+654:	DirectInput 関連の初期化は正常に終了しました
+656:	WASAPI の初期化を行います
+660:		デバイス名 : PHL 273V7 (NVIDIA High Definition Audio)
+664:		デフォルト遅延時間 : 10.000 ms
+664:		最小遅延時間       : 3.000 ms
+665:		遅延時間           : 10.000 ms
+665:		チャンネル数  　   : 2 ch
+665:		量子化ビット深度   : 32 bit
+665:		有効ビット深度　   : 32 bit
+665:		サンプリングレート : 48000 Hz
+666:		データ形式         : 浮動小数点型
+681:		動作モード         : 共有モード
+681:	WASAPI の初期化は正常に終了しました
+684:	d3d11.dll の読み込み.... 成功
+686:	dxgi.dll の読み込み.... 成功
+687:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+687:	IDXGIFactory2 を作成します.... 成功
+696:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
+696:	IDXGIAdapter を列挙
+697:		Adapter No.0 Desc:NVIDIA GeForce RTX 4070 Ti  VRAM:11994MB
+697:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 1920, 1080 )
+697:			Output Device No.1 Name:\\.\DISPLAY2 ( -7, -1080 )-( 1913, 0 )
+697:		Adapter No.1 Desc:Intel(R) UHD Graphics 770  VRAM:128MB
+698:		Adapter No.2 Desc:Microsoft Basic Render Driver  VRAM:0MB
+698:	API D3D11CreateDevice のアドレスを取得します.... 成功
+698:	IDXGIAdapter を取得します.... 成功
+698:	IDXGIAdapter1 を取得します.... 成功
+698:	IDXGIAdapter2 を取得します.... 成功
+698:	IDXGIAdapter3 を取得します.... 成功
+699:	IDXGIAdapter4 を取得します.... 成功
+699:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
+699:	ID3D11Device オブジェクトを取得します.... 成功
+822:	IDXGIDevice1 を取得します.... 成功
+822:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+822:	[ウインドウモード 1920x1080 ( 0, 0 )-( 1920, 1080 )]
+823:	IDXGISwapChain2 を作成します.... 成功
+824:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+824:	IDXGIOutput を取得します.... 成功
+824:	Graphics Device:NVIDIA GeForce RTX 4070 Ti
+825:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+825:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+825:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+825:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+825:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+825:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+826:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+826:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+826:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+826:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+826:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+826:	ＤＸＴ２テクスチャフォーマットは使えません
+827:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+827:	ＤＸＴ４テクスチャフォーマットは使えません
+827:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+827:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+827:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+827:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+827:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+829:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+829:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+829:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+829:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+829:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+830:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+830:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+830:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+830:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+830:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+831:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+831:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+831:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+831:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+831:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+832:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+832:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+832:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+832:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+832:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+833:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+833:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+833:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+833:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+834:	同時にレンダリングできるバッファの数:8
+834:	最大テクスチャサイズ　幅:16384 高さ:16384
+834:	標準描画用の頂点バッファの作成.... 成功
+835:	シェーダーコード関係の初期化.... 成功
+844:	各種シェーダー用定数バッファの作成.... 成功
+845:	各種 ID3D11InputLayout の作成.... 成功
+855:	画像の単純転送処理の初期化... 成功
+855:	深度バッファを作成します.... 成功
+857:	フォントの初期化を行います
+859:	フォントの初期化は正常に終了しました
+948:	文字コードバッファの初期化を行います... 完了しました
+964:ＤＸライブラリの初期化処理終了
+1383:Model File Open Error : C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
+1649:Model File Open Error : C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
+1913:Model File Open Error : C:\Users\student1\Desktop\2nd_3DAction\DXLibProject_Start\Resource\Enemy\Queen\Animation\Damage.mv1
+19785:ウインドウを閉じようとしています
+19790:ウインドウが破棄されようとしています
+19791:ソフトを終了する準備が整いました
+19802:フォントの初期化を行います
+19808:フォントの初期化は正常に終了しました
+19858:d3d11.dll の解放 1
+19859:dxgi.dll の解放 1
+19859:Direct3D11 のオブジェクト数を出力
+19860:Direct3D11 のオブジェクト合計数 : 0
+19861:DirectInput 関連の終了処理... 完了
+19863:サウンド関連の終了処理... 完了
+19868:ウィンドウ関連の終了処理... 完了
+19932:ＣＯＭを終了... 完了
+19933:
+19933:Alloc memory dump
+19933:	Total size:0(0.000kb)  Alloc num:0
+19933:

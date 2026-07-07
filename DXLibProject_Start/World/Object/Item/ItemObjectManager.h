@@ -3,8 +3,8 @@
 #include<vector>
 #include<memory>
 #include <type_traits>
+#include"ItemObject.h"
 class GameObject;
-class ItemObject;
 class ItemCursor;
 class ItemObjectManager
 {
@@ -44,6 +44,8 @@ inline T* ItemObjectManager::CreateItem(GameObject* obj)
 	auto item = m_pGameObjectManager->CreateObject<T>();
 	SetupItem(item, obj);
 
+	// 配列に追加
+	m_items.push_back(item);
 	return item;
 }
 
@@ -53,23 +55,22 @@ inline void ItemObjectManager::CallItem(GameObject* obj)
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム呼び出し:アイテムの基底クラスを未継承");
 	// 再利用できるオブジェクトを探す
-	for (auto& item : m_items) {
+	for (int i = 0; i < m_items.size();i++) {
 		// nullチェック
-		if (!item)continue;
+		if (!m_items[i])continue;
 		// アクティブ状態でないオブジェクトを探す
-		if (item->IsActive())continue;
+		if (m_items[i]->IsActive())continue;
 		// 同じクラスかどうかチェック
-		if (!dynamic_cast<T*>(m_items[0])) continue;
+		if (!dynamic_cast<T*>(m_items[i])) continue;
 		//if (!std::is_same < T, typeid(item) > ::value)continue;
 		// アイテムのセットアップ
-		item->Setup(obj->GetTransform());
-
+		m_items[i]->Setup(obj->GetTransform());
+		
 		return;
 	}
 
 	// 再利用できるオブジェクトがなければ
 	auto item=CreateItem<T>(obj);
-	//item->SetupItem(item, obj);
 
 	return;
 }

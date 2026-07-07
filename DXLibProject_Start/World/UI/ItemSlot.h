@@ -17,6 +17,9 @@ public:
 	void SetItemType(BlendManager::Type itemType);
 	int GetHoldNum() { return m_holdNum; }
 	void SetPosition(const Vector3& const position) { m_drawPos = position; }
+private:
+	// 固定サイズの画像の大きさを取得
+	float NormalizeGraphScale(int graphHandle);
 public:
 	BlendManager::Type m_type;
 	bool m_select;

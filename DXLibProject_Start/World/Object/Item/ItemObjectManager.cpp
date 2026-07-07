@@ -31,7 +31,7 @@ void ItemObjectManager::Update()
 
 void ItemObjectManager::Draw()
 {
-
+	printfDx("m_items.size : %d\n", m_items.size());
 }
 
 void ItemObjectManager::SetupItem(ItemObject* item, GameObject* obj)

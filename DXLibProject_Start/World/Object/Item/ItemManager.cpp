@@ -26,18 +26,24 @@ void ItemManager::End()
 {
 	// アイテムスロットの終了処理
 	m_pItemCursor->End();
+	// アイテムオブジェクトの終了処理
+	m_pItemObjectManager->End();
 }
 
 void ItemManager::Update()
 {
 	// アイテムスロットの更新処理
 	m_pItemCursor->Update();
+	// アイテムオブジェクトの更新処理
+	m_pItemObjectManager->Update();
 }
 
 void ItemManager::Draw()
 {
 	// アイテムスロットの更新処理
 	m_pItemCursor->Draw();
+
+	m_pItemObjectManager->Draw();
 }
 
 void ItemManager::SetGameObjectManager(GameObjectManager* pGameObjectManager)

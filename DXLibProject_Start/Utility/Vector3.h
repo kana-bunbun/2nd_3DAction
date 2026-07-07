@@ -52,15 +52,24 @@ public:
 	/// <param name="y">y方向の値</param>
 	/// <param name="z">z方向の値</param>
 	constexpr Vector3(float x,float y,float z) :x(x), y(y), z(z){}
+	/// <summary>
+	/// 引数ありのコンストラクタ
+	/// </summary>
+	/// <param name="vector">DXライブラリ標準のベクトル</param>
+	constexpr Vector3(VECTOR vector) :x(vector.x), y(vector.y), z(vector.z){}
 
 
 	// Vector3の演算
 	Vector3 operator=(float value)const;					// マイナスのベクトルを返す
 	Vector3 operator-()const;					// マイナスのベクトルを返す
 	Vector3 operator+(const Vector3& vec)const;		// ベクトルの加算
+	Vector3 operator+(const VECTOR& vec)const;		// ベクトルの加算
 	Vector3& operator+=(const Vector3& vec);	// ベクトルの加算代入演算子
+	Vector3& operator+=(const VECTOR& vec);	// ベクトルの加算代入演算子
 	Vector3 operator-(const Vector3& vec)const;		// ベクトルの減算
+	Vector3 operator-(const VECTOR& vec)const;		// ベクトルの減算
 	Vector3& operator-=(const Vector3& vec);	// ベクトルの減算代入演算子
+	Vector3& operator-=(const VECTOR& vec);	// ベクトルの減算代入演算子
 	Vector3 operator* (float value)const;		// ベクトルとスカラーの乗算
 	Vector3& operator*=(float value);			// ベクトルとスカラーの乗算代入演算子
 	Vector3 operator/(float value)const;		// ベクトルとスカラーの除算
