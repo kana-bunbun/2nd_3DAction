@@ -4,7 +4,7 @@
 #include "../../Utility/MyMath.h"
 
 namespace {
-	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] = {
+	const char* const kItemPath[static_cast<int>(ItemData::Type::Max)] = {
 		"HealBottleIcon",
 		"Item_Beer",
 		"Item_Bread",
@@ -19,12 +19,12 @@ namespace {
 }
 
 ItemSlot::ItemSlot():
-	m_type(BlendManager::Type::Invalid),
+	m_itemData(),
 	m_select(false),
 	m_holdNum(0),
 	graphHandle(-1)
 {
-
+	m_itemData.m_type = ItemData::Type::Invalid;
 }
 
 ItemSlot::~ItemSlot()
@@ -36,15 +36,15 @@ void ItemSlot::Init()
 {
 	m_holdNum = 0;
 	m_select = false;
-	m_type = BlendManager::Type::Invalid;
+	m_itemData.m_type = ItemData::Type::Invalid;
 }
 
 void ItemSlot::Draw()
 {
 	int backGroundHandle = ResourceManager::GetInstance().GetGraph(kBackGroundPath);
 	DrawRotaGraph(m_drawPos.x, m_drawPos.y, kSlotScale, 0, backGroundHandle, TRUE);
-	if (m_type == BlendManager::Type::Invalid)return;
-	int itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_type)]);
+	if (m_itemData.m_type == ItemData::Type::Invalid)return;
+	int itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
 	Vector3 drawPos = m_drawPos;
 	if (m_select)drawPos += kSelectIconOffset;
 	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemHandle), 0, itemHandle, TRUE);
@@ -68,12 +68,7 @@ void ItemSlot::Sub()
 	// 所持数が0になったら
 
 	// アイテムの種類を不正値にする
-	m_type = BlendManager::Type::Invalid;
-}
-
-void ItemSlot::SetItemType(BlendManager::Type itemType)
-{
-
+	m_itemData.m_type = ItemData::Type::Invalid;
 }
 
 float ItemSlot::NormalizeGraphScale(int graphHandle)

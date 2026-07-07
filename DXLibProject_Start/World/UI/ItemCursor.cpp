@@ -1,4 +1,5 @@
 #include "ItemCursor.h"
+#include "../Object/Item/ItemData.h"
 #include"../../Utility/Game.h"
 #include"../../Utility/Vector3.h"
 #include"../../Utility/MyMath.h"
@@ -27,7 +28,7 @@ namespace {
 
 	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
-	const char* const kItemPath[static_cast<int>(BlendManager::Type::Max)] =
+	const char* const kItemPath[static_cast<int>(ItemData::Type::Max)] =
 	{
 		"Resource\\Graph\\HealBottleIcon.png",
 		"Resource\\Graph\\Item_Beer.png",
@@ -67,12 +68,12 @@ ItemCursor::ItemCursor():
 	}
 	for (int i = 0; i < m_slots.size(); i++) {
 		int num = (m_slots.size() + i) % m_slots.size();
-		int type = (static_cast<int>(BlendManager::Type::Max) + i) % static_cast<int>(BlendManager::Type::Max);
+		int type = (static_cast<int>(ItemData::Type::Max) + i) % static_cast<int>(ItemData::Type::Max);
 		for (int j = 0; j < type * i * i+1; j++) {
-		AddItem(static_cast<BlendManager::Type>(type));
+		AddItem(static_cast<ItemData::Type>(type));
 		}
 	}
-	m_selected.fill(BlendManager::Type::Invalid);
+	m_selected.fill(ItemData::Type::Invalid);
 }
 
 ItemCursor::~ItemCursor()
@@ -165,7 +166,7 @@ void ItemCursor::UpdateToInput()
 
 	if (Input::IsPressed(Input::Button::B, m_pad)) {
 
-		if (m_slots[m_selectIndex]->m_type != BlendManager::Type::Invalid)
+		if (m_slots[m_selectIndex]->GetItemType() != ItemData::Type::Invalid)
 			if (m_slots[m_selectIndex]->GetHoldNum() > 0) {
 
 				Select();
@@ -192,22 +193,22 @@ void ItemCursor::NormalizeIndex()
 
 void ItemCursor::UseItem()
 {
-	switch (m_slots[m_selectIndex]->m_type)
+	switch (m_slots[m_selectIndex]->GetItemType())
 	{
-	case BlendManager::Type::Apple:
+	case ItemData::Type::Apple:
 	//m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
-	case BlendManager::Type::Beer:
+	case ItemData::Type::Beer:
 		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
-	case BlendManager::Type::Bread:
+	case ItemData::Type::Bread:
 		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
-	case BlendManager::Type::Cheese:
+	case ItemData::Type::Cheese:
 		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 		break;
-	case BlendManager::Type::CheeseBread:
+	case ItemData::Type::CheeseBread:
 		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
 	default:
 		break;
@@ -256,11 +257,11 @@ Vector3 ItemCursor::GetSelectPos(int selectIndex)
 	return result;
 }
 
-bool ItemCursor::AddItem(const BlendManager::Type& type)
+bool ItemCursor::AddItem(const ItemData::Type& type)
 {
 	// 同じアイテムをすでに所持しているときは所持数に加算する
 	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->m_type != type)continue;
+		if (m_slots[i]->GetItemType() != type)continue;
 		// 所持数に加算
 		m_slots[i]->Add();
 		// 追加できたのでtrue
@@ -269,9 +270,9 @@ bool ItemCursor::AddItem(const BlendManager::Type& type)
 	// 同じアイテムを所持していないとき
 	// nullptrの要素を探して追加
 	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->m_type!=BlendManager::Type::Invalid)continue;
+		if (m_slots[i]->GetItemType() !=ItemData::Type::Invalid)continue;
 		// アイテム情報を生成し追加
-		m_slots[i]->m_type = type;
+		m_slots[i]->SetItemType(type);
 		m_slots[i]->Add();
 		// 追加できたのでtrue
 		return true;
@@ -281,12 +282,12 @@ bool ItemCursor::AddItem(const BlendManager::Type& type)
 	return false;
 }
 
-bool ItemCursor::SubItem(const BlendManager::Type& type)
+bool ItemCursor::SubItem(const ItemData::Type& type)
 {
 
 	// そのアイテムをすでに所持しているときは所持数を減らす
 	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->m_type != type)continue;
+		if (m_slots[i]->m_itemData.m_type != type)continue;
 		// 所持数を減らす
 		m_slots[i]->Sub();
 
@@ -303,12 +304,12 @@ bool ItemCursor::SubItem(const BlendManager::Type& type)
 void ItemCursor::Select()
 {
 	// 選択しているスロットに格納されているアイテムの種類が不正値なら即時return
-	if (m_slots[m_selectIndex]->m_type == BlendManager::Type::Invalid)return;
+	if (m_slots[m_selectIndex]->GetItemType() == ItemData::Type::Invalid)return;
 
 	// 
 	int selectedIndex = -1;
 	for (int i = 0; i < m_selected.size(); i++) {
-		if (m_selected[i] == m_slots[m_selectIndex]->m_type) {
+		if (m_selected[i] == m_slots[m_selectIndex]->GetItemType()) {
 			selectedIndex = i;
 			break;
 		}
@@ -316,7 +317,7 @@ void ItemCursor::Select()
 	if(selectedIndex<0)
 	for (int i = 0; i < m_selected.size(); i++) {
 		 
-		if (m_selected[i] != BlendManager::Type::Invalid)continue;
+		if (m_selected[i] != ItemData::Type::Invalid)continue;
 
 		selectedIndex = i;
 		break;
@@ -331,10 +332,10 @@ void ItemCursor::ChangeSelectFlag(size_t index)
 {
 	bool selected = m_slots[m_selectIndex]->m_select;
 	if (selected) {
-		m_selected[index] = BlendManager::Type::Invalid;
+		m_selected[index] = ItemData::Type::Invalid;
 	}
 	else {
-		m_selected[index] = m_slots[m_selectIndex]->m_type;
+		m_selected[index] = m_slots[m_selectIndex]->GetItemType();
 	}
 	m_slots[m_selectIndex]->m_select ^= 1;
 }
@@ -342,28 +343,28 @@ void ItemCursor::ChangeSelectFlag(size_t index)
 void ItemCursor::Cancel()
 {
 	// 無選択状態にする
-	m_selected.fill(BlendManager::Type::Invalid);
+	m_selected.fill(ItemData::Type::Invalid);
 	for (auto& slot : m_slots) {
 		slot->m_select = false;
 	}
 }
 
-void ItemCursor::Cancel(const BlendManager::Type& type)
+void ItemCursor::Cancel(const ItemData::Type& type)
 {
 	for (auto& select : m_selected) {
 		if (select != type)continue;
-		select = BlendManager::Type::Invalid;
+		select = ItemData::Type::Invalid;
 		return;
 	}
 }
 
 bool ItemCursor::BlendItem()
 {
-	BlendManager::Type blendResult = BlendManager::GetInstnce().Blend(m_selected[0], m_selected[1]);
+	ItemData::Type blendResult = BlendManager::GetInstnce().Blend(m_selected[0], m_selected[1]);
 	// 合成結果が不正値なら処理しない
-	if (blendResult == BlendManager::Type::Invalid) {
+	if (blendResult == ItemData::Type::Invalid) {
 		Cancel();
-		m_selected.fill(BlendManager::Type::Invalid);
+		m_selected.fill(ItemData::Type::Invalid);
 		return false;
 	}
 

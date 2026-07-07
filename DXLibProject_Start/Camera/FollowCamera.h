@@ -1,8 +1,10 @@
 #pragma once
 #include "Camera.h"
+
 #include "../Utility/Vector3.h"
 #include "../World/Component/Transform.h"
 
+#include "CameraParam.h"
 /// <summary>
 /// プレイヤーを追従するカメラ
 /// </summary>
@@ -10,6 +12,7 @@ class FollowCamera : public ICamera
 {
 public:
 	FollowCamera(const Transform* target);
+	FollowCamera(const Transform* target,const FollowCameraParam& param);
 	~FollowCamera();
 
 	/// =========================================
@@ -58,6 +61,9 @@ private:
 	/// targetとの距離
 	/// </summary>
 	float m_distance;
-
+	/// <summary>
+	/// FollowCameraのパラメータ群
+	/// </summary>
+	FollowCameraParam m_param;
 };
 

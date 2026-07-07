@@ -1,5 +1,5 @@
 #pragma once
-#include"../Object/Item/BlendManager.h"
+#include"../Object/Item/ItemData.h"
 #include"../../Utility/Vector3.h"
 class ItemSlot
 {
@@ -14,14 +14,15 @@ public:
 	void Add();
 	void Sub();
 public:
-	void SetItemType(BlendManager::Type itemType);
 	int GetHoldNum() { return m_holdNum; }
 	void SetPosition(const Vector3& const position) { m_drawPos = position; }
+	ItemData::Type GetItemType() { return m_itemData.m_type; }
+	void SetItemType(ItemData::Type type) { m_itemData.m_type = type; }
 private:
 	// 固定サイズの画像の大きさを取得
 	float NormalizeGraphScale(int graphHandle);
 public:
-	BlendManager::Type m_type;
+	ItemData m_itemData;
 	bool m_select;
 private:
 	/// <summary>

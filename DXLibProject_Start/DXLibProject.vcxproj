@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FromCSV.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObject.cpp" />
@@ -248,6 +249,9 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\CameraParam.h" />
+    <ClInclude Include="FromCSV.h" />
+    <ClInclude Include="World\Object\Item\ItemData.h" />
     <ClInclude Include="World\Object\Item\ItemManager.h" />
     <ClInclude Include="World\Object\Item\ItemObjectManager.h" />
     <ClInclude Include="World\Object\Item\ItemObject.h" />

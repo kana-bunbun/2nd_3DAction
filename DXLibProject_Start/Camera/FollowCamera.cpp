@@ -10,26 +10,32 @@
 #include "../Utility/Input.h"
 #include "../Utility/MyMath.h"
 #include "../Utility/MyRandom.h"
-
+#include "CameraParam.h"
 
 namespace {
-    constexpr float kFieldOfView = 60.0f;       	// カメラの視野角 FOV = field of view
 
-    constexpr float kDistanceToTarget = 600.0f; 	// カメラの被写体までの初期距離
-    constexpr float kMinDistance = 150;         	// 被写体との最短距離
-    constexpr float kMaxDistance = 150;         	// 被写体との最長距離
-    constexpr float kAngleSpeed = 2.0f;         	// カメラの角速度
-
-    constexpr float kInitCameraHeight = 150.0f;		// カメラの初期の高さ
-    constexpr float kLowAngle = -30.0f * MyMath::ToRadian;				// カメラの最大仰角
-    constexpr float kHighAngle = 80.0f * MyMath::ToRadian;				// カメラの最大俯角
 }
 
 FollowCamera::FollowCamera(const Transform* target):
     m_target(target),
     m_view{},
-    m_distance(kDistanceToTarget)
+    m_distance(),
+    m_param()
 {
+    m_distance = 600;
+    m_transform.Reset();
+    m_view.fov = 60.0f;
+}
+
+FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& param) :
+    m_target(target),
+    m_view{},
+    m_distance(),
+    m_param()
+{
+    m_distance = 600;
+    m_transform.Reset();
+    m_view.fov = param.fieldOfView;
 }
 
 FollowCamera::~FollowCamera()
@@ -56,11 +62,11 @@ Camera::CameraView FollowCamera::GetView() const
 void FollowCamera::UpdateDistance(float deltaTime)
 {
     // カメラの最短距離、最長距離を求める
-    float minDistance = kDistanceToTarget - kMinDistance;
-    float maxDistance = kDistanceToTarget - kMaxDistance;
+    float minDistance = m_param.distanceToTarget - m_param.minDistance;
+    float maxDistance = m_param.distanceToTarget - m_param.maxDistance;
 
-    minDistance = MyMath::Clamp(minDistance, 0.0f, kDistanceToTarget);
-    maxDistance = MyMath::Clamp(maxDistance, kDistanceToTarget, maxDistance);
+    minDistance = MyMath::Clamp(minDistance, 0.0f, m_param.distanceToTarget);
+    maxDistance = MyMath::Clamp(maxDistance, m_param.distanceToTarget, maxDistance);
     // 距離を指定範囲内に収める
     m_distance = MyMath::Clamp(m_distance, minDistance, maxDistance);
 }
@@ -80,11 +86,11 @@ void FollowCamera::UpdateAngle(float deltaTime)
     // 正規化
     m_moveVector = m_moveVector.Normalize();
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * kAngleSpeed;
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_param.angleSpeed;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
     pitchRad += m_moveVector.y * deltaTime;
-    pitchRad = MyMath::Clamp(pitchRad, kLowAngle, kHighAngle);
+    pitchRad = MyMath::Clamp(pitchRad, m_param.lowAngle*MyMath::ToRadian, m_param.highAngle * MyMath::ToRadian);
     m_transform.rotation.x = pitchRad;
 
     yawRad = MyMath::NormalizeRadian(yawRad);
@@ -122,7 +128,7 @@ void FollowCamera::UpdatePosition(float deltaTime)
     rotate *= m_distance;
     
     
-    Vector3 cameraPos = Vector3(0.0f, kInitCameraHeight, 0.0f);
+    Vector3 cameraPos = Vector3(0.0f, m_param.initCameraHeight*MyMath::ToRadian, 0.0f);
 
     cameraPos += m_target->position;
     cameraPos = (cameraPos + rotate);

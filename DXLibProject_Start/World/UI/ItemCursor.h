@@ -43,8 +43,8 @@ public:
 
 	Vector3 GetSelectPos(int selectIndex);
 
-	bool AddItem(const BlendManager::Type& type);
-	bool SubItem(const BlendManager::Type& type);
+	bool AddItem(const ItemData::Type& type);
+	bool SubItem(const ItemData::Type& type);
 
 	// アイテムを選択する関数
 	void Select();
@@ -52,7 +52,7 @@ public:
 	void ChangeSelectFlag(size_t index);
 	// キャンセルする関数
 	void Cancel();
-	void Cancel(const BlendManager::Type& type);
+	void Cancel(const ItemData::Type& type);
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
@@ -74,7 +74,7 @@ private:
 	Input::Pad m_pad;
 	// 所持しているアイテムの種類
 	std::array < ItemSlot*, kSlotMax > m_slots;
-	std::array<BlendManager::Type, kSelectMax>m_selected;
+	std::array<ItemData::Type, kSelectMax>m_selected;
 	// アイテム合成メニュ―かどうか
 	bool m_isBlendMenu;
 

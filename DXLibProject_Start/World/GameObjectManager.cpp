@@ -123,7 +123,7 @@ void GameObjectManager::CheckCollision()
 		const auto& collisionsA = objA->GetCollisions();
 		// コリジョンがなければスルー
 		if (collisionsA.empty())continue;
-		for (size_t j = 0; j < m_objects.size(); j++) {
+		for (size_t j = i+1; j < m_objects.size(); j++) {
 			// オブジェクトの取得
 			GameObject* objB = m_objects[j].get();
 			// アクティブになっていなければスルー

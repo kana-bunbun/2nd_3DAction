@@ -32,6 +32,35 @@ Data::Csv::Table Data::Csv::LoadRawCSV(const std::string& path)
 	return table;
 }
 
+std::vector<Data::Csv::Row> Data::Csv::ToRows(const Table& table)
+{
+	// 結果を返す変数を用意
+	std::vector<Row> rows;
+	// データが空かどうかチェック
+	if (table.empty()) {
+		assert(false && "Data::Csv::ToRows table is empty");
+		return rows;
+	}
+	// 1行目をヘッダとして取得
+	const std::vector <std::string>& header = table[0];
+	// 2行目以降はデータとして取得
+	for (size_t i = 1; i < table.size(); i++) {
+		// 読み取ったデータの一時保管
+		const auto& line = table[i];
+
+		// 一時保管のデータから格納する変数
+		Row row;
+
+		// ヘッダの内容に合わせてmapに適応
+		for (size_t j = 0; j < header.size(); j++) {
+			if (j >= line.size()) break;
+				row[header[j]] = line[i];
+		}
+		rows.push_back(row);
+	}
+	return rows;
+}
+
 std::vector<std::string> Data::Csv::Split(const std::string& str, char separate)
 {
 	// 結果を返す配列を用意

@@ -12,9 +12,17 @@ namespace {
 	constexpr float kRotateSpeedMax = DX_PI_F * 1.3f;
 	// 描画の中心となるフレームの位置
 	constexpr int kDrawCenterFrameNum = 1;
+
+	constexpr float kEffectMaxCount = 3.0f;
+	constexpr float kAlphaMax = 0.5f;
+	constexpr float kEffectRadius = 420;
 }
 
-HealBottle::HealBottle()
+HealBottle::HealBottle():
+	m_fallSpeed(0),
+m_rotateSpeed(),
+m_isEffect(false),
+m_effectCount(0)
 {
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
 }
@@ -39,11 +47,16 @@ void HealBottle::Setup(const Transform& transform)
 	m_isActive = true;
 	m_transform.position = transform.position;
 	
-	m_rotateSpeed.x= MyRandom::Float(0, kRotateSpeedMax);
-	m_rotateSpeed.y= MyRandom::Float(0, kRotateSpeedMax);
-	m_rotateSpeed.z= MyRandom::Float(0, kRotateSpeedMax);
+	m_rotateSpeed.x= MyRandom::Float(-kRotateSpeedMax, kRotateSpeedMax);
+	m_rotateSpeed.y= MyRandom::Float(-kRotateSpeedMax, kRotateSpeedMax);
+	m_rotateSpeed.z= MyRandom::Float(-kRotateSpeedMax, kRotateSpeedMax);
 	m_transform.rotation = m_rotateSpeed;
 	m_fallSpeed = kThrowPower;
+
+	m_isEffect = false;
+	m_effectCount = kEffectMaxCount;
+
+	m_isTrans = false;
 }
 
 void HealBottle::Update(float deltaTime)
@@ -54,8 +67,50 @@ void HealBottle::Update(float deltaTime)
 	if (m_transform.position.y < 0) {
 		m_fallSpeed = 0;
 		m_transform.position.y = 0;
+		m_isEffect = true;
+	}
+
+	if (!m_isEffect)return;
+	m_effectCount -= deltaTime;
+	m_alpha = m_effectCount / kEffectMaxCount;
+	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
+	m_isTrans = true;
+
+	if (m_effectCount < 0) {
+		m_effectCount = 0;
+		m_isEffect = false;
 		m_isActive = false;
 	}
+}
+
+void HealBottle::Draw()
+{
+	if (m_isEffect) {
+		DrawEffect();
+	}
+	else {
+		DrawBottle();
+	}
+}
+
+void HealBottle::DrawBottle()
+{
+	// モデルが読み込まれているかどうかチェック
+	if (m_modelHandle == -1)return;
+
+	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
+	MV1SetPosition(m_modelHandle, m_transform.position.ToVECTOR());
+	MV1DrawModel(m_modelHandle);
+}
+
+void HealBottle::DrawEffect()
+{
+	SetUseBackCulling(true);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
+	DrawSphere3D(m_transform.position.ToVECTOR(), kEffectRadius, 10, Color::kGreen, Color::kGreen, TRUE);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+	SetUseBackCulling(false);
+
 }
 
 void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

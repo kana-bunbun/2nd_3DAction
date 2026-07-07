@@ -82,7 +82,8 @@ SceneTest::SceneTest() :
 	m_pGameObjectManager = std::make_unique<GameObjectManager>();
 	m_pBee = m_pGameObjectManager->CreateObject<Bee>();
 	m_pBarrier = m_pGameObjectManager->CreateObject<Barrier>();
-	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>();
+	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>(m_pGameObjectManager.get());
+	
 	m_pGameObjectManager->CreateObject<Enemy>();
 	m_pGameObjectManager->CreateObject<Enemy>();
 	m_pGameObjectManager->CreateObject<Enemy>();

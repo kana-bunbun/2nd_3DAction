@@ -10,6 +10,9 @@ public:
 	void End()override;
 	void Setup(const Transform& transform)override;
 	void Update(float deltaTime)override;
+	void Draw()override;
+	void DrawBottle();
+	void DrawEffect();
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,
@@ -18,7 +21,7 @@ public:
 	)override;
 
 
-	bool IsTransparent()override { return true; }
+	bool IsTransparent()override { return m_isTrans; }
 
 
 public:
@@ -26,6 +29,13 @@ public:
 	float m_fallSpeed;
 	// 回転速度
 	Vector3 m_rotateSpeed;
-
+	// 効果発動中かどうか
+	bool m_isEffect;
+	// 効果発動時間
+	float m_effectCount;
+	// 描画の透明度
+	float m_alpha;
+	// 透明度を扱うかどうか
+	bool m_isTrans;
 };
 

@@ -41,10 +41,15 @@ namespace Data
 
 		// 今回はvectorの2次元配列にTableという名前を付けている
 		using Table = std::vector <std::vector<std::string>>;
-
+		// ヘッダー付きデータのデータ単位　連想配列　ハッシュテーブル
+		// key:列名 value:値
+		using Row = std::unordered_map <std::string, std::string>;
 		// CSVをそのまま読み込む
 		// データの中身は気にせず読み込む
 		Table LoadRawCSV(const std::string& path);
+
+		// csvから読み込んだデータをヘッダーの内容で分類
+		std::vector<Row> ToRows(const Table& table);
 
 		// 1行分の文字列を指定した文字で分割する
 		// 分割した文字列を返す

@@ -5,9 +5,7 @@ namespace {
 	constexpr float kMoveSpeed = 500.0f;
 	constexpr float kDeleteCount = 3.0f;
 }
-DragonBreath::DragonBreath() :
-	m_transform(),
-	m_isActive(false)
+DragonBreath::DragonBreath()
 {
 	m_transform.Reset();
 }
@@ -17,7 +15,12 @@ DragonBreath::~DragonBreath()
 
 }
 
-void DragonBreath::Init(const Vector3& RegistPos, const Vector3& moveVec)
+void DragonBreath::Init()
+{
+
+}
+
+void DragonBreath::Setup(const Vector3& RegistPos, const Vector3& moveVec)
 {
 	m_transform.position = RegistPos;
 	m_moveVec = moveVec.Normalize();
@@ -26,10 +29,6 @@ void DragonBreath::Init(const Vector3& RegistPos, const Vector3& moveVec)
 	m_lifeCount = 0.0f;
 }
 
-void DragonBreath::End()
-{
-
-}
 
 void DragonBreath::Update(float deltaTime)
 {
@@ -47,3 +46,6 @@ void DragonBreath::Draw()
 {
 	DrawSphere3D(m_transform.position.ToVECTOR(), 30, 10, Color::kMagenta, Color::kMagenta, TRUE);
 }
+
+void DragonBreath::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
+{}

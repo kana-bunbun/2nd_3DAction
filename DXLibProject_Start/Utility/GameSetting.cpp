@@ -2,6 +2,8 @@
 
 #include "../Utility/Vector3.h"
 #include "Game.h"
+namespace {
+}
 
 void GameSetting::InitWindow()
 {

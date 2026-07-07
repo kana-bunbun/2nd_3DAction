@@ -15,12 +15,13 @@ namespace {
 	constexpr int kBleathCount = 30;
 }
 class Player;
+class GameObjectManager;
 class DragonAttack;
 class DragonBreath;
 class Dragon:public GameObject
 {
 public:
-	Dragon();
+	Dragon(GameObjectManager* pGameObjectManager);
 	~Dragon();
 
 	void Init()override;
@@ -57,6 +58,7 @@ public:
 	void SetPosition(const Vector3& pos)override;
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 	void SetTarget(GameObject* target) { m_target = target; }
+	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
 private:
 	void FollowPlayer();
 	void FollowTarget(float deltaTime);
@@ -98,10 +100,11 @@ private:
 	float m_speed;
 	std::shared_ptr<Gauge> m_gauge;
 
-	std::array<std::unique_ptr<DragonBreath>, kBleathCount> m_breath;
+	std::array<DragonBreath*, kBleathCount> m_breath;
 
 	Input::Pad m_pad;
 
 	GameObject* m_target;
+	GameObjectManager* m_pGameObjectManager;
 };
 
