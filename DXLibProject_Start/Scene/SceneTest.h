@@ -103,8 +103,6 @@ private:
 	std::unique_ptr<CameraManager> m_pCameraMgr;
 	Player* m_pPlayer;
 	Dragon* m_pDragon;
-	std::unique_ptr<CharaGaugeManager> m_pGaugeManager;
-	std::unique_ptr<GameObjectManager>m_pGameObjectManager;
 	/// <summary>
 	/// ƒvƒŒƒCƒ„[‚Ì”
 	/// </summary>
@@ -115,8 +113,6 @@ private:
 
 	std::unique_ptr<TileManager>m_pTileManager;
 	std::unique_ptr<PadManager> m_pPadManager;
-	std::unique_ptr<CharacterManager> m_pCharacterManager;
 	std::unique_ptr<ItemManager> m_pItemManager;
-	GameObject* obj;
 
 };

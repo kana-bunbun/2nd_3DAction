@@ -7,9 +7,10 @@
 #include"Map/MapConst.h"
 #include"GameObject.h"
 
-GameObjectManager::GameObjectManager()
+GameObjectManager& GameObjectManager::GetInstance()
 {
-
+	static GameObjectManager instance;
+	return instance;
 }
 
 GameObjectManager::~GameObjectManager()
@@ -62,10 +63,10 @@ void GameObjectManager::Draw()
 		object->Draw();
 	}
 	// 当たり判定のデバッグ表示
-	//for (auto& object : m_objects) {
-	//	if (!object->IsActive())continue;
-	//	object->DebugCollision();
-	//}
+	for (auto& object : m_objects) {
+		if (!object->IsActive())continue;
+		object->DebugCollision();
+	}
 	// 後描画処理
 	for (auto& object : m_objects) {
 		if (!object->IsActive())continue;
@@ -229,6 +230,8 @@ void GameObjectManager::StrageObject(GameObject* obj)
 	if (castToCharacter) {
 		// キャラクタークラスの配列に追加
 		m_characters.push_back(castToCharacter);
+		// IDを設定
+		castToCharacter->m_ID = m_characters.size() - 1;
 		return;
 	}
 }

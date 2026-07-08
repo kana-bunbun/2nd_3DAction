@@ -23,7 +23,6 @@
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
 #include"../World/UI/UIManager.h"
-#include"../World/Character/CharaGaugeManager.h"
 #include"../World/Map/TileManager.h"
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
@@ -54,16 +53,13 @@ namespace {
 }
 
 SceneTest::SceneTest() :
-	m_pGameObjectManager(nullptr),
 	m_pBarrier(nullptr),
 	m_pCameraMgr(nullptr),
 	m_pDragon(nullptr),
-	m_pGaugeManager(nullptr),
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
 	m_pUiManager(nullptr),
 	m_pPadManager(nullptr),
-	m_pCharacterManager(nullptr),
 	m_pItemManager(nullptr),
 	m_playerNum(0)
 {
@@ -78,28 +74,20 @@ SceneTest::SceneTest() :
 		assert(false && "コントローラー 接続失敗");
 	}
 	
-	m_pGameObjectManager = std::make_unique<GameObjectManager>();
-	m_pBarrier = m_pGameObjectManager->CreateObject<Barrier>();
-	m_pDragon = m_pGameObjectManager->CreateObject<Dragon>(m_pGameObjectManager.get());
+	m_pBarrier = GameObjectManager::GetInstance().CreateObject<Barrier>();
+	m_pDragon = GameObjectManager::GetInstance().CreateObject<Dragon>();
 	
-	m_pGameObjectManager->CreateObject<Enemy>();
-	m_pGameObjectManager->CreateObject<Enemy>();
-	m_pGameObjectManager->CreateObject<Enemy>();
+	GameObjectManager::GetInstance().CreateObject<Enemy>();
+	GameObjectManager::GetInstance().CreateObject<Enemy>();
+	GameObjectManager::GetInstance().CreateObject<Enemy>();
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
-	m_pGaugeManager = std::make_unique<CharaGaugeManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pCharacterManager = std::make_unique<CharacterManager>();
-	m_pTileManager->SetGameObjectManager(m_pGameObjectManager.get());
-	m_pTileManager->SetCharacterManager(m_pCharacterManager.get());
-	m_pCharacterManager->SetGameObjectManager(m_pGameObjectManager.get());
 	m_pItemManager = std::make_unique<ItemManager>();
-	m_pItemManager->SetGameObjectManager(m_pGameObjectManager.get());
-	m_pPlayer = m_pGameObjectManager->CreateObject<Player>();
+	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>();
 
 
-	obj = m_pGameObjectManager->FindObject<Enemy>();
 }
 
 SceneTest::~SceneTest() {}
@@ -115,22 +103,16 @@ void SceneTest::Init() {
 	SoundManager::GetInstance().LoadBGM();
 	SoundManager::GetInstance().LoadSe();
 
-	m_pGameObjectManager->Init();
+	GameObjectManager::GetInstance().Init();
 	m_pDragon->SetMaster(m_pPlayer);
 	m_pPlayer->SetBarrier(m_pBarrier);
 	m_pUiManager->SetPlayer(m_pPlayer);
 	m_pUiManager->SetDragon(m_pDragon);
-	m_pGaugeManager->Init();
-	m_pGaugeManager->SetPlayer(m_pPlayer);
-	m_pGaugeManager->SetDragon(m_pDragon);
-	m_pPadManager->SetCharacterManager(m_pCharacterManager.get());
 	m_pPadManager->SetItemCursor(m_pItemManager->GetItemCursor());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
 	m_pTileManager->SetPlayer(m_pPlayer);
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	m_pItemManager->SetPlayer(m_pPlayer);
-	m_pDragon->SetTarget(obj);
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
@@ -153,9 +135,8 @@ void SceneTest::End() {
 	//m_pSound->Release();
 	//delete m_pSound;
 	//m_pSound = nullptr;
-	if (m_pGameObjectManager) {
-		m_pGameObjectManager->End();
-	}
+	
+	GameObjectManager::GetInstance().End();
 	m_pItemManager->End();
 	m_pPadManager->End();
 
@@ -165,15 +146,13 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pCameraMgr->Update(deltaTime);
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pUiManager->Update(deltaTime);
-	m_pGaugeManager->Update();
 	m_pTileManager->Update(deltaTime);
-	if (m_pGameObjectManager) {
-		m_pGameObjectManager->Update(deltaTime);
-	}
+	
+	GameObjectManager::GetInstance().Update(deltaTime);
 	m_pItemManager->Update();
 	m_pPadManager->Update();
 
-	m_pGameObjectManager->CheckCollision();
+	GameObjectManager::GetInstance().CheckCollision();
 	// 敵と当たっているかどうかを調べる
 	//Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
 	//printfDx("当たってい%s\n", result.isHit ? "る" : "ない");
@@ -203,8 +182,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 		m_pPadManager->ChangePadState(PadManager::PadState::Player);
 	}
 
-	if (m_pGameObjectManager) {
-	}
 	return nullptr;
 }
 
@@ -214,9 +191,8 @@ void SceneTest::Draw() {
 	m_pCameraMgr->Apply();
 	// マップの描画処理
 	// ゲームオブジェクトの描画処理
-	if (m_pGameObjectManager) {
-		m_pGameObjectManager->Draw();
-	}
+	GameObjectManager::GetInstance().Draw();
+	
 	m_pTileManager->Draw();
 	m_pItemManager->Draw();
 	// アイテムメニュー中は画面を少し暗くする
