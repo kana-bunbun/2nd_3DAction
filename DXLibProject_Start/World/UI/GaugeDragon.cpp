@@ -40,7 +40,7 @@ void GaugeDragon::SetDragon(Dragon * dragon)
 		Vector3 pos = GaugeParam::kDragonGaugePos;
 
 		GaugeShow* gauge = new GaugeShow(pos,GaugeType::HP);
-		gauge->SetGauge(dragon->GetGauge());
+		gauge->SetGauge(dragon->GetHP());
 		m_gauge = gauge;
 	
 }

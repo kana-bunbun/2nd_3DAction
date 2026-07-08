@@ -63,6 +63,9 @@ namespace {
 	constexpr int kHatLeftFrameIndex = 12;
 	constexpr int kWaistFrameIndex = 3;
 
+	// パリィ溜め時のMP減少量
+	constexpr float kParryMPDecrease = 0.05f;
+
 }
 
 Player::Player(Vector3 position) :
@@ -78,8 +81,7 @@ Player::Player(Vector3 position) :
 	m_pBarrier(nullptr),
 	m_dashFlag(false),
 	m_isGroud(true),
-	m_isJump(false),
-	m_gauges()
+	m_isJump(false)
 {
 	// モデルの設定
 	LoadModel();
@@ -93,9 +95,8 @@ Player::Player(Vector3 position) :
 	// カプセルのオフセットを計算
 	m_capsule.SetOffset(kCapsuleOffset);
 	// ゲージの初期化
-	for (int i = 0; i < GaugeType::Max; i++) {
-		m_gauges.emplace_back(std::make_shared<Gauge>());
-	}
+	m_HPGauge=std::make_unique<Gauge>();
+	m_MPGauge=std::make_unique<Gauge>();
 	// 当たり判定追加
 	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kBodyCollisionOffsetY, 0.0f), kBodyCollisionSize), CollisionType::Body);
 	// 座標設定
@@ -205,12 +206,11 @@ void Player::Update(float deltaTime)
 
 
 	// ゲージが上限・下限を超えないようにする
-	for (auto& gauge : m_gauges)
-		gauge->Clamp();
+	
 
 	// MPの自動回復
 	if(m_status!=Status::Player::Parry)
-	m_gauges[GaugeType::MP]->Increase(deltaTime);
+	m_MPGauge->Increase(deltaTime);
 
 	//m_animation.Debug();
 }
@@ -254,7 +254,7 @@ void Player::Parry()
 	if (m_parry)return;
 	// ボタンを離した瞬間
 	if ((!Input::IsDown(Input::Button::A, m_pad)&&m_charge) ||
-		!m_gauges[GaugeType::MP]->GetRate()) {
+		!m_MPGauge->GetRate()) {
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
@@ -272,7 +272,7 @@ void Player::Parry()
 		float animSpeed = (kParryStopTime - m_animation.GetPlayCount()) / kParryStopTime;
 		// アニメーションの再生速度を設定
 		m_animation.SetAnimSpeed(animSpeed);
-		m_gauges[GaugeType::MP]->Decrease(0.05f);
+		m_MPGauge->Decrease(kParryMPDecrease);
 		// アニメーションのカウントが一定以上いかないようにする(一応)
 		if (m_animation.GetPlayCount() > kParryStopTime)
 			m_animation.ResetPlayCount(kParryStopTime);

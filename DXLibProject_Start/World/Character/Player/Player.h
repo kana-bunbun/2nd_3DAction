@@ -82,7 +82,6 @@ public:
 	void SetCameraView(const Camera::CameraView& cameraview) { m_cameraView = cameraview; }
 
 	void SetBarrier(Barrier* barrier);
-	std::vector<std::shared_ptr<Gauge>> GetGauge() { return m_gauges; }
 	 bool GetIsGround()const { return m_isGroud; }
 	 void SetPad(Input::Pad pad) { m_pad = pad; }
 private:
@@ -137,10 +136,7 @@ private:
 	bool m_dashFlag;
 	bool m_isGroud;
 	bool m_isJump;
-	/// <summary>
-	/// ゲージの種類
-	/// </summary>
-	std::vector<std::shared_ptr<Gauge>> m_gauges;
+
 	Collision::Capsule m_capsule;
 
 };

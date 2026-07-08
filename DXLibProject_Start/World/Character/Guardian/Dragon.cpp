@@ -9,6 +9,7 @@
 #include"DragonBreath.h"
 #include"../../../Utility/Input.h"
 #include"../../GameObjectManager.h"
+#include"../CharacterManager.h"
 
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
@@ -82,7 +83,7 @@ namespace {
 
 }
 
-Dragon::Dragon(GameObjectManager* pGameObjectManager):
+Dragon::Dragon():
 	m_animation(),
 	m_animData(),
 	m_status(Status::Dragon::Neutral),
@@ -96,8 +97,7 @@ Dragon::Dragon(GameObjectManager* pGameObjectManager):
 	m_canAttackFlag(false),
 	m_speed(),
 	m_breath(),
-	m_pad(Input::Pad::Invalid),
-	m_pGameObjectManager(pGameObjectManager)
+	m_pad(Input::Pad::Invalid)
 {
 	m_transform.Reset();
 
@@ -131,12 +131,13 @@ Dragon::Dragon(GameObjectManager* pGameObjectManager):
 	m_move.SetLerpSpeed(kLerpRad);
 	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
-	m_gauge = std::make_shared<Gauge>(300,300,0);
+
+	m_HPGauge = std::make_unique<Gauge>();
 
 	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 0), GameObject::CollisionType::Body);
 	// ブレスの初期化
 	for (int i = 0; i < m_breath.size(); i++) {
-		m_breath[i] = m_pGameObjectManager->CreateObject<DragonBreath>();
+		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
 }
 
@@ -210,8 +211,7 @@ void Dragon::Update(float deltaTime)
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
 
-	m_gauge->Clamp();
-
+	m_HPGauge->Clamp();
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
 
@@ -223,6 +223,7 @@ void Dragon::UpdateFromInput()
 
 	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
 		if (Input::IsDown(Input::Button::LT, Input::Pad::P1)) {
+			SetTarget(CharacterManager::GetInstance().CheckNearestCharacter(m_transform.position, Character::Type::Enemy));
 			Call();
 		}
 		else

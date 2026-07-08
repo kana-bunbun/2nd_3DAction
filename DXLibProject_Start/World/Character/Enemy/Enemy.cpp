@@ -6,9 +6,9 @@ namespace {
 	const char* const kMotionPath = "Animation\\";
 	const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
 	{
+		"Run.mv1",
 		"Idle.mv1",
 		"Roar.mv1",
-		"Run.mv1",
 		"Walk.mv1",
 		"TailAttack.mv1",
 		"JumpAttack.mv1",
@@ -35,7 +35,11 @@ namespace {
 		true,
 		true,
 	};
+	constexpr float kSphereRadius = 48;
+	constexpr int kLeftFootIndex = 48;
+	constexpr int kRightFootIndex = 58;
 
+	constexpr float kDefaultAnimSpeed = 0.3f;
 }
 
 Enemy::Enemy():
@@ -49,6 +53,12 @@ Enemy::Enemy():
 	m_transform.Reset();
 
 	LoadModel();
+	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	m_collisionTag = GameObject::CollisionTag::Enemy;
+	m_HPGauge = std::make_unique<Gauge>();
 }
 
 Enemy::Enemy(const Transform& transform) :
@@ -62,6 +72,12 @@ Enemy::Enemy(const Transform& transform) :
 	m_transform = transform;
 
 	LoadModel();
+	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius),CollisionType::Foot);
+	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	m_collisionTag = GameObject::CollisionTag::Enemy;
+	m_HPGauge = std::make_unique<Gauge>();
 }
 
 Enemy::~Enemy()
@@ -114,6 +130,7 @@ void Enemy::LoadModel()
 
 void Enemy::Update(float deltaTime)
 {
+	m_animation.SetAnimSpeed(kDefaultAnimSpeed);
 	// アニメーション速度を初期化
 	UpdateAnimation(deltaTime);
 
@@ -121,6 +138,17 @@ void Enemy::Update(float deltaTime)
 	//printfDx("Queen\n");
 	//printfDx("status : %d\n",m_status);
 	//m_animation.Debug();
+}
+
+void Enemy::UpdateCollision()
+{
+
+	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	m_collisions[0].shape->SetPosition(FootPos);
+	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	m_collisions[1].shape->SetPosition(FootPos);
+	printfDx("FootPos | x : %f / y : %f / z : %f\n", FootPos.x, FootPos.y, FootPos.z);
+	printfDx("HP : %f\n", m_HPGauge->GetValue());
 }
 
 void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

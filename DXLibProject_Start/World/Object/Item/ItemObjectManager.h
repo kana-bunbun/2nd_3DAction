@@ -25,12 +25,9 @@ public:
 	void SetupItem(ItemObject* item, GameObject* obj);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
-	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
 private:
 	// 自身が管理するアイテムオブジェクトの配列
 	std::vector<ItemObject*>m_items;
-	// ゲームオブジェクト管理をするポインタ
-	GameObjectManager* m_pGameObjectManager;
 	// アイテムカーソル
 	std::unique_ptr<ItemCursor> m_pItemCursor;
 };
@@ -41,7 +38,7 @@ inline T* ItemObjectManager::CreateItem(GameObject* obj)
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム生成:アイテムの基底クラスを未継承");
 	// オブジェクト生成
-	auto item = m_pGameObjectManager->CreateObject<T>();
+	auto item = GameObjectManager::GetInstance().CreateObject<T>();
 	SetupItem(item, obj);
 
 	// 配列に追加

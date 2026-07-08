@@ -181,7 +181,6 @@
     <ClCompile Include="World\Map\RoomData.cpp" />
     <ClCompile Include="World\Map\TileManager.cpp" />
     <ClCompile Include="System\FontManager.cpp" />
-    <ClCompile Include="World\Character\CharaGaugeManager.cpp" />
     <ClCompile Include="World\Map\MapCreate.cpp" />
     <ClCompile Include="World\Map\MapManager.cpp" />
     <ClCompile Include="World\Map\MapTile.cpp" />
@@ -287,7 +286,6 @@
     <ClInclude Include="World\Map\RoomData.h" />
     <ClInclude Include="World\Map\TileManager.h" />
     <ClInclude Include="System\FontManager.h" />
-    <ClInclude Include="World\Character\CharaGaugeManager.h" />
     <ClInclude Include="World\Map\MapConst.h" />
     <ClInclude Include="World\Map\MapCreate.h" />
     <ClInclude Include="World\Map\MapManager.h" />

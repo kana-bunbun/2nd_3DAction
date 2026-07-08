@@ -1,7 +1,32 @@
 #pragma once
 #include "../GameObject.h"
+#include"../UI/Gauge.h"
+class Gauge;
 class Character :public GameObject
 {
-
+public:
+	enum class Type {
+		Invalid = -1,
+		Player,
+		Enemy,
+		Dragon,
+	};
+public:
+	// キャラクター種類の取得
+	virtual const Type& GetCharacterType() {
+		return Type::Player;
+	}
+	// HP取得処理
+	Gauge* GetHP() { return m_HPGauge.get(); }
+	Gauge* GetMP() { return m_MPGauge.get(); }
+	// キャラクターのID
+	int m_ID;
+	virtual void Damage(float damage) { m_HPGauge->Decrease(damage); m_HPGauge->Clamp(); }
+	virtual void Heal(float heal) { m_HPGauge->Increase(heal); }
+protected:
+	// HP
+	std::unique_ptr<Gauge> m_HPGauge;
+	// MP
+	std::unique_ptr<Gauge> m_MPGauge;
 };
 

@@ -22,6 +22,10 @@ public:
 	/// </summary>
 	void Update(float deltaTime)override;
 	/// <summary>
+	/// 当たり判定の更新処理
+	/// </summary>
+	void UpdateCollision()override;
+	/// <summary>
 	/// 衝突処理
 	/// </summary>
 	/// <param name="result"></param>
@@ -36,6 +40,8 @@ public:
 	void UpdateAnimation(float deltaTime);
 	void ChangeAnimation(const Status::Queen& status);
 public:		// ゲッター・セッター関数
+	const Character::Type& GetCharacterType()override { return Character::Type::Enemy; }
+
 private:
 	/// <summary>
 	/// アニメーションの管理を行う

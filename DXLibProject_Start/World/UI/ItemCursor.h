@@ -57,7 +57,6 @@ public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
 	void SetPad(Input::Pad pad) { m_pad = pad; }
-	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	void SetItemObjectManager(ItemObjectManager* pItemObjectManager) { m_pItemObjectManager = pItemObjectManager; }
 private:
 	bool BlendItem();
@@ -81,7 +80,6 @@ private:
 	float m_holdLeftCount;
 	float m_holdRightCount;
 
-	Player* m_pPlayer;
 	ItemObjectManager* m_pItemObjectManager;
 };
 

@@ -21,6 +21,8 @@ public:
 private:
 
 	// ゲージの配列
-	std::array<GaugeShow*, GaugeType::Max>m_gauges;
+	GaugeShow* m_HPGauge;
+	GaugeShow* m_MPGauge;
+
 };
 

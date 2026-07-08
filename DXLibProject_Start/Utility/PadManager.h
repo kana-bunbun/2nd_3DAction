@@ -28,12 +28,10 @@ public:
 	void ChangePadState(const PadState& padState);
 
 public:
-	void SetCharacterManager(CharacterManager* pCharacterManager) { m_pCharacterManager = pCharacterManager; }
 	void SetItemCursor(ItemCursor* pItemCursor) { m_pItemCursor = pItemCursor; }
 	void SetTileManager(TileManager* pTileManager) { m_pTileManager = pTileManager; }
 	const PadState& GetPadState() { return m_padState; }
 private:
-	CharacterManager* m_pCharacterManager;
 	ItemCursor* m_pItemCursor;
 	TileManager* m_pTileManager;
 	PadState m_padState;

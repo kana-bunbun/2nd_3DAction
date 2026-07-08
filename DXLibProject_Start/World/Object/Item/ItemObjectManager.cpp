@@ -3,8 +3,7 @@
 #include "../../GameObject.h"
 #include"../../UI/ItemCursor.h"
 
-ItemObjectManager::ItemObjectManager():
-	m_pGameObjectManager(nullptr)
+ItemObjectManager::ItemObjectManager()
 {
 	
 }

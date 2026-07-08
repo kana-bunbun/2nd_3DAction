@@ -45,13 +45,3 @@ void ItemManager::Draw()
 
 	m_pItemObjectManager->Draw();
 }
-
-void ItemManager::SetGameObjectManager(GameObjectManager* pGameObjectManager)
-{
-	m_pItemObjectManager->SetGameObjectManager(pGameObjectManager);
-}
-
-void ItemManager::SetPlayer(Player* pPlayer)
-{
-	player = pPlayer; m_pItemCursor->SetPlayer(player);
-}

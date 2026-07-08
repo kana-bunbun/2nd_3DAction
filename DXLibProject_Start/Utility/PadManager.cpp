@@ -5,7 +5,6 @@
 #include"../World/Map/TileManager.h"
 #include"../System/TimeManager.h"
 PadManager::PadManager():
-	m_pCharacterManager(nullptr),
 	m_pItemCursor(nullptr),
 	m_pTileManager(nullptr),
 	m_padState(PadManager::PadState::Invalid)
@@ -56,16 +55,16 @@ void PadManager::ChangePadState(const PadState& padState)
 			m_pItemCursor->SetPad(Input::Pad::P1);
 			m_pItemCursor->SetIsBlendMenu(false);
 		}
-		if (m_pCharacterManager)
-			m_pCharacterManager->SetPad(Input::Pad::Invalid);
+		//if (m_pCharacterManager)
+			CharacterManager::GetInstance().SetPad(Input::Pad::Invalid);
 
 		if (m_pTileManager)
 			m_pTileManager->SetPad(Input::Pad::Invalid);
 
 		break;
 	case PadManager::PadState::Player:
-		if (m_pCharacterManager)
-			m_pCharacterManager->SetPad(Input::Pad::P1);
+		//if (m_pCharacterManager)
+		CharacterManager::GetInstance().SetPad(Input::Pad::P1);
 		
 		if (m_pItemCursor) {
 			m_pItemCursor->SetPad(Input::Pad::P1);
@@ -82,8 +81,8 @@ void PadManager::ChangePadState(const PadState& padState)
 		m_pItemCursor->SetIsBlendMenu(true);
 		}
 		
-		if (m_pCharacterManager)
-			m_pCharacterManager->SetPad(Input::Pad::Invalid);
+		//if (m_pCharacterManager)
+		CharacterManager::GetInstance().SetPad(Input::Pad::Invalid);
 
 		if (m_pTileManager)
 			m_pTileManager->SetPad(Input::Pad::Invalid);

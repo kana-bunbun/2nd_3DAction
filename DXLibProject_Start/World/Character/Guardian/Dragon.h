@@ -1,5 +1,6 @@
 #pragma once
 #include"../../GameObject.h"
+#include"../Character.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
@@ -18,14 +19,15 @@ class Player;
 class GameObjectManager;
 class DragonAttack;
 class DragonBreath;
-class Dragon:public GameObject
+class Dragon:public Character
 {
 public:
-	Dragon(GameObjectManager* pGameObjectManager);
+	Dragon();
 	~Dragon();
 
 	void Init()override;
 	void Update(float deltaTime)override;
+	const Character::Type& GetCharacterType()override { return Character::Type::Dragon; }
 	void UpdateFromInput();
 	/// <summary>
 	/// 追従時の更新処理
@@ -54,11 +56,9 @@ public:
 	/// </summary>
 	void SetMaster(GameObject* pMaster) { m_pMaster = pMaster; }
 	Vector3 CheckFollowOffset();
-	std::shared_ptr<Gauge> GetGauge() { return m_gauge; }
 	void SetPosition(const Vector3& pos)override;
 	void SetPad(Input::Pad pad) { m_pad = pad; }
 	void SetTarget(GameObject* target) { m_target = target; }
-	void SetGameObjectManager(GameObjectManager* pGameObjectManager) { m_pGameObjectManager = pGameObjectManager; }
 private:
 	void FollowPlayer();
 	void FollowTarget(float deltaTime);
@@ -98,13 +98,11 @@ private:
 	bool m_attackFlag;
 	bool m_canAttackFlag;
 	float m_speed;
-	std::shared_ptr<Gauge> m_gauge;
 
 	std::array<DragonBreath*, kBleathCount> m_breath;
 
 	Input::Pad m_pad;
 
 	GameObject* m_target;
-	GameObjectManager* m_pGameObjectManager;
 };
 

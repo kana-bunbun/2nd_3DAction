@@ -1,5 +1,6 @@
 #pragma once
 
+//#include"../Include/Effekseer/EffekseerForDXLib.h"
 /// <summary>
 /// ゲームの処理関連の初期設定を行う
 /// </summary>
@@ -18,6 +19,7 @@ public:
 	/// <summary>
 	/// DXライブラリでの3D描画の設定
 	/// </summary>
-	void InitDxLib3D();
+	static void InitDxLib3D();
+
 
 };

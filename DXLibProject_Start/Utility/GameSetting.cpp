@@ -2,6 +2,9 @@
 
 #include "../Utility/Vector3.h"
 #include "Game.h"
+
+
+
 namespace {
 	constexpr int BackGroundR=112/*128*/;
 	constexpr int BackGroundG=128/*229*/;

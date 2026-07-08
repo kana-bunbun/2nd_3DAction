@@ -40,9 +40,7 @@ TileManager::TileManager() :
 	m_pStair(nullptr),
 	m_upStair(false),
 	m_pPlayer(nullptr),
-	m_pCharacterManager(nullptr),
 	m_pad(Input::Pad::Invalid),
-	m_pGameObjectManager(nullptr),
 	m_stairID(-1)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
@@ -87,7 +85,7 @@ void TileManager::SetUpFloor()
 			// 生成されていなければ
 			if (i>=m_pTiles.size()) {
 			// タイルを生成
-			TileObject* tile = m_pGameObjectManager->CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
+			TileObject* tile = GameObjectManager::GetInstance().CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
 			// モデルハンドルを設定
 			tile->SetFloorModel(MV1DuplicateModel(m_floorHandle));
 			tile->SetWallHandle(MV1DuplicateModel(m_wallHandle));
@@ -106,7 +104,7 @@ void TileManager::SetUpFloor()
 		}
 	}
 	if (!m_pStair) {
-		m_pStair = m_pGameObjectManager->CreateObject<Stair>();
+		m_pStair = GameObjectManager::GetInstance().CreateObject<Stair>();
 	}
 	else {
 		m_pTiles[m_stairID]->SetIsStair(false);
@@ -115,9 +113,8 @@ void TileManager::SetUpFloor()
 	m_pStair->SetTile(m_stairID);
 	m_pTiles[m_stairID]->SetIsStair(true);
 
-	if(m_pCharacterManager)
 	// キャラクターランダム配置
-	m_pCharacterManager->SetRandomPos();
+	CharacterManager::GetInstance().SetRandomPos();
 
 }
 

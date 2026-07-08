@@ -10,6 +10,7 @@
 #include"../Character/Player/Player.h"
 #include"../Object/Item/ItemObjectManager.h"
 #include"../Object/Item/HealBottle.h"
+#include"../Character/CharacterManager.h"
 #include"ItemSlot.h"
 #include<string>
 #include<array>
@@ -57,7 +58,6 @@ ItemCursor::ItemCursor():
 	m_isBlendMenu(false),
 	m_holdLeftCount(0.0f),
 	m_holdRightCount(0.0f),
-	m_pPlayer(nullptr),
 	m_pItemObjectManager(nullptr)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
@@ -193,23 +193,26 @@ void ItemCursor::NormalizeIndex()
 
 void ItemCursor::UseItem()
 {
+	Player* pPlayer = CharacterManager::GetInstance().GetPlayer();
+	// ポインタを取得できなければ即時return
+	if (!pPlayer)return;
 	switch (m_slots[m_selectIndex]->GetItemType())
 	{
 	case ItemData::Type::Apple:
 	//m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
-		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
 	case ItemData::Type::Beer:
-		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
 	case ItemData::Type::Bread:
-		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
 	case ItemData::Type::Cheese:
-		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
 	case ItemData::Type::CheeseBread:
-		m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 	default:
 		break;
 	}

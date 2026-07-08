@@ -28,6 +28,7 @@ public:
 		Body,
 		Foot,
 		Sensor,
+		Attack,
 		Null,		// 当たり判定をチェックしない
 	};
 	struct CollisionData {
@@ -35,7 +36,11 @@ public:
 		std::unique_ptr<Collision::Shape>shape;
 		CollisionType type;
 	};
-
+	struct HitCollisionData{
+	public:
+		Collision::Shape* collision;
+		bool isHit;
+	};
 public:
 	GameObject();
 	virtual ~GameObject() = default;
