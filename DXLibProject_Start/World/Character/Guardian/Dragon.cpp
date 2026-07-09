@@ -10,6 +10,8 @@
 #include"../../../Utility/Input.h"
 #include"../../GameObjectManager.h"
 #include"../CharacterManager.h"
+#include"../../Map/RouteSearcher.h"
+#include"../../Map/MapManager.h"
 
 namespace {
 	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
@@ -139,6 +141,9 @@ Dragon::Dragon():
 	for (int i = 0; i < m_breath.size(); i++) {
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
+	float sizeAxis = 600;
+	Vector3 size = { sizeAxis,sizeAxis,sizeAxis };
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), GameObject::CollisionType::Invalid);
 }
 
 
@@ -177,7 +182,7 @@ void Dragon::Init()
 
 void Dragon::Update(float deltaTime)
 {
-
+	CheckRouteManhattan();
 	// 入力による更新処理
 	UpdateFromInput();
 
@@ -214,7 +219,11 @@ void Dragon::Update(float deltaTime)
 	m_HPGauge->Clamp();
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
-
+	for (int i = 0; i < moveData.size(); i++) {
+		Vector3 position = MapManager::GetInstance().GetWorldPosFromID(moveData[i].m_sourceSquareID);
+		position.y = 50;
+		DrawSphere3D(position.ToVECTOR(), 40, 10, Color::kCyan, Color::kCyan, TRUE);
+	}
 	//DrawSphere3D(m_transform.position.ToVECTOR(), 500, 10, 0xff0000, 0xff0000, TRUE);
 }
 
@@ -242,6 +251,9 @@ void Dragon::FollowUpdate(float deltaTime)
 	case FollowState::Attack:
 		FollowTarget(deltaTime);
 		break;
+	case FollowState::RouteSearch:
+		FollowRoute();
+			break;
 	default:
 		break;
 	}
@@ -273,15 +285,28 @@ void Dragon::AttackUpdate(float deltaTime)
 
 }
 
-void Dragon::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
-{}
+void Dragon::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
+{
+	Vector3 push = result.normal * result.penetration;
+
+	switch (other.GetCollisionTag())
+	{
+	case CollisionTag::Wall: {
+		Vector3 pushResult = m_transform.position + push;
+		SetPosition(pushResult);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 
 void Dragon::Call()
 {
-	if (!m_target)return;
+	if (!m_pTarget)return;
 
 	m_followState = FollowState::Attack;
-	m_pTarget = m_target;
 }
 
 void Dragon::CallBack()
@@ -305,7 +330,6 @@ Vector3 Dragon::CheckFollowOffset()
 
 	//DrawSphere3D(OffsetLeft.ToVECTOR(), 8, 10, 0xff0000, 0xff0000, FALSE);
 	//DrawSphere3D(OffsetRight.ToVECTOR(), 8, 10, 0x0000ff, 0x0000ff, FALSE);
-
 
 
 	float distanceRight = (myPos - OffsetRight).GetSqLength();
@@ -340,6 +364,7 @@ void Dragon::SetPosition(const Vector3& pos)
 void Dragon::FollowPlayer()
 {
 	assert(m_pMaster);
+
 	Vector3 myPos = m_transform.position;
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
@@ -362,7 +387,10 @@ void Dragon::FollowPlayer()
 	}
 
 	m_move.SetSpeed(kMoveSpeed*m_speed);
+	if (moveData.size() > 5) {
+		m_followState = FollowState::RouteSearch;
 
+	}
 }
 
 void Dragon::FollowTarget(float deltaTime)
@@ -392,6 +420,43 @@ void Dragon::FollowTarget(float deltaTime)
 	m_speed = MyMath::Clamp(m_speed, 0.0f, 2.0f);
 	m_move.SetSpeed(m_speed*kMoveSpeed);
 
+}
+
+void Dragon::FollowRoute()
+{
+	assert(m_pMaster);
+	if (!moveData.size())return;
+	Vector3 myPos = m_transform.position;
+	myPos -= kPosOffset;
+	Vector3  distance = myPos - MapManager::GetInstance().GetWorldPosFromID(moveData[0].m_sourceSquareID);
+	Vector3  distancePlayer = myPos - m_pMaster->GetTransform().position;
+	m_speed = distancePlayer.GetSqLength() * kFollowSqLengthRate - 0.3f;
+	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
+	float angle = atan2(distance.x, distance.z);
+
+	m_move.SetDesireRad(angle);
+	if (distance.GetSqLength() > kFollowSqLength) {
+		//m_speed = 1;
+		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed, 0.0f, 1.0f);
+		m_move.SetLerpSpeed(10);
+
+
+	}
+	else {
+		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed, 0.0f, 1.0f);
+		m_move.SetLerpSpeed(10);
+	}
+
+	m_move.SetSpeed(kMoveSpeed * m_speed);
+
+	if (moveData.size() <= 1) {
+		m_followState = FollowState::Normal;
+	}
+
+
+	if (m_onTileID == moveData[0].m_sourceSquareID) {
+		moveData.erase(moveData.begin());
+	}
 }
 
 void Dragon::UpdateAnimation(float deltaTime)
@@ -461,5 +526,41 @@ void Dragon::Breath()
 		m_breath[i]->Setup(fire, differ);
 		break;
 	}
+}
+
+void Dragon::CheckRouteManhattan()
+{
+	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData()))
+	{
+		return;
+	}
+	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData()))
+	{
+		return;
+	}
+	if (GetOnTileID() == m_pMaster->GetOnTileID())
+	{
+		return;
+	}
+	std::function<bool(SquareData*)>tilecheck;
+	tilecheck = [&](SquareData* data) {
+		return CanMoveManhattan(data);
+		};
+	std::vector<ManhattanMoveData>route = RouteSearcher::GetInstance().RouteSearchManhattan(m_onTileID, m_pMaster->GetOnTileID(), tilecheck);
+	moveData.clear();
+	int routeSize = route.size();
+	for (int i = 0; i < routeSize; i++) {
+		moveData.push_back(route[route.size()-1]);
+		route.erase(route.end() - 1);
+	}
+	moveData.erase(moveData.begin());
+}
+
+bool Dragon::CanMoveManhattan(SquareData* square)
+{
+	if (!square)return false;
+	MapConst::eTerrain terrain = square->GetTerrain();
+	if (terrain == MapConst::eTerrain::Invalid)return false;
+	return terrain!=MapConst::eTerrain::Wall;
 }
 

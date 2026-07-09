@@ -11,14 +11,17 @@
 namespace {
 	enum FollowState {
 		Normal,
-		Attack
+		Attack,
+		RouteSearch
 	};
 	constexpr int kBleathCount = 30;
 }
 class Player;
 class GameObjectManager;
+class SquareData;
 class DragonAttack;
 class DragonBreath;
+class ManhattanMoveData;
 class Dragon:public Character
 {
 public:
@@ -58,10 +61,11 @@ public:
 	Vector3 CheckFollowOffset();
 	void SetPosition(const Vector3& pos)override;
 	void SetPad(Input::Pad pad) { m_pad = pad; }
-	void SetTarget(GameObject* target) { m_target = target; }
+	void SetTarget(GameObject* target) { m_pTarget = target; }
 private:
 	void FollowPlayer();
 	void FollowTarget(float deltaTime);
+	void FollowRoute();
 
 	/// <summary>
 	/// アニメーションの更新処理
@@ -73,6 +77,8 @@ private:
 	void ChangeAnimation(const Status::Dragon& status);
 
 	void Breath();
+	void CheckRouteManhattan();
+	bool CanMoveManhattan(SquareData* square);
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -102,7 +108,7 @@ private:
 	std::array<DragonBreath*, kBleathCount> m_breath;
 
 	Input::Pad m_pad;
+	std::vector<ManhattanMoveData> moveData;
 
-	GameObject* m_target;
 };
 

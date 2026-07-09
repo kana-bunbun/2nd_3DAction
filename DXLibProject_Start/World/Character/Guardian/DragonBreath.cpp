@@ -25,22 +25,28 @@ void DragonBreath::Init()
 
 void DragonBreath::Setup(const Vector3& RegistPos, const Vector3& moveVec)
 {
+	// 生成座標の設定
 	m_transform.position = RegistPos;
-	m_moveVec = moveVec.Normalize();
-	m_isActive = true;
-
-	m_lifeCount = 0.0f;
+	// 当たり判定の更新
 	UpdateCollision();
+	// 移動方向のノーマライズ
+	m_moveVec = moveVec.Normalize();
+	// アクティブフラグをtrue
+	m_isActive = true;
+	// 生存時間の初期化
+	m_lifeCount = 0.0f;
 }
 
 
 void DragonBreath::Update(float deltaTime)
 {
 	//deltaTime = 0.0000001f;
+	// 前回のフレームで当たっているかどうかを調べる
 	for (int i = 0; i < m_hitData.size(); i++) {
 		if (m_hitData[i].isHit) {
 		m_hitData[i].isHit = false;
 		}
+		// 当たっていなければ配列から削除する
 		else {
 			m_hitData[i].collision = nullptr;
 			delete m_hitData[i].collision;
@@ -79,6 +85,7 @@ void DragonBreath::ResolveCollision(GameObject& other, const CollisionData& myDa
 			if (m_hitData[i].collision != otherData.shape.get())continue;
 			m_hitData[i].isHit = true;
 			inList = true;
+			break;
 		}
 		if (!inList) {
 		const Character& character = dynamic_cast<const Character&>(other);

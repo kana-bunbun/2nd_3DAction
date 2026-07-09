@@ -28,9 +28,15 @@ void CharacterManager::SetRandomPos()
 	// 部屋マスのIDの配列を取得
 	std::vector<int>rooms = MapCreate::GetInstance().GetRooms();
 
+	// ドラゴンのポインタがなければ取得
+	if(!m_pDragon)
 	m_pDragon = GameObjectManager::GetInstance().FindObject<Dragon>();
+	// プレイヤーのポインタがなければ取得
+	if(!m_pPlayer)
 	m_pPlayer = GameObjectManager::GetInstance().FindObject<Player>();
+	// プレイヤー座標を格納する変数
 	Vector3 playerPos = Vector3::zero;
+
 	for (auto& character : m_characters) {
 		// 部屋マスの配列のインデックスをランダムで取得
 		int roomID = MyRandom::Int(0, rooms.size()-1);
@@ -41,10 +47,12 @@ void CharacterManager::SetRandomPos()
 		// 指定したインデックスの要素を削除
 		rooms.erase(rooms.begin() + roomID);
 
-		// プレイヤーの場合、生成座標を保持しておく
+		// キャラクターがプレイヤーの場合、生成座標を保持しておく
 		if (character!=m_pPlayer)continue;
 		playerPos = randomPos;
+
 	}
+	// ドラゴンの座標にプレイヤー座標を設定しておく
 	m_pDragon->SetPosition(playerPos);
 }
 
@@ -61,7 +69,7 @@ Character* CharacterManager::GetCharacter(int ID)
 		// 有効な値なら指定したIDのキャラクターを返す
 		return m_characters[ID];
 	}
-
+	// 有効な値でないときnullptr
 	return nullptr;
 }
 
@@ -91,27 +99,32 @@ Player* CharacterManager::GetPlayer()
 Character* CharacterManager::CheckNearestCharacter(const Vector3& basePosition, const Character::Type& characterType)
 {
 	Character* character = nullptr;
-	if (m_characters.size() <= 0) {
-		m_characters = GameObjectManager::GetInstance().GetCharacters();
-	}
+	// GameObjectManagerの配列と要素数が異なるとき
+	std::vector<Character*>characters= GameObjectManager::GetInstance().GetCharacters();
+	m_characters = characters;
+	// 最短距離を格納する変数を不正値で初期化
 	float minLength = -1;
 	for (int i = 0; i < m_characters.size(); i++) {
 		// nullptrまたはアクティブでないキャラクターはスルー
 		if (!m_characters[i]||!m_characters[i]->IsActive())continue;
-		// キャラクターの種類が指定されていて、かつ指定した種類のキャラクターでなければスルー
+		// キャラクターの種類が指定されている時、かつ指定した種類のキャラクターでなければスルー
 		if (characterType != Character::Type::Invalid &&
 			m_characters[i]->GetCharacterType() != characterType)continue;
+		// 距離の差を取得
+		Vector3 differ = (basePosition - m_characters[i]->GetTransform().position);
+		differ.y = 0;
 		// キャラクターとの距離を計算
-		float characterLength = (basePosition - m_characters[i]->GetTransform().position).GetSqLength();
+		float characterLength = differ.GetSqLength();
 		// minLengthに正常値が入っているときかつ、
 		// 調べた距離が最短距離でないときスルー
 		if (minLength > 0 && minLength < characterLength)continue;
 		// 最短距離なら
 
-		// 値を更新
+		// 最短距離の更新
 		minLength = characterLength;
 		// 返す値の更新
 		character = m_characters[i];
 	}
+	// 最短距離のキャラクターのポインタを返す
 	return character;
 }

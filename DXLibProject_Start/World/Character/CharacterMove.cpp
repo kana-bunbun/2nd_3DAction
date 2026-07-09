@@ -36,11 +36,12 @@ void CharacterMove::Update(float deltaTime)
 	// 角度を180～-180の間に収める
 	lerpRad = MyMath::NormalizeRadian(lerpRad);
 	// 補間割合をかける
-	lerpRad *= m_lerpSpeed;
+	lerpRad *= MyMath::Clamp((m_lerpSpeed * deltaTime), 0.0f, 1.0f);
+
 	if (lerpRad*lerpRad < MyMath::Epsilon)
 		lerpRad = 0;
 	// 
-	m_transform.rotation.y += lerpRad*deltaTime;
+	m_transform.rotation.y += lerpRad;
 	m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
 
 
