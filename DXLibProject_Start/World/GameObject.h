@@ -29,6 +29,7 @@ public:
 		Foot,
 		Sensor,
 		Attack,
+		Heal,
 		Null,		// 当たり判定をチェックしない
 	};
 	struct CollisionData {

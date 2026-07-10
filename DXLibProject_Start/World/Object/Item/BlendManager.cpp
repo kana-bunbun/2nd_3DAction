@@ -3,20 +3,14 @@
 #include<DxLib.h>
 namespace {
 	constexpr int kTypeMax = static_cast<int>(ItemData::Type::Max);
-	constexpr ItemData::Type kBlendRecipe[kTypeMax][kTypeMax] = {
-		{ItemData::Type::Invalid},		//Appleの組み合わせ
-		{},		//Beerの組み合わせ
-		{},		//Breadの組み合わせ
-		{},		//Cheeseの組み合わせ
-		{},		//CheeseBreadの組み合わせ
 
-	};
 	const char* const ItemName[kTypeMax]{
-		"Apple",
-		"Beer",
-		"Bread",
-		"Cheese",
-		"CheeseBread",
+		"Honey",
+		"Jam",
+		"Pepper",
+		"Whiskey",
+		"HealBottle",
+		"MolotovCocktail",
 	};
 }
 BlendManager& BlendManager::GetInstnce()
@@ -72,6 +66,11 @@ void BlendManager::LoadRecipe(std::vector<std::vector<std::string>> loadData)
 			int itemIndex = j + 1;
 			ItemData::Type add = SToItemType(loadData[itemIndex][i]);
 			ItemData::Type result = SToItemType(loadData[itemIndex][i+1]);
+
+			if (base == ItemData::Type::Whiskey && add == ItemData::Type::Pepper) {
+				int e=0;
+			}
+
 			ItemRecipe[static_cast<int>(base)][static_cast<int>(add)] = static_cast<int>(result);
 
 		}

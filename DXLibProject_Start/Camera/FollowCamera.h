@@ -65,5 +65,6 @@ private:
 	/// FollowCameraのパラメータ群
 	/// </summary>
 	FollowCameraParam m_param;
+
 };
 

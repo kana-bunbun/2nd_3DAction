@@ -11,7 +11,7 @@ public:
 	void Setup(const Transform& transform)override;
 	void Update(float deltaTime)override;
 	void Draw()override;
-	void DrawBottle();
+	void DrawModel();
 	void DrawEffect();
 	void ResolveCollision(
 		GameObject& other,
@@ -25,10 +25,7 @@ public:
 
 
 public:
-	// 落下速度
-	float m_fallSpeed;
-	// 回転速度
-	Vector3 m_rotateSpeed;
+
 	// 効果発動中かどうか
 	bool m_isEffect;
 	// 効果発動時間

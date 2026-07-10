@@ -1,6 +1,7 @@
-,Apple,,,Beer,,,Bread,,,Cheese,,,CheeseBread
-Apple,Invalid,,Apple,Invalid,,Apple,CheeseBread,,Apple,Beer,,Apple,Cheese
-Beer,Invalid,,Beer,Invalid,,Beer,Apple,,Beer,Apple,,Beer,Apple
-Bread,CheeseBread,,Bread,Apple,,Bread,Invalid,,Bread,Bread,,Bread,Bread
-Cheese,Beer,,Cheese,Apple,,Cheese,Bread,,Cheese,Invalid,,Cheese,CheeseBread
-CheeseBread,Cheese,,CheeseBread,Apple,,CheeseBread,Bread,,CheeseBread,CheeseBread,,CheeseBread,Invalid
+,Honey,,,Jam,,,Pepper,,,Whiskey,,,HealBottle,,,MolotovCocktail
+Honey,Invalid,,Honey,HealBottle,,Honey,Invalid,,Honey,Invalid,,Honey,Invalid,,Honey,Invalid
+Jam,HealBottle,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid
+Pepper,Invalid,,Pepper,Invalid,,Pepper,Invalid,,Pepper,MolotovCocktail,,Pepper,Invalid,,Pepper,Invalid
+Whiskey,Invalid,,Whiskey,Invalid,,Whiskey,MolotovCocktail,,Whiskey,Invalid,,Whiskey,Invalid,,Whiskey,Invalid
+HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid
+MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid

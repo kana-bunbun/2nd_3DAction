@@ -5,11 +5,12 @@
 
 namespace {
 	const char* const kItemPath[static_cast<int>(ItemData::Type::Max)] = {
-		"HealBottleIcon",
-		"Item_Beer",
-		"Item_Bread",
-		"Item_Cheese",
-		"Item_Apple",
+		"Honey",
+		"Jam",
+		"Pepper",
+		"Whiskey",
+		"HealBottle",
+		"MolotovCocktail",
 	};
 	const char* const kBackGroundPath = "Icon Background";
 	constexpr float kSlotScale = 0.05f * Game::kWindowScale;

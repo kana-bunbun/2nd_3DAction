@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FromCSV.cpp" />
+    <ClCompile Include="World\Object\Item\MolotovCocktail.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObject.cpp" />
@@ -250,6 +251,7 @@
   <ItemGroup>
     <ClInclude Include="Camera\CameraParam.h" />
     <ClInclude Include="FromCSV.h" />
+    <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />
     <ClInclude Include="World\Object\Item\ItemManager.h" />
     <ClInclude Include="World\Object\Item\ItemObjectManager.h" />

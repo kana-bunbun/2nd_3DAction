@@ -4,11 +4,12 @@ struct ItemData
 public:
 	enum class Type {
 		Invalid = -1,
-		Apple,
-		Beer,
-		Bread,
-		Cheese,
-		CheeseBread,
+		Honey,
+		Jam,
+		Pepper,
+		Whiskey,
+		HealBottle,
+		MolotovCocktail,
 		Max,
 	};
 	Type m_type;

@@ -11,6 +11,13 @@ ItemManager::ItemManager():
 	m_pItemCursor->SetItemObjectManager(m_pItemObjectManager.get());
 }
 
+ItemManager& ItemManager::GetInstance()
+{
+	// TODO: return ステートメントをここに挿入します
+	static ItemManager instance;
+	return instance;
+}
+
 ItemManager::~ItemManager()
 {
 

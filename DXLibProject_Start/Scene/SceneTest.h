@@ -31,7 +31,6 @@ class FloorBlock;
 class PadManager;
 class GameObjectManager;
 class GameObject;
-class ItemManager;
 //
 //namespace Collision {
 //	class AABB;
@@ -113,6 +112,5 @@ private:
 
 	std::unique_ptr<TileManager>m_pTileManager;
 	std::unique_ptr<PadManager> m_pPadManager;
-	std::unique_ptr<ItemManager> m_pItemManager;
 
 };

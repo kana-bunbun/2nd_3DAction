@@ -60,7 +60,6 @@ SceneTest::SceneTest() :
 	m_pTileManager(nullptr),
 	m_pUiManager(nullptr),
 	m_pPadManager(nullptr),
-	m_pItemManager(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -84,7 +83,6 @@ SceneTest::SceneTest() :
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pItemManager = std::make_unique<ItemManager>();
 	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>();
 
 
@@ -108,7 +106,7 @@ void SceneTest::Init() {
 	m_pPlayer->SetBarrier(m_pBarrier);
 	m_pUiManager->SetPlayer(m_pPlayer);
 	m_pUiManager->SetDragon(m_pDragon);
-	m_pPadManager->SetItemCursor(m_pItemManager->GetItemCursor());
+	m_pPadManager->SetItemCursor(ItemManager::GetInstance().GetItemCursor());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
 	m_pTileManager->SetPlayer(m_pPlayer);
@@ -137,19 +135,20 @@ void SceneTest::End() {
 	//m_pSound = nullptr;
 	
 	GameObjectManager::GetInstance().End();
-	m_pItemManager->End();
+	ItemManager::GetInstance().End();
 	m_pPadManager->End();
 
 }
 
 std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pCameraMgr->Update(deltaTime);
+	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pUiManager->Update(deltaTime);
 	m_pTileManager->Update(deltaTime);
 	
 	GameObjectManager::GetInstance().Update(deltaTime);
-	m_pItemManager->Update();
+	ItemManager::GetInstance().Update();
 	m_pPadManager->Update();
 
 	GameObjectManager::GetInstance().CheckCollision();
@@ -194,7 +193,7 @@ void SceneTest::Draw() {
 	GameObjectManager::GetInstance().Draw();
 	
 	m_pTileManager->Draw();
-	m_pItemManager->Draw();
+	ItemManager::GetInstance().Draw();
 	// アイテムメニュー中は画面を少し暗くする
 	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);

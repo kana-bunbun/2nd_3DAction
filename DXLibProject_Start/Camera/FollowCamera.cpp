@@ -143,4 +143,8 @@ void FollowCamera::UpdatePosition(float deltaTime)
 
 
     m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
+    if (m_transform.position.y < 0)
+    {
+        m_transform.position.y = 0;
+    }
 }

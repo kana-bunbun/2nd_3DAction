@@ -10,6 +10,7 @@
 #include"../Character/Player/Player.h"
 #include"../Object/Item/ItemObjectManager.h"
 #include"../Object/Item/HealBottle.h"
+#include"../Object/Item/MolotovCocktail.h"
 #include"../Character/CharacterManager.h"
 #include"ItemSlot.h"
 #include<string>
@@ -29,21 +30,14 @@ namespace {
 
 	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
-	const char* const kItemPath[static_cast<int>(ItemData::Type::Max)] =
-	{
-		"Resource\\Graph\\HealBottleIcon.png",
-		"Resource\\Graph\\Item_Beer.png",
-		"Resource\\Graph\\Item_Bread.png",
-		"Resource\\Graph\\Item_Cheese.png",
-		"Resource\\Graph\\Item_Apple.png",
-	};
 	// 所持数テキストの表示オフセット
-	constexpr Vector3 kHoldNumTextOffset = { 15*Game::kWindowScale,10 * Game::kWindowScale,0.0f };
+	constexpr Vector3 kHoldNumTextOffset = { 15*Game::kWindowScale,9 * Game::kWindowScale,0.0f };
 	// フォント関連
 	//const char* const kFontName = "OCRB";
-	const char* const kFontName = "Bauhaus 93";
-	constexpr int kFontThickness = 5*Game::kWindowScale;
-	constexpr int kFontSize = 20 * Game::kWindowScale;
+	//const char* const kFontName = "Bauhaus 93";
+	const char* const kFontName = "BIZ UDゴシック";
+	constexpr int kFontThickness = 15*Game::kWindowScale;
+	constexpr int kFontSize = 25 * Game::kWindowScale;
 	
 	// 長押しで連続的にカーソル移動する際のインターバル
 	constexpr float kHoldArrowInterval = 0.04f;
@@ -198,21 +192,20 @@ void ItemCursor::UseItem()
 	if (!pPlayer)return;
 	switch (m_slots[m_selectIndex]->GetItemType())
 	{
-	case ItemData::Type::Apple:
-	//m_pItemObjectManager->CallItem<HealBottle>(m_pPlayer);
+	case ItemData::Type::Honey:
+		break;
+	case ItemData::Type::Jam:
+		break;
+	case ItemData::Type::Pepper:
+		break;
+	case ItemData::Type::Whiskey:
+		break;
+	case ItemData::Type::HealBottle:
 		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
-	case ItemData::Type::Beer:
-		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
+	case ItemData::Type::MolotovCocktail:
+		m_pItemObjectManager->CallItem<MolotovCocktail>(pPlayer);
 		break;
-	case ItemData::Type::Bread:
-		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
-		break;
-	case ItemData::Type::Cheese:
-		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
-		break;
-	case ItemData::Type::CheeseBread:
-		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 	default:
 		break;
 	}
