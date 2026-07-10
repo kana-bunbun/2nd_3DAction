@@ -7,6 +7,7 @@
 #include"../../Utility/Color.h"
 #include"../../Utility/MyRandom.h"
 #include"../Character/CharacterManager.h"
+#include"../Character/Guardian/Dragon.h"
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"
 #include<DxLib.h>
@@ -201,12 +202,24 @@ bool TileManager::InDevideList(size_t id)
 
 void TileManager::DrawMark()
 {
+	Transform drawPos;
+	drawPos.position = GetMiniMapPosition(m_markPos.position);
+	DrawRotaGraph(drawPos.position.x, drawPos.position.y, kCursorScale, m_markPos.rotation.y, m_cursorHandle, TRUE);
+	drawPos = CharacterManager::GetInstance().GetDragon()->GetTransform();
+	drawPos.position = GetMiniMapPosition(drawPos.position);
+	DrawRotaGraph(drawPos.position.x, drawPos.position.y, kCursorScale, drawPos.rotation.y, m_cursorHandle, TRUE);
+
+}
+
+const Vector3& TileManager::GetMiniMapPosition(const Vector3& position) const
+{
 	Vector3 drawStart = kDrawCenter - kDrawBlockStart;
 	Vector3 toMapPos=Vector3::zero;
-	toMapPos.x= m_markPos.position.x / kMapSize.x* kDrawBlockStart.x;
-	toMapPos.y= m_markPos.position.z / kMapSize.y* kDrawBlockStart.y;
+
+	toMapPos.x= position.x / kMapSize.x* kDrawBlockStart.x;
+	toMapPos.y= position.z / kMapSize.y* kDrawBlockStart.y;
 	toMapPos += drawStart;
-	DrawRotaGraph(toMapPos.x, toMapPos.y, kCursorScale, m_markPos.rotation.y, m_cursorHandle, TRUE);
+	return toMapPos;
 }
 
 int TileManager::RandomPassableID()

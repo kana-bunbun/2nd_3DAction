@@ -22,6 +22,7 @@ public:
 	void DrawMiniMap();
 	bool InDevideList(size_t id);
 	void DrawMark();
+	const Vector3& GetMiniMapPosition(const Vector3& position)const;
 	void SetMarkPos(Transform markPos) { m_markPos = markPos; }
 
 	int RandomPassableID();
