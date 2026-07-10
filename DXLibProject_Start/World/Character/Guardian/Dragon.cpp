@@ -183,6 +183,11 @@ void Dragon::Init()
 
 void Dragon::Update(float deltaTime)
 {
+	m_oldTileID = m_onTileID;
+	m_onTileID = MapManager::GetInstance().GetIDFromWorldPos(m_transform.position);
+	m_masterOldTileID = m_masterTileID;
+	m_masterTileID= MapManager::GetInstance().GetIDFromWorldPos(m_pMaster->GetTransform().position);
+	if(m_onTileID!=m_oldTileID||m_masterTileID!=m_masterOldTileID)
 	CheckRouteManhattan();
 	// 入力による更新処理
 	UpdateFromInput();
@@ -220,6 +225,7 @@ void Dragon::Update(float deltaTime)
 	m_HPGauge->Clamp();
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
+	printfDx("followState : %d\n", m_followState);
 
 	Vector3 myTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchTileID);
 	Vector3 masterTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchPlayerTileID);
@@ -374,8 +380,12 @@ void Dragon::FollowPlayer()
 	Vector3 myPos = m_transform.position;
 	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
-	Vector3  distancePlayer = myPos - m_pMaster->GetTransform().position;
-	m_speed = distancePlayer.GetSqLength()*kFollowSqLengthRate-0.3f;
+	float speed = distance.GetSqLength() * kFollowSqLengthRate;
+	if (speed > 3) {
+		int i = 0;
+	}
+
+	m_speed = speed;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float angle = atan2(distance.x, distance.z);
 
@@ -393,7 +403,7 @@ void Dragon::FollowPlayer()
 	}
 
 	m_move.SetSpeed(kMoveSpeed*m_speed);
-	if (moveData.size() > 5) {
+	if (moveData.size() >= 5 && !IsTargetSameRoom()) {
 		m_followState = FollowState::RouteSearch;
 
 	}
@@ -404,7 +414,7 @@ void Dragon::FollowTarget(float deltaTime)
 	Vector3 myPos = m_transform.position- kPosOffset;
 	Vector3  distance = myPos - m_pTarget->GetTransform().position;
 	float angle = atan2(distance.x, distance.z);
-	float speed = kAttenuationSpeed * deltaTime - 0.3f;
+	float speed = kAttenuationSpeed * deltaTime;
 	m_speed *= MyMath::Clamp(speed,0.0f, kAttenuationMax);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
@@ -455,9 +465,8 @@ void Dragon::FollowRoute()
 	}
 
 	m_move.SetSpeed(kMoveSpeed * m_speed);
-	int myRoomID = MapManager::GetInstance().GetRoomID(m_onTileID);
-	int masterRoomID = MapManager::GetInstance().GetRoomID(m_pMaster->GetOnTileID());
-	if (moveData.size() <= 5||myRoomID==masterRoomID) {
+	
+	if (moveData.size() <= 5||IsTargetSameRoom()) {
 		m_followState = FollowState::Normal;
 	}
 
@@ -536,16 +545,27 @@ void Dragon::Breath()
 	}
 }
 
+bool Dragon::IsTargetSameRoom()
+{
+	int myRoomID = MapManager::GetInstance().GetRoomID(m_onTileID);
+	int masterRoomID = MapManager::GetInstance().GetRoomID(m_pMaster->GetOnTileID());
+	printfDx("myRoomID : %d\n", myRoomID);
+	printfDx("masterRoomID : %d\n", masterRoomID);
+	if (myRoomID == -1 || masterRoomID == -1)return false;
+	if (myRoomID == masterRoomID)return true;
+	return false;
+}
+
 void Dragon::CheckRouteManhattan()
 {
 	m_routeSearchTileID = GetOnTileID();
 	m_routeSearchPlayerTileID = m_pMaster->GetOnTileID();
 	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData())) {
-		m_routeSearchTileID = GetNearestCanMoveTile(MapManager::GetInstance().GetWorldPosFromID(m_routeSearchTileID));
+		m_routeSearchTileID = GetNearestCanMoveTile(m_transform.position);
 
 	}
 	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData())) {
-		m_routeSearchPlayerTileID = GetNearestCanMoveTile(MapManager::GetInstance().GetWorldPosFromID(m_routeSearchPlayerTileID));
+		m_routeSearchPlayerTileID = GetNearestCanMoveTile(m_pMaster->GetTransform().position);
 
 	}
 	/*if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData()))
@@ -556,7 +576,7 @@ void Dragon::CheckRouteManhattan()
 	{
 		return;
 	}*/
-	if (GetOnTileID() == m_pMaster->GetOnTileID())
+	if (m_routeSearchTileID == m_routeSearchPlayerTileID)
 	{
 		return;
 	}
@@ -593,6 +613,7 @@ int Dragon::GetNearestCanMoveTile(const Vector3& position)
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionEight::Max); i++) {
 		MapConst::eDirectionEight direction = static_cast<MapConst::eDirectionEight>(i);
 		square=MapManager::GetInstance().GetToDirSquare(baseID, direction);
+		if (!square)continue;
 		if (!CanMoveManhattan(square->GetSquareData()))continue;
 		float distance = (position - MapManager::GetInstance().GetWorldPosFromID(square->GetId())).GetSqLength();
 		if (minDistance > 0 && minDistance < distance)continue;

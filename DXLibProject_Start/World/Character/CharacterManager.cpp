@@ -94,6 +94,27 @@ Player* CharacterManager::GetPlayer()
 	return m_pPlayer;
 }
 
+Dragon* CharacterManager::GetDragon()
+{
+	// ドラゴンのポインタがないとき
+	if (!m_pDragon) {
+		// キャラクターの配列を総当たりして調べる
+		for (auto& character : m_characters) {
+			// キャラクターの種類がプレイヤーでないときreturn
+			if (character->GetCharacterType() != Character::Type::Dragon)continue;
+			// キャストしてドラゴンでなければスルー
+			Dragon* dragon = dynamic_cast<Dragon*>(character);
+			if (!dragon)continue;
+			// ドラゴンなら
+			m_pDragon = dragon;
+			// ループを抜ける
+			break;
+		}
+	}
+	// ポインタを返す
+	return m_pDragon;
+}
+
 
 // 指定したキャラクターが不正値ならすべてのキャラクターの中で最も近いキャラクターを返す
 Character* CharacterManager::CheckNearestCharacter(const Vector3& basePosition, const Character::Type& characterType)

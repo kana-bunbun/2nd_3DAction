@@ -77,6 +77,7 @@ private:
 	void ChangeAnimation(const Status::Dragon& status);
 
 	void Breath();
+	bool IsTargetSameRoom();
 	void CheckRouteManhattan();
 	bool CanMoveManhattan(SquareData* square);
 	/// <summary>
@@ -115,5 +116,8 @@ private:
 	std::vector<ManhattanMoveData> moveData;
 	int m_routeSearchTileID;
 	int m_routeSearchPlayerTileID;
+	int m_oldTileID;
+	int m_masterTileID;
+	int m_masterOldTileID;
 };
 

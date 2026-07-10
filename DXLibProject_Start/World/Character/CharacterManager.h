@@ -18,7 +18,7 @@ public:
 	void SetPad(Input::Pad pad);
 	Character* GetCharacter(int ID);
 	Player* GetPlayer();
-	
+	Dragon* GetDragon();
 public:
 	/// <summary>
 	/// 指定した種類のキャラクターを返す処理
