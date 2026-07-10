@@ -79,6 +79,10 @@ private:
 	void Breath();
 	void CheckRouteManhattan();
 	bool CanMoveManhattan(SquareData* square);
+	/// <summary>
+	/// 経路探索で通行可能かつ指定した座標から最短距離のマスIDを取得
+	/// </summary>
+	int GetNearestCanMoveTile(const Vector3& position);
 private:
 	/// <summary>
 	/// アニメーションの管理を行う
@@ -109,6 +113,7 @@ private:
 
 	Input::Pad m_pad;
 	std::vector<ManhattanMoveData> moveData;
-
+	int m_routeSearchTileID;
+	int m_routeSearchPlayerTileID;
 };
 

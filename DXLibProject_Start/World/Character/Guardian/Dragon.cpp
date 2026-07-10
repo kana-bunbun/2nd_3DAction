@@ -141,9 +141,10 @@ Dragon::Dragon():
 	for (int i = 0; i < m_breath.size(); i++) {
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
-	float sizeAxis = 600;
+	float sizeAxis = 300;
 	Vector3 size = { sizeAxis,sizeAxis,sizeAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), GameObject::CollisionType::Invalid);
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), GameObject::CollisionType::Body);
+	m_collisionTag = GameObject::CollisionTag::Dragon;
 }
 
 
@@ -220,7 +221,12 @@ void Dragon::Update(float deltaTime)
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
 
-
+	Vector3 myTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchTileID);
+	Vector3 masterTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchPlayerTileID);
+	Vector3 Tile = MapManager::GetInstance().GetWorldPosFromID(m_onTileID);
+	DrawSphere3D(myTile.ToVECTOR(), 200, 20, Color::kCyan, Color::kCyan, TRUE);
+	DrawSphere3D(masterTile.ToVECTOR(), 200, 20, Color::kMagenta, Color::kMagenta, TRUE);
+	DrawSphere3D(Tile.ToVECTOR(), 20, 20, Color::kRed, Color::kRed, TRUE);
 	//DrawSphere3D(m_transform.position.ToVECTOR(), 500, 10, 0xff0000, 0xff0000, TRUE);
 }
 
@@ -291,6 +297,9 @@ void Dragon::ResolveCollision(GameObject& other, const CollisionData& myData, co
 	case CollisionTag::Wall: {
 		Vector3 pushResult = m_transform.position + push;
 		SetPosition(pushResult);
+		if (push.GetSqLength() > 900) {
+			int s = 0;
+		}
 		break;
 	}
 	default:
@@ -422,6 +431,7 @@ void Dragon::FollowTarget(float deltaTime)
 void Dragon::FollowRoute()
 {
 	assert(m_pMaster);
+
 	if (!moveData.size())return;
 	Vector3 myPos = m_transform.position;
 	myPos -= kPosOffset;
@@ -447,7 +457,7 @@ void Dragon::FollowRoute()
 	m_move.SetSpeed(kMoveSpeed * m_speed);
 	int myRoomID = MapManager::GetInstance().GetRoomID(m_onTileID);
 	int masterRoomID = MapManager::GetInstance().GetRoomID(m_pMaster->GetOnTileID());
-	if (moveData.size() <= 1||myRoomID==masterRoomID) {
+	if (moveData.size() <= 5||myRoomID==masterRoomID) {
 		m_followState = FollowState::Normal;
 	}
 
@@ -528,14 +538,24 @@ void Dragon::Breath()
 
 void Dragon::CheckRouteManhattan()
 {
-	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData()))
+	m_routeSearchTileID = GetOnTileID();
+	m_routeSearchPlayerTileID = m_pMaster->GetOnTileID();
+	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData())) {
+		m_routeSearchTileID = GetNearestCanMoveTile(MapManager::GetInstance().GetWorldPosFromID(m_routeSearchTileID));
+
+	}
+	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData())) {
+		m_routeSearchPlayerTileID = GetNearestCanMoveTile(MapManager::GetInstance().GetWorldPosFromID(m_routeSearchPlayerTileID));
+
+	}
+	/*if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData()))
 	{
 		return;
 	}
 	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData()))
 	{
 		return;
-	}
+	}*/
 	if (GetOnTileID() == m_pMaster->GetOnTileID())
 	{
 		return;
@@ -544,13 +564,14 @@ void Dragon::CheckRouteManhattan()
 	tilecheck = [&](SquareData* data) {
 		return CanMoveManhattan(data);
 		};
-	std::vector<ManhattanMoveData>route = RouteSearcher::GetInstance().RouteSearchManhattan(m_onTileID, m_pMaster->GetOnTileID(), tilecheck);
+	std::vector<ManhattanMoveData>route = RouteSearcher::GetInstance().RouteSearchManhattan(m_routeSearchTileID, m_routeSearchPlayerTileID, tilecheck);
 	moveData.clear();
 	int routeSize = route.size();
 	for (int i = 0; i < routeSize; i++) {
 		moveData.push_back(route[route.size()-1]);
 		route.erase(route.end() - 1);
 	}
+	if(moveData.size())
 	moveData.erase(moveData.begin());
 }
 
@@ -560,5 +581,24 @@ bool Dragon::CanMoveManhattan(SquareData* square)
 	MapConst::eTerrain terrain = square->GetTerrain();
 	if (terrain == MapConst::eTerrain::Invalid)return false;
 	return terrain!=MapConst::eTerrain::Wall;
+}
+
+int Dragon::GetNearestCanMoveTile(const Vector3& position)
+{
+	int baseID = MapManager::GetInstance().GetIDFromWorldPos(position);
+	MapTile* square = MapManager::GetInstance().GetTile(baseID);
+	float minDistance = -1;
+	int resultID = -1;
+	if (CanMoveManhattan(square->GetSquareData()))return baseID;
+	for (int i = 0; i < static_cast<int>(MapConst::eDirectionEight::Max); i++) {
+		MapConst::eDirectionEight direction = static_cast<MapConst::eDirectionEight>(i);
+		square=MapManager::GetInstance().GetToDirSquare(baseID, direction);
+		if (!CanMoveManhattan(square->GetSquareData()))continue;
+		float distance = (position - MapManager::GetInstance().GetWorldPosFromID(square->GetId())).GetSqLength();
+		if (minDistance > 0 && minDistance < distance)continue;
+		minDistance = distance;
+		resultID = square->GetId();
+	}
+	return resultID;
 }
 

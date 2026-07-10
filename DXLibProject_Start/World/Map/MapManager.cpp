@@ -83,6 +83,13 @@ MapTile* MapManager::GetToDirSquare(int ID, MapConst::eDirectionFour direction)
     int beforeX = IDToPosX(ID), beforeY = IDToPosY(ID);
     return GetToDirSquare(beforeX,beforeY,direction);
 }
+MapTile* MapManager::GetToDirSquare(int ID, MapConst::eDirectionEight direction)
+{
+    int posX = IDToPosX(ID), posY = IDToPosY(ID);
+    ToDirPosition(posX,posY,direction);
+    MapTile* result = GetTile(posX, posY);
+    return result;
+}
 
 void MapManager::ToDirPosition(int& x, int& y, MapConst::eDirectionFour direction)
 {
@@ -103,6 +110,47 @@ void MapManager::ToDirPosition(int& x, int& y, MapConst::eDirectionFour directio
         x--;
         break;
     case MapConst::eDirectionFour::Max:
+        break;
+    default:
+        break;
+    }
+}
+
+void MapManager::ToDirPosition(int& x, int& y, MapConst::eDirectionEight direction)
+{
+    switch (direction)
+    {
+    case MapConst::eDirectionEight::Invalid:
+        break;
+    case MapConst::eDirectionEight::Up:
+        y++;
+        break;
+    case MapConst::eDirectionEight::UpRight:
+        x++;
+        y++;
+        break;
+    case MapConst::eDirectionEight::Right:
+        x++;
+        break;
+    case MapConst::eDirectionEight::DownRight:
+        x++;
+        y--;
+        break;
+    case MapConst::eDirectionEight::Down:
+        y--;
+        break;
+    case MapConst::eDirectionEight::DownLeft:
+        x--;
+        y--; 
+        break;
+    case MapConst::eDirectionEight::Left:
+        x--;
+        break;
+    case MapConst::eDirectionEight::UpLeft:
+        x--;
+        y++; 
+        break;
+    case MapConst::eDirectionEight::Max:
         break;
     default:
         break;

@@ -18,6 +18,7 @@ public:
 	enum class CollisionTag {
 		None,
 		Player,
+		Dragon,
 		Enemy,
 		Wall,
 		Stage,

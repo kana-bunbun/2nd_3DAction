@@ -154,6 +154,13 @@ void GameObjectManager::CheckCollision()
 					// 当たっていなければスルー
 					if (!resultA.isHit)continue;
 
+					if ((objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
+						objB->GetCollisionTag() == GameObject::CollisionTag::Dragon) ||
+						(objA->GetCollisionTag() == GameObject::CollisionTag::Dragon &&
+							objB->GetCollisionTag() == GameObject::CollisionTag::Wall)) {
+						int f = 0;
+					}
+
 					// objAの衝突後処理
 					objA->ResolveCollision(*objB, collisionA, collisionB, resultA);
 

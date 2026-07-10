@@ -44,11 +44,13 @@ public:
 	/// 指定座標のマスから見た指定方向マスのポインタ取得(ID指定)
 	/// </summary>
 	MapTile* GetToDirSquare(int ID, MapConst::eDirectionFour direction);
+	MapTile* GetToDirSquare(int ID, MapConst::eDirectionEight direction);
 
 		/// <summary>
 	/// 指定した座標から指定した方向にあるマスの座標取得
 	/// </summary>
 	void ToDirPosition(int& x, int& y, MapConst::eDirectionFour direction);
+	void ToDirPosition(int& x, int& y, MapConst::eDirectionEight direction);
 
 	/// <summary>
 	/// すべてのマスに行う処理を適応する
