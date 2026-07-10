@@ -256,3 +256,26 @@ int MapManager::DirectionToPosition(int ID, MapConst::eDirectionEight direction)
     result = PositionToID(centerX, centerY);
     return result;
 }
+
+std::vector<RoomData*> MapManager::GetRooms()
+{
+    std::vector<RoomData*>data;
+    for (int i = 0; i < m_rooms.size(); i++) {
+        data.push_back(m_rooms[i].get());
+    }
+    return data;
+}
+
+int MapManager::GetRoomID(int squareID)
+{
+    int roomID = -1;
+    for (int i = 0; i < m_rooms.size(); i++) {
+        std::vector<int> roomSquareList = m_rooms[i]->GetIDList();
+        for (int j = 0; j < roomSquareList.size(); j++) {
+            if (squareID != roomSquareList[j])continue;
+            roomID = i;
+            return roomID;
+        }
+    }
+    return roomID;
+}

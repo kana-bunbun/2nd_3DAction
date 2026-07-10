@@ -60,6 +60,7 @@ void MapCreate::CreateFirstArea()
 		};
 	// 全てのマスを壁にする
 	MapManager::GetInstance().ExecuteAllSquare(firstWall);
+	MapManager::GetInstance().RemoveAllRoom();
 	AreaData* firstArea = new AreaData(2, 2, MapConst::MAP_SQUARE_WIDTH_COUNT - 4, MapConst::MAP_SQUARE_HEIGHT_COUNT - 4);
 	m_areas.push_back(firstArea);
 }

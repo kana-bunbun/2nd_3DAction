@@ -96,6 +96,8 @@ public:
 	/// タイルの最大数を取得
 	/// </summary>
 	int GetTileMaxNum() { return m_mapData.size(); }
+	std::vector <RoomData*> GetRooms();
+	int GetRoomID(int squareID);
 private:
 	// シングルトンにするのでprivate
 	MapManager() = default;

@@ -30,6 +30,7 @@ namespace {
 
 	const char* const kBackGroundPath = "Resource\\Graph\\Icon Background.png";
 	const char* const kCursorPath = "Resource\\Graph\\ItemCursor.png";
+
 	// 所持数テキストの表示オフセット
 	constexpr Vector3 kHoldNumTextOffset = { 15*Game::kWindowScale,9 * Game::kWindowScale,0.0f };
 	// フォント関連
@@ -192,14 +193,6 @@ void ItemCursor::UseItem()
 	if (!pPlayer)return;
 	switch (m_slots[m_selectIndex]->GetItemType())
 	{
-	case ItemData::Type::Honey:
-		break;
-	case ItemData::Type::Jam:
-		break;
-	case ItemData::Type::Pepper:
-		break;
-	case ItemData::Type::Whiskey:
-		break;
 	case ItemData::Type::HealBottle:
 		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
@@ -207,7 +200,7 @@ void ItemCursor::UseItem()
 		m_pItemObjectManager->CallItem<MolotovCocktail>(pPlayer);
 		break;
 	default:
-		break;
+		return;
 	}
 	// 選択中のアイテムを1つ減らす
 	m_slots[m_selectIndex]->Sub();

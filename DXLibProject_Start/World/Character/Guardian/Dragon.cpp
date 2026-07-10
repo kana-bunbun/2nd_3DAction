@@ -219,11 +219,8 @@ void Dragon::Update(float deltaTime)
 	m_HPGauge->Clamp();
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
-	for (int i = 0; i < moveData.size(); i++) {
-		Vector3 position = MapManager::GetInstance().GetWorldPosFromID(moveData[i].m_sourceSquareID);
-		position.y = 50;
-		DrawSphere3D(position.ToVECTOR(), 40, 10, Color::kCyan, Color::kCyan, TRUE);
-	}
+
+
 	//DrawSphere3D(m_transform.position.ToVECTOR(), 500, 10, 0xff0000, 0xff0000, TRUE);
 }
 
@@ -448,8 +445,9 @@ void Dragon::FollowRoute()
 	}
 
 	m_move.SetSpeed(kMoveSpeed * m_speed);
-
-	if (moveData.size() <= 1) {
+	int myRoomID = MapManager::GetInstance().GetRoomID(m_onTileID);
+	int masterRoomID = MapManager::GetInstance().GetRoomID(m_pMaster->GetOnTileID());
+	if (moveData.size() <= 1||myRoomID==masterRoomID) {
 		m_followState = FollowState::Normal;
 	}
 
