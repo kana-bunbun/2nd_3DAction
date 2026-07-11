@@ -10,11 +10,16 @@ namespace {
 	constexpr float kEffectMaxCount = 3.0f;
 	constexpr float kAlphaMax = 0.5f;
 	constexpr float kEffectRadius = 300;
+	constexpr float kBodyCollisionRadius = 30;
+	constexpr float kBodyCollisionAxis = 30;
+
 }
 MolotovCocktail::MolotovCocktail()
 {
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
-
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),GameObject::CollisionType::Attack);
+	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),GameObject::CollisionType::Attack);
 }
 
 MolotovCocktail::~MolotovCocktail()
@@ -29,24 +34,13 @@ void MolotovCocktail::Init()
 
 void MolotovCocktail::Update(float deltaTime)
 {
-	Vector3 moveValue = m_moveVector * deltaTime * kMoveSpeed;
-	m_transform.position += moveValue;
-	m_moveVector.y -= deltaTime;
-	m_transform.rotation += m_rotateSpeed*deltaTime;
+	BeforeEffectUpdate(deltaTime);
+	if (m_transform.position.y < 0) {
 
-	if (m_transform.position.y > 0)return;
-	m_isEffect = true;
-	m_moveVector = Vector3::zero;
-
-	m_effectCount -= deltaTime;
-	m_alpha = m_effectCount / kEffectMaxCount;
-	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
-	if (m_effectCount < 0) {
-		m_effectCount = 0;
-		m_isEffect = false;
-		m_isActive = false;
+	EffectSetup();
 	}
-
+	if (!m_isEffect)return;
+	EffectUpdate(deltaTime);
 }
 
 void MolotovCocktail::End()
@@ -81,7 +75,18 @@ void MolotovCocktail::DrawEffect()
 
 }
 void MolotovCocktail::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
-{}
+{
+	Vector3 push = result.normal * result.penetration;
+	switch (other.GetCollisionTag())
+	{
+	case GameObject::CollisionTag::Wall:
+		SetPosition(m_transform.position + push);
+		EffectSetup();
+		break;
+	default:
+		break;
+	}
+}
 
 void MolotovCocktail::Setup(const Transform & transform)
 {
@@ -104,4 +109,43 @@ void MolotovCocktail::Setup(const Transform & transform)
 	m_effectCount = kEffectMaxCount;
 	m_isActive = true;
 	m_isEffect = false;
+}
+
+void MolotovCocktail::EffectSetup()
+{
+	m_isEffect = true;
+	m_moveVector = Vector3::zero;
+}
+
+void MolotovCocktail::BeforeEffectUpdate(float deltaTime)
+{
+	// 移動方向をキャッシュ
+	Vector3 moveValue = m_moveVector * deltaTime * kMoveSpeed;
+	// 座標の更新
+	m_transform.position += moveValue;
+	// Y軸方向(落下速度)を更新
+	m_moveVector.y -= deltaTime;
+	// 回転させる
+	m_transform.rotation += m_rotateSpeed * deltaTime;
+}
+
+void MolotovCocktail::EffectUpdate(float deltaTime)
+{
+// カウントダウン
+	m_effectCount -= deltaTime;
+	// カウントに応じて透明度を求める
+	m_alpha = m_effectCount / kEffectMaxCount;
+	// 透明度をクランプ
+	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
+	// カウントが0になったら
+	if (m_effectCount < 0) {
+		// カウントを0に
+		m_effectCount = 0;
+		// 効果発動フラグの更新
+		m_isEffect = false;
+		// 非アクティブ状態にする
+		m_isActive = false;
+	}
+
+
 }

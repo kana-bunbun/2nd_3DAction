@@ -204,8 +204,6 @@ void SceneTest::Draw() {
 	m_pUiManager->Draw();
 
 
-	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
-	BlendManager::GetInstnce().Debug();
 }
 
 void SceneTest::DrawGround()

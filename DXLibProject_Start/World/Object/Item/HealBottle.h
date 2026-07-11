@@ -19,17 +19,14 @@ public:
 		const CollisionData& otherData,
 		const Collision::Result& result
 	)override;
-
-
+	void EffectSetup()override;
+	void BeforeEffectUpdate(float deltaTime)override;
+	void EffectUpdate(float deltaTime)override;
 	bool IsTransparent()override { return m_isTrans; }
 
 
 public:
 
-	// 効果発動中かどうか
-	bool m_isEffect;
-	// 効果発動時間
-	float m_effectCount;
 	// 描画の透明度
 	float m_alpha;
 	// 透明度を扱うかどうか

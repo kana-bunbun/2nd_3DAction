@@ -18,14 +18,12 @@ namespace {
 }
 
 HealBottle::HealBottle() :
-	m_isEffect(false),
-	m_effectCount(0),
 	m_alpha(0),
 	m_isTrans(false)
 {
 	m_rotateSpeed = Vector3::zero;
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), GameObject::CollisionType::Heal);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), GameObject::CollisionType::Null);
 }
 
 HealBottle::~HealBottle()
@@ -57,32 +55,24 @@ void HealBottle::Setup(const Transform& transform)
 	m_effectCount = kEffectMaxCount;
 
 	m_isTrans = false;
+	m_collisions[0].type = GameObject::CollisionType::Null;
 
 }
 
 void HealBottle::Update(float deltaTime)
 {
-	m_transform.rotation += m_rotateSpeed * deltaTime;
-	m_moveVector.y -= kFallSpeed * deltaTime;
-	m_transform.position.y += m_moveVector.y * deltaTime;
+	// 効果発動前の処理
+	BeforeEffectUpdate(deltaTime);
+	// 地面に落下した時
 	if (m_transform.position.y < 0&&m_moveVector.y<0) {
-		m_moveVector.y = 0;
-		m_transform.position.y = 0;
-		m_isEffect = true;
+		// 効果のセットアップ
+		EffectSetup();
 	}
-	m_collisions[0].type = GameObject::CollisionType::Null;
-	if (!m_isEffect)return;
-	m_collisions[0].type = GameObject::CollisionType::Heal;
-	m_effectCount -= deltaTime;
-	m_alpha = m_effectCount / kEffectMaxCount;
-	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
-	m_isTrans = true;
 
-	if (m_effectCount < 0) {
-		m_effectCount = 0;
-		m_isEffect = false;
-		m_isActive = false;
-	}
+	// 効果発動中でなければ即時return
+	if (!m_isEffect)return;
+	// 効果の更新処理
+	EffectUpdate(deltaTime);
 }
 
 void HealBottle::Draw()
@@ -115,5 +105,53 @@ void HealBottle::DrawEffect()
 
 void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {
+	// 一旦適当な値の回復処理を呼んでおく
+	other.Heal(2);
+}
 
+void HealBottle::EffectSetup()
+{
+	// 落下速度を0に
+	m_moveVector.y = 0;
+	// Y座標をクランプ
+	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
+	// エフェクトフラグを更新
+	m_isEffect = true;
+}
+
+void HealBottle::BeforeEffectUpdate(float deltaTime)
+{
+	// 効果発動中なら処理しない
+	if (m_isEffect)return;
+	// 回転させる
+	m_transform.rotation += m_rotateSpeed * deltaTime;
+	// 落下速度を更新
+	m_moveVector.y -= kFallSpeed * deltaTime;
+	// 落下させる
+	m_transform.position.y += m_moveVector.y * deltaTime;
+	// 効果発動前は衝突判定をチェックしない
+	m_collisions[0].type = GameObject::CollisionType::Null;
+}
+
+void HealBottle::EffectUpdate(float deltaTime)
+{
+	// 効果発動中は衝突判定をチェックする
+	m_collisions[0].type = GameObject::CollisionType::Heal;
+	// カウントダウン
+	m_effectCount -= deltaTime;
+	// カウントに応じて透明度を求める
+	m_alpha = m_effectCount / kEffectMaxCount;
+	// 透明度をクランプ
+	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
+	// 透明度フラグの更新
+	m_isTrans = true;
+	// カウントが0になったら
+	if (m_effectCount <= 0) {
+		// カウントを0に
+		m_effectCount = 0;
+		// 効果発動フラグを更新
+		m_isEffect = false;
+		// 非アクティブにする
+		m_isActive = false;
+	}
 }

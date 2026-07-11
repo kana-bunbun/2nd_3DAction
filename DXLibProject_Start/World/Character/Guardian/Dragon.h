@@ -30,6 +30,7 @@ public:
 
 	void Init()override;
 	void Update(float deltaTime)override;
+	void TileIDUpdate();
 	const Character::Type& GetCharacterType()override { return Character::Type::Dragon; }
 	void UpdateFromInput();
 	/// <summary>
@@ -79,6 +80,9 @@ private:
 	void Breath();
 	bool IsTargetSameRoom();
 	void CheckRouteManhattan();
+	/// <summary>
+	/// 通行可否を調べる処理
+	/// </summary>
 	bool CanMoveManhattan(SquareData* square);
 	/// <summary>
 	/// 経路探索で通行可能かつ指定した座標から最短距離のマスIDを取得

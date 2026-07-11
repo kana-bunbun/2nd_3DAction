@@ -147,8 +147,7 @@ void Enemy::UpdateCollision()
 	m_collisions[0].shape->SetPosition(FootPos);
 	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
 	m_collisions[1].shape->SetPosition(FootPos);
-	printfDx("FootPos | x : %f / y : %f / z : %f\n", FootPos.x, FootPos.y, FootPos.z);
-	printfDx("HP : %f\n", m_HPGauge->GetValue());
+
 }
 
 void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

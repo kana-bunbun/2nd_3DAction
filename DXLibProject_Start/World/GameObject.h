@@ -64,6 +64,8 @@ public:
 	virtual void Draw();
 	virtual void LateDraw() {};	// 最後に行いたい描画処理
 	virtual void DebugCollision(int color=Color::kWhite);
+	virtual void Damage(float damage){}
+	virtual void Heal(float heal) {}
 	/// <summary>
 	/// トランスフォームを取得
 	/// 値変更をしてほしくないため最初にconst

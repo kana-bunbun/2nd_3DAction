@@ -136,7 +136,7 @@ Dragon::Dragon():
 
 	m_HPGauge = std::make_unique<Gauge>();
 
-	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 0), GameObject::CollisionType::Body);
+	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 30), GameObject::CollisionType::Body);
 	// ブレスの初期化
 	for (int i = 0; i < m_breath.size(); i++) {
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
@@ -183,12 +183,8 @@ void Dragon::Init()
 
 void Dragon::Update(float deltaTime)
 {
-	m_oldTileID = m_onTileID;
-	m_onTileID = MapManager::GetInstance().GetIDFromWorldPos(m_transform.position);
-	m_masterOldTileID = m_masterTileID;
-	m_masterTileID= MapManager::GetInstance().GetIDFromWorldPos(m_pMaster->GetTransform().position);
-	if(m_onTileID!=m_oldTileID||m_masterTileID!=m_masterOldTileID)
-	CheckRouteManhattan();
+	// タイルIDの更新処理
+	TileIDUpdate();
 	// 入力による更新処理
 	UpdateFromInput();
 
@@ -227,13 +223,19 @@ void Dragon::Update(float deltaTime)
 	printfDx("m_speed : %f\n", m_speed);
 	printfDx("followState : %d\n", m_followState);
 
-	Vector3 myTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchTileID);
-	Vector3 masterTile = MapManager::GetInstance().GetWorldPosFromID(m_routeSearchPlayerTileID);
-	Vector3 Tile = MapManager::GetInstance().GetWorldPosFromID(m_onTileID);
-	DrawSphere3D(myTile.ToVECTOR(), 200, 20, Color::kCyan, Color::kCyan, TRUE);
-	DrawSphere3D(masterTile.ToVECTOR(), 200, 20, Color::kMagenta, Color::kMagenta, TRUE);
-	DrawSphere3D(Tile.ToVECTOR(), 20, 20, Color::kRed, Color::kRed, TRUE);
-	//DrawSphere3D(m_transform.position.ToVECTOR(), 500, 10, 0xff0000, 0xff0000, TRUE);
+}
+
+void Dragon::TileIDUpdate()
+{
+	// 
+	m_oldTileID = m_onTileID;
+	m_onTileID = MapManager::GetInstance().GetIDFromWorldPos(m_transform.position);
+	m_masterOldTileID = m_masterTileID;
+	m_masterTileID = MapManager::GetInstance().GetIDFromWorldPos(m_pMaster->GetTransform().position);
+	// 自身またはプレイヤーの所属しているマスが切り替わった時のみ以下の処理
+	if (m_onTileID == m_oldTileID && m_masterTileID == m_masterOldTileID)return;
+	// 自身とプレイヤー間の経路を生成
+	CheckRouteManhattan();
 }
 
 void Dragon::UpdateFromInput()
@@ -558,68 +560,89 @@ bool Dragon::IsTargetSameRoom()
 
 void Dragon::CheckRouteManhattan()
 {
+	// 自身とプレイヤーのマスを取得
 	m_routeSearchTileID = GetOnTileID();
 	m_routeSearchPlayerTileID = m_pMaster->GetOnTileID();
+	// 自身のマスが経路探索での通行不可マスの時
 	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData())) {
+		// 周囲8マスのうち最も近い通行可能マスを取得
 		m_routeSearchTileID = GetNearestCanMoveTile(m_transform.position);
-
 	}
+	// プレイヤーのマスが経路探索での通行不可マスの時
 	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData())) {
+		// 周囲8マスのうち最も近い通行可能マスを取得
 		m_routeSearchPlayerTileID = GetNearestCanMoveTile(m_pMaster->GetTransform().position);
+	}
+	// 自身とプレイヤーが同じマスの場合は経路を生成しない
+	if (m_routeSearchTileID == m_routeSearchPlayerTileID)return;
 
-	}
-	/*if (!CanMoveManhattan(MapManager::GetInstance().GetTile(GetOnTileID())->GetSquareData()))
-	{
-		return;
-	}
-	if (!CanMoveManhattan(MapManager::GetInstance().GetTile(m_pMaster->GetOnTileID())->GetSquareData()))
-	{
-		return;
-	}*/
-	if (m_routeSearchTileID == m_routeSearchPlayerTileID)
-	{
-		return;
-	}
+	// 通行可否を調べる関数ポインタ
 	std::function<bool(SquareData*)>tilecheck;
 	tilecheck = [&](SquareData* data) {
 		return CanMoveManhattan(data);
 		};
+	// 経路を生成
 	std::vector<ManhattanMoveData>route = RouteSearcher::GetInstance().RouteSearchManhattan(m_routeSearchTileID, m_routeSearchPlayerTileID, tilecheck);
 	moveData.clear();
+	// 経路のコストをキャッシュ
 	int routeSize = route.size();
 	for (int i = 0; i < routeSize; i++) {
+		// 経路の後ろから順に追加
 		moveData.push_back(route[route.size()-1]);
+		// 追加した要素を削除
 		route.erase(route.end() - 1);
 	}
-	if(moveData.size())
+	// 経路生成出来たかどうかチェック
+	if (!moveData.size())return;
+	// 最初のマス(自身のマス)を削除
 	moveData.erase(moveData.begin());
 }
 
 bool Dragon::CanMoveManhattan(SquareData* square)
 {
+	// nullptrなら処理しない
 	if (!square)return false;
+	// タイルの種類を調べる
 	MapConst::eTerrain terrain = square->GetTerrain();
+	// タイルが不正値なら通行不可
 	if (terrain == MapConst::eTerrain::Invalid)return false;
+	// 壁以外なら通行可能
 	return terrain!=MapConst::eTerrain::Wall;
 }
 
 int Dragon::GetNearestCanMoveTile(const Vector3& position)
 {
+	// 指定した座標の所属するマスIDを取得
 	int baseID = MapManager::GetInstance().GetIDFromWorldPos(position);
+	// 取得したIDから基準となるマスの取得
 	MapTile* square = MapManager::GetInstance().GetTile(baseID);
-	float minDistance = -1;
+	// 最短距離を格納する変数
+	float minLength = -1;
+	// 最短距離マスのIDを格納する変数
 	int resultID = -1;
+	// 基準のマスが通行可能なら基準マスを返す
 	if (CanMoveManhattan(square->GetSquareData()))return baseID;
+	// 8方向を調べる
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionEight::Max); i++) {
+		// 方向を取得
 		MapConst::eDirectionEight direction = static_cast<MapConst::eDirectionEight>(i);
+		// 取得した方向からマスを取得
 		square=MapManager::GetInstance().GetToDirSquare(baseID, direction);
+		// nullptrならスルー
 		if (!square)continue;
+		// 通行不可ならスルー
 		if (!CanMoveManhattan(square->GetSquareData()))continue;
+		// 指定方向のマスとの距離を求める
 		float distance = (position - MapManager::GetInstance().GetWorldPosFromID(square->GetId())).GetSqLength();
-		if (minDistance > 0 && minDistance < distance)continue;
-		minDistance = distance;
+		// minLengthに正常な値が入っていて、かつ最短距離でなければスルー
+		if (minLength > 0 && minLength < distance)continue;
+		// 最短距離なら
+		// 最短距離の更新
+		minLength = distance;
+		// 最短距離マスのIDを更新
 		resultID = square->GetId();
 	}
+
 	return resultID;
 }
 
