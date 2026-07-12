@@ -41,7 +41,7 @@ void GaugePlayer::SetPlayer(Player* player)
 		pos = GaugeParam::kPlayerGaugePos;
 		pos.y -= GaugeParam::kDiffer * (static_cast<int>(GaugeType::MP) - 0.5f);
 		GaugeShow* mpGauge = new GaugeShow(pos, mp);
-		mpGauge->SetGauge(player->GetHP());
+		mpGauge->SetGauge(player->GetMP());
 		m_MPGauge = mpGauge;
 
 	// プレイヤーが持っているゲージを配列に設定する

@@ -20,7 +20,7 @@ Barrier::Barrier(const Vector3& offset):
 	AddCollision(std::make_unique<Collision::Sphere>(
 		m_transform.position,
 		kRadius
-	), GameObject::CollisionType::Body);
+	), GameObject::CollisionType::Null);
 
 	MATERIALPARAM Material;
 	// マテリアルの設定
@@ -53,7 +53,9 @@ void Barrier::Update(float deltaTime)
 
 void Barrier::Draw()
 {
+	m_collisions[0].type == GameObject::CollisionType::Null;
 	if (!m_alpha)return;
+	m_collisions[0].type == GameObject::CollisionType::Body;
 	MATERIALPARAM Material;
 	// マテリアルの設定
 	Material.Diffuse = GetColorF(0.0f, 0.0f, 0.0f, 1.0f);

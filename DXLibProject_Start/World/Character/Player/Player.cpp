@@ -99,6 +99,7 @@ Player::Player(Vector3 position) :
 	m_MPGauge=std::make_unique<Gauge>();
 	// 当たり判定追加
 	AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kBodyCollisionOffsetY, 0.0f), kBodyCollisionSize), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
 	// 座標設定
 	SetPosition(position);
 }
@@ -265,7 +266,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::Button::A, Input::Pad::P1)) {
+	if (Input::IsDown(Input::Button::A, m_pad)|| Input::IsPressed(Input::Button::A, m_pad)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -398,9 +399,9 @@ void Player::ResolveCollision(GameObject& other, const CollisionData& myData, co
 	case CollisionTag::None:
 		break;
 	case CollisionTag::Enemy:
-		if (myData.type == CollisionType::Body && otherData.type == CollisionType::Body) {
-			m_move.AddPendingPush(push);
-		}
+		//if (myData.type == CollisionType::Body && otherData.type == CollisionType::Body) {
+		//	m_move.AddPendingPush(push);
+		//}
 		break;
 	case CollisionTag::Stage:
 	case CollisionTag::Wall: {
