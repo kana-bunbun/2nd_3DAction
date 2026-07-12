@@ -3,6 +3,7 @@
 namespace {
 	const char* const kGraphPath[BillboardManager::eBillboard::Max] = {
 		"Resource\\Graph\\BillboardText_Stair.png",
+		"Resource\\Graph\\BillboardText_Collection.png",
 	};
 }
 BillboardManager& BillboardManager::GetInstance()

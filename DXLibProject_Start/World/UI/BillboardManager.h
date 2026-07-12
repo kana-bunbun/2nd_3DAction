@@ -7,6 +7,7 @@ public:
 	// ビルボードで描画する種類
 	enum eBillboard {
 		Stair,
+		Collection,
 		Max,
 	};
 public:
