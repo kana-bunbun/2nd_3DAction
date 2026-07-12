@@ -12,14 +12,17 @@ namespace {
 	constexpr float kEffectRadius = 300;
 	constexpr float kBodyCollisionRadius = 30;
 	constexpr float kBodyCollisionAxis = 30;
+	// 攻撃のインターバル
+	constexpr float kAttackInterval = 0.5f;
 
 }
 MolotovCocktail::MolotovCocktail()
 {
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius),GameObject::CollisionType::Null);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),GameObject::CollisionType::Attack);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),GameObject::CollisionType::Attack);
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),GameObject::CollisionType::Invalid);
 }
 
 MolotovCocktail::~MolotovCocktail()
@@ -50,6 +53,8 @@ void MolotovCocktail::End()
 
 void MolotovCocktail::Draw()
 {
+	printfDx("molotov::CollisionType : %d\n", m_collisions[0].type);
+	printfDx("molotov::TileID : %d\n", GetOnTileID());
 	if (m_isEffect) {
 		DrawEffect();
 	}
@@ -80,8 +85,18 @@ void MolotovCocktail::ResolveCollision(GameObject& other, const CollisionData& m
 	switch (other.GetCollisionTag())
 	{
 	case GameObject::CollisionTag::Wall:
+		// エフェクトの当たり判定なら処理を抜ける
+		if (myData.type == GameObject::CollisionType::Attack)break;
 		SetPosition(m_transform.position + push);
 		EffectSetup();
+		break;
+	case GameObject::CollisionTag::Player:
+	case GameObject::CollisionTag::Dragon:
+	case GameObject::CollisionTag::Enemy:
+		// エフェクトの当たり判定でなければ処理を抜ける
+		if (myData.type == GameObject::CollisionType::Invalid)break;
+		if (m_activationCount)break;
+		other.Damage(1);
 		break;
 	default:
 		break;
@@ -95,6 +110,7 @@ void MolotovCocktail::Setup(const Transform & transform)
 	Vector3 offset = Vector3::zero;
 	offset.y = sinf(kThrowRadian);
 	move += offset.Normalize();
+	m_activationCount = 0;
 	if (move.GetSqLength()) {
 		m_moveVector = move.Normalize();
 		m_moveVector.x = -sinf(transform.rotation.y);
@@ -137,6 +153,13 @@ void MolotovCocktail::EffectUpdate(float deltaTime)
 	m_alpha = m_effectCount / kEffectMaxCount;
 	// 透明度をクランプ
 	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
+	// 攻撃の当たり判定チェックを開始
+	m_collisions[0].type = GameObject::CollisionType::Attack;
+	// 攻撃カウントを加算
+	m_activationCount += deltaTime;
+	if (m_activationCount > kAttackInterval) {
+		m_activationCount = 0;
+	}
 	// カウントが0になったら
 	if (m_effectCount < 0) {
 		// カウントを0に

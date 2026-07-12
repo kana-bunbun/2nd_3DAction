@@ -11,10 +11,16 @@ namespace {
 
 	// 描画の中心となるフレームの位置
 	constexpr int kDrawCenterFrameNum = 1;
-
+	// 効果発動の最大カウント
 	constexpr float kEffectMaxCount = 3.0f;
+	// 透明度の最大値
 	constexpr float kAlphaMax = 0.5f;
+	// 効果の範囲
 	constexpr float kEffectRadius = 420;
+	// 回復処理発動インターバル
+	constexpr float kEffectInterval = 0.3f;
+	constexpr float kBodyCollisionAxis = 30;
+
 }
 
 HealBottle::HealBottle() :
@@ -24,6 +30,8 @@ HealBottle::HealBottle() :
 	m_rotateSpeed = Vector3::zero;
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), GameObject::CollisionType::Null);
+	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), GameObject::CollisionType::Invalid);
 }
 
 HealBottle::~HealBottle()
@@ -77,6 +85,8 @@ void HealBottle::Update(float deltaTime)
 
 void HealBottle::Draw()
 {
+	printfDx("healBottle::CollisionType : %d\n", m_collisions[0].type);
+	printfDx("healBottle::TileID : %d\n", GetOnTileID());
 	if (m_isEffect) {
 		DrawEffect();
 	}
@@ -105,8 +115,27 @@ void HealBottle::DrawEffect()
 
 void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
 {
+	Vector3 push = result.normal * result.penetration;
+	switch (other.GetCollisionTag())
+	{
+	case GameObject::CollisionTag::Wall:
+		// エフェクトの当たり判定なら処理を抜ける
+		if (myData.type == GameObject::CollisionType::Heal)break;
+		SetPosition(m_transform.position + push);
+		EffectSetup();
+		break;
+	case GameObject::CollisionTag::Player:
+	case GameObject::CollisionTag::Dragon:
+	case GameObject::CollisionTag::Enemy:
+		if (myData.type == GameObject::CollisionType::Invalid)break;
+		if (m_activationCount)break;
 	// 一旦適当な値の回復処理を呼んでおく
 	other.Heal(2);
+		break;
+	default:
+		break;
+	}
+
 }
 
 void HealBottle::EffectSetup()
@@ -145,6 +174,13 @@ void HealBottle::EffectUpdate(float deltaTime)
 	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
 	// 透明度フラグの更新
 	m_isTrans = true;
+	// 効果発動のカウントを更新
+	m_activationCount += deltaTime;
+	// 効果カウントがインターバルを超えたら
+	if (m_activationCount > kEffectInterval) {
+		m_activationCount = 0;
+	}
+	
 	// カウントが0になったら
 	if (m_effectCount <= 0) {
 		// カウントを0に

@@ -26,7 +26,6 @@ public:
 
 
 public:
-
 	// 描画の透明度
 	float m_alpha;
 	// 透明度を扱うかどうか

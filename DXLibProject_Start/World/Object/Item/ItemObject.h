@@ -34,7 +34,13 @@ protected:
 	/// 効果発動中かどうか
 	/// </summary>
 	bool m_isEffect;
-	// 効果発動時間
+	/// <summary>
+	/// 効果発動の全体時間
+	/// </summary>
 	float m_effectCount;
+	/// <summary>
+	/// 効果発動カウント
+	/// </summary>
+	float m_activationCount;
 };
 
