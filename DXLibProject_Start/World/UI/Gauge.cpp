@@ -1,4 +1,5 @@
 #include "Gauge.h"
+#include "../../Utility/MyMath.h"
 namespace {
 	// valueやmaxで使う基本の値
 	constexpr float kDefaultValue = 100;
@@ -37,19 +38,18 @@ void Gauge::End()
 void Gauge::Increase(float value)
 {
 	// 現在の値に加算
-	m_value += value;
+	SetValue(m_value + value);
 }
 
 void Gauge::Decrease(float value)
 {
 	// 現在の値に減算
-	m_value -= value;
+	SetValue(m_value - value);
 }
 
 void Gauge::Clamp()
 {
-	if (m_value < m_min)m_value = m_min;
-	if (m_value > m_max)m_value = m_max;
+	m_value = MyMath::Clamp(m_value, m_min, m_max);
 }
 
 float Gauge::GetValue()
@@ -80,6 +80,7 @@ void Gauge::SetValue(float value)
 {
 	// 現在の値を設定
 	m_value = value;
+	Clamp();
 }
 
 void Gauge::SetMax(float max)
