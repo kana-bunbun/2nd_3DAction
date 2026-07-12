@@ -32,7 +32,7 @@ void GameObjectManager::Update(float deltaTime)
 {
 	for (auto& obj : m_objects) {
 		if (!obj->IsActive())continue;
-	
+		obj->UpdateHitData();
 		obj->Update(deltaTime);
 		obj->UpdateCollision();
 	}
@@ -151,15 +151,15 @@ void GameObjectManager::CheckCollision()
 					// 衝突判定
 					Collision::Result resultA = collisionA.shape->CheckCollision(*collisionB.shape);
 
+					if ((objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
+						collisionB.type==GameObject::CollisionType::Heal) ||
+						(objA->GetCollisionTag() == GameObject::CollisionTag::Dragon &&
+							collisionB.type == GameObject::CollisionType::Heal)) {
+						int f = 0;
+					}
 					// 当たっていなければスルー
 					if (!resultA.isHit)continue;
 
-					if ((objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
-						objB->GetCollisionTag() == GameObject::CollisionTag::Dragon) ||
-						(objA->GetCollisionTag() == GameObject::CollisionTag::Dragon &&
-							objB->GetCollisionTag() == GameObject::CollisionTag::Wall)) {
-						int f = 0;
-					}
 
 					// objAの衝突後処理
 					objA->ResolveCollision(*objB, collisionA, collisionB, resultA);

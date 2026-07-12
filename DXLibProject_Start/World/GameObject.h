@@ -97,7 +97,7 @@ public:
 		const CollisionData& otherData,
 		const Collision::Result& result
 		) = 0;
-
+	void UpdateHitData();
 	/// <summary>
 	/// コリジョンの追加
 	/// </summary>
@@ -118,6 +118,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual bool IsTransparent() { return false; }
+	virtual bool IsDead() { return false; }
+protected:
+	bool IsCollisionEnter(Collision::Shape* collision);
+
+	
 protected:
 	/// <summary>
 	/// 座標・回転・拡縮
@@ -156,5 +161,10 @@ protected:
 	/// 前回当たり判定チェック時の座標
 	/// </summary>
 	Vector3 m_oldPos;
+	/// <summary>
+	/// 当たり判定の接触ログ
+	/// </summary>
+	std::vector<GameObject::HitCollisionData> m_hitData;
+
 };
 

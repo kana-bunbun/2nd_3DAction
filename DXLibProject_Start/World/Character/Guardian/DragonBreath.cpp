@@ -41,18 +41,7 @@ void DragonBreath::Setup(const Vector3& RegistPos, const Vector3& moveVec)
 void DragonBreath::Update(float deltaTime)
 {
 	//deltaTime = 0.0000001f;
-	// 前回のフレームで当たっているかどうかを調べる
-	for (int i = 0; i < m_hitData.size(); i++) {
-		if (m_hitData[i].isHit) {
-		m_hitData[i].isHit = false;
-		}
-		// 当たっていなければ配列から削除する
-		else {
-			m_hitData[i].collision = nullptr;
-			delete m_hitData[i].collision;
-			m_hitData.erase(m_hitData.begin() + i);
-		}
-	}
+
 	m_transform.position += m_moveVec * kMoveSpeed * deltaTime;
 	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
 	m_lifeCount += deltaTime;
@@ -79,15 +68,8 @@ void DragonBreath::ResolveCollision(GameObject& other, const CollisionData& myDa
 	switch (other.GetCollisionTag())
 	{
 	case GameObject::CollisionTag::Enemy: {
-		bool inList = false;
-		for (int i = 0; i < m_hitData.size(); i++) {
-
-			if (m_hitData[i].collision != otherData.shape.get())continue;
-			m_hitData[i].isHit = true;
-			inList = true;
-			break;
-		}
-		if (!inList) {
+		
+		if (IsCollisionEnter(otherData.shape.get())) {
 		const Character& character = dynamic_cast<const Character&>(other);
 		Character* Enemy=CharacterManager::GetInstance().GetCharacter(character.m_ID);
 		if (!Enemy)break;

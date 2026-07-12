@@ -27,6 +27,5 @@ private:
 	Vector3 m_moveVec;		// 移動方向のベクトル
 	float m_lifeCount;		// 生存カウント
 
-	std::vector<GameObject::HitCollisionData> m_hitData;
 };
 

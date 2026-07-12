@@ -68,6 +68,22 @@ void GameObject::SetPosition(const Vector3& position)
 //	return *m_collisions.front().shape;
 //}
 
+void GameObject::UpdateHitData()
+{
+	// 前回のフレームで当たっているかどうかを調べる
+	for (int i = 0; i < m_hitData.size(); i++) {
+		if (m_hitData[i].isHit) {
+			m_hitData[i].isHit = false;
+		}
+		// 当たっていなければ配列から削除する
+		else {
+			m_hitData[i].collision = nullptr;
+			delete m_hitData[i].collision;
+			m_hitData.erase(m_hitData.begin() + i);
+		}
+	}
+}
+
 void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, CollisionType type)
 {
 	assert(shape && "GameCbject::AddCOllision : shape null");
@@ -88,4 +104,18 @@ int GameObject::GetOnTileID()
 	}
 	// マスIDを返す
 	return m_onTileID;
+}
+
+bool GameObject::IsCollisionEnter(Collision::Shape* collision)
+{
+	bool inList = false;
+	for (int i = 0; i < m_hitData.size(); i++) {
+
+		if (m_hitData[i].collision != collision)continue;
+		m_hitData[i].isHit = true;
+		inList = true;
+		break;
+	}
+	// 配列に入っていなければtrue
+	return !inList;
 }
