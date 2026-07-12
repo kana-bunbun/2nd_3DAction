@@ -21,8 +21,10 @@ public:
 	Gauge* GetMP() { return m_MPGauge.get(); }
 	// キャラクターのID
 	int m_ID;
-	void Damage(float damage)override { m_HPGauge->Decrease(damage); m_HPGauge->Clamp(); }
-	void Heal(float heal)override { m_HPGauge->Increase(heal); m_HPGauge->Clamp(); }
+	void Damage(float damage)override { m_HPGauge->Decrease(damage); }
+	void Heal(float heal)override { m_HPGauge->Increase(heal); }
+	virtual void Setup(){}
+	bool IsDead() { return (m_HPGauge && !m_HPGauge->GetValue()); }
 protected:
 	// HP
 	std::unique_ptr<Gauge> m_HPGauge;

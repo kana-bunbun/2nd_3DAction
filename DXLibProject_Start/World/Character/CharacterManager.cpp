@@ -44,6 +44,7 @@ void CharacterManager::SetRandomPos()
 		Vector3 randomPos = MapManager::GetInstance().GetWorldPosFromID(rooms[roomID]);
 		// 取得したワールド座標にキャラクターを配置
 		character->SetPosition(randomPos);
+		character->Setup();
 		// 指定したインデックスの要素を削除
 		rooms.erase(rooms.begin() + roomID);
 
@@ -131,6 +132,8 @@ Character* CharacterManager::CheckNearestCharacter(const Vector3& basePosition, 
 		// キャラクターの種類が指定されている時、かつ指定した種類のキャラクターでなければスルー
 		if (characterType != Character::Type::Invalid &&
 			m_characters[i]->GetCharacterType() != characterType)continue;
+		// 死亡しているキャラクターはスルー
+		if (!m_characters[i]->GetHP()->GetValue())continue;
 		// 距離の差を取得
 		Vector3 differ = (basePosition - m_characters[i]->GetTransform().position);
 		differ.y = 0;
