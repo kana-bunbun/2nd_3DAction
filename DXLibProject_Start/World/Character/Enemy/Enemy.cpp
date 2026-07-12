@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "../../UI/BillboardManager.h"
 #include <string>
 namespace {
 	const char* const kFilePath = "Resource\\Enemy\\Queen\\";
@@ -6,21 +7,19 @@ namespace {
 	const char* const kMotionPath = "Animation\\";
 	const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
 	{
-		"Run.mv1",
 		"Idle.mv1",
 		"Roar.mv1",
 		"Walk.mv1",
-		"TailAttack.mv1",
+		"Run.mv1",
 		"JumpAttack.mv1",
 		"Damage.mv1",
 		"Death.mv1",
-	}; 
+	};
 	constexpr bool kLoopFrag[static_cast<int>(Status::Queen::Max)]{
 	true,
+	false,
+		true,
 	true,
-	false,
-	false,
-	false,
 	false,
 	false,
 	false,
@@ -33,13 +32,16 @@ namespace {
 		true,
 		true,
 		true,
-		true,
 	};
-	constexpr float kSphereRadius = 48;
+	constexpr float kSphereRadius = 480;
 	constexpr int kLeftFootIndex = 48;
 	constexpr int kRightFootIndex = 58;
+	constexpr int kBodyIndex = 2;
 
 	constexpr float kDefaultAnimSpeed = 0.3f;
+	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
+	constexpr float kAlphaSpeed = 255.0f * 3.0f;
+
 }
 
 Enemy::Enemy():
@@ -53,10 +55,12 @@ Enemy::Enemy():
 	m_transform.Reset();
 
 	LoadModel();
-	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
-	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
-	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
-	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	//Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = GameObject::CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
 }
@@ -72,10 +76,12 @@ Enemy::Enemy(const Transform& transform) :
 	m_transform = transform;
 
 	LoadModel();
-	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
-	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius),CollisionType::Foot);
-	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
-	AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	//Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = GameObject::CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
 }
@@ -135,23 +141,66 @@ void Enemy::Update(float deltaTime)
 	UpdateAnimation(deltaTime);
 
 	m_animation.Update(deltaTime);
-	//printfDx("Queen\n");
-	//printfDx("status : %d\n",m_status);
-	//m_animation.Debug();
+	printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
+	UpdateBillboard(deltaTime);
+}
+
+void Enemy::UpdateBillboard(float deltaTime)
+{
+	m_isHitOld = m_isHit;
+	// アルファ値の増減量を求める
+	float alphaValue = kAlphaSpeed * deltaTime;
+	if (m_isHitOld) {	// プレイヤーが当たっているときアルファ値増加
+		m_alpha += alphaValue;
+	}
+	else {			// プレイヤーが当たっていないときアルファ値減少
+		m_alpha -= alphaValue;
+	}
+	// アルファ値を値域内に収める
+	m_alpha = MyMath::Clamp(m_alpha, 0.0f, 255.0f);
+	m_isHit = false;
 }
 
 void Enemy::UpdateCollision()
 {
 
-	Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
-	m_collisions[0].shape->SetPosition(FootPos);
-	FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
-	m_collisions[1].shape->SetPosition(FootPos);
-
+	//Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
+	//m_collisions[0].shape->SetPosition(FootPos);
+	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
+	//m_collisions[1].shape->SetPosition(FootPos);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	m_collisions[0].shape->SetPosition(bodyPos);
 }
 
 void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
-{}
+{
+	switch (other.GetCollisionTag())
+	{
+	case GameObject::CollisionTag::Player:
+	/*	if (!IsDead()) {
+			break;
+		}
+		else { 
+			int t=0;
+		}*/
+		m_isHit = true;
+		m_billboardPos = other.GetTransform().position;
+		break;
+	default:
+		break;
+	}
+}
+
+void Enemy::LateDraw()
+{
+	return;
+	Vector3 billboardPos = m_billboardPos + kBillboardOffset;
+	// 透明度を操作して描画
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+	// ビルボードで描画
+	BillboardManager::GetInstance().DrawBillboard(billboardPos, -0.2f, 0, 300, 0, BillboardManager::eBillboard::Collection);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
 
 void Enemy::SetModelHandle(int modelHandle)
 {}
@@ -175,7 +224,9 @@ void Enemy::UpdateAnimation(float deltaTime)
 	// アニメーションが終了していればアイドル状態に
 	if (!m_animation.IsPlaying())
 		nextStatus = Status::Queen::Neutral;
-
+	// HPが0なくなっていたら
+	if(!m_HPGauge->GetValue())
+		nextStatus = Status::Queen::Dead;
 	// ステータスが異なっていたらアニメーションの変更
 	if (m_status != nextStatus) {
 		ChangeAnimation(nextStatus);
@@ -190,5 +241,10 @@ void Enemy::ChangeAnimation(const Status::Queen& status)
 	m_animation.PlayAnimation(m_animData[static_cast<int>(status)]);
 	// ステータスの更新
 	m_status = status;
+}
+
+void Enemy::Setup()
+{
+	m_HPGauge->SetValue(m_HPGauge->GetMax());
 }
 

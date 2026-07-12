@@ -21,6 +21,7 @@ public:
 	/// 更新処理
 	/// </summary>
 	void Update(float deltaTime)override;
+	void UpdateBillboard(float deltaTime);
 	/// <summary>
 	/// 当たり判定の更新処理
 	/// </summary>
@@ -35,10 +36,12 @@ public:
 		const CollisionData& otherData,
 		const Collision::Result& result
 	);
+	void LateDraw()override;
 	void SetModelHandle(int modelHandle);
 	void SetTarget(GameObject* target);
 	void UpdateAnimation(float deltaTime);
 	void ChangeAnimation(const Status::Queen& status);
+	void Setup()override;
 public:		// ゲッター・セッター関数
 	const Character::Type& GetCharacterType()override { return Character::Type::Enemy; }
 
@@ -69,6 +72,10 @@ private:
 	/// ターゲット
 	/// </summary>
 	GameObject* m_target;
+	Vector3 m_billboardPos;
+	float m_alpha;
+	bool m_isHit;
+	bool m_isHitOld;
 };
 
 

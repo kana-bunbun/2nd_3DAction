@@ -28,9 +28,8 @@ namespace Status {
 		Neutral = 0,
 		Roar,
 		Walk,
-		run,
+		Run,
 		Attack,
-		JumpAttack,
 		Damage,
 		Dead,
 		Max
