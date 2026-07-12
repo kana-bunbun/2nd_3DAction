@@ -62,8 +62,8 @@ namespace Collision {
 			// distance‚ğ•½•ûª‚É‚¹‚¸ŒvZ‚·‚é(•½•ûª‚ÌŒvZ‚Íˆ—•‰‰×‚ª‚‚¢)‚½‚ß
 			// ”¼Œa‚Ì˜a‚ğ2æ‚·‚é
 			radiusSum = radiusSum * radiusSum;
-			// ‚à‚µ2‚Â‚Ì”»’è‚Ì˜a‚ªdistance‚æ‚è’Z‚¯‚ê‚Î“–‚½‚Á‚Ä‚¢‚é
-			if (distance <= radiusSum)return result;
+			// ‚à‚µ2‚Â‚Ì”¼Œa‚Ì˜a‚ªdistance‚æ‚è’Z‚¯‚ê‚Î“–‚½‚Á‚Ä‚¢‚È‚¢
+			if (radiusSum <= distance)return result;
 			// ‚±‚±‚Ü‚Å—ˆ‚½‚ç“–‚½‚Á‚Ä‚¢‚é
 			result.isHit = true;
 			// Result‚Ìî•ñ‚ğ‹‚ß‚ÄŠi”[‚·‚é
