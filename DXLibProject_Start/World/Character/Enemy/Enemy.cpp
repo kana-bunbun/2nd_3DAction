@@ -41,7 +41,7 @@ namespace {
 	constexpr float kDefaultAnimSpeed = 0.3f;
 	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
 	constexpr float kAlphaSpeed = 255.0f * 3.0f;
-
+	constexpr Vector3 kModelSize = { 0.3f,0.3f,0.3f };
 }
 
 Enemy::Enemy():
@@ -102,8 +102,7 @@ void Enemy::LoadModel()
 	std::string path = kFilePath;
 	// モデルの読み込み
 	m_modelHandle = MV1LoadModel((path + kModelPath).c_str());
-	//MV1SetScale(m_modelHandle, Vector3(kModelScale, kModelScale, kModelScale).ToVECTOR());
-	//m_animation.Init(m_modelHandle);
+	MV1SetScale(m_modelHandle, kModelSize.ToVECTOR());
 	path += kMotionPath;
 	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
 
@@ -141,7 +140,7 @@ void Enemy::Update(float deltaTime)
 	UpdateAnimation(deltaTime);
 
 	m_animation.Update(deltaTime);
-	printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
+	//printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
 	UpdateBillboard(deltaTime);
 }
 

@@ -65,7 +65,7 @@ void GameObjectManager::Draw()
 	// 当たり判定のデバッグ表示
 	for (auto& object : m_objects) {
 		if (!object->IsActive())continue;
-		object->DebugCollision();
+		//object->DebugCollision();
 	}
 	// 後描画処理
 	for (auto& object : m_objects) {

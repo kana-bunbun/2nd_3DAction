@@ -222,11 +222,11 @@ void Dragon::Update(float deltaTime)
 		m_attackFlag = false;
 
 	m_HPGauge->Clamp();
-	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
+	/*printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
 	printfDx("followState : %d\n", m_followState);
 	printfDx("dragon::CollisionType : %d\n", m_collisions[0].type);
-	printfDx("dragon::TileID : %d\n", GetOnTileID());
+	printfDx("dragon::TileID : %d\n", GetOnTileID());*/
 
 }
 
@@ -557,8 +557,8 @@ bool Dragon::IsTargetSameRoom()
 {
 	int myRoomID = MapManager::GetInstance().GetRoomID(m_onTileID);
 	int masterRoomID = MapManager::GetInstance().GetRoomID(m_pMaster->GetOnTileID());
-	printfDx("myRoomID : %d\n", myRoomID);
-	printfDx("masterRoomID : %d\n", masterRoomID);
+	//printfDx("myRoomID : %d\n", myRoomID);
+	//printfDx("masterRoomID : %d\n", masterRoomID);
 	if (myRoomID == -1 || masterRoomID == -1)return false;
 	if (myRoomID == masterRoomID)return true;
 	return false;

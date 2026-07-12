@@ -73,7 +73,7 @@ void DragonBreath::ResolveCollision(GameObject& other, const CollisionData& myDa
 		const Character& character = dynamic_cast<const Character&>(other);
 		Character* Enemy=CharacterManager::GetInstance().GetCharacter(character.m_ID);
 		if (!Enemy)break;
-		Enemy->Damage(1);
+		Enemy->Damage(5);
 		GameObject::HitCollisionData data = { otherData.shape.get(),true};
 		m_hitData.push_back(data);
 		}

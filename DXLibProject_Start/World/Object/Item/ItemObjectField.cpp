@@ -4,7 +4,7 @@
 #include "../../../Utility/Input.h"
 namespace {
 	constexpr float kSphereRadius = 50.0f;
-	constexpr Vector3 kCollisionSize = { 50,300,50 };
+	constexpr Vector3 kCollisionSize = { 100,300,100 };
 }
 ItemObjectField::ItemObjectField()
 {

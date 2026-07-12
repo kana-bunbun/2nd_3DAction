@@ -60,10 +60,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		pSceneMgr->Update(deltaTime);
 		
 		pSceneMgr->Draw();
-		printfDx("deltaItme : %f\n", deltaTime);
-		printfDx("rawdeltaItme : %f\n", TimeManager::GetRawDeltaTime());
-		printfDx("Fps : %f\n", TimeManager::GetFPS());
-		printfDx("timesScale : %f\n", TimeManager::GetTimeScale());
+		//printfDx("deltaItme : %f\n", deltaTime);
+		//printfDx("rawdeltaItme : %f\n", TimeManager::GetRawDeltaTime());
+		//printfDx("Fps : %f\n", TimeManager::GetFPS());
+		//printfDx("timesScale : %f\n", TimeManager::GetTimeScale());
 		//Input::Update();
 		//Input::Debug();
 		// •`‰ææ‚ğØ‚è‘Ö‚¦‚é
