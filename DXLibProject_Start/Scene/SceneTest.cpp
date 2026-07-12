@@ -193,13 +193,13 @@ void SceneTest::Draw() {
 	GameObjectManager::GetInstance().Draw();
 	
 	m_pTileManager->Draw();
-	ItemManager::GetInstance().Draw();
 	// アイテムメニュー中は画面を少し暗くする
 	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, Color::kBlack, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
+	ItemManager::GetInstance().Draw();
 	// ゲージ関連の描画処理
 	m_pUiManager->Draw();
 

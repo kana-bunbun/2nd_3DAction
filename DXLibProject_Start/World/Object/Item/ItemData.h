@@ -1,4 +1,6 @@
 #pragma once
+#include<array>
+
 struct ItemData
 {
 public:

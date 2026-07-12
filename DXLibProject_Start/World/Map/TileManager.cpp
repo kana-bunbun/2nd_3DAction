@@ -10,6 +10,7 @@
 #include"../Character/Guardian/Dragon.h"
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"
+#include"../Object/Item/ItemManager.h"
 #include<DxLib.h>
 #include<vector>
 
@@ -116,7 +117,7 @@ void TileManager::SetUpFloor()
 
 	// キャラクターランダム配置
 	CharacterManager::GetInstance().SetRandomPos();
-
+	ItemManager::GetInstance().CreateFielditemFloor(5);
 }
 
 void TileManager::Update(float deltaTime)

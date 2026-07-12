@@ -1,7 +1,10 @@
 #pragma once
 #include<memory>
 #include"../../../Camera/Camera.h"
+#include"ItemData.h"
+#include "../../../Utility/Vector3.h"
 class ItemCursor;
+class ItemObjectField;
 class ItemObjectManager;
 class ItemManager
 {
@@ -13,7 +16,8 @@ public:
 	void End();
 	void Update();
 	void Draw();
-
+	void CreateFielditemFloor(int createnum);
+	bool CreateFieldItem(const ItemData::Type& type,const Vector3& position);
 
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
@@ -30,5 +34,6 @@ private:
 	// アイテムカーソル
 	std::unique_ptr<ItemCursor> m_pItemCursor;
 	Camera::CameraView m_view;
+	std::vector<ItemObjectField*> m_fieldItems;
 };
 

@@ -245,6 +245,7 @@ Vector3 ItemCursor::GetSelectPos(int selectIndex)
 
 bool ItemCursor::AddItem(const ItemData::Type& type)
 {
+	if (type == ItemData::Type::Invalid)return false;
 	// 同じアイテムをすでに所持しているときは所持数に加算する
 	for (int i = 0; i < m_slots.size(); i++) {
 		if (m_slots[i]->GetItemType() != type)continue;

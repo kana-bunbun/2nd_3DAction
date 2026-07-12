@@ -25,6 +25,7 @@ public:
 	void SetupItem(ItemObject* item, GameObject* obj);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
+	
 private:
 	// 自身が管理するアイテムオブジェクトの配列
 	std::vector<ItemObject*>m_items;

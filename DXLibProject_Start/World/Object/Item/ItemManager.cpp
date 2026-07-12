@@ -1,7 +1,17 @@
 #include "ItemObjectManager.h"
 #include "ItemManager.h"
+#include "ItemObjectField.h"
 #include"../../UI/ItemCursor.h"
+#include"../../Map/MapCreate.h"
+#include"../../Map/MapManager.h"
+#include"../../../Utility/MyRandom.h"
+#include"../../GameObjectManager.h"
+namespace {
+	constexpr int kDropItemTypeMax = 4;
 
+	ItemData::Type kDropItemType[kDropItemTypeMax] = { ItemData::Type::Honey,ItemData::Type::Jam,ItemData::Type::Pepper,ItemData::Type::Whiskey };
+
+}
 ItemManager::ItemManager():
 	m_pItemCursor(nullptr)
 
@@ -52,3 +62,32 @@ void ItemManager::Draw()
 
 	m_pItemObjectManager->Draw();
 }
+
+void ItemManager::CreateFielditemFloor(int createnum)
+{
+	std::vector<int>roomIDList = MapCreate::GetInstance().GetRooms();
+	for (int i = 0; i < createnum; i++) {
+		int randomIndex = MyRandom::Int(0, roomIDList.size() + 1);
+		int randomID = roomIDList[randomIndex];
+		ItemData::Type randomType = kDropItemType[MyRandom::Int(0, kDropItemTypeMax)];;
+		if (CreateFieldItem(randomType, MapManager::GetInstance().GetWorldPosFromID(randomID))) {
+		roomIDList.erase(roomIDList.begin() + randomIndex);
+		}
+	}
+}
+
+bool ItemManager::CreateFieldItem(const ItemData::Type& type, const Vector3& position)
+{
+	for (int i = 0; i < m_fieldItems.size(); i++) {
+		if (m_fieldItems[i]->IsActive())continue;
+		m_fieldItems[i]->Setup(type, position);
+		return true;
+	}
+	ItemObjectField* item = GameObjectManager::GetInstance().CreateObject<ItemObjectField>();
+	if (!item)return false;
+	m_fieldItems.push_back(item);
+	item->Setup(type, position);
+	item->SetItemCursor(m_pItemCursor.get());
+	return true;
+}
+
