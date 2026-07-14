@@ -6,13 +6,18 @@
 #include<fstream>
 #include<cassert>
 
+namespace {
+	const char* const kFilePath = "Data\\";
+	const char* const kCSV = ".csv";
+}
+
 Data::Csv::Table Data::Csv::LoadRawCSV(const std::string& path)
 {
 	// 結果を返す関数を用意
 	Data::Csv::Table table;
 
 	// ファイルを開く
-	std::ifstream ifs(path);
+	std::ifstream ifs(kFilePath + path + kCSV);
 
 	// ファイルを開けなかったら即時return
 	if (ifs.fail()) {
@@ -66,17 +71,43 @@ std::vector<std::string> Data::Csv::Split(const std::string& str, char separate)
 	// 結果を返す配列を用意
 	std::vector<std::string> separateList;
 
-	std::stringstream ss(str);
 
-	// 分割したデータの一時保管する変数を宣言、最後の文字まで繰り返す
+	// 分割したデータの一時保管をする変数を宣言
 	std::string buf;
+	// クォートがあるか
+	bool isQuotes = false;
 
-	// 文字列を1文字ずつ区切る
-	while (std::getline(ss,buf,separate))
-	{
-		// 引数で指定した記号が見つかったら配列に追加
-		separateList.push_back(buf);
+	for (size_t i = 0; i < str.size(); i++) {
+		// 1文字ずつチェック
+		char check = str[i];
+		if (check == '""') {
+			// もしクォートなら
+			isQuotes = true;
+		}
+		else if (check == separate && !isQuotes) {
+			// もしクォートが見つかっていなくてカンマがあれば
+			separateList.push_back(buf);
+			buf.clear();
+		}
+		else {
+			buf += check;
+		}
 	}
+
+	//std::stringstream ss(str);
+
+	//// 分割したデータの一時保管する変数を宣言、最後の文字まで繰り返す
+	//std::string buf;
+
+	//// 文字列を1文字ずつ区切る
+	//while (std::getline(ss,buf,separate))
+	//{
+	//	// 引数で指定した記号が見つかったら配列に追加
+	//	separateList.push_back(buf);
+	//}
+	
+	separateList.push_back(buf);
+
 	// 区切った配列を返す
 	return separateList;
 }
@@ -92,4 +123,28 @@ std::vector <std::vector<int>> Data::Csv::TiIntTable(const Table& table)
 		intTable.push_back(row);
 	}
 	return intTable;
+}
+
+Data::Json::JsonObject Data::Json::LoadRawJSON(const std::string& path)
+{
+	JsonObject jsonObject;
+
+	// ファイルを開く
+	std::ifstream ifs(path);
+
+	// ファイルを開けなかったら即時return
+	if (ifs.fail()) {
+		assert(false, "Data::Json::LoadRawJSON Fail To Open JSON File");
+		return jsonObject;
+	}
+	try {
+		// JSONデータの解析をする
+		ifs >> jsonObject;
+	}
+	catch(const JsonObject::parse_error& e){
+		assert(false && "LoadRawJSON parse error");
+		return JsonObject{};
+	}
+
+	return jsonObject;
 }

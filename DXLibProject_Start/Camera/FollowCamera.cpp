@@ -23,9 +23,9 @@ FollowCamera::FollowCamera(const Transform* target):
     m_param()
 {
     m_param = FollowCameraParam();
-    m_distance = m_param.distanceToTarget;
+    m_distance = m_param.initDistance;
     m_transform.Reset();
-    m_transform.rotation.x = (m_param.highAngle+m_param.lowAngle)*0.5f * MyMath::ToRadian;
+    m_transform.rotation.x = (m_param.maxPitchDegAngle+m_param.minPitchDegAngle)*0.5f * MyMath::ToRadian;
     m_view.fov = m_param.fieldOfView;
 }
 
@@ -35,9 +35,9 @@ FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& par
     m_distance(),
     m_param()
 {
-    m_distance = m_param.distanceToTarget;
+    m_distance = m_param.initDistance;
     m_transform.Reset();
-    m_transform.rotation.x = (m_param.highAngle+m_param.lowAngle)*0.5f * MyMath::ToRadian;
+    m_transform.rotation.x = (m_param.maxPitchDegAngle+m_param.minPitchDegAngle)*0.5f * MyMath::ToRadian;
     m_view.fov = m_param.fieldOfView;
 }
 
@@ -65,11 +65,11 @@ Camera::CameraView FollowCamera::GetView() const
 void FollowCamera::UpdateDistance(float deltaTime)
 {
     // カメラの最短距離、最長距離を求める
-    float minDistance = m_param.distanceToTarget - m_param.minDistance;
-    float maxDistance = m_param.distanceToTarget - m_param.maxDistance;
+    float minDistance = m_param.initDistance - m_param.minDistance;
+    float maxDistance = m_param.initDistance - m_param.maxDistance;
 
-    minDistance = MyMath::Clamp(minDistance, 0.0f, m_param.distanceToTarget);
-    maxDistance = MyMath::Clamp(maxDistance, m_param.distanceToTarget, maxDistance);
+    minDistance = MyMath::Clamp(minDistance, 0.0f, m_param.initDistance);
+    maxDistance = MyMath::Clamp(maxDistance, m_param.initDistance, maxDistance);
     // 距離を指定範囲内に収める
     m_distance = MyMath::Clamp(m_distance, minDistance, maxDistance);
 }
@@ -89,11 +89,11 @@ void FollowCamera::UpdateAngle(float deltaTime)
     // 正規化
     m_moveVector = m_moveVector.Normalize();
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_param.angleSpeed;
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_param.rotateSpeedDeg;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
     pitchRad += m_moveVector.y * deltaTime;
-    pitchRad = MyMath::Clamp(pitchRad, m_param.lowAngle*MyMath::ToRadian, m_param.highAngle * MyMath::ToRadian);
+    pitchRad = MyMath::Clamp(pitchRad, m_param.minPitchDegAngle*MyMath::ToRadian, m_param.maxPitchDegAngle * MyMath::ToRadian);
     m_transform.rotation.x = pitchRad;
 
     yawRad = MyMath::NormalizeRadian(yawRad);
@@ -131,13 +131,14 @@ void FollowCamera::UpdatePosition(float deltaTime)
     rotate *= m_distance;
     
     
-    Vector3 cameraPos = Vector3(0.0f, m_param.initCameraHeight*MyMath::ToRadian, 0.0f);
+    Vector3 cameraPos = Vector3(0.0f, 0.0f, 0.0f);
 
     cameraPos += m_target->position;
     cameraPos = (cameraPos + rotate);
 
     m_view.position = cameraPos;
     m_view.target = m_target->position;
+    m_view.target += m_param.offsetPos;
     m_transform.position = cameraPos;
 
 

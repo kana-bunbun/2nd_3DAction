@@ -5,6 +5,7 @@
 #include<unordered_map>
 
 #include"CsvConvert.h"
+#include"../Utility/json.hpp"
 /// <summary>
 /// 外部データに関する処理
 /// </summary>
@@ -58,6 +59,27 @@ namespace Data
 		/// 読み込んだデータをint型に変更する
 		/// </summary>
 		std::vector<std::vector<int>>TiIntTable(const Table& table);
+
+	}
+	/// <summary>
+	/// .jsonのデータに関する処理
+	/// </summary>
+	namespace Json {
+		// jsonデータとは構造化されたデータを保存できるテキスト形式のデータのこと
+		// csvと比べて構造化されたデータを扱うことに長けていてネスト構造が可能
+		// 階層構造を持つデータを歩かう際は使いすく、人間が読みやすいデータになっている
+		// 注意点として、データ内にコメントを記述できないことがある
+
+		// エイリアスの作成
+
+		// 外部ライブラリなので参照元は把握しやすくしたい
+		// 省略目的でエイリアスを作成
+		using JsonObject = nlohmann::json;
+
+		/// <summary>
+		/// JSONを読み込む
+		/// </summary>
+		JsonObject LoadRawJSON(const std::string& path);
 
 	}
 

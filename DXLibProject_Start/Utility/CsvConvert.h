@@ -4,6 +4,7 @@
 #include<sstream>
 #include<fstream>
 #include<cassert>
+#include"Vector3.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -45,6 +46,20 @@ namespace Data {
 			assert(false && "comvert<bool> input error");
 
 			return false;
+		}
+		/// <summary>
+		/// Vector3 型に変換
+		/// </summary>
+		template<>
+		inline Vector3 Convert<Vector3>(const std::string& str) {
+			Vector3 vec = Vector3::zero;
+
+			std::stringstream ss(str);
+			char separate = ',';
+
+			ss >> vec.x >> separate >> vec.y >> separate >> vec.z;
+			return vec;
+
 		}
 	}
 }

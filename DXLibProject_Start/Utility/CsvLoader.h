@@ -1,44 +1,40 @@
 #pragma once
 #include<vector>
 #include<string>
-#include<unordered_map>
-/// <summary>
-/// ファイル名を指定しCSVのデータを読み込む
-/// </summary>
-class CsvLoader
-{
-public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	CsvLoader() = default;
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="filePath">読み込みたいファイルパス</param>
-	CsvLoader(std::string filePath);
-	~CsvLoader() = default;
-	/// <summary>
-	/// 行の文字列を1文字ずつ区切る
-	/// </summary>
-	/// <param name="str">区切りたい文字列</param>
-	/// <param name="separate">分割する記号</param>
-	/// <returns></returns>
-	std::vector<std::string>Split(const std::string& str, char separate);
-	/// <summary>
-	/// CSVデータを読み込む関数
-	/// </summary>
-	/// <param name="filePath"></param>
-	/// <returns></returns>
-	bool LoadCSVData(std::string filePath);
-	/// <summary>
-	/// 読み込んだCSVデータを取得する関数
-	/// </summary>
-	/// <returns></returns>
-	std::vector<std::vector<std::string>> GetLoadData() { return m_loadData; }
+#include<cassert>
+#include"Data.h"
+#include"FromCsv.h"
 
-private:
-	std::vector<std::vector<std::string>> m_loadData;
+namespace Data{
+	namespace Csv{
+		template<typename T>
+		std::vector<T>LoadCsvAs(const std::string& path) {
+			// csvデータ読み込み
+			Csv::Table table = Csv::LoadRawCSV(path);
 
-};
+			// データが空かどうかチェック
+			if (table.empty()) {
+				assert(false && "LoadCsvAs csv is Empty");
+				return{};
+			}
+			// データがヘッダのみかどうかチェック
+			if (table.size() < 2) {
+				assert(false && "LoadCsvAs csv has no Data");
+				return{};
+			}
 
+			// 行データへ変換
+			const auto& rows = Csv::ToRows(table);
+			// 変換結果を返す変数を用意
+			// 読み込む量がわかっているのできちんとメモリを確保
+			std::vector<T>result;
+			result.reserve(rows.size());
+
+			// 構造体へデータを格納
+			for (const auto& row : rows) {
+				result.push_back(FromJson<T>::Binding(row));
+			}
+			return result;
+		}
+	}
+}

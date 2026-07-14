@@ -1,0 +1,2 @@
+basePath,motionPath,modelPath,animNum,animPath[0],animPath[1],animPath[2],animPath[3],animPath[4]
+Resource\\Player\\ChaWitch\\,Motions\\,Model.mv1,5,Idle.mv1,Walk.mv1,Parry.mv1,Damage.mv1,dead

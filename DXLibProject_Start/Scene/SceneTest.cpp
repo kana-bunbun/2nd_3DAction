@@ -8,6 +8,8 @@
 #include "../Utility/MyRandom.h"
 #include "../Utility/PadManager.h"
 #include "../Utility/Data.h"
+#include "../Utility/FromCSV.h"
+#include "../Utility/CSVLoader.h"
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
 #include "../Camera/CameraOld.h"
@@ -49,7 +51,7 @@ namespace {
 	constexpr int kFontSize = 50;
 	constexpr int kFontThickness = 50;
 
-	const char* const kTestPath = "Data\\test.csv";
+	const char* const kcameraParamPath = "CameraParam";
 }
 
 SceneTest::SceneTest() :
@@ -79,6 +81,7 @@ SceneTest::SceneTest() :
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
+	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();
@@ -152,21 +155,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pPadManager->Update();
 
 	GameObjectManager::GetInstance().CheckCollision();
-	// “G‚Æ“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é
-	//Collision::Result result = m_pBee->GetCollision().CheckCollision(m_pPlayer->GetCollision());
-	//printfDx("“–‚½‚Á‚Ä‚¢%s\n", result.isHit ? "‚é" : "‚È‚¢");
-	//m_pPlayer->ResolveCollision(*m_pBee, result);
-
-
-	// ƒJƒƒ‰Ø‚è‘Ö‚¦ˆ—
-	//if (Input::IsPressed(Input::Button::RThumb, Input::Pad::P1)) {
-	//	m_pCameraMgr->NextCamera();
-	//	bool isDebug = m_pCameraMgr->GetActiveCameraType() == Camera::CameraType::Follow;
-	//	m_pPlayer->SetActive(isDebug);
-	//	m_pDragon->SetActive(isDebug);
-	//	m_pBarrier->SetActive(isDebug);
-	//	m_pBee->SetActive(isDebug);
-	//}
 
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
@@ -180,7 +168,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	else if(IsFadeEnd()){
 		m_pPadManager->ChangePadState(PadManager::PadState::Player);
 	}
-
 	return nullptr;
 }
 

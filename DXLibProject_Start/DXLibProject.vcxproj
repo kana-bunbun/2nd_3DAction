@@ -145,7 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FromCSV.cpp" />
+    <ClCompile Include="Utility\FromCSV.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
     <ClCompile Include="World\Object\Item\MolotovCocktail.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
@@ -251,7 +251,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\CameraParam.h" />
-    <ClInclude Include="FromCSV.h" />
+    <ClInclude Include="Utility\FromJson.h" />
+    <ClInclude Include="Utility\JsonConvert.h" />
+    <ClInclude Include="Utility\JsonLoader.h" />
+    <ClInclude Include="World\Character\Player\PlayerModelParam.h" />
+    <ClInclude Include="Utility\FromCSV.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
     <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />
@@ -328,6 +332,8 @@
     <ClInclude Include="Utility\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Utility\CameraParam.csv" />
+    <None Include="Data\CameraParam.xlsx" />
     <None Include="Data\test.csv" />
     <None Include="Data\test.xlsx" />
     <None Include="Resource\Bee.mv1" />

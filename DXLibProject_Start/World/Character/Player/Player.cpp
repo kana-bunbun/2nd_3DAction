@@ -2,6 +2,7 @@
 #include<DxLib.h>
 #include<string>
 #include<vector>
+#include"PlayerModelParam.h"
 #include"../Animation.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/CameraOld.h"
@@ -10,6 +11,8 @@
 #include"../../Object/Barrier.h"
 #include"../../../Utility/CsvLoader.h"
 #include"../../../Camera/Camera.h"
+#include "../../../Utility/Data.h"
+#include "../../../Utility/FromCSV.h"
 namespace {
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
@@ -146,22 +149,17 @@ void Player::Init()
 void Player::LoadModel()
 {
 	// csvデータ読み込み
-	CsvLoader csv("PlayerModelPath.csv");
-	std::vector<std::vector<std::string>>path;
-	path = csv.GetLoadData();
-	// 組み立てたファイルパスで読みこむ
-	std::string str = (path[1][0] + path[3][0]);
-	m_modelHandle = MV1LoadModel(str.c_str());
+	const auto& param = Data::Csv::LoadCsvAs<ModelPathParam>("PlayerModelPath")[0];
+	m_modelHandle = MV1LoadModel(param.modelPath.c_str());
 	// モデルの大きさを設定
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
 		// ファイルパスを組み立てる
 		// アニメーションハンドルの初期化
 		m_animHandle[i] = -1;
-		str = (path[1][0] + path[1][1] + path[5][i]);
 
 		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel(str.c_str());
+		m_animHandle[i] = MV1LoadModel(param.animationPath[i].c_str());
 		// 読み込みができたら
 		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
@@ -170,18 +168,18 @@ void Player::LoadModel()
 		m_animData[i].index = i;
 	}
 
-	// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
-	csv=CsvLoader("PlayerEmiColor.csv");
-	// 値を格納する配列
-	std::vector<float> emiColor;
-	for (int i = 0; i < csv.GetLoadData().size(); i++) {
-		// csvのB列の値を使う
-		float color = std::stof(csv.GetLoadData()[i][1]);
-		emiColor.push_back(color);
-	}
-	// 読み込んだ値を元にエミッシブカラーを設定
-	COLOR_F color = { emiColor[0],emiColor[1],emiColor[2],emiColor[3] };
-	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	//// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
+	//csv=CsvLoader("PlayerEmiColor.csv");
+	//// 値を格納する配列
+	//std::vector<float> emiColor;
+	//for (int i = 0; i < csv.GetLoadData().size(); i++) {
+	//	// csvのB列の値を使う
+	//	float color = std::stof(csv.GetLoadData()[i][1]);
+	//	emiColor.push_back(color);
+	//}
+	//// 読み込んだ値を元にエミッシブカラーを設定
+	//COLOR_F color = { emiColor[0],emiColor[1],emiColor[2],emiColor[3] };
+	//MV1SetMaterialEmiColor(m_modelHandle, 0, color);
 }
 
 void Player::Update(float deltaTime)
