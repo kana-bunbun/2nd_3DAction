@@ -4,7 +4,7 @@
 #include "../Utility/Vector3.h"
 #include "../World/Component/Transform.h"
 
-#include "CameraParam.h"
+#include "../Data/CameraParam.h"
 /// <summary>
 /// プレイヤーを追従するカメラ
 /// </summary>

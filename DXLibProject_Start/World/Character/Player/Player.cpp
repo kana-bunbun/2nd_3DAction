@@ -2,7 +2,7 @@
 #include<DxLib.h>
 #include<string>
 #include<vector>
-#include"PlayerModelParam.h"
+#include"../../../Data/ModelPathParam.h"
 #include"../Animation.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/CameraOld.h"

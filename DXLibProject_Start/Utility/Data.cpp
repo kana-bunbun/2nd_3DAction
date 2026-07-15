@@ -7,7 +7,7 @@
 #include<cassert>
 
 namespace {
-	const char* const kFilePath = "Data\\";
+	const char* const kCSVFilePath = "Data\\CSV\\";
 	const char* const kCSV = ".csv";
 }
 
@@ -17,7 +17,7 @@ Data::Csv::Table Data::Csv::LoadRawCSV(const std::string& path)
 	Data::Csv::Table table;
 
 	// ファイルを開く
-	std::ifstream ifs(kFilePath + path + kCSV);
+	std::ifstream ifs(kCSVFilePath + path + kCSV);
 
 	// ファイルを開けなかったら即時return
 	if (ifs.fail()) {

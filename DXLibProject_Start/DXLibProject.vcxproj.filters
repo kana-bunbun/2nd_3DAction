@@ -219,7 +219,10 @@
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\Object\Item\BlendRecipe.cpp">
+    <ClCompile Include="Data\BlendRecipe.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ExternalDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -539,7 +542,7 @@
     <ClInclude Include="World\Object\Item\ItemData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Camera\CameraParam.h">
+    <ClInclude Include="Data\CameraParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Utility\FromCSV.h">
@@ -551,7 +554,7 @@
     <ClInclude Include="World\Object\Item\ItemObjectField.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\Character\Player\PlayerModelParam.h">
+    <ClInclude Include="Data\ModelPathParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Utility\JsonConvert.h">
@@ -566,7 +569,10 @@
     <ClInclude Include="Utility\ModelData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\Object\Item\BlendRecipe.h">
+    <ClInclude Include="Data\BlendRecipe.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ExternalDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -633,13 +639,21 @@
     <None Include="Resource\Map\wall.fbx" />
     <None Include="Resource\UI\Icon Background.psd" />
     <None Include="Resource\Graph\HPGauge.psd" />
-    <None Include="Data\test.csv" />
-    <None Include="Data\test.xlsx" />
     <None Include="Resource\Item\bottlePotionHealth.mv1" />
     <None Include="Resource\Item\bottlePotionMana.mv1" />
     <None Include="Resource\Item\bottlePotionPoison.mv1" />
     <None Include="Utility\CameraParam.csv" />
-    <None Include="Data\CameraParam.xlsx" />
+    <None Include="Data\CSV\CameraParam.csv" />
+    <None Include="Data\CSV\CameraParam.xlsx" />
+    <None Include="Data\CSV\ItemRecipe.csv" />
+    <None Include="Data\CSV\ItemRecipe.xlsx" />
+    <None Include="Data\CSV\PlayerEmiColor.csv" />
+    <None Include="Data\CSV\PlayerEmissiveColor.csv" />
+    <None Include="Data\CSV\PlayerEmissiveColor.xlsx" />
+    <None Include="Data\CSV\PlayerModelPath.csv" />
+    <None Include="Data\CSV\PlayerModelPath.xlsx" />
+    <None Include="Data\CSV\test.csv" />
+    <None Include="Data\CSV\test.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

@@ -145,8 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\ExternalDataManager.cpp" />
     <ClCompile Include="Utility\FromCSV.cpp" />
-    <ClCompile Include="World\Object\Item\BlendRecipe.cpp" />
+    <ClCompile Include="Data\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
     <ClCompile Include="World\Object\Item\MolotovCocktail.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
@@ -251,14 +252,15 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera\CameraParam.h" />
+    <ClInclude Include="Data\CameraParam.h" />
+    <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="Utility\FromJson.h" />
     <ClInclude Include="Utility\JsonConvert.h" />
     <ClInclude Include="Utility\JsonLoader.h" />
     <ClInclude Include="Utility\ModelData.h" />
-    <ClInclude Include="World\Character\Player\PlayerModelParam.h" />
+    <ClInclude Include="Data\ModelPathParam.h" />
     <ClInclude Include="Utility\FromCSV.h" />
-    <ClInclude Include="World\Object\Item\BlendRecipe.h" />
+    <ClInclude Include="Data\BlendRecipe.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
     <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />
@@ -335,10 +337,18 @@
     <ClInclude Include="Utility\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\CSV\CameraParam.csv" />
+    <None Include="Data\CSV\CameraParam.xlsx" />
+    <None Include="Data\CSV\ItemRecipe.csv" />
+    <None Include="Data\CSV\ItemRecipe.xlsx" />
+    <None Include="Data\CSV\PlayerEmiColor.csv" />
+    <None Include="Data\CSV\PlayerEmissiveColor.csv" />
+    <None Include="Data\CSV\PlayerEmissiveColor.xlsx" />
+    <None Include="Data\CSV\PlayerModelPath.csv" />
+    <None Include="Data\CSV\PlayerModelPath.xlsx" />
+    <None Include="Data\CSV\test.csv" />
+    <None Include="Data\CSV\test.xlsx" />
     <None Include="Utility\CameraParam.csv" />
-    <None Include="Data\CameraParam.xlsx" />
-    <None Include="Data\test.csv" />
-    <None Include="Data\test.xlsx" />
     <None Include="Resource\Bee.mv1" />
     <None Include="Resource\ChaWitch\ChaWitch.mv1" />
     <None Include="Resource\ChaWitch\ChaWitchM.mv1" />

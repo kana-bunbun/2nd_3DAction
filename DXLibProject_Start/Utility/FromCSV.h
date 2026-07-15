@@ -2,9 +2,9 @@
 #include<cassert>
 #include"Data.h"
 #include"CsvConvert.h"
-#include"../Camera/CameraParam.h"
-#include"../World/Character/Player/PlayerModelParam.h"
-#include"../World/Object/Item/BlendRecipe.h"
+#include"../Data/CameraParam.h"
+#include"../Data/ModelPathParam.h"
+#include"../Data/BlendRecipe.h"
 #include"Color.h"
 namespace Data {
 	namespace Csv {

@@ -3,7 +3,7 @@
 #include<vector>
 #include<string>
 #include"ItemData.h"
-#include"BlendRecipe.h"
+#include"../../../Data/BlendRecipe.h"
 class BlendManager {
 public:
 

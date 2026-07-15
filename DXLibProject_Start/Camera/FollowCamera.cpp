@@ -10,11 +10,8 @@
 #include "../Utility/Input.h"
 #include "../Utility/MyMath.h"
 #include "../Utility/MyRandom.h"
-#include "CameraParam.h"
+#include "../Data/CameraParam.h"
 
-namespace {
-
-}
 
 FollowCamera::FollowCamera(const Transform* target):
     m_target(target),

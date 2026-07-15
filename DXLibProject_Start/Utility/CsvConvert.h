@@ -6,7 +6,7 @@
 #include<cassert>
 #include"Vector3.h"
 #include"Color.h"
-#include"../World/Object/Item/BlendRecipe.h"
+#include"../Data/BlendRecipe.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
