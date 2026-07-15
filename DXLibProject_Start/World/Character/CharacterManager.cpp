@@ -38,6 +38,7 @@ void CharacterManager::SetRandomPos()
 	Vector3 playerPos = Vector3::zero;
 
 	for (auto& character : m_characters) {
+		if (!rooms.size())break;
 		// 部屋マスの配列のインデックスをランダムで取得
 		int roomID = MyRandom::Int(0, rooms.size()-1);
 		// ランダムで取得した値のIDをもとにマスのワールド座標を取得

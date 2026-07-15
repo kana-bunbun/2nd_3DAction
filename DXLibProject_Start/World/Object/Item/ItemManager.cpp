@@ -67,7 +67,8 @@ void ItemManager::CreateFielditemFloor(int createnum)
 {
 	std::vector<int>roomIDList = MapCreate::GetInstance().GetRooms();
 	for (int i = 0; i < createnum; i++) {
-		int randomIndex = MyRandom::Int(0, roomIDList.size() + 1);
+		if (!roomIDList.size())break;
+		int randomIndex = MyRandom::Int(0, roomIDList.size()-1);
 		int randomID = roomIDList[randomIndex];
 		ItemData::Type randomType = kDropItemType[MyRandom::Int(0, kDropItemTypeMax)];;
 		if (CreateFieldItem(randomType, MapManager::GetInstance().GetWorldPosFromID(randomID))) {
