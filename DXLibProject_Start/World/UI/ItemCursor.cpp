@@ -232,6 +232,7 @@ void ItemCursor::Draw()
 		DrawStringToHandle(textPos.x, textPos.y, holdText.c_str(), Color::kWhite, handle);
 	}
 		DrawRotaGraph(m_cursorPosition.x, m_cursorPosition.y, kCursorScale, 0, m_cursorHandle, TRUE);
+		BlendManager::GetInstnce().Debug();
 }
 
 Vector3 ItemCursor::GetSelectPos(int selectIndex)

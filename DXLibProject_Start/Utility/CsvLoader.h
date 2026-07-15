@@ -32,9 +32,11 @@ namespace Data{
 
 			// 構造体へデータを格納
 			for (const auto& row : rows) {
-				result.push_back(FromJson<T>::Binding(row));
+				result.push_back(FromCsv<T>::Binding(row));
 			}
 			return result;
 		}
+
+		
 	}
 }

@@ -149,7 +149,7 @@ void Player::Init()
 void Player::LoadModel()
 {
 	// csvデータ読み込み
-	const auto& param = Data::Csv::LoadCsvAs<ModelPathParam>("PlayerModelPath")[0];
+	ModelPathParam param = Data::Csv::LoadCsvAs<ModelPathParam>("PlayerModelPath")[0];
 	m_modelHandle = MV1LoadModel(param.modelPath.c_str());
 	// モデルの大きさを設定
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
@@ -167,19 +167,10 @@ void Player::LoadModel()
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
-
-	//// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
-	//csv=CsvLoader("PlayerEmiColor.csv");
-	//// 値を格納する配列
-	//std::vector<float> emiColor;
-	//for (int i = 0; i < csv.GetLoadData().size(); i++) {
-	//	// csvのB列の値を使う
-	//	float color = std::stof(csv.GetLoadData()[i][1]);
-	//	emiColor.push_back(color);
-	//}
-	//// 読み込んだ値を元にエミッシブカラーを設定
-	//COLOR_F color = { emiColor[0],emiColor[1],emiColor[2],emiColor[3] };
-	//MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
+	Color_F color=Data::Csv::LoadCsvAs<Color_F>("PlayerEmissiveColor")[0];
+	// 読み込んだ値を元にエミッシブカラーを設定
+	MV1SetMaterialEmiColor(m_modelHandle, 0, color.ToCOLOR_F());
 }
 
 void Player::Update(float deltaTime)

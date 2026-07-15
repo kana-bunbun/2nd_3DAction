@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Utility\FromCSV.cpp" />
+    <ClCompile Include="World\Object\Item\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
     <ClCompile Include="World\Object\Item\MolotovCocktail.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
@@ -254,8 +255,10 @@
     <ClInclude Include="Utility\FromJson.h" />
     <ClInclude Include="Utility\JsonConvert.h" />
     <ClInclude Include="Utility\JsonLoader.h" />
+    <ClInclude Include="Utility\ModelData.h" />
     <ClInclude Include="World\Character\Player\PlayerModelParam.h" />
     <ClInclude Include="Utility\FromCSV.h" />
+    <ClInclude Include="World\Object\Item\BlendRecipe.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
     <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />

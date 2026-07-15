@@ -5,6 +5,8 @@
 #include<fstream>
 #include<cassert>
 #include"Vector3.h"
+#include"Color.h"
+#include"../World/Object/Item/BlendRecipe.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -59,6 +61,27 @@ namespace Data {
 
 			ss >> vec.x >> separate >> vec.y >> separate >> vec.z;
 			return vec;
+
+		}
+		/// <summary>
+		/// ItemType型に型変換
+		/// </summary>
+		template<>
+		inline ItemData::Type Convert<ItemData::Type>(const std::string& str) {
+			return BlendRecipe::SToItemType(str);
+		}
+		/// <summary>
+		/// COLOR_F 型に変換
+		/// </summary>
+		template<>
+		inline Color_F Convert<Color_F >(const std::string& str) {
+			Color_F color;
+
+			std::stringstream ss(str);
+			char separate = ',';
+
+			ss >> color.red >> separate >> color.green >> separate >> color.blue >>separate >> color.alpha;
+			return color;
 
 		}
 	}

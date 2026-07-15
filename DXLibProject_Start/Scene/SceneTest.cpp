@@ -81,7 +81,10 @@ SceneTest::SceneTest() :
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
+
+
 	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
+	
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();

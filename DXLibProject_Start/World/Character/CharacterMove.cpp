@@ -52,7 +52,7 @@ void CharacterMove::Update(float deltaTime)
 	moveVec += m_pendingPush;
 	if (moveVec.GetLength() < MyMath::Epsilon)return;
 	m_transform.position += moveVec * deltaTime;
-	m_pendingPush *= kAttenuation * deltaTime;
+	m_pendingPush *= MyMath::Clamp(kAttenuation * deltaTime, 0.0f, 1.0f);
 	if (m_pendingPush.GetLength() < MyMath::Epsilon)
 		m_pendingPush = Vector3::zero;
 }

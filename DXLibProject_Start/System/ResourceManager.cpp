@@ -17,7 +17,7 @@ namespace {
 	const char* const kAnimation = "Animation\\";
 	const char* const kPng = ".png";
 	const char* const kMv1 = ".mv1";
-	const char* const kCsv = ".csv";
+	//const char* const kCsv = ".csv";
 	// csvデータのパスが記されているインデックス(行)
 	constexpr int kPathIndex = 1;
 	// csvデータのモデルパスが記されているインデックス(列)
@@ -99,3 +99,39 @@ int ResourceManager::GetModel(std::string modelName, FileName modelType)
 	// モデルハンドルを返す
 	return modelData.modelHandle;
 }
+
+ModelData ResourceManager::GetModelCSV(std::string csvName)
+{
+	// 総当たりして同じ名前のデータを探す
+	for (auto& model : m_modelData) {
+		if (model.modelName != csvName)continue;
+		ModelData result = model;
+		result.modelHandle = MV1DuplicateModel(model.modelHandle);
+		// モデルハンドルを複製して渡す
+		result.anim = model.anim.Duplicate();
+		// モデルデータを返す
+		return result;
+	}
+
+	// 以下の処理は読み込んでいない判定
+	ModelData modelData;
+	std::string path = kDataPath + csvName + kCsv;
+	// csvパスを作成
+	const auto& csvData = Data::Csv::LoadCsvAs<ModelPathParam>(path.c_str())[0];
+	// モデルデータまでのパスを作成
+	modelData.modelHandle = MV1LoadModel(csvData.modelPath.c_str());
+	// 読み込みができていなければ処理しない
+	if (modelData.modelHandle < 0)return modelData;
+	for (int i = 0; i < csvData.animationPath.size() - 1; i++) {
+		// アニメーションデータのパスを使って読み込み
+		int animHandle = MV1LoadModel(csvData.animationPath[i].c_str());
+		modelData.anim.AddAnim(animHandle);
+	}
+	// データに名前を付ける
+	modelData.modelName = csvName;
+	// 配列に追加
+	m_modelData.push_back(modelData);
+
+	return modelData;
+}
+

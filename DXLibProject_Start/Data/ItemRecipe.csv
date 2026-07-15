@@ -1,7 +1,7 @@
-,Honey,,,Jam,,,Pepper,,,Whiskey,,,HealBottle,,,MolotovCocktail
-Honey,Invalid,,Honey,HealBottle,,Honey,Invalid,,Honey,Invalid,,Honey,Invalid,,Honey,Invalid
-Jam,HealBottle,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid,,Jam,Invalid
-Pepper,Invalid,,Pepper,Invalid,,Pepper,Invalid,,Pepper,MolotovCocktail,,Pepper,Invalid,,Pepper,Invalid
-Whiskey,Invalid,,Whiskey,Invalid,,Whiskey,MolotovCocktail,,Whiskey,Invalid,,Whiskey,Invalid,,Whiskey,Invalid
-HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid,,HealBottle,Invalid
-MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid,,MolotovCocktail,Invalid
+AddÅ_Base,Honey,Jam,Pepper,Whiskey,HealBottle,MolotovCocktail
+Honey,Invalid,HealBottle,Invalid,Invalid,Invalid,Invalid
+Jam,HealBottle,Invalid,Invalid,Invalid,Invalid,Invalid
+Pepper,Invalid,Invalid,Invalid,MolotovCocktail,Invalid,Invalid
+Whiskey,Invalid,Invalid,MolotovCocktail,Invalid,Invalid,Invalid
+HealBottle,Invalid,Invalid,Invalid,Invalid,Invalid,Invalid
+MolotovCocktail,Invalid,Invalid,Invalid,Invalid,Invalid,Invalid

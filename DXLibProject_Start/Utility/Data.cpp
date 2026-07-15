@@ -59,7 +59,7 @@ std::vector<Data::Csv::Row> Data::Csv::ToRows(const Table& table)
 		// ヘッダの内容に合わせてmapに適応
 		for (size_t j = 0; j < header.size(); j++) {
 			if (j >= line.size()) break;
-				row[header[j]] = line[i];
+				row[header[j]] = line[j];
 		}
 		rows.push_back(row);
 	}

@@ -1,5 +1,5 @@
 #pragma once
-
+#include<DxLib.h>
 /// <summary>
 /// 色のデータ
 /// </summary>
@@ -37,3 +37,12 @@ namespace Color {
 	constexpr int kMagenta = 0xff00ff;
 
 }
+struct Color_F {
+public:
+	float red = 0.0f;
+	float green = 0.0f;
+	float blue = 0.0f;
+	float alpha = 1.0f;
+	COLOR_F ToCOLOR_F() { return{ red,green,blue,alpha }; }
+	int ToColor() { return GetColor(static_cast<int>(255 * red), static_cast<int>(255 * green), static_cast<int>(255 * blue)); }
+};
