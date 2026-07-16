@@ -72,7 +72,7 @@ void Bee::Init()
 	AddCollision(std::make_unique<Collision::AABB>(
 		kModelOffset,
 		kCollisionSize
-	), GameObject::CollisionType::Body);
+	), CollisionType::Body);
 	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 }
 
@@ -91,7 +91,7 @@ void Bee::ResolveCollision(GameObject & other, const CollisionData & myData, con
 	if (!result.isHit)return;
 
 	// Playerでなければ即時return
-	if (other.GetCollisionTag() != GameObject::CollisionTag::Player)return;
+	if (other.GetCollisionTag() != CollisionTag::Player)return;
 
 	// 押し戻しベクトルを生成
 	Vector3 revertVec = result.normal * result.penetration;

@@ -3,8 +3,8 @@
 #include<cassert>
 #include"Data.h"
 #include"JsonConvert.h"
-#include"../Camera/CameraParam.h"
-#include"../World/Character/Player/PlayerModelParam.h"
+#include"../Data/CameraParam.h"
+#include"../Data/ModelPathParam.h"
 
 namespace Data {
 	namespace Json {
@@ -55,11 +55,12 @@ namespace Data {
 				param.basePath = Convert<std::string>(row.at("basePath"));
 				param.motionPath = param.motionPath + param.basePath + Convert<std::string>(row.at("motionPath"));
 				param.modelPath = Convert<std::string>(row.at("modelPath"));
-				param.idlePath = param.basePath + Convert<std::string>(row.at("idlePath"));
-				param.walkPath = param.motionPath + Convert<std::string>(row.at("walkPath"));
-				param.parryPath = param.motionPath + Convert<std::string>(row.at("parryPath"));
-				param.damagePath = param.motionPath + Convert<std::string>(row.at("damagePath"));
-				param.deadPath = param.motionPath + Convert<std::string>(row.at("deadPath"));
+				int animNum= Convert<int>(row.at("animNum"));
+				for (int i = 0; i < animNum; i++) {
+					std::string header = "animPath[" + std::to_string(i) + "]";
+					std::string animPath = param.motionPath + Convert<std::string>(row.at(header));
+					param.animationPath.emplace_back(animPath);
+				}
 				return param;
 			}
 		};

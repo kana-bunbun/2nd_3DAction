@@ -138,15 +138,15 @@ Dragon::Dragon():
 
 	m_HPGauge = std::make_unique<Gauge>();
 
-	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 30), GameObject::CollisionType::Body);
+	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 30), CollisionType::Body);
 	// ブレスの初期化
 	for (int i = 0; i < m_breath.size(); i++) {
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
 	float sizeAxis = 300;
 	Vector3 size = { sizeAxis,sizeAxis,sizeAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), GameObject::CollisionType::Body);
-	m_collisionTag = GameObject::CollisionTag::Dragon;
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), CollisionType::Body);
+	m_collisionTag = CollisionTag::Dragon;
 }
 
 

@@ -65,6 +65,7 @@ namespace Input {
 		//XINPUT_BUTTON_A;
 		// 入力情報の更新
 		// 
+		padNum = GetJoypadNum();
 		for (int i = 0; i < padNum; i++) {
 
 			// ボタンの数だけ繰り返し

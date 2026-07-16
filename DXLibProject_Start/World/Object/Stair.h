@@ -15,7 +15,7 @@ public:
 	void Draw()override;
 
 	void ResolveCollision(GameObject& other, const Collision::Result& result);
-	void ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result);
+	void ResolveCollision(CollisionTag tag, const Collision::Result& result);
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

@@ -29,9 +29,9 @@ HealBottle::HealBottle() :
 {
 	m_rotateSpeed = Vector3::zero;
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), GameObject::CollisionType::Null);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), CollisionType::Null);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), GameObject::CollisionType::Invalid);
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), CollisionType::Invalid);
 }
 
 HealBottle::~HealBottle()
@@ -63,7 +63,7 @@ void HealBottle::Setup(const Transform& transform)
 	m_effectCount = kEffectMaxCount;
 
 	m_isTrans = false;
-	m_collisions[0].type = GameObject::CollisionType::Null;
+	m_collisions[0].type = CollisionType::Null;
 
 }
 
@@ -118,16 +118,16 @@ void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myDa
 	Vector3 push = result.normal * result.penetration;
 	switch (other.GetCollisionTag())
 	{
-	case GameObject::CollisionTag::Wall:
+	case CollisionTag::Wall:
 		// エフェクトの当たり判定なら処理を抜ける
-		if (myData.type == GameObject::CollisionType::Heal)break;
+		if (myData.type == CollisionType::Heal)break;
 		SetPosition(m_transform.position + push);
 		EffectSetup();
 		break;
-	case GameObject::CollisionTag::Player:
-	case GameObject::CollisionTag::Dragon:
-	case GameObject::CollisionTag::Enemy:
-		if (myData.type == GameObject::CollisionType::Invalid)break;
+	case CollisionTag::Player:
+	case CollisionTag::Dragon:
+	case CollisionTag::Enemy:
+		if (myData.type == CollisionType::Invalid)break;
 		if (m_activationCount)break;
 	// 一旦適当な値の回復処理を呼んでおく
 	other.Heal(2);
@@ -159,13 +159,13 @@ void HealBottle::BeforeEffectUpdate(float deltaTime)
 	// 落下させる
 	m_transform.position.y += m_moveVector.y * deltaTime;
 	// 効果発動前は衝突判定をチェックしない
-	m_collisions[0].type = GameObject::CollisionType::Null;
+	m_collisions[0].type = CollisionType::Null;
 }
 
 void HealBottle::EffectUpdate(float deltaTime)
 {
 	// 効果発動中は衝突判定をチェックする
-	m_collisions[0].type = GameObject::CollisionType::Heal;
+	m_collisions[0].type = CollisionType::Heal;
 	// カウントダウン
 	m_effectCount -= deltaTime;
 	// カウントに応じて透明度を求める

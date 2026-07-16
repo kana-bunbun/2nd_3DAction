@@ -26,7 +26,7 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
 		// 方向を調べる
 		MapConst::eDirectionFour direction = static_cast<MapConst::eDirectionFour>(i);
-		AddCollision(std::make_unique<Collision::AABB>(), GameObject::CollisionType::Invalid);
+		AddCollision(std::make_unique<Collision::AABB>(), CollisionType::Invalid);
 		RegistWall(direction);
 	}
 	ChangeTile(ID, position, terrain);
@@ -143,7 +143,7 @@ void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 	regist.position += m_transform.position;
 	m_collisions[wallNum].shape = std::move(shape);
 	m_collisions[wallNum].shape ->SetPosition(regist.position);
-	m_collisionTag = GameObject::CollisionTag::Wall;
+	m_collisionTag = CollisionTag::Wall;
 	// 自身の座標から見た壁の座標を追加
 	m_wallPos.push_back(regist);
 }
@@ -174,7 +174,7 @@ void TileObject::CheckWall()
 			continue;
 		}
 		m_wallDirection[i] = true;
-		m_collisions[i].type = CollisionType::Invalid;
+		m_collisions[i].type = CollisionType::Normal;
 
 	}
 

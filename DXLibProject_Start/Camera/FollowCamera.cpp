@@ -30,7 +30,7 @@ FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& par
     m_target(target),
     m_view{},
     m_distance(),
-    m_param()
+    m_param(param)
 {
     m_distance = m_param.initDistance;
     m_transform.Reset();

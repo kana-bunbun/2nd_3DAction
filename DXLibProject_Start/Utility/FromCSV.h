@@ -1,5 +1,6 @@
 #pragma once
 #include<cassert>
+#include<string>
 #include"Data.h"
 #include"CsvConvert.h"
 #include"../Data/CameraParam.h"
@@ -18,19 +19,32 @@ namespace Data {
 				return T{};
 			}
 		};
+		template<typename T>
+		T Get(const Csv::Row& row,  const std::string key) {
+			// keyの値をrowから探す
+			// 見つかればrowのvalueを、見つからなければend()が入る
+			auto it = row.find(key);
+			if (it == row.end()) {
+				// 設定ミス
+				assert(0 && "key not found");
+				return T{};
+			}
+			// 見つかったらvalueを変換して返す
+			return Convert<T>(it->second);
+		}
 		template<>
 		struct FromCsv<FollowCameraParam> {
 			static FollowCameraParam Binding(const Csv::Row& row) {
 				FollowCameraParam param;
-				param.fieldOfView = Convert<float>(row.at("fieldOfView"));
-				param.initDistance= Convert<float>(row.at("initDistance"));
-				param.minDistance = Convert<float>(row.at("minDistance"));
-				param.maxDistance = Convert<float>(row.at("maxDistance"));
-				param.minPitchDegAngle = Convert<float>(row.at("minPitchDegAngle"));
-				param.maxPitchDegAngle = Convert<float>(row.at("maxPitchDegAngle"));
-				param.moveSpeed = Convert<float>(row.at("moveSpeed"));
-				param.rotateSpeedDeg = Convert<float>(row.at("rotateSpeedDeg"));
-				param.offsetPos = Convert<Vector3>(row.at("offsetPos"));
+				param.fieldOfView = Get<float>(row,"fieldOfView");
+				param.initDistance= Get<float>(row,"initDistance");
+				param.minDistance = Get<float>(row,"minDistance");
+				param.maxDistance = Get<float>(row,"maxDistance");
+				param.minPitchDegAngle = Get<float>(row,"minPitchDegAngle");
+				param.maxPitchDegAngle = Get<float>(row,"maxPitchDegAngle");
+				param.moveSpeed = Get<float>(row,"moveSpeed");
+				param.rotateSpeedDeg = Get<float>(row,"rotateSpeedDeg");
+				param.offsetPos = Get<Vector3>(row,"offsetPos");
 				return param;
 			}
 		};
@@ -38,13 +52,13 @@ namespace Data {
 		struct FromCsv<ModelPathParam> {
 			static ModelPathParam Binding(const Csv::Row& row) {
 				ModelPathParam param;
-				param.basePath = Convert<std::string>(row.at("basePath"));
-				param.motionPath= param.motionPath + param.basePath+Convert<std::string>(row.at("motionPath"));
-				param.modelPath = param.basePath + Convert<std::string>(row.at("modelPath"));
-				int animNum = Convert<int>(row.at("animNum"));
+				param.basePath = Get<std::string>(row,"basePath");
+				param.motionPath= param.motionPath + param.basePath+Get<std::string>(row,"motionPath");
+				param.modelPath = param.basePath + Get<std::string>(row,"modelPath");
+				int animNum = Get<int>(row,"animNum");
 				for (int i = 0; i < animNum; i++) {
 					std::string header = "animPath[" + std::to_string(i) + "]";
-					std::string animPath = param.motionPath + Convert<std::string>(row.at(header));
+					std::string animPath = param.motionPath + Get<std::string>(row,(header));
 					param.animationPath.emplace_back(animPath);
 				}
 				return param;
@@ -56,7 +70,7 @@ namespace Data {
 				BlendRecipe param;
 				for (int i = 0; i < static_cast<int>(ItemData::Type::Max); i++) {
 					std::string itemName = BlendRecipe::ItemTypeToS(static_cast<ItemData::Type>(i));
-					ItemData::Type blendResult = Convert<ItemData::Type>(row.at(itemName));
+					ItemData::Type blendResult = Get<ItemData::Type>(row,(itemName));
 					param.blendRecipe[i] = blendResult;
 				}
 				return param;
@@ -66,10 +80,20 @@ namespace Data {
 		struct FromCsv<Color_F> {
 			static Color_F Binding(const Csv::Row& row) {
 				Color_F param;
-				param.red = Convert<float>(row.at("Red"));
-				param.green = Convert<float>(row.at("Green"));
-				param.blue = Convert<float>(row.at("Blue"));
-				param.alpha = Convert<float>(row.at("Alpha"));
+				param.red = Get<float>(row,"red");
+				param.green = Get<float>(row,"green");
+				param.blue = Get<float>(row,"blue");
+				param.alpha = Get<float>(row,"alpha");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<AddCollisionAABBData> {
+			static AddCollisionAABBData Binding(const Csv::Row& row) {
+				AddCollisionAABBData param;
+				param.position = Get<Vector3>(row,"position");
+				param.size = Get<Vector3>(row,"size");
+				param.type = Get<CollisionType>(row,"type");
 				return param;
 			}
 		};

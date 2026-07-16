@@ -8,7 +8,7 @@ namespace {
 }
 ItemObjectField::ItemObjectField()
 {
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, kCollisionSize), GameObject::CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, kCollisionSize), CollisionType::Body);
 }
 
 ItemObjectField::~ItemObjectField()
@@ -44,7 +44,7 @@ void ItemObjectField::ResolveCollision(GameObject & other, const CollisionData &
 {
 	switch (other.GetCollisionTag())
 	{
-	case GameObject::CollisionTag::Player:
+	case CollisionTag::Player:
 		m_hitLog[1] = true;
 		break;
 	default:

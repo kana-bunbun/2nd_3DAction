@@ -9,6 +9,8 @@
 namespace {
 	const char* const kCSVFilePath = "Data\\CSV\\";
 	const char* const kCSV = ".csv";
+	const char* const kJSON = ".json";
+	const char* const kJSONFilePath = "Data\\JSON\\";
 }
 
 Data::Csv::Table Data::Csv::LoadRawCSV(const std::string& path)
@@ -80,9 +82,9 @@ std::vector<std::string> Data::Csv::Split(const std::string& str, char separate)
 	for (size_t i = 0; i < str.size(); i++) {
 		// 1文字ずつチェック
 		char check = str[i];
-		if (check == '""') {
+		if (check == '"') {
 			// もしクォートなら
-			isQuotes = true;
+			isQuotes =!isQuotes;
 		}
 		else if (check == separate && !isQuotes) {
 			// もしクォートが見つかっていなくてカンマがあれば
@@ -130,7 +132,7 @@ Data::Json::JsonObject Data::Json::LoadRawJSON(const std::string& path)
 	JsonObject jsonObject;
 
 	// ファイルを開く
-	std::ifstream ifs(path);
+	std::ifstream ifs(kJSONFilePath + path + kJSON);
 
 	// ファイルを開けなかったら即時return
 	if (ifs.fail()) {

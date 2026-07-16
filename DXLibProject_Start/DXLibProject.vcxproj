@@ -261,6 +261,7 @@
     <ClInclude Include="Data\ModelPathParam.h" />
     <ClInclude Include="Utility\FromCSV.h" />
     <ClInclude Include="Data\BlendRecipe.h" />
+    <ClInclude Include="World\GameObjectParam.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
     <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />

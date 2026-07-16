@@ -46,7 +46,7 @@ void GameObject::Draw()
 void GameObject::DebugCollision(int color)
 {
 	for (auto& collision : m_collisions) {
-		if (collision.type == GameObject::CollisionType::Null)continue;
+		if (collision.type == CollisionType::Null)continue;
 		collision.shape->DebugDraw();
 	}
 }

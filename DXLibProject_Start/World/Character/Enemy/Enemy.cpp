@@ -61,7 +61,7 @@ Enemy::Enemy():
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
 	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
-	m_collisionTag = GameObject::CollisionTag::Enemy;
+	m_collisionTag = CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
 }
 
@@ -82,7 +82,7 @@ Enemy::Enemy(const Transform& transform) :
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
 	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
-	m_collisionTag = GameObject::CollisionTag::Enemy;
+	m_collisionTag = CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
 }
 
@@ -175,7 +175,7 @@ void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, c
 {
 	switch (other.GetCollisionTag())
 	{
-	case GameObject::CollisionTag::Player:
+	case CollisionTag::Player:
 	/*	if (!IsDead()) {
 			break;
 		}

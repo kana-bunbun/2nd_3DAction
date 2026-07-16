@@ -12,8 +12,8 @@ FloorBlock::FloorBlock()
 {
 	m_modelHandle = MV1LoadModel(kModelPath);
 	MV1SetScale(m_modelHandle, kInitSize.ToVECTOR());
-	m_collisionTag = GameObject::CollisionTag::Stage;
-	AddCollision(std::make_unique<Collision::AABB>(kOffsetPos, kCollisionSize), GameObject::CollisionType::Body);
+	m_collisionTag = CollisionTag::Stage;
+	AddCollision(std::make_unique<Collision::AABB>(kOffsetPos, kCollisionSize), CollisionType::Body);
 }
 
 void FloorBlock::Init()

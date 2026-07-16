@@ -67,7 +67,7 @@ void DragonBreath::ResolveCollision(GameObject& other, const CollisionData& myDa
 {
 	switch (other.GetCollisionTag())
 	{
-	case GameObject::CollisionTag::Enemy: {
+	case CollisionTag::Enemy: {
 		
 		if (IsCollisionEnter(otherData.shape.get())) {
 		const Character& character = dynamic_cast<const Character&>(other);

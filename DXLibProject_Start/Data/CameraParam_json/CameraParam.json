@@ -1,0 +1,21 @@
+[
+	{
+		"fieldOfView": 60.0,
+
+		"initDistance": 500.0,
+		"minDistance": 300.0,
+		"maxDistance": 700.0,
+
+		"minPitchDegAngle": -30.0,
+		"maxPitchDegAngle": 40.0,
+
+		"moveSpeed": 300.0,
+		"rotateSpeedDeg": 120.0,
+
+		"offsetPos": {
+			"x": 0.0,
+			"y": 50.0,
+			"z": -100.0
+		}
+	}
+]

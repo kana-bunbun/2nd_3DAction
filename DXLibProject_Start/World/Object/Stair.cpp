@@ -18,7 +18,7 @@ Stair::Stair():
 {
 	m_transform.Reset();
 	//m_collision = std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize);
-	AddCollision(std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize), GameObject::CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize), CollisionType::Body);
 	m_modelHandle = MV1LoadModel(kFilePath);
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.3f,0.3f,0.3f,1.0f };
@@ -70,7 +70,7 @@ void Stair::ResolveCollision(GameObject & other, const Collision::Result & resul
 
 }
 
-void Stair::ResolveCollision(GameObject::CollisionTag tag, const Collision::Result& result)
+void Stair::ResolveCollision(CollisionTag tag, const Collision::Result& result)
 {}
 
 void Stair::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

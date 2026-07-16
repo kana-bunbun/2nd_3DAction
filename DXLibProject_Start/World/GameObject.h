@@ -4,6 +4,7 @@
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
 #include"../World/Component/Collision.h"
+#include"GameObjectParam.h"
 /// <summary>
 /// ゲームで扱うオブジェクトの基本クラス
 /// 座標・モデル・衝突判定・ライフサイクルを管理する
@@ -12,33 +13,12 @@
 class GameObject
 {
 public:
-	/// <summary>
-	/// 衝突判定時にGameObjectクラスを区別するときに使用
-	/// </summary>
-	enum class CollisionTag {
-		None,
-		Player,
-		Dragon,
-		Enemy,
-		Wall,
-		Stage,
-		Barrier,
-	};
-	enum class CollisionType {
-		Invalid,
-		Body,
-		Foot,
-		Sensor,
-		Attack,
-		Heal,
-		Null,		// 当たり判定をチェックしない
-	};
 	struct CollisionData {
 	public:
 		std::unique_ptr<Collision::Shape>shape;
 		CollisionType type;
 	};
-	struct HitCollisionData{
+	struct HitCollisionData {
 	public:
 		Collision::Shape* collision;
 		bool isHit;

@@ -107,6 +107,44 @@ Player::Player(Vector3 position) :
 	SetPosition(position);
 }
 
+Player::Player(std::vector<AddCollisionAABBData> param) :
+	m_animation(),
+	m_animData(),
+	m_status(),
+	m_animHandle(),
+	m_speed(0),
+	m_desireRad(0),
+	m_move(),
+	m_parry(false),
+	m_charge(false),
+	m_pBarrier(nullptr),
+	m_dashFlag(false),
+	m_isGroud(true),
+	m_isJump(false)
+{
+	// モデルの設定
+	LoadModel();
+	// トランスフォームの初期化処理
+	m_transform.Reset();
+	// 移動時の角度の補間割合を設定
+	m_move.SetLerpSpeed(kLerpModelRadian);
+	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
+	// カプセルの初期化
+	m_capsule = Collision::Capsule(kCapsuleRadius);
+	// カプセルのオフセットを計算
+	m_capsule.SetOffset(kCapsuleOffset);
+	// ゲージの初期化
+	m_HPGauge = std::make_unique<Gauge>();
+	m_MPGauge = std::make_unique<Gauge>();
+	// 当たり判定追加
+	for (const auto& obj : param) {
+		AddCollision(std::make_unique<Collision::AABB>(obj.position, obj.size), obj.type);
+	}
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
+	// 座標設定
+	SetPosition(Vector3::zero);
+}
+
 Player::~Player()
 {
 	// アニメーションハンドルの破棄
@@ -157,9 +195,9 @@ void Player::LoadModel()
 		// ファイルパスを組み立てる
 		// アニメーションハンドルの初期化
 		m_animHandle[i] = -1;
-
+		std::string animPath = param.animationPath[i];
 		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel(param.animationPath[i].c_str());
+		m_animHandle[i] = MV1LoadModel(animPath.c_str());
 		// 読み込みができたら
 		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
@@ -193,7 +231,7 @@ void Player::Update(float deltaTime)
 		m_pBarrier->SetPosition(m_transform.position);
 	}
 
-
+	printfDx("status : %d\n", m_status);
 
 	// ゲージが上限・下限を超えないようにする
 	

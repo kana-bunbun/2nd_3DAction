@@ -7,6 +7,7 @@
 #include"Vector3.h"
 #include"Color.h"
 #include"../Data/BlendRecipe.h"
+#include"../World/GameObjectParam.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -84,5 +85,39 @@ namespace Data {
 			return color;
 
 		}
+		/// <summary>
+		/// CollisionTagに変換
+		/// </summary>
+		template<>
+		inline CollisionTag Convert<CollisionTag >(const std::string& str) {
+				
+			if (str == "None")return CollisionTag::None;
+			if (str == "Player")return CollisionTag::Player;
+			if (str == "Dragon")return CollisionTag::Dragon;
+			if (str == "Enemy")return CollisionTag::Enemy;
+			if (str == "Wall")return CollisionTag::Wall;
+			if (str == "Stage")return CollisionTag::Stage;
+			if (str == "Barrier")return CollisionTag::Barrier;
+
+			assert(0 && "Convert CollisionTag key not found");
+
+			return CollisionTag::Invalid;
+		}
+		/// <summary>
+		/// CollisionTypeに変換
+		/// </summary>
+		template<>
+		inline CollisionType Convert<CollisionType>(const std::string& str) {
+			if (str == "Normal")return CollisionType::Normal;
+			if (str == "Body")return CollisionType::Body;
+			if (str == "Foot")return CollisionType::Foot;
+			if (str == "Sensor")return CollisionType::Sensor;
+			if (str == "Attack")return CollisionType::Attack;
+			if (str == "Heal")return CollisionType::Heal;
+			if (str == "Null")return CollisionType::Null;
+			assert(0 && "Convert CollisionType key not found");
+			return CollisionType::Invalid;
+		}
 	}
+
 }

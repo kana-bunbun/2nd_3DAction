@@ -134,27 +134,27 @@ void GameObjectManager::CheckCollision()
 			// コリジョンがなければスルー
 			if (collisionsB.empty())continue;
 			// 壁同士の当たり判定は調べない
-			if (objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
-				objB->GetCollisionTag() == GameObject::CollisionTag::Wall)continue;
+			if (objA->GetCollisionTag() == CollisionTag::Wall &&
+				objB->GetCollisionTag() == CollisionTag::Wall)continue;
 			// 現在いるマスが隣り合っていない場合スルー
 			if (!IsChebyishevTile(objA, objB))continue;
 
 			for (auto& collisionA : collisionsA) {
 				// コリジョンがなければスルー
 				if (!collisionA.shape)continue;
-				if (collisionA.type == GameObject::CollisionType::Null)continue;
+				if (collisionA.type == CollisionType::Null)continue;
 
 				for (auto& collisionB : collisionsB) {
 					// コリジョンがなければスルー
 					if (!collisionB.shape)continue;
-					if (collisionB.type == GameObject::CollisionType::Null)continue;
+					if (collisionB.type == CollisionType::Null)continue;
 					// 衝突判定
 					Collision::Result resultA = collisionA.shape->CheckCollision(*collisionB.shape);
 
-					if ((objA->GetCollisionTag() == GameObject::CollisionTag::Wall &&
-						collisionB.type==GameObject::CollisionType::Heal) ||
-						(objA->GetCollisionTag() == GameObject::CollisionTag::Dragon &&
-							collisionB.type == GameObject::CollisionType::Heal)) {
+					if ((objA->GetCollisionTag() == CollisionTag::Wall &&
+						collisionB.type==CollisionType::Heal) ||
+						(objA->GetCollisionTag() == CollisionTag::Dragon &&
+							collisionB.type == CollisionType::Heal)) {
 						int f = 0;
 					}
 					// 当たっていなければスルー

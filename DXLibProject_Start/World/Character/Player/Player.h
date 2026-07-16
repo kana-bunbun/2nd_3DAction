@@ -5,6 +5,7 @@
 #include"../../UI/GaugeShow.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/Camera.h"
+#include"../../GameObjectParam.h"
 #include"../Character.h"
 #include<array>
 class CameraOld;
@@ -18,6 +19,7 @@ public:
 	/// プレイヤーのコンストラクタ
 	/// </summary>
 	Player(Vector3 position=Vector3::zero);
+	Player(std::vector<AddCollisionAABBData> param);
 	/// <summary>
 	/// プレイヤーのデストラクタ
 	/// </summary>

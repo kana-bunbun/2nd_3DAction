@@ -10,6 +10,7 @@
 #include "../Utility/Data.h"
 #include "../Utility/FromCSV.h"
 #include "../Utility/CSVLoader.h"
+#include "../Utility/JsonLoader.h"
 #include "../World/Component/Transform.h"
 #include "../World/Component/Collision.h"
 #include "../Camera/CameraOld.h"
@@ -68,7 +69,8 @@ SceneTest::SceneTest() :
 	Vector3 lightVec= Vector3::YAxis*-1;
 	ChangeLightTypeDir(lightVec.ToVECTOR());
 	// 最初に接続しているコントローラーの数で初期化
-	m_playerNum = GetJoypadNum();
+	m_playerNum = 1;
+	//m_playerNum = GetJoypadNum();
 	// コントローラー接続が失敗していたら警告
 	if (!m_playerNum) {
 
@@ -84,12 +86,15 @@ SceneTest::SceneTest() :
 
 
 	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
-	
+	//const auto& scameraParam = Data::Json::LoadJsonAs<FollowCameraParam>(kcameraParamPath);
+
+
+	auto data = Data::Csv::LoadCsvAs<AddCollisionAABBData>("AddCollisionAABBData");
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>();
+	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(data);
 
 
 }
@@ -102,7 +107,8 @@ void SceneTest::Init() {
 	//m_pSound->LoadSe();
 	//m_pSound->LoadBGM();
 	m_pCameraMgr->Init();
-	m_pCameraMgr->AddCamera(Camera::CameraType::Follow,std::make_unique<FollowCamera>(&m_pPlayer->GetTransform()));
+	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
+	m_pCameraMgr->AddCamera(Camera::CameraType::Follow,std::make_unique<FollowCamera>(&m_pPlayer->GetTransform(),cameraParam[0]));
 	m_pCameraMgr->AddCamera(Camera::CameraType::Debug, std::make_unique<DebugCamera>());
 	SoundManager::GetInstance().LoadBGM();
 	SoundManager::GetInstance().LoadSe();

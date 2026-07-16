@@ -1,6 +1,7 @@
 #include "MolotovCocktail.h"
 #include "ItemManager.h"
 #include "../../../System/ResourceManager.h"
+#include"../../GameObjectParam.h"
 namespace {
 	const char* const kModelPath = "molotovCocktail";
 
@@ -19,10 +20,10 @@ namespace {
 MolotovCocktail::MolotovCocktail()
 {
 	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius),GameObject::CollisionType::Null);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),GameObject::CollisionType::Attack);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius),CollisionType::Null);
+	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),CollisionType::Attack);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),GameObject::CollisionType::Invalid);
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),CollisionType::Invalid);
 }
 
 MolotovCocktail::~MolotovCocktail()
@@ -84,17 +85,17 @@ void MolotovCocktail::ResolveCollision(GameObject& other, const CollisionData& m
 	Vector3 push = result.normal * result.penetration;
 	switch (other.GetCollisionTag())
 	{
-	case GameObject::CollisionTag::Wall:
+	case CollisionTag::Wall:
 		// エフェクトの当たり判定なら処理を抜ける
-		if (myData.type == GameObject::CollisionType::Attack)break;
+		if (myData.type == CollisionType::Attack)break;
 		SetPosition(m_transform.position + push);
 		EffectSetup();
 		break;
-	case GameObject::CollisionTag::Player:
-	case GameObject::CollisionTag::Dragon:
-	case GameObject::CollisionTag::Enemy:
+	case CollisionTag::Player:
+	case CollisionTag::Dragon:
+	case CollisionTag::Enemy:
 		// エフェクトの当たり判定でなければ処理を抜ける
-		if (myData.type == GameObject::CollisionType::Invalid)break;
+		if (myData.type == CollisionType::Invalid)break;
 		if (m_activationCount)break;
 		other.Damage(1);
 		break;
@@ -154,7 +155,7 @@ void MolotovCocktail::EffectUpdate(float deltaTime)
 	// 透明度をクランプ
 	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
 	// 攻撃の当たり判定チェックを開始
-	m_collisions[0].type = GameObject::CollisionType::Attack;
+	m_collisions[0].type = CollisionType::Attack;
 	// 攻撃カウントを加算
 	m_activationCount += deltaTime;
 	if (m_activationCount > kAttackInterval) {
