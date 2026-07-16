@@ -1,9 +1,18 @@
 #include "ExternalDataManager.h"
 #include"../Utility/CsvLoader.h"
-
+#include"../World/GameObjectParam.h"
 namespace {
 	// プレイヤーのパス情報のデータ名
 	const char* const kPlayerModelPath = "PlayerModelPath";
+
+	const char* const kModelPath[static_cast<int>(ModelName::Max)]{
+		"PlayerModel",
+		"DragonModel",
+		"EnemyModel",
+		"WallModel",
+		"FloorModel",
+		"StairModel",
+	};
 }
 ExternalDataManager::ExternalDataManager()
 {

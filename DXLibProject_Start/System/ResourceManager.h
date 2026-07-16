@@ -28,11 +28,23 @@ public:
 		Max,
 	};
 public:
-	class GraphData {			// 画像のデータ
+	class Resource {
 	public:
-		int graphHandle=-1;		// グラフィックハンドル
-		std::string graphName;	// データの名前
+		Resource() = default;
+		~Resource() = default;
+	public:
+		int GetHandle() { return m_handle; }
+		std::string GetName() { return m_name; }
+	protected:
+	void Reset();
+	private:
+		virtual void Load(std::string path)=0;
+		virtual void Delete() = 0;
+	protected:
+		int m_handle;			// データのハンドル
+		std::string m_name;	// データ名
 	};
+
 	
 public:
 	void End();
@@ -40,7 +52,7 @@ public:
 	/// <summary>
 	/// グラフィックハンドルを取得する関数
 	/// </summary>
-	int GetGraph(std::string graphName);
+	GraphData* GetGraph(std::string graphName);
 	/// <summary>
 	/// モデルハンドルのみを取得する関数
 	/// </summary>
@@ -56,8 +68,28 @@ private:
 	ResourceManager(ResourceManager&&) = delete;
 	ResourceManager& operator=(const ResourceManager&&) = delete;
 private:
-	std::vector<GraphData>m_graphData;
-	std::vector<ModelData>m_modelData;
+	std::vector<std::unique_ptr<GraphData>>m_graphData;
+	std::vector <std::unique_ptr<ModelData>> m_modelData;
 };
 
- 
+class ModelData:public ResourceManager::Resource {			// モデルのデータ
+public:
+	ModelData(std::string path);
+	~ModelData();
+private:
+	void Load(std::string path)override;
+	void Delete()override;
+private:
+	// アニメーションのハンドル
+	std::vector<int> m_animHandle;
+	// アニメーション管理
+	AnimationController m_anim;
+};
+class GraphData:public ResourceManager::Resource {			// 画像のデータ
+public:
+	GraphData(std::string path);
+	~GraphData();
+private:
+	void Load(std::string path)override;
+	void Delete()override;
+};

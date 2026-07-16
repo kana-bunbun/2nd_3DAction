@@ -22,21 +22,13 @@ namespace {
 	constexpr int kPathIndex = 1;
 	// csvデータのモデルパスが記されているインデックス(列)
 	constexpr int kModelIndex = 0;
+	// データ読み込み時の不正値
+	constexpr int kHandleInvalidValue = -1;
 }
 
 void ResourceManager::End()
 {
-	for (auto& graph : m_graphData) {
-		DeleteGraph(graph.graphHandle);
-		graph.graphHandle = -1;
-		graph.graphName = "";
-	}
-	for (auto& modelData : m_modelData) {
-		MV1DeleteModel(modelData.modelHandle);
-		modelData.modelHandle = -1;
-		modelData.anim.End();
-		modelData.modelName = "";
-	}
+
 }
 
 ResourceManager& ResourceManager::GetInstance()
@@ -46,43 +38,40 @@ ResourceManager& ResourceManager::GetInstance()
 
 }
 
-int ResourceManager::GetGraph(std::string graphName)
+GraphData* ResourceManager::GetGraph(std::string graphName)
 {
 	// 総当たりして同じ名前の画像を探す
 	for (auto& graphData : m_graphData) {
 		// 同じ名前のデータがあれば読み込み済みの判定
-		if (graphData.graphName != graphName)continue;
-		return graphData.graphHandle;
+		if (graphData->GetName() != graphName)continue;
+		return graphData.get();
 	}
 
 	// 以下の処理は読み込んでない判定としての処理
 	//　パスの作成
 	std::string path = kResourcePath;
 	path += kFilePath[static_cast<int>(FileName::Graph)] + graphName + kPng;
-	GraphData graphData;
 	// グラフィックハンドルの読み込み
-	graphData.graphHandle = LoadGraph(path.c_str());
-	// データに名前を付ける
-	graphData.graphName = graphName;
+	std::unique_ptr<GraphData> graphData=std::make_unique<GraphData>(path);
 	// 読み込み失敗したら不正値を返す
-	if (graphData.graphHandle < 0)return -1;
+	if (graphData->GetHandle() == kHandleInvalidValue)return nullptr;
 
 	// 以下の処理は読み込み成功時の処理
 	// 配列に追加
 	m_graphData.push_back(graphData);
 
-	// グラフィックハンドルを返す
-	return graphData.graphHandle;
+	// グラフィックデータを返す
+	return graphData.get();
 }
 
 int ResourceManager::GetModel(std::string modelName, FileName modelType)
 {
 	// 総当たりして同じ名前のデータを探す
 	for (auto& model : m_modelData) {
-		if (model.modelName != modelName)continue;
+		if (model->GetName() != modelName)continue;
 
 		// モデルハンドルを複製して返す
-		return MV1DuplicateModel(model.modelHandle);
+		return MV1DuplicateModel(model->GetHandle());
 	}
 
 	// 以下の処理は読み込んでいない判定
@@ -108,7 +97,7 @@ ModelData ResourceManager::GetModelCSV(std::string csvName)
 		ModelData result = model;
 		result.modelHandle = MV1DuplicateModel(model.modelHandle);
 		// モデルハンドルを複製して渡す
-		result.anim = model.anim.Duplicate();
+		result.m_anim = model.m_anim.Duplicate();
 		// モデルデータを返す
 		return result;
 	}
@@ -125,7 +114,7 @@ ModelData ResourceManager::GetModelCSV(std::string csvName)
 	for (int i = 0; i < csvData.animationPath.size() - 1; i++) {
 		// アニメーションデータのパスを使って読み込み
 		int animHandle = MV1LoadModel(csvData.animationPath[i].c_str());
-		modelData.anim.AddAnim(animHandle);
+		modelData.m_anim.AddAnim(animHandle);
 	}
 	// データに名前を付ける
 	modelData.modelName = csvName;
@@ -135,3 +124,62 @@ ModelData ResourceManager::GetModelCSV(std::string csvName)
 	return modelData;
 }
 
+ModelData::ModelData(std::string path)
+{
+	// データの読み込み
+	Load(path);
+}
+
+ModelData::~ModelData()
+{
+	// データの破棄
+	Delete();
+
+}
+
+void ModelData::Load(std::string path)
+{
+
+}
+
+void ModelData::Delete()
+{
+	for (auto& anim : m_animHandle) {
+		if (anim == kHandleInvalidValue)continue;
+		MV1DeleteModel(anim);
+		anim = kHandleInvalidValue;
+}
+	m_handle = kHandleInvalidValue;
+}
+
+GraphData::GraphData(std::string path)
+{
+	// データの読み込み
+	Load(path);
+}
+
+GraphData::~GraphData()
+{
+	// データの破棄
+	Delete();
+}
+
+void GraphData::Load(std::string path)
+{
+	m_handle = kHandleInvalidValue;
+	path = kResourcePath + kDataPath[static_cast<int>(ResourceManager::FileName::Graph)] + path + kPng;
+	m_handle = LoadGraph(path.c_str());
+}
+
+void GraphData::Delete()
+{
+	if (m_handle == kHandleInvalidValue)return;
+	DeleteGraph(m_handle);
+	Reset();
+}
+
+void ResourceManager::Resource::Reset()
+{
+	m_handle = kHandleInvalidValue;
+	m_name = "";
+}

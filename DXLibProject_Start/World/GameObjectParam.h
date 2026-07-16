@@ -57,3 +57,13 @@
 		Vector3 size;
 		CollisionType type;
 	};
+	enum class ModelName {
+		Invalid=-1,
+		Player,
+		Dragon,
+		Enemy,
+		Wall,
+		Floor,
+		Stair,
+		Max
+	};
