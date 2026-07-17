@@ -14,6 +14,7 @@
 #include "../../../Utility/Data.h"
 #include "../../../Utility/FromCSV.h"
 namespace {
+	const char* const kModelDataName = "PlayerModel";
 	// 各アニメーションのループフラグ
 	constexpr bool kLoopFrag[static_cast<int>(Status::Player::Max)] = {
 		true,  	// アイドル
@@ -162,7 +163,7 @@ Player::~Player()
 void Player::Init()
 {
 	// アニメーションの初期化
-	m_animation.Init(GameObject::m_modelHandle);
+	m_animation.Init(m_modelData);
 	
 	// アニメーションデータの初期化処理
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
@@ -186,29 +187,17 @@ void Player::Init()
 
 void Player::LoadModel()
 {
-	// csvデータ読み込み
-	ModelPathParam param = Data::Csv::LoadCsvAs<ModelPathParam>("PlayerModelPath")[0];
-	m_modelHandle = MV1LoadModel(param.modelPath.c_str());
-	// モデルの大きさを設定
-	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataName);
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {
-		// ファイルパスを組み立てる
-		// アニメーションハンドルの初期化
-		m_animHandle[i] = -1;
-		std::string animPath = param.animationPath[i];
-		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel(animPath.c_str());
-		// 読み込みができたら
-		if (m_animHandle[i] == -1)continue;
+
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
 	// プレイヤーモデルのエミッシブカラーをCSVデータから読み込んで設定する
 	Color_F color=Data::Csv::LoadCsvAs<Color_F>("PlayerEmissiveColor")[0];
 	// 読み込んだ値を元にエミッシブカラーを設定
-	MV1SetMaterialEmiColor(m_modelHandle, 0, color.ToCOLOR_F());
+	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color.ToCOLOR_F());
 }
 
 void Player::Update(float deltaTime)
@@ -458,13 +447,12 @@ void Player::SetCameraAngle(const Vector3& position)
 void Player::UpdateCollision()
 {
 	// 当たり判定の更新
-	VECTOR hatRightFrame = MV1GetFramePosition(m_modelHandle, kHatRightFrameIndex);
-	VECTOR HatLeftFrame = MV1GetFramePosition(m_modelHandle, kHatLeftFrameIndex);
-	VECTOR headFrame = MV1GetFramePosition(m_modelHandle, kHeadFrameIndex);
-	headFrame = VScale(VAdd(headFrame, VScale(VAdd(hatRightFrame, HatLeftFrame),0.5f)), 0.5f);
-	VECTOR waistFrame = MV1GetFramePosition(m_modelHandle, kWaistFrameIndex);
-	/*Vector3 hatCenter={(headPos1.x + headPos2.x)*0.5f,(headPos1.y + headPos2.y) * 0.5f,(headPos1.z + headPos2.z) * 0.5f };
-	Vector3 get = { (hatCenter.x + headPos.x) * 0.5f,(hatCenter.y + headPos.y) * 0.5f ,(hatCenter.z + headPos.z) * 0.5f };*/
+	Vector3 hatRightFrame = MV1GetFramePosition(m_modelData->GetHandle(), kHatRightFrameIndex);
+	Vector3 HatLeftFrame = MV1GetFramePosition(m_modelData->GetHandle(), kHatLeftFrameIndex);
+	Vector3 headFrame = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
+	headFrame += (hatRightFrame + HatLeftFrame) * 0.5f;
+	headFrame *= 0.5f;
+	Vector3 waistFrame = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
 	m_capsule.SetMaxPosition({ headFrame.x, headFrame.y, headFrame.z });
 	m_capsule.SetMinPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
 

@@ -59,7 +59,7 @@ Enemy::Enemy():
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
 	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
-	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
@@ -80,7 +80,7 @@ Enemy::Enemy(const Transform& transform) :
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
 	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
 	//AddCollision(std::make_unique<Collision::Sphere>(FootPos, kSphereRadius), CollisionType::Foot);
-	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
 	m_HPGauge = std::make_unique<Gauge>();
@@ -88,7 +88,6 @@ Enemy::Enemy(const Transform& transform) :
 
 Enemy::~Enemy()
 {
-	MV1DeleteModel(m_modelHandle);
 }
 
 void Enemy::Init()
@@ -101,21 +100,10 @@ void Enemy::LoadModel()
 
 	std::string path = kFilePath;
 	// モデルの読み込み
-	m_modelHandle = MV1LoadModel((path + kModelPath).c_str());
-	MV1SetScale(m_modelHandle, kModelSize.ToVECTOR());
 	path += kMotionPath;
 	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
 
-		// ファイルパスを組み立てる
-		// アニメーションハンドルの初期化
-		m_animHandle[i] = -1;
-
-		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel((path + kAnimPath[i]).c_str());
-		// 読み込みができたら
-		if (m_animHandle[i] == -1)continue;
 		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 		// アニメーションデータのループフラグを設定
@@ -123,9 +111,10 @@ void Enemy::LoadModel()
 		// アニメーションデータの割り込み不可能フラグを設定
 		m_animData[i].isForcePlay = kForcePlay[i];
 	}
-
+	m_modelData = ResourceManager::GetInstance().GetModel("EnemyModelPath");
 	// アニメーション初期化
-	m_animation.Init(m_modelHandle);
+	MV1SetScale(m_modelData->GetHandle(), kModelSize.ToVECTOR());
+	m_animation.Init(m_modelData);
 
 	m_status = Status::Queen::Neutral;
 	// アニメーション再生
@@ -167,7 +156,7 @@ void Enemy::UpdateCollision()
 	//m_collisions[0].shape->SetPosition(FootPos);
 	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
 	//m_collisions[1].shape->SetPosition(FootPos);
-	Vector3 bodyPos = MV1GetFramePosition(m_modelHandle, kBodyIndex);
+	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	m_collisions[0].shape->SetPosition(bodyPos);
 }
 

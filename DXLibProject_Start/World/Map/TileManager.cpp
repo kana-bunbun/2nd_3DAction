@@ -89,8 +89,8 @@ void TileManager::SetUpFloor()
 			// タイルを生成
 			TileObject* tile = GameObjectManager::GetInstance().CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
 			// モデルハンドルを設定
-			tile->SetFloorModel(MV1DuplicateModel(m_floorHandle));
-			tile->SetWallHandle(MV1DuplicateModel(m_wallHandle));
+			tile->SetFloorModel(m_floorModel->Duplicate());
+			tile->SetWallHandle(MV1DuplicateModel(m_wallmodel->Duplicate()));
 			// 配列に追加
 			m_pTiles.push_back(std::move(tile));
 			}

@@ -22,9 +22,9 @@ namespace {
 ItemSlot::ItemSlot():
 	m_itemData(),
 	m_select(false),
-	m_holdNum(0),
-	graphHandle(-1)
+	m_holdNum(0)
 {
+	m_graphData = ResourceManager::GetInstance().GetGraph(kBackGroundPath);
 	m_itemData.m_type = ItemData::Type::Invalid;
 }
 
@@ -42,13 +42,12 @@ void ItemSlot::Init()
 
 void ItemSlot::Draw()
 {
-	int backGroundHandle = ResourceManager::GetInstance().GetGraph(kBackGroundPath);
-	DrawRotaGraph(m_drawPos.x, m_drawPos.y, kSlotScale, 0, backGroundHandle, TRUE);
+	DrawRotaGraph(m_drawPos.x, m_drawPos.y, kSlotScale, 0, m_graphData->GetHandle(), TRUE);
 	if (m_itemData.m_type == ItemData::Type::Invalid)return;
-	int itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
+	GraphData* itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
 	Vector3 drawPos = m_drawPos;
 	if (m_select)drawPos += kSelectIconOffset;
-	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemHandle), 0, itemHandle, TRUE);
+	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemHandle->GetHandle()), 0, itemHandle->GetHandle(), TRUE);
 
 }
 

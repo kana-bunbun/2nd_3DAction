@@ -28,7 +28,7 @@ HealBottle::HealBottle() :
 	m_isTrans(false)
 {
 	m_rotateSpeed = Vector3::zero;
-	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
+	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), CollisionType::Null);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
 	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), CollisionType::Invalid);

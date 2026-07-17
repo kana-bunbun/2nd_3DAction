@@ -5,6 +5,7 @@
 #include"../Utility/Vector3.h"
 #include"../World/Component/Collision.h"
 #include"GameObjectParam.h"
+#include"../System/Resource.h"
 /// <summary>
 /// ゲームで扱うオブジェクトの基本クラス
 /// 座標・モデル・衝突判定・ライフサイクルを管理する
@@ -115,7 +116,7 @@ protected:
 	/// <summary>
 	/// モデルハンドル
 	/// </summary>
-	int m_modelHandle;
+	ModelData* m_modelData;
 
 	/// <summary>
 	/// 当たり判定

@@ -14,16 +14,7 @@
 #include"../../Map/MapManager.h"
 
 namespace {
-	const char* const kFilePath="Resource\\Dragon\\ChaDragon\\";
-	const char* const kModelPath = "Model.mv1";
-	const char* const kMotionPath = "Motions\\";
-	const char* const kAnimPath[static_cast<int>(Status::Dragon::Max)] = {
-		 "Move.mv1",
-		 "Move.mv1",
-		 "Attack.mv1",
-		 "Damage.mv1",
-		 "Death.mv1",
-	};
+	const char* const kModelDataName = "DragonModel";
 	constexpr bool kLoopFrag[static_cast<int>(Status::Dragon::Max)]{
 		true,
 		true,
@@ -105,28 +96,13 @@ Dragon::Dragon():
 {
 	m_transform.Reset();
 
-	std::string path = kFilePath;
-	// モデルの読み込み
-	m_modelHandle = MV1LoadModel((path+kModelPath).c_str());
-	MV1SetScale(m_modelHandle, Vector3(kModelScale, kModelScale, kModelScale).ToVECTOR());
-	path += kMotionPath;
 	for (int i = 0; i < static_cast<int>(Status::Dragon::Max);i++) {
-
-		// ファイルパスを組み立てる
-		// アニメーションハンドルの初期化
-		m_animHandle[i] = -1;
-
-		// アニメーションの更読み込み
-		m_animHandle[i] = MV1LoadModel((path+kAnimPath[i]).c_str());
-		// 読み込みができたら
-		if (m_animHandle[i] == -1)continue;
-		// アニメーションを追加
-		m_animation.AddAnim(m_animHandle[i]);
 		// インデックスを設定
 		m_animData[i].index = i;
 	}
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataName);
 	// アニメーション初期化
-	m_animation.Init(m_modelHandle);
+	m_animation.Init(m_modelData);
 	// 座標を設定
 	m_transform.position+=kPosOffset;
 
@@ -153,11 +129,6 @@ Dragon::Dragon():
 
 Dragon::~Dragon()
 {
-	// モデルハンドルを破棄
-	MV1DeleteModel(m_modelHandle);
-	// アニメーションハンドルを破棄
-	for (int& anim : m_animHandle)
-		MV1DeleteModel(anim);
 	// ポインタの破棄
 	if (m_pMaster) {
 		m_pMaster = nullptr;
@@ -537,7 +508,7 @@ void Dragon::ChangeAnimation(const Status::Dragon & status)
 void Dragon::Breath()
 {
 	// VECTOR型の座標を取得
-	VECTOR headPos = MV1GetFramePosition(m_modelHandle, 6), firePos = MV1GetFramePosition(m_modelHandle, 11);
+	VECTOR headPos = MV1GetFramePosition(m_modelData->GetHandle(), 6), firePos = MV1GetFramePosition(m_modelData->GetHandle(), 11);
 	// Vector3型に変換
 	Vector3 head, fire;
 	head = { headPos.x,headPos.y,headPos.z };

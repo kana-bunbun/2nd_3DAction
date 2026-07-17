@@ -5,14 +5,9 @@ namespace {
 
 	// アニメーションの再生速度
 	constexpr float kPlaySpeed = 30;
-	constexpr float kBlentSpeed = 0.3f;
-	constexpr float kBlentMin = 0.3f;
-	constexpr float kBlentMax = 30.0f;
-
 }
 
 AnimationController::AnimationController():
-	m_modelHandle(-1),
 	m_attachIndex(-1),
 	m_currentAnim(-1),
 	m_nextAnim(-1),
@@ -22,10 +17,13 @@ AnimationController::AnimationController():
 	m_isPlaying(false),
 	m_animSpeed(1),
 	m_isForcePlay(false),
-	m_blendRate(1),
-	m_animHandle()
+	m_blendRate(1)
 {
-	m_animHandle.clear();
+}
+
+AnimationController::AnimationController(ModelData* modelData)
+{
+
 }
 
 AnimationController::~AnimationController()
@@ -33,25 +31,13 @@ AnimationController::~AnimationController()
 	End();
 }
 
-void AnimationController::Init(int modelHandle)
+void AnimationController::Init(ModelData* modelData)
 {
-	m_modelHandle = modelHandle;
-	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnim, m_blendRate);
+	m_modelData = modelData;
 }
 
 void AnimationController::End()
 {
-	if (m_modelHandle != -1) {
-		MV1DeleteModel(m_modelHandle);
-		m_modelHandle = -1;
-	}
-
-	if (!m_animHandle.empty()) {
-		for (int i = m_animHandle.size() - 1; i >= 0; i--) {
-			MV1DeleteModel(m_animHandle[i]);
-		}
-		m_animHandle.clear();
-	}
 }
 
 void AnimationController::PlayAnimation(const Status::AnimData& data)
@@ -63,13 +49,13 @@ void AnimationController::PlayAnimation(const Status::AnimData& data)
 	m_nextIndex = data.index;
 	// すでに再生中なら一度アニメーションを外しておく
 	if (m_attachIndex != -1) {
-		MV1DetachAnim(m_modelHandle, m_attachIndex);
+		MV1DetachAnim(m_modelData->GetHandle(), m_attachIndex);
 	}
 
 	// アニメーションのインデックスを更新
-	m_attachIndex = MV1AttachAnim(m_modelHandle, 0, m_animHandle[m_nextIndex]);
+	m_attachIndex = MV1AttachAnim(m_modelData->GetHandle(), 0, m_modelData->GetAnimHandle()[m_nextIndex]);
 	// アニメーションの総尺を取得
-	m_totalTime = MV1GetAttachAnimTotalTime(m_modelHandle, m_attachIndex);
+	m_totalTime = MV1GetAttachAnimTotalTime(m_modelData->GetHandle(), m_attachIndex);
 	// 現在のアニメーションを更新
 	m_nextAnim = data.index;
 
@@ -106,27 +92,23 @@ void AnimationController::Update(float deltaTime)
 		}
 	}
 
-	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnim, m_blendRate);
 
 	// モデルに再生時間をセット
-	MV1SetAttachAnimTime(m_modelHandle, m_attachIndex, m_playCount);
+	MV1SetAttachAnimTime(m_modelData->GetHandle(), m_attachIndex, m_playCount);
 }
 
 AnimationController AnimationController::Duplicate()
 {
 	AnimationController duplicate;
 
-	duplicate.SetModelhandle(MV1DuplicateModel(m_modelHandle));
-	for (int i = 0; i < m_animHandle.size(); i++) {
-		duplicate.AddAnim(MV1DuplicateModel(m_animHandle[i]));
-	}
+	duplicate.m_modelData = m_modelData->Duplicate();
 
 	return duplicate;
 }
 
 void AnimationController::Debug()
 {
-	printfDx("animation |    modeel   : %d\n", m_modelHandle);
+	printfDx("animation |    modeel   : %d\n", m_modelData->GetHandle());
 	printfDx("animation | currentAnim : %d\n", m_currentAnim);
 	printfDx("animation | m_playCount : %f\n", m_playCount);
 	printfDx("animation | m_totalTime : %f\n", m_totalTime);
@@ -142,9 +124,4 @@ bool AnimationController::CheckOverMoment(float time)
 	if (m_playCount < time)return false;
 	if (m_playCountOld > time)return false;
 	return true;
-}
-
-void AnimationController::AddAnim(int animHandle)
-{
-	m_animHandle.push_back(animHandle);
 }

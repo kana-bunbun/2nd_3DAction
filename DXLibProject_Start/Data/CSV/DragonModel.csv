@@ -1,2 +1,2 @@
 basePath,motionPath,modelPath,animNum,animPath[0],animPath[1],animPath[2],animPath[3],animPath[4]
-Resource\\Player\\ChaWitch\\,Motions\\,Model.mv1,5,Idle.mv1,Move.mv1,Attack.mv1,Damage.mv1,Dead.mv1
+Resource\\Dragon\\ChaDragon\\,Motions\\,Model.mv1,5,Idle.mv1,Move.mv1,Attack.mv1,Damage.mv1,Dead.mv1

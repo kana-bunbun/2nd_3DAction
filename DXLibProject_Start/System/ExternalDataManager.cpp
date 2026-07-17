@@ -26,8 +26,10 @@ ExternalDataManager::~ExternalDataManager()
 
 void ExternalDataManager::LoadAll()
 {
-	// プレイヤーモデルのパス情報
-	m_playerPathParam = Data::Csv::LoadCsvAs<ModelPathParam>(kPlayerModelPath)[0];
+	// モデルのパス情報
+	for (int i = 0; i < m_modelPathParam.size(); i++) {
+		m_modelPathParam[i] = Data::Csv::LoadCsvAs<ModelPathParam>(kModelPath[i])[0];
+	}
 }
 
 void ExternalDataManager::Init()

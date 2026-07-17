@@ -1,20 +1,20 @@
 #pragma once
 #include"Animation.h"
 #include<vector>
-
+#include"../../System/ResourceManager.h"
+class ModelData;
 class AnimationController
 {
 public:
 	
-	
-	
 	AnimationController();
+	AnimationController(ModelData* modelData);
 	~AnimationController();
 
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Init(int modelHandle);
+	void Init(ModelData* modelData);
 	/// <summary>
 	/// 終了処理
 	/// </summary>
@@ -71,11 +71,9 @@ public:
 	/// </summary>
 	/// <returns>割り込み不可能の時true</returns>
 	bool IsForcePlay() { return m_isForcePlay; }
-	void AddAnim(int animHandle);
-	void SetModelhandle(int modelHandle) { m_modelHandle = modelHandle; }
 private:
-	// モデルハンドル
-	int m_modelHandle;
+	// モデルデータ
+	ModelData* m_modelData;
 	// アニメーションの番号
 	int m_attachIndex;
 	int m_nextIndex;
@@ -98,7 +96,5 @@ private:
 	bool m_isForcePlay;
 	// アニメーションのブレンド率
 	float m_blendRate;
-	// アニメーションのハンドル
-	std::vector<int>m_animHandle;
 };
 

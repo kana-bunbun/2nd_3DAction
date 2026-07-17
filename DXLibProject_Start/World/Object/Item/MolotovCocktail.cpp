@@ -19,7 +19,7 @@ namespace {
 }
 MolotovCocktail::MolotovCocktail()
 {
-	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath, ResourceManager::FileName::Item);
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius),CollisionType::Null);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),CollisionType::Attack);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
@@ -66,11 +66,11 @@ void MolotovCocktail::Draw()
 void MolotovCocktail::DrawModel()
 {
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelHandle == -1)return;
+	if (m_modelData->GetHandle() == -1)return;
 
-	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelHandle, m_transform.position.ToVECTOR());
-	MV1DrawModel(m_modelHandle);
+	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
+	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
+	MV1DrawModel(m_modelData->GetHandle());
 }
 
 void MolotovCocktail::DrawEffect()

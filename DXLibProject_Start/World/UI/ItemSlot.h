@@ -1,6 +1,7 @@
 #pragma once
 #include"../Object/Item/ItemData.h"
 #include"../../Utility/Vector3.h"
+#include"../../System/Resource.h"
 class ItemSlot
 {
 public:
@@ -30,9 +31,9 @@ private:
 	/// </summary>
 	int m_holdNum;
 	/// <summary>
-	/// グラフィックハンドル
+	/// 画像データ
 	/// </summary>
-	int graphHandle;
+	GraphData* m_graphData;
 	/// <summary>
 	/// 描画する座標
 	/// </summary>

@@ -36,8 +36,7 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 
 TileObject::~TileObject()
 {
-	MV1DeleteModel(m_modelHandle);
-	MV1DeleteModel(m_wallHandle);
+
 }
 
 void TileObject::Init()
@@ -64,11 +63,11 @@ void TileObject::Draw()
 	// 階段マスなら描画しない
 	if (m_isStair)return;
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelHandle != -1) {
+	if (m_modelData->GetHandle() != -1) {
 		Vector3 pos = m_transform.position + kModelOffset;
-	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
-	MV1DrawModel(m_modelHandle);
+	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
+	MV1SetPosition(m_modelData->GetHandle(), pos.ToVECTOR());
+	MV1DrawModel(m_modelData->GetHandle());
 	}
 
 	// 壁マスでなければ処理しない

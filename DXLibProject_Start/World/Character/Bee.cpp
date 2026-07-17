@@ -51,17 +51,6 @@ namespace {
 Bee::Bee():
 	m_state(Status::Bee::Fly)
 {
-	GameObject::m_modelHandle = MV1LoadModel(kModelPath);
-	m_animation.Init(m_modelHandle);
-	for (int i = 0;i < static_cast<int>(Status::Bee::Max);i++) {
-
-		m_animData[i].index = MV1GetAnimIndex(m_modelHandle, kAnimationName[i]);
-		// アニメーションデータのループフラグを設定
-		m_animData[i].isLoop = kLoopFrag[i];
-		// アニメーションデータの割り込み不可能フラグを設定
-		m_animData[i].isForcePlay = kForcePlay[i];
-	}
-	GameObject::m_collisionTag = CollisionTag::Enemy;
 }
 
 void Bee::Init()
@@ -73,7 +62,6 @@ void Bee::Init()
 		kModelOffset,
 		kCollisionSize
 	), CollisionType::Body);
-	MV1SetScale(m_modelHandle, kModelScale.ToVECTOR());
 }
 
 void Bee::Update(float deltaTime)

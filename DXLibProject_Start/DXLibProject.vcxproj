@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\Resource.cpp" />
     <ClCompile Include="System\ExternalDataManager.cpp" />
     <ClCompile Include="Utility\FromCSV.cpp" />
     <ClCompile Include="Data\BlendRecipe.cpp" />
@@ -253,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\CameraParam.h" />
+    <ClInclude Include="System\Resource.h" />
     <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="Utility\FromJson.h" />
     <ClInclude Include="Utility\JsonConvert.h" />

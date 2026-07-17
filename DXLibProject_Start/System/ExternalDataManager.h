@@ -1,5 +1,7 @@
 #pragma once
 #include"../Data/ModelPathParam.h"
+#include"../World/GameObjectParam.h"
+#include<array>
 /// <summary>
 /// 外部データの読み込み、情報の保持をする
 /// </summary>
@@ -18,12 +20,12 @@ public:
 	/// <summary>
 	/// プレイヤーモデルのパス情報を取得
 	/// </summary>
-	ModelPathParam GetPlayerPath() { return m_playerPathParam; }
+	ModelPathParam GetPlayerPath(int modelTpye) { return m_modelPathParam[modelTpye]; }
 private:
 	/// <summary>
 	/// プレイヤーモデルのパス情報
 	/// </summary>
-	ModelPathParam m_playerPathParam;
+	std::array <ModelPathParam , static_cast<int>(ModelName::Max) > m_modelPathParam;
 
 };
 
