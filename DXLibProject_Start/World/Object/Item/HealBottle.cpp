@@ -28,7 +28,7 @@ HealBottle::HealBottle() :
 	m_isTrans(false)
 {
 	m_rotateSpeed = Vector3::zero;
-	m_modelHandle = ResourceManager::GetInstance().GetModel(kModelPath);
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), CollisionType::Null);
 	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
 	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), CollisionType::Invalid);
@@ -36,7 +36,7 @@ HealBottle::HealBottle() :
 
 HealBottle::~HealBottle()
 {
-	MV1DeleteModel(m_modelHandle);
+	
 }
 
 void HealBottle::Init()
@@ -98,11 +98,11 @@ void HealBottle::Draw()
 void HealBottle::DrawModel()
 {
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelHandle == -1)return;
+	if (m_modelData->GetHandle() == -1)return;
 
-	MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelHandle, m_transform.position.ToVECTOR());
-	MV1DrawModel(m_modelHandle);
+	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
+	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
+	MV1DrawModel(m_modelData->GetHandle());
 }
 
 void HealBottle::DrawEffect()

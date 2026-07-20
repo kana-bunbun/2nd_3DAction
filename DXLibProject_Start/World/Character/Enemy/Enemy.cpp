@@ -2,19 +2,20 @@
 #include "../../UI/BillboardManager.h"
 #include <string>
 namespace {
-	const char* const kFilePath = "Resource\\Enemy\\Queen\\";
-	const char* const kModelPath = "Model.mv1";
-	const char* const kMotionPath = "Animation\\";
-	const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
-	{
-		"Idle.mv1",
-		"Roar.mv1",
-		"Walk.mv1",
-		"Run.mv1",
-		"JumpAttack.mv1",
-		"Damage.mv1",
-		"Death.mv1",
-	};
+	//const char* const kFilePath = "Resource\\Enemy\\Queen\\";
+	//const char* const kModelPath = "Model.mv1";
+	//const char* const kMotionPath = "Animation\\";
+	//const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
+	//{
+	//	"Idle.mv1",
+	//	"Roar.mv1",
+	//	"Walk.mv1",
+	//	"Run.mv1",
+	//	"JumpAttack.mv1",
+	//	"Damage.mv1",
+	//	"Death.mv1",
+	//};
+	const char* const kModelDataPath = "EnemyModel";
 	constexpr bool kLoopFrag[static_cast<int>(Status::Queen::Max)]{
 	true,
 	false,
@@ -35,8 +36,8 @@ namespace {
 	};
 	constexpr float kSphereRadius = 480;
 	constexpr int kLeftFootIndex = 48;
-	constexpr int kRightFootIndex = 58;
 	constexpr int kBodyIndex = 2;
+	constexpr int kRightFootIndex = 58;
 
 	constexpr float kDefaultAnimSpeed = 0.3f;
 	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
@@ -97,21 +98,14 @@ void Enemy::Init()
 
 void Enemy::LoadModel()
 {
-
-	std::string path = kFilePath;
-	// モデルの読み込み
-	path += kMotionPath;
+	
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataPath);
 	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
-
-		// アニメーションを追加
-		// インデックスを設定
-		m_animData[i].index = i;
 		// アニメーションデータのループフラグを設定
 		m_animData[i].isLoop = kLoopFrag[i];
 		// アニメーションデータの割り込み不可能フラグを設定
 		m_animData[i].isForcePlay = kForcePlay[i];
 	}
-	m_modelData = ResourceManager::GetInstance().GetModel("EnemyModelPath");
 	// アニメーション初期化
 	MV1SetScale(m_modelData->GetHandle(), kModelSize.ToVECTOR());
 	m_animation.Init(m_modelData);

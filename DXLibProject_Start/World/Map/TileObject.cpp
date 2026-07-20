@@ -82,20 +82,20 @@ void TileObject::Draw()
 	}
 }
 
-void TileObject::SetFloorModel(int modelHandle)
+void TileObject::SetFloorModel(ModelData* modelData)
 {
-	m_modelHandle = modelHandle;
-	MV1SetScale(m_modelHandle, kFloorSize.ToVECTOR());
+	m_modelData = modelData;
+	MV1SetScale(m_modelData->GetHandle(), kFloorSize.ToVECTOR());
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.1f,0.1f,0.1f,1.0f };
-	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color);
 }
 
 
-void TileObject::SetWallHandle(int wallHandle)
+void TileObject::SetWallHandle(ModelData* wallData)
 {
-	m_wallHandle = wallHandle;
-	MV1SetScale(m_wallHandle, kWallSize.ToVECTOR());
+	m_wallModelData = wallData;
+	MV1SetScale(m_wallModelData->GetHandle(), kWallSize.ToVECTOR());
 
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.3f,0.3f,0.3f,1.0f };

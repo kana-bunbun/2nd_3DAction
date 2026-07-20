@@ -47,16 +47,11 @@ TileManager::TileManager() :
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
 
-	m_wallHandle = MV1LoadModel(kWallPath);
-	m_floorHandle = MV1LoadModel(kFloorPath);
-	
 }
 
 TileManager::~TileManager()
 {
 	DeleteGraph(m_cursorHandle);
-	MV1DeleteModel(m_floorHandle);
-	MV1DeleteModel(m_wallHandle);
 }
 
 void TileManager::Init()
@@ -90,7 +85,7 @@ void TileManager::SetUpFloor()
 			TileObject* tile = GameObjectManager::GetInstance().CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
 			// モデルハンドルを設定
 			tile->SetFloorModel(m_floorModel->Duplicate());
-			tile->SetWallHandle(MV1DuplicateModel(m_wallmodel->Duplicate()));
+			tile->SetWallHandle(m_wallmodel->Duplicate());
 			// 配列に追加
 			m_pTiles.push_back(std::move(tile));
 			}

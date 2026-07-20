@@ -5,6 +5,14 @@
 
 
 
+ResourceManager::~ResourceManager()
+{
+	for (size_t i = 0; i < m_graphData.size(); i++) {
+		delete m_graphData[i];
+		m_graphData[i] = nullptr;
+	}
+}
+
 void ResourceManager::End()
 {
 
@@ -48,9 +56,9 @@ ModelData* ResourceManager::GetModel(std::string dataName)
 	// 総当たりして同じ名前のデータを探す
 	for (auto& model : m_modelData) {
 		if (model->GetName() != dataName)continue;
-
+		m_DuplicateList.emplace_back(model->Duplicate());
 		// モデルハンドルを複製して返す
-		return model->Duplicate();
+		return m_DuplicateList[m_DuplicateList.size() - 1];
 	}
 
 	// 以下の処理は読み込んでいない判定

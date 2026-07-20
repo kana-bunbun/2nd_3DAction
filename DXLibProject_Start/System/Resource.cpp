@@ -23,7 +23,7 @@ ModelData::~ModelData()
 ModelData* ModelData::Duplicate()
 {
 	if (m_handle)return nullptr;
-	ModelData* modelData;
+	ModelData* modelData = new ModelData(m_name);
 	modelData->m_name = m_name;
 	modelData->m_handle = MV1DuplicateModel(m_handle);
 	for (int i = 0; i < m_animHandle.size(); i++) {

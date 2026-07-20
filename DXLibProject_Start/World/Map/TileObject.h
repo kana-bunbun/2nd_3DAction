@@ -22,8 +22,8 @@ public:
 		const Collision::Result& result
 	);
 	void Draw()override;
-	void SetFloorModel(int modelHandle);
-	void SetWallHandle(int wallHandle);
+	void SetFloorModel(ModelData* modelData);
+	void SetWallHandle(ModelData* wallData);
 	void RegistWall(const MapConst::eDirectionFour& direction);
 
 	void ChangeTile(int ID, const Vector3& position, const MapConst::eTerrain& terrain);
@@ -39,11 +39,10 @@ protected:
 	std::array<bool, static_cast<int>(MapConst::eDirectionFour::Max)> m_wallDirection;
 	// 壁を表示する座標
 	std::vector<Transform>m_wallPos;
-	// 壁のモデルハンドル
-	int m_wallHandle;
 	// 階段マスかどうか
 	bool m_isStair;
 	// 壁の当たり判定
 	std::vector < std::unique_ptr<Collision::Shape>>m_walls;
+	ModelData* m_wallModelData;
 };
 
