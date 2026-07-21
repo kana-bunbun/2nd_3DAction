@@ -4,7 +4,7 @@
 #include "SceneTest.h"
 #include "../Utility/Input.h"
 #include "../System/TimeManager.h"
-
+#include "SceneSelectDebug.h"
 SceneManager::SceneManager() {
 
 	m_pCurrentScene = nullptr;
@@ -13,7 +13,8 @@ SceneManager::SceneManager() {
 SceneManager::~SceneManager() {}
 
 void SceneManager::Init() {
-	m_pCurrentScene = std::make_unique<SceneTest>();
+	//m_pCurrentScene = std::make_unique<SceneTest>();
+	m_pCurrentScene = std::make_unique<SceneSelectDebug>();
 	m_pCurrentScene->Init();
 }
 

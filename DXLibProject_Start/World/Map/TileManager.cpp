@@ -31,8 +31,8 @@ namespace {
 	constexpr Vector3 kMapSize = { MapConst::kTileUnscaledSize * MapConst::MAP_SQUARE_WIDTH_COUNT,MapConst::kTileUnscaledSize  * MapConst::MAP_SQUARE_HEIGHT_COUNT,0.0f };
 	constexpr float kCursorScale = 0.20f;
 	const char* const kCursorPath = "Resource\\Graph\\MapPlayerCursor.png";
-	const char* const kWallPath = "Resource\\Map\\wall.mv1";
-	const char* const kFloorPath = "Resource\\Map\\floor.mv1";
+	const char* const kWallPath = "WallModel";
+	const char* const kFloorPath = "FloorModel";
 }
 
 TileManager::TileManager() :
@@ -46,7 +46,8 @@ TileManager::TileManager() :
 	m_stairID(-1)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
-
+	m_floorModel = ResourceManager::GetInstance().GetModel(kFloorPath);
+	m_wallmodel = ResourceManager::GetInstance().GetModel(kWallPath);
 }
 
 TileManager::~TileManager()
@@ -84,8 +85,8 @@ void TileManager::SetUpFloor()
 			// タイルを生成
 			TileObject* tile = GameObjectManager::GetInstance().CreateObject<TileObject>(i, MapManager::GetInstance().GetWorldPosFromID(i), terrain);
 			// モデルハンドルを設定
-			tile->SetFloorModel(m_floorModel->Duplicate());
-			tile->SetWallHandle(m_wallmodel->Duplicate());
+			tile->SetFloorModel(m_floorModel);
+			tile->SetWallHandle(m_wallmodel);
 			// 配列に追加
 			m_pTiles.push_back(std::move(tile));
 			}

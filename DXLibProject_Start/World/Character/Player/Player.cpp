@@ -198,6 +198,7 @@ void Player::LoadModel()
 	Color_F color=Data::Csv::LoadCsvAs<Color_F>("PlayerEmissiveColor")[0];
 	// 読み込んだ値を元にエミッシブカラーを設定
 	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color.ToCOLOR_F());
+	MV1SetScale(m_modelData->GetHandle(), kModelScale.ToVECTOR());
 }
 
 void Player::Update(float deltaTime)

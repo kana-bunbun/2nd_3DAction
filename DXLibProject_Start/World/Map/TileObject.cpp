@@ -19,7 +19,6 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 	m_ID(ID),
 	m_wallDirection(),
 	m_wallPos(),
-	m_wallHandle(-1),
 	m_terrain(terrain)
 {
 	m_transform.position = position;
@@ -74,11 +73,11 @@ void TileObject::Draw()
 	//if (m_terrain != MapConst::eTerrain::Wall)return;
 	// 隣接する壁の方向だけ描画
 	for (int i = 0; i < m_wallPos.size();i++) {
-		if (m_wallHandle == -1||
+		if (m_wallModelData->GetHandle() == -1 ||
 			!m_wallDirection[i])continue;
-		MV1SetRotationXYZ(m_wallHandle, m_wallPos[i].rotation.ToVECTOR());
-		MV1SetPosition(m_wallHandle, m_wallPos[i].position.ToVECTOR());
-		MV1DrawModel(m_wallHandle);
+		MV1SetRotationXYZ(m_wallModelData->GetHandle(), m_wallPos[i].rotation.ToVECTOR());
+		MV1SetPosition(m_wallModelData->GetHandle(), m_wallPos[i].position.ToVECTOR());
+		MV1DrawModel(m_wallModelData->GetHandle());
 	}
 }
 
@@ -99,7 +98,7 @@ void TileObject::SetWallHandle(ModelData* wallData)
 
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.3f,0.3f,0.3f,1.0f };
-	MV1SetMaterialEmiColor(m_wallHandle, 0, color);
+	MV1SetMaterialEmiColor(m_wallModelData->GetHandle(), 0, color);
 
 }
 

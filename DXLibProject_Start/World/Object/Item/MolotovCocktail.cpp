@@ -3,7 +3,7 @@
 #include "../../../System/ResourceManager.h"
 #include"../../GameObjectParam.h"
 namespace {
-	const char* const kModelPath = "molotovCocktail";
+	const char* const kModelPath = "MolotovCocktailModel";
 
 	constexpr float kThrowRadian = 75 * MyMath::ToRadian;
 	constexpr float kMoveSpeed = 1500.0f;

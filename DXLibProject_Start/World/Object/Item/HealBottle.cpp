@@ -2,7 +2,7 @@
 #include "../../../System/ResourceManager.h"
 #include"../../../Utility/MyRandom.h"
 namespace {
-	const char* const kModelPath = "bottlePotionHealth";
+	const char* const kModelPath = "HealBottleModel";
 
 	// 投げる力の強さ
 	constexpr float kThrowPower=1200.0f;

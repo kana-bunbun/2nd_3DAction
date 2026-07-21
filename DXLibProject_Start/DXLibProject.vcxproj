@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\SceneCollisionTest.cpp" />
+    <ClCompile Include="Scene\SceneSelectDebug.cpp" />
     <ClCompile Include="System\Resource.cpp" />
     <ClCompile Include="System\ExternalDataManager.cpp" />
     <ClCompile Include="Utility\FromCSV.cpp" />
@@ -254,6 +256,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\CameraParam.h" />
+    <ClInclude Include="Scene\SceneCollisionTest.h" />
+    <ClInclude Include="Scene\SceneSelectDebug.h" />
     <ClInclude Include="System\Resource.h" />
     <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="Utility\FromJson.h" />

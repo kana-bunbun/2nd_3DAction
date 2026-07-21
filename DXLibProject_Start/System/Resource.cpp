@@ -22,7 +22,7 @@ ModelData::~ModelData()
 
 ModelData* ModelData::Duplicate()
 {
-	if (m_handle)return nullptr;
+	if (m_handle==-1)return nullptr;
 	ModelData* modelData = new ModelData(m_name);
 	modelData->m_name = m_name;
 	modelData->m_handle = MV1DuplicateModel(m_handle);
@@ -37,7 +37,7 @@ void ModelData::Load(std::string path)
 	ModelPathParam pathParam = Data::Csv::LoadCsvAs<ModelPathParam>(path)[0];
 	m_name = path;
 	m_handle = MV1LoadModel(pathParam.modelPath.c_str());
-	for (int i = 0; i < pathParam.modelPath.size(); i++) {
+	for (int i = 0; i < pathParam.animationPath.size(); i++) {
 		m_animHandle.emplace_back(MV1LoadModel(pathParam.animationPath[i].c_str()));
 	}
 }
@@ -68,7 +68,6 @@ GraphData::~GraphData()
 void GraphData::Load(std::string path)
 {
 	m_handle = kHandleInvalidValue;
-	path = kResourcePath + kDataPath[static_cast<int>(ResourceManager::FileName::Graph)] + path + kPng;
 	m_handle = LoadGraph(path.c_str());
 }
 

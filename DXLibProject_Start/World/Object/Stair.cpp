@@ -1,12 +1,13 @@
 #include "Stair.h"
 #include"../Map/MapManager.h"
 #include"../UI/BillboardManager.h"
+#include"../../System/ResourceManager.h"
 namespace {
 	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
 	constexpr Vector3 kCollisionSize = { MapConst::kTileSize*2,MapConst::kTileSize,MapConst::kTileSize * 2 };
 	constexpr Vector3 kModelOffset = { 0.0f,-MapConst::kFloorScale* kCollisionSize.y,0.0f };
 
-	const char* const kFilePath = "Resource\\Map\\stairs.mv1";
+	const char* const kModelDataPath = "StairModel";
 	constexpr float kAlphaSpeed = 255.0f * 3.0f;
 }
 Stair::Stair():
@@ -19,18 +20,17 @@ Stair::Stair():
 	m_transform.Reset();
 	//m_collision = std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize);
 	AddCollision(std::make_unique<Collision::AABB>(Vector3::zero, kCollisionSize), CollisionType::Body);
-	m_modelHandle = MV1LoadModel(kFilePath);
+	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataPath);
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.3f,0.3f,0.3f,1.0f };
-	MV1SetMaterialEmiColor(m_modelHandle, 0, color);
+	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color);
 	float sizeAxis = MapConst::kFloorScale;
 	Vector3 size = { sizeAxis,sizeAxis ,sizeAxis };
-	MV1SetScale(m_modelHandle, size.ToVECTOR());
+	MV1SetScale(m_modelData->GetHandle(), size.ToVECTOR());
 }
 
 Stair::~Stair()
 {
-	MV1DeleteModel(m_modelHandle);
 }
 
 void Stair::Init()
@@ -57,11 +57,11 @@ void Stair::Update(float deltaTime)
 void Stair::Draw()
 {
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelHandle != -1) {
+	if (m_modelData->GetHandle() != -1) {
 		Vector3 position = m_transform.position + kModelOffset;
-		MV1SetRotationXYZ(m_modelHandle, m_transform.rotation.ToVECTOR());
-		MV1SetPosition(m_modelHandle, position.ToVECTOR());
-		MV1DrawModel(m_modelHandle);
+		MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
+		MV1SetPosition(m_modelData->GetHandle(), position.ToVECTOR());
+		MV1DrawModel(m_modelData->GetHandle());
 	}
 }
 

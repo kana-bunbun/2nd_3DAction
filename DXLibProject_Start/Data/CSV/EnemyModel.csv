@@ -1,0 +1,2 @@
+basePath,motionPath,modelPath,animNum,animPath[0],animPath[1],animPath[2],animPath[3],animPath[4],animPath[5],animPath[6]
+Resource\\Enemy\\Queen\\,Motions\\,Model.mv1,7,Idle.mv1,Roar.mv1,Walk.mv1,Run.mv1,JumpAttack.mv1,Damage.mv1,Dead.mv1
