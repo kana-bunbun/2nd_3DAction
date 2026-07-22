@@ -1,5 +1,6 @@
 #include "ItemSlot.h"
 #include "../../System/ResourceManager.h"
+#include "../../System/Debug/ProfileScope.h"
 #include "../../Utility/Game.h"
 #include "../../Utility/MyMath.h"
 
@@ -42,12 +43,15 @@ void ItemSlot::Init()
 
 void ItemSlot::Draw()
 {
+	std::string ss = "ItemCursor" + std::to_string(m_drawPos.x) + "::Draw()";
+	ProfileScope scope(ss);
+
 	DrawRotaGraph(m_drawPos.x, m_drawPos.y, kSlotScale, 0, m_graphData->GetHandle(), TRUE);
 	if (m_itemData.m_type == ItemData::Type::Invalid)return;
-	GraphData* itemHandle = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
+	GraphData* itemGraph = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
 	Vector3 drawPos = m_drawPos;
 	if (m_select)drawPos += kSelectIconOffset;
-	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemHandle->GetHandle()), 0, itemHandle->GetHandle(), TRUE);
+	DrawRotaGraph(drawPos.x, drawPos.y, NormalizeGraphScale(itemGraph->GetHandle()), 0, itemGraph->GetHandle(), TRUE);
 
 }
 
@@ -69,6 +73,15 @@ void ItemSlot::Sub()
 
 	// アイテムの種類を不正値にする
 	m_itemData.m_type = ItemData::Type::Invalid;
+}
+
+void ItemSlot::SetItemType(ItemData::Type type)
+{
+	m_itemData.m_type = type;
+
+	if (type == ItemData::Type::Invalid)return;
+	//m_graphData = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
+
 }
 
 float ItemSlot::NormalizeGraphScale(int graphHandle)

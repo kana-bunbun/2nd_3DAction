@@ -19,6 +19,8 @@
 #include "../Camera/DebugCamera.h"
 #include "../System/SoundManager.h"
 #include "../System/FontManager.h"
+#include "../System/Debug/ProfileScope.h"
+#include "../System/Debug/Profiler.h"
 #include"../World/Character/Bee.h"
 #include"../World/Character/CharacterManager.h"
 #include"../World/Character/Enemy/Enemy.h"
@@ -181,6 +183,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 }
 
 void SceneTest::Draw() {
+	ProfileScope scope("SceneTest::Draw()");
 	//DrawGround();
 	// ƒJƒƒ‰‚Ì•`‰æ
 	m_pCameraMgr->Apply();

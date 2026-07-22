@@ -5,6 +5,7 @@
 #include"../../Map/MapCreate.h"
 #include"../../Map/MapManager.h"
 #include"../../../Utility/MyRandom.h"
+#include"../../../System/Debug/ProfileScope.h"
 #include"../../GameObjectManager.h"
 namespace {
 	constexpr int kDropItemTypeMax = 4;
@@ -57,6 +58,8 @@ void ItemManager::Update()
 
 void ItemManager::Draw()
 {
+	ProfileScope scope("ItemManager::Draw()");
+
 	// アイテムスロットの更新処理
 	m_pItemCursor->Draw();
 

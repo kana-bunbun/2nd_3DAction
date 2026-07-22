@@ -35,17 +35,14 @@ GraphData* ResourceManager::GetGraph(std::string dataName)
 	}
 
 	// 以下の処理は読み込んでない判定としての処理
-	//　パスの作成
-	std::string path = kResourcePath;
-	path += kFilePath[static_cast<int>(FileName::Graph)] + dataName + kPng;
+
 	// グラフィックハンドルの読み込み
-	GraphData* graphData = new GraphData(path);
+	GraphData* graphData = new GraphData(dataName);
 	// 読み込み失敗したら不正値を返す
 	if (graphData->GetHandle() == -1)return nullptr;
-
 	// 以下の処理は読み込み成功時の処理
 	// 配列に追加
-	m_graphData.push_back(graphData);
+	m_graphData.emplace_back(graphData);
 
 	// グラフィックデータを返す
 	return graphData;

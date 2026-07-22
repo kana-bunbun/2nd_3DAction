@@ -4,9 +4,11 @@
 #include "Utility/GameSetting.h"
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
+#include"Utility/Color.h"
 #include"System/TimeManager.h"
 #include"World/UI/BillboardManager.h"
 #include"World/Object/Item/BlendManager.h"
+#include"System/Debug/Profiler.h"
 #include<memory>
 
 
@@ -57,6 +59,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Input::Update();
 		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
+		
+		Profiler::BeginFrame();
+
+
 		pSceneMgr->Update(deltaTime);
 		
 		pSceneMgr->Draw();
@@ -66,6 +72,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		printfDx("timesScale : %f\n", TimeManager::GetTimeScale());
 		//Input::Update();
 		//Input::Debug();
+		Profiler::EndFrame();
+
+		auto records = Profiler::GetRecords();
+		int count = 0;
+
+		for (const auto& record : records) {
+			count++;
+			std::string recordName = record.name;
+			std::string recordMs = std::to_string(record.elapsedMilliSecond);
+			std::string recordDesc = recordName + " : " + recordMs + "ms";
+			DrawString(500, count * 20, recordDesc.c_str(), Color::kRed);
+		}
+
 		// ï`âÊêÊÇêÿÇËë÷Ç¶ÇÈ
 		ScreenFlip();
 	}

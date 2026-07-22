@@ -3,7 +3,7 @@
 #include<cassert>
 namespace {
 	constexpr float kNearDistance = 5.0f;	// カメラの手前のクリップ距離
-	constexpr float kFarDistance = 5000.0f;	// カメラの奥のクリップ距離
+	constexpr float kFarDistance = 20000.0f;	// カメラの奥のクリップ距離
 	constexpr float kFieldOfView = 60.0f;	// カメラの視野角
 }
 

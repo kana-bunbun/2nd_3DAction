@@ -43,7 +43,7 @@ namespace {
 	// モデルの大きさ倍率
 	constexpr float kModelScale = 0.5f;
 	// 座標のオフセット
-	constexpr Vector3 kPosOffset = { 0.0f,70.0f,0.0f };
+	constexpr Vector3 kPosOffset = { 0.0f,0.0f,0.0f };
 
 	// プレイヤー追従関連
 
@@ -101,6 +101,8 @@ Dragon::Dragon():
 		m_animData[i].index = i;
 	}
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataName);
+	Vector3 modelScale{ kModelScale ,kModelScale ,kModelScale };
+	MV1SetScale(m_modelData->GetHandle(), modelScale.ToVECTOR());
 	// アニメーション初期化
 	m_animation.Init(m_modelData);
 	// 座標を設定
@@ -282,9 +284,7 @@ void Dragon::ResolveCollision(GameObject& other, const CollisionData& myData, co
 	case CollisionTag::Wall: {
 		Vector3 pushResult = m_transform.position + push;
 		SetPosition(pushResult);
-		if (push.GetSqLength() > 900) {
-			int s = 0;
-		}
+	
 		break;
 	}
 	default:

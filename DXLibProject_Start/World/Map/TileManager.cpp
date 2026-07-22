@@ -11,6 +11,8 @@
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"
 #include"../Object/Item/ItemManager.h"
+#include"../../System/Debug/ProfileScope.h"
+#include"../../System/Debug/Profiler.h"
 #include<DxLib.h>
 #include<vector>
 
@@ -135,6 +137,7 @@ void TileManager::Update(float deltaTime)
 
 void TileManager::Draw()
 {
+	ProfileScope scope("TileManager::Draw()");
 	// マップの描画処理
 	for (int i = 0; i < m_pTiles.size();i++) {
 		if (i == m_stairID) {

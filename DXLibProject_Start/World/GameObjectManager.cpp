@@ -4,6 +4,8 @@
 #include<memory>
 #include<vector>
 #include"../Utility/MyMath.h"
+#include"../System/Debug/ProfileScope.h"
+#include"../System/Debug/Profiler.h"
 #include"Map/MapConst.h"
 #include"GameObject.h"
 
@@ -48,6 +50,7 @@ void GameObjectManager::LateUpdate(float deltaTime)
 
 void GameObjectManager::Draw()
 {
+	ProfileScope scope("GameObjectManager::Draw()");
 	std::vector<GameObject*>transparentIndex;
 	for (auto& object:m_objects) {
 		if (!object->IsActive())continue;

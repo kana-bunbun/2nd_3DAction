@@ -44,8 +44,8 @@ SceneSelectDebug::SceneSelectDebug():
 
 void SceneSelectDebug::Init()
 {
-    m_sceneList.emplace_back("Debug");
     m_sceneList.emplace_back("Test");
+    m_sceneList.emplace_back("Debug");
     m_sceneList.emplace_back("Collision");
     m_sceneList.emplace_back("Debug");
 

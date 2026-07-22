@@ -145,6 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
+    <ClCompile Include="System\Debug\ProfileScope.cpp" />
+    <ClCompile Include="System\Debug\Profiler.cpp" />
     <ClCompile Include="Scene\SceneCollisionTest.cpp" />
     <ClCompile Include="Scene\SceneSelectDebug.cpp" />
     <ClCompile Include="System\Resource.cpp" />
@@ -256,8 +259,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\CameraParam.h" />
+    <ClInclude Include="System\Debug\MemoryProfiler.h" />
+    <ClInclude Include="System\Debug\ProfileScope.h" />
+    <ClInclude Include="System\Debug\Profiler.h" />
     <ClInclude Include="Scene\SceneCollisionTest.h" />
     <ClInclude Include="Scene\SceneSelectDebug.h" />
+    <ClInclude Include="System\Debug\ProfileRecord.h" />
     <ClInclude Include="System\Resource.h" />
     <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="Utility\FromJson.h" />

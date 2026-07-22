@@ -4,8 +4,9 @@
 #include"../../Utility/Vector3.h"
 #include"../../Utility/MyMath.h"
 #include"../../System/FontManager.h"
-#include"../../Utility/Color.h"
 #include"../../System/TimeManager.h"
+#include"../../System/Debug/ProfileScope.h"
+#include"../../Utility/Color.h"
 #include"../Object/Item/BlendManager.h"
 #include"../Character/Player/Player.h"
 #include"../Object/Item/ItemObjectManager.h"
@@ -208,6 +209,7 @@ void ItemCursor::UseItem()
 
 void ItemCursor::Draw()
 {
+	ProfileScope scope("ItemCursor::Draw()");
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 

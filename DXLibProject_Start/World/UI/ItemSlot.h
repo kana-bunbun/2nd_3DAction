@@ -18,7 +18,7 @@ public:
 	int GetHoldNum() { return m_holdNum; }
 	void SetPosition(const Vector3& const position) { m_drawPos = position; }
 	ItemData::Type GetItemType() { return m_itemData.m_type; }
-	void SetItemType(ItemData::Type type) { m_itemData.m_type = type; }
+	void SetItemType(ItemData::Type type);
 private:
 	// 固定サイズの画像の大きさを取得
 	float NormalizeGraphScale(int graphHandle);

@@ -1,2 +1,2 @@
 fieldOfView,initDistance,minDistance,maxDistance,minPitchDegAngle,maxPitchDegAngle,moveSpeed,rotateSpeedDeg,offsetPos
-60,600,150,900,-45,45,400,2,"0.0,100.0,0.0"
+60,600,450,750,-45,85,400,2,"0.0,150.0,0.0"

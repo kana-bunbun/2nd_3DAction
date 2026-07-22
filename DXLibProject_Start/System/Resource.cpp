@@ -55,6 +55,7 @@ void ModelData::Delete()
 
 GraphData::GraphData(std::string path)
 {
+
 	// データの読み込み
 	Load(path);
 }
@@ -67,8 +68,12 @@ GraphData::~GraphData()
 
 void GraphData::Load(std::string path)
 {
+	m_name = path;
+	//　パスの作成
+	std::string name = kResourcePath;
+	name += kFilePath[static_cast<int>(ResourceManager::FileName::Graph)] + path + kPng;
 	m_handle = kHandleInvalidValue;
-	m_handle = LoadGraph(path.c_str());
+	m_handle = LoadGraph(name.c_str());
 }
 
 void GraphData::Delete()
