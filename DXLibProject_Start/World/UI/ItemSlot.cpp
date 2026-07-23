@@ -43,8 +43,6 @@ void ItemSlot::Init()
 
 void ItemSlot::Draw()
 {
-	std::string ss = "ItemCursor" + std::to_string(m_drawPos.x) + "::Draw()";
-	ProfileScope scope(ss);
 
 	DrawRotaGraph(m_drawPos.x, m_drawPos.y, kSlotScale, 0, m_graphData->GetHandle(), TRUE);
 	if (m_itemData.m_type == ItemData::Type::Invalid)return;
@@ -78,10 +76,6 @@ void ItemSlot::Sub()
 void ItemSlot::SetItemType(ItemData::Type type)
 {
 	m_itemData.m_type = type;
-
-	if (type == ItemData::Type::Invalid)return;
-	//m_graphData = ResourceManager::GetInstance().GetGraph(kItemPath[static_cast<int>(m_itemData.m_type)]);
-
 }
 
 float ItemSlot::NormalizeGraphScale(int graphHandle)

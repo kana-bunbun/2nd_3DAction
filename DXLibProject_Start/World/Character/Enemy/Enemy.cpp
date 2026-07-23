@@ -101,6 +101,7 @@ void Enemy::LoadModel()
 	
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelDataPath);
 	for (int i = 0; i < static_cast<int>(Status::Queen::Max); i++) {
+		m_animData[i].index = i;
 		// アニメーションデータのループフラグを設定
 		m_animData[i].isLoop = kLoopFrag[i];
 		// アニメーションデータの割り込み不可能フラグを設定
@@ -207,8 +208,9 @@ void Enemy::UpdateAnimation(float deltaTime)
 	if (!m_animation.IsPlaying())
 		nextStatus = Status::Queen::Neutral;
 	// HPが0なくなっていたら
-	if(!m_HPGauge->GetValue())
+	if (!m_HPGauge->GetValue()) {
 		nextStatus = Status::Queen::Dead;
+	}
 	// ステータスが異なっていたらアニメーションの変更
 	if (m_status != nextStatus) {
 		ChangeAnimation(nextStatus);

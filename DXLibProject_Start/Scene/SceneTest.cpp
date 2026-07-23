@@ -183,7 +183,6 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 }
 
 void SceneTest::Draw() {
-	ProfileScope scope("SceneTest::Draw()");
 	//DrawGround();
 	// ƒJƒƒ‰‚Ì•`‰æ
 	m_pCameraMgr->Apply();

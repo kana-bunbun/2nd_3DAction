@@ -69,7 +69,7 @@ void CameraManager::AddCamera(Camera::CameraType type, std::unique_ptr<ICamera> 
 }
 
 
-void CameraManager::SetAcctiveCamera(Camera::CameraType type)
+void CameraManager::SetActiveCamera(Camera::CameraType type)
 {
 	m_cameraType = type;
 }

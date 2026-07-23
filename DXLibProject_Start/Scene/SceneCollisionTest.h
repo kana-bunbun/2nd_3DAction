@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include<memory>
+class CameraManager;
 class SceneCollisionTest : public SceneBase
 {
 public:
@@ -13,6 +14,10 @@ public:
 	void Draw()override;
 
 private:
+
+	void DrawGround();
+
+	std::unique_ptr<CameraManager> m_pCameraManager;
 
 };
 

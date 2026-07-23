@@ -32,22 +32,49 @@
 // 関数オブジェクト
 // 処理をデータのように扱う
 // これを用いることで上記のシーン情報をまとめることができる
+// →シーンを追加する際に楽ができるようになる
 // 
+// 前回の処理からSceneInfo構造体、関数オブジェクトを用いたことで
+// Update関数内の処理がSceneを追加しても修正が必要なくなった
+// しかし、ここでしか使わない小さな関数でわざわざ定義を書かないといけないのは面倒
+// 
+// 以下の方法で多少は楽になる
+// ラムダ式
+// その場で作る小さな関数　名前がない関数
+// 関数オブジェクトと相性がいい
+// 慣れるまでが記法に戸惑う
+// ラムダ式の構文
+// [キャプチャ](引数){処理};
 //
-
 
 SceneSelectDebug::SceneSelectDebug():
     m_selectIndex(0)
 {
     m_sceneList.reserve(10);
 }
-
+std::unique_ptr<SceneBase> GetSceneTest() {
+    return std::make_unique<SceneTest>();
+}
+std::unique_ptr<SceneBase> GetSceneCollision() {
+    return std::make_unique<SceneCollisionTest>();
+}
+std::unique_ptr<SceneBase> GetSceneInvalid() {
+    return nullptr;
+}
 void SceneSelectDebug::Init()
 {
-    m_sceneList.emplace_back("Test");
-    m_sceneList.emplace_back("Debug");
-    m_sceneList.emplace_back("Collision");
-    m_sceneList.emplace_back("Debug");
+    std::function<std::unique_ptr<SceneBase>()>s;
+
+    s = [&]() {
+        return std::make_unique<SceneTest>();
+        };
+
+
+    // ラムダ式で追加する
+    m_sceneList.push_back({ "Test", []() {return std::make_unique<SceneTest>(); } });
+    m_sceneList.push_back({ "Debug",GetSceneInvalid });
+    m_sceneList.push_back({ "Collision",[]() {return std::make_unique<SceneCollisionTest>(); } });
+    m_sceneList.push_back({ "Debug", GetSceneInvalid });
 
 }
 
@@ -72,18 +99,7 @@ std::unique_ptr<SceneBase> SceneSelectDebug::Update(float deltaTime)
     }
 
 
-    // シーン遷移
-    const std::string& currentSceneName = m_sceneList[m_selectIndex];
-
-    if (currentSceneName == "Test") {
-        return std::make_unique<SceneTest>();
-    }
-    if (currentSceneName == "Collision") {
-        return std::make_unique<SceneCollisionTest>();
-    }
-
-
-    return nullptr;
+    return m_sceneList[m_selectIndex].createScenefunc();
 }
 
 void SceneSelectDebug::Draw()
@@ -94,6 +110,6 @@ void SceneSelectDebug::Draw()
     for (int i = 0; i < m_sceneList.size(); i++) {
         int color = Color::kWhite;
         if (i == m_selectIndex)color = Color::kRed;
-        DrawString(baseX, baseY + 30 * (i + 1), m_sceneList[i].c_str(), color);
+        DrawString(baseX, baseY + 30 * (i + 1), m_sceneList[i].name.c_str(), color);
     }
 }

@@ -46,6 +46,7 @@ void AnimationController::PlayAnimation(const Status::AnimData& data)
 	if (m_isForcePlay && m_isPlaying)return;
 	// 同じアニメーションなら処理しない
 	if (m_currentAnim == data.index && m_isPlaying)return;
+	m_currentAnim = data.index;
 	m_nextIndex = data.index;
 	// すでに再生中なら一度アニメーションを外しておく
 	if (m_attachIndex != -1) {
@@ -117,6 +118,10 @@ void AnimationController::Debug()
 	printfDx("animation |   isPlay    : %s\n", m_isPlaying?"再生中": "再生してない");
 	printfDx("animation |    speed    : %f\n", m_animSpeed  );
 	printfDx("animation |    blend    : %f\n", m_blendRate);
+	for (int i = 0; i < m_modelData->GetAnimHandle().size(); i++) {
+		printfDx("animation |animHandle[i]: %d\n", m_modelData->GetAnimHandle()[i]);
+
+	}
 }
 
 bool AnimationController::CheckOverMoment(float time)

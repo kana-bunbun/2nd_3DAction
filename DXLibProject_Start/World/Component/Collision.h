@@ -154,7 +154,7 @@ namespace Collision {
 	class Capsule :public Shape {
 	public:
 		Capsule() = default;
-		Capsule(float radius);
+		Capsule(const Vector3& start,const Vector3& end,float radius);
 		~Capsule() = default;
 		/// <summary>
 		/// 形状データを取得する
@@ -171,13 +171,13 @@ namespace Collision {
 		/// </summary>
 		/// <param name="pos"></param>
 		void SetPosition(const Vector3& pos) override;
-		void SetMaxPosition(const Vector3& pos);
-		void SetMinPosition(const Vector3& pos);
+		void SetStartPosition(const Vector3& pos);
+		void SetEndPosition(const Vector3& pos);
 		/// <summary>
 		/// 座標の取得
 		/// </summary>
 		/// <returns></returns>
-		Vector3 GetPos()const override { return (m_maxPos + m_minPos) * 0.5f; }
+		Vector3 GetPos()const override { return (m_startPos + m_endPos) * 0.5f; }
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
@@ -189,17 +189,11 @@ namespace Collision {
 		/// <param name="radius"></param>
 		void SetRadius(float radius);
 
-		/// <summary>
-		/// オフセットを設定する関数
-		/// </summary>
-		/// <param name="offset"></param>
-		void SetOffset(float offset) { m_offset = offset; }
 	private:
 		void CheckEndPos();
 	private:
-		Vector3 m_minPos;
-		Vector3 m_maxPos;
-		float m_offset;
+		Vector3 m_startPos;
+		Vector3 m_endPos;
 		float m_radius;
 	};
 

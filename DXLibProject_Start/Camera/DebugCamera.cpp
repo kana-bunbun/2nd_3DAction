@@ -9,7 +9,7 @@
 
 namespace {
     constexpr float kMoveSpeed = 5.0f;
-    constexpr float kRotSpeed = 1.5f * MyMath::ToRadian;
+    constexpr float kRotSpeed = 5.5f * MyMath::ToRadian;
     constexpr float kFieldOfView = 60.0f;
 
     constexpr float kPitchLimit = 89.0f * MyMath::ToRadian; // pich制限
@@ -37,7 +37,10 @@ DebugCamera::~DebugCamera()
 
 void DebugCamera::Update(float deltaTime)
 {
- 
+    // 移動量の計算 レバーを倒した割合にかける
+    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_rotSpeed;
+    float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Input::Pad::P1);
+    if (!moveAmount && !analogAmount)return;
     float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1) * MyMath::ToRadian;
     float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1);
     float pitchRad = m_transform.rotation.x;
@@ -49,8 +52,7 @@ void DebugCamera::Update(float deltaTime)
     m_moveVector.y = -cosf(inputRadian);
     // 正規化
     m_moveVector = m_moveVector.Normalize();
-    // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_rotSpeed;
+  
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
     pitchRad += m_moveVector.y * deltaTime;
@@ -64,7 +66,7 @@ void DebugCamera::Update(float deltaTime)
     // 水平方向の角度を範囲内に収める
     yawRad = MyMath::NormalizeAngle(yawRad);
     m_transform.rotation.y = yawRad /** MyMath::ToRadian*/;
-    m_view.target = m_transform.position+Vector3(1,0,0);
+    m_view.target = m_transform.position+Vector3(0,0,0);
     // 右方向のベクトルを取得
     Vector3 right;
     right.x = cosf(yawRad);
@@ -75,7 +77,6 @@ void DebugCamera::Update(float deltaTime)
     Vector3 move=Vector3::zero;
 
     // 入力量を取得
-    float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Input::Pad::P1);
     // 入力角度を取得
     float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Input::Pad::P1);
     // 角度をラジアン角に変更
@@ -95,7 +96,7 @@ void DebugCamera::Update(float deltaTime)
     moveVec *= 10*analogAmount;
     move= moveVec * deltaTime;
 
-    m_view.GetForward();
+    //m_view.GetForward();
 
     Vector3 forward;
     forward.x = cosf(pitchRad) * sinf(yawRad);

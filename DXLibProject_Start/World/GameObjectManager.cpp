@@ -50,7 +50,6 @@ void GameObjectManager::LateUpdate(float deltaTime)
 
 void GameObjectManager::Draw()
 {
-	ProfileScope scope("GameObjectManager::Draw()");
 	std::vector<GameObject*>transparentIndex;
 	for (auto& object:m_objects) {
 		if (!object->IsActive())continue;
@@ -68,8 +67,8 @@ void GameObjectManager::Draw()
 	// 当たり判定のデバッグ表示
 	for (auto& object : m_objects) {
 		if (!object->IsActive())continue;
-		//object->DebugCollision(
-		// );
+		object->DebugCollision(
+		 );
 	}
 	// 後描画処理
 	for (auto& object : m_objects) {

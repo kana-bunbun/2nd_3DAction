@@ -95,9 +95,9 @@ Player::Player(Vector3 position) :
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
-	m_capsule = Collision::Capsule(kCapsuleRadius);
-	// カプセルのオフセットを計算
-	m_capsule.SetOffset(kCapsuleOffset);
+	Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
+	Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
+	m_capsule = Collision::Capsule(startPos, endPos, kCapsuleRadius);
 	// ゲージの初期化
 	m_HPGauge=std::make_unique<Gauge>();
 	m_MPGauge=std::make_unique<Gauge>();
@@ -131,9 +131,9 @@ Player::Player(std::vector<AddCollisionAABBData> param) :
 	m_move.SetLerpSpeed(kLerpModelRadian);
 	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
-	m_capsule = Collision::Capsule(kCapsuleRadius);
-	// カプセルのオフセットを計算
-	m_capsule.SetOffset(kCapsuleOffset);
+	Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
+	Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
+	m_capsule = Collision::Capsule(startPos,endPos,kCapsuleRadius);
 	// ゲージの初期化
 	m_HPGauge = std::make_unique<Gauge>();
 	m_MPGauge = std::make_unique<Gauge>();
@@ -454,8 +454,8 @@ void Player::UpdateCollision()
 	headFrame += (hatRightFrame + HatLeftFrame) * 0.5f;
 	headFrame *= 0.5f;
 	Vector3 waistFrame = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
-	m_capsule.SetMaxPosition({ headFrame.x, headFrame.y, headFrame.z });
-	m_capsule.SetMinPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
+	m_capsule.SetStartPosition({ headFrame.x, headFrame.y, headFrame.z });
+	m_capsule.SetEndPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
 
 	for (auto& collision : m_collisions) {
 		collision.shape->SetPosition(m_transform.position);

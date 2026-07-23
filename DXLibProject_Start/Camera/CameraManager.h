@@ -38,7 +38,7 @@ public:
 	/// 管理するカメラの設定
 	/// </summary>
 	/// <param name="type"></param>
-	void SetAcctiveCamera(Camera::CameraType type);
+	void SetActiveCamera(Camera::CameraType type);
 	/// <summary>
 	/// カメラを切り替える
 	/// </summary>

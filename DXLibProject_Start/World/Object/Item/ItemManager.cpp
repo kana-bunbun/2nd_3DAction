@@ -58,7 +58,6 @@ void ItemManager::Update()
 
 void ItemManager::Draw()
 {
-	ProfileScope scope("ItemManager::Draw()");
 
 	// アイテムスロットの更新処理
 	m_pItemCursor->Draw();

@@ -288,11 +288,10 @@ namespace Collision {
 
 
 
-	Capsule::Capsule(float radius) :
-		m_minPos(),
-		m_maxPos(),
-		m_radius(radius),
-		m_offset(0)
+	Capsule::Capsule(const Vector3& start, const Vector3& end, float radius):
+		m_startPos(start),
+		m_endPos(end),
+		m_radius(radius)
 	{
 	}
 	Collision::Result Capsule::CheckCollision(const Shape & other) const
@@ -312,7 +311,7 @@ namespace Collision {
 
 			// ƒJƒvƒZƒ‹“¯Žm‚Ì‹——£‚ð‘ª‚é
 			float length = Segment_Segment_MinLength(
-				m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), checkCapsule->m_maxPos.ToVECTOR(), checkCapsule->m_minPos.ToVECTOR());
+				m_endPos.ToVECTOR(), m_startPos.ToVECTOR(), checkCapsule->m_endPos.ToVECTOR(), checkCapsule->m_startPos.ToVECTOR());
 
 			// ”¼Œa‚Ì‡Œv‚ð’²‚×‚é
 			float radiusSum = m_radius + checkCapsule->m_radius;
@@ -333,21 +332,25 @@ namespace Collision {
 	}
 	void Capsule::SetPosition(const Vector3& pos)
 	{
+		Vector3 center = GetPos();
+		Vector3 moveMent = pos - center;
+		m_startPos += moveMent;
+		m_endPos += moveMent;
 	}
-	void Capsule::SetMaxPosition(const Vector3& pos)
+	void Capsule::SetStartPosition(const Vector3& pos)
 	{
-		m_minPos = pos;
+		m_startPos = pos;
 	}
-	void Capsule::SetMinPosition(const Vector3 & pos)
+	void Capsule::SetEndPosition(const Vector3 & pos)
 	{
-		m_maxPos = pos;
+		m_endPos = pos;
 	}
 	void Capsule::DebugDraw(int color) const
 	{
 		float debugRadius = m_radius * 0.2f;
-		DrawCapsule3D(m_maxPos.ToVECTOR(), m_minPos.ToVECTOR(), m_radius, 10, color, color, FALSE);
-		DrawSphere3D(m_maxPos.ToVECTOR(), debugRadius, 10, Color::kRed, color, TRUE);
-		DrawSphere3D(m_minPos.ToVECTOR(), debugRadius, 10, Color::kBlue, color, TRUE);
+		DrawCapsule3D(m_endPos.ToVECTOR(), m_startPos.ToVECTOR(), m_radius, 10, color, color, FALSE);
+		DrawSphere3D(m_endPos.ToVECTOR(), debugRadius, 10, Color::kRed, color, TRUE);
+		DrawSphere3D(m_startPos.ToVECTOR(), debugRadius, 10, Color::kBlue, color, TRUE);
 	}
 	void Capsule::SetRadius(float radius)
 	{

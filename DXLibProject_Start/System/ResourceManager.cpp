@@ -7,6 +7,11 @@
 
 ResourceManager::~ResourceManager()
 {
+	for (size_t i = 0; i < m_modelData.size(); i++) {
+		delete m_modelData[i];
+		m_modelData[i] = nullptr;
+	}
+
 	for (size_t i = 0; i < m_graphData.size(); i++) {
 		delete m_graphData[i];
 		m_graphData[i] = nullptr;

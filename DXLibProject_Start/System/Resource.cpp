@@ -38,7 +38,8 @@ void ModelData::Load(std::string path)
 	m_name = path;
 	m_handle = MV1LoadModel(pathParam.modelPath.c_str());
 	for (int i = 0; i < pathParam.animationPath.size(); i++) {
-		m_animHandle.emplace_back(MV1LoadModel(pathParam.animationPath[i].c_str()));
+		int animHandle = MV1LoadModel(pathParam.animationPath[i].c_str());
+		m_animHandle.emplace_back(animHandle);
 	}
 }
 

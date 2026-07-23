@@ -185,6 +185,7 @@ void Dragon::Update(float deltaTime)
 	default:
 		break;
 	}
+	Vector3 dd = m_transform.position;
 	// アニメーション更新処理
 	UpdateAnimation(deltaTime);
 	// 移動
@@ -214,6 +215,7 @@ void Dragon::TileIDUpdate()
 	if (m_onTileID == m_oldTileID && m_masterTileID == m_masterOldTileID)return;
 	// 自身とプレイヤー間の経路を生成
 	CheckRouteManhattan();
+	
 }
 
 void Dragon::UpdateFromInput()

@@ -209,7 +209,6 @@ void ItemCursor::UseItem()
 
 void ItemCursor::Draw()
 {
-	ProfileScope scope("ItemCursor::Draw()");
 
 	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 

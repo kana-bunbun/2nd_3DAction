@@ -7,6 +7,7 @@
 #include"../Data/ModelPathParam.h"
 #include"../Data/BlendRecipe.h"
 #include"Color.h"
+#include"../World/Component/Collision.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐためにデータ変換に関する処理を記載する
@@ -96,6 +97,11 @@ namespace Data {
 				param.type = Get<CollisionType>(row,"type");
 				return param;
 			}
+		};
+		template<>
+		struct FromCsv<Collision::Sphere> {
+			Collision::Sphere collision;
+			float size;
 		};
 	
 	}

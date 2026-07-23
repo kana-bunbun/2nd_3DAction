@@ -51,10 +51,22 @@
 		Heal,
 		Null,		// 当たり判定をチェックしない
 	};
+	enum class CollisionRangeType {
+		Invalid = -1,
+		Sphere,
+		AABB,
+		Max,
+	};
 	struct AddCollisionAABBData
 	{
 		Vector3 position;
 		Vector3 size;
+		CollisionType type;
+	};
+	struct AddCollisionSphereData
+	{
+		Vector3 position;
+		float radius;
 		CollisionType type;
 	};
 	enum class ModelName {

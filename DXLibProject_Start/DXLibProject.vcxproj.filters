@@ -696,6 +696,31 @@
     <None Include="Data\CSV\PlayerModelPath.xlsx" />
     <None Include="Data\CSV\test.csv" />
     <None Include="Data\CSV\test.xlsx" />
+    <None Include="Resource\Enemy\Queen\Motions\Damage.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\Death.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%402HitComboClawsAttack1Forward.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%402HitComboClawsAttack2.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40Death.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40GetHit1.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40GetHit2.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40Idle.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40JumpClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40LeftClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40LeftClawsAttackForward.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40RightClawsAttack.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40Roar.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40Run.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40TailAttackRight.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40TurnLeft180.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40TurnRight180.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\GastaroidQueen%40Walk.FBX" />
+    <None Include="Resource\Enemy\Queen\Motions\Idle.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\JumpAttack.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\Roar.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\Run.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\TailAttack.mv1" />
+    <None Include="Resource\Enemy\Queen\Motions\untitled.fbx" />
+    <None Include="Resource\Enemy\Queen\Motions\Walk.mv1" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\ChaWitch\Log.txt" />

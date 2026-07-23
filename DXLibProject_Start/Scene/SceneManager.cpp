@@ -36,7 +36,6 @@ void SceneManager::End() {
 }
 
 void SceneManager::Update(float deltaTime) {
-	ProfileScope scope("SceneManager::Update()");
 	// 確認処理
 	assert(m_pCurrentScene);
 	if (!m_pCurrentScene) return;
@@ -72,7 +71,6 @@ void SceneManager::Update(float deltaTime) {
 }
 
 void SceneManager::Draw() {
-	ProfileScope scope("SceneManager::Draw()");
 
 	// 確認処理
 	assert(m_pCurrentScene);
