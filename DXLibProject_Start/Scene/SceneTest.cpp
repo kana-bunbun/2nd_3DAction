@@ -91,12 +91,11 @@ SceneTest::SceneTest() :
 	//const auto& scameraParam = Data::Json::LoadJsonAs<FollowCameraParam>(kcameraParamPath);
 
 
-	auto data = Data::Csv::LoadCsvAs<AddCollisionAABBData>("AddCollisionAABBData");
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
-	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(data);
+	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
 
 
 }

@@ -7,20 +7,22 @@
 
 ResourceManager::~ResourceManager()
 {
+	End();
+}
+
+void ResourceManager::End()
+{
 	for (size_t i = 0; i < m_modelData.size(); i++) {
+		if (!m_modelData[i])continue;
 		delete m_modelData[i];
 		m_modelData[i] = nullptr;
 	}
 
 	for (size_t i = 0; i < m_graphData.size(); i++) {
+		if (!m_graphData[i])continue;
 		delete m_graphData[i];
 		m_graphData[i] = nullptr;
 	}
-}
-
-void ResourceManager::End()
-{
-
 }
 
 ResourceManager& ResourceManager::GetInstance()

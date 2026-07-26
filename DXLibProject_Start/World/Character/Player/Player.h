@@ -19,7 +19,7 @@ public:
 	/// プレイヤーのコンストラクタ
 	/// </summary>
 	Player(Vector3 position=Vector3::zero);
-	Player(std::vector<AddCollisionAABBData> param);
+	Player();
 	/// <summary>
 	/// プレイヤーのデストラクタ
 	/// </summary>

@@ -9,6 +9,7 @@
 #include"World/UI/BillboardManager.h"
 #include"World/Object/Item/BlendManager.h"
 #include"System/Debug/Profiler.h"
+#include"System/ResourceManager.h"
 #include<memory>
 
 
@@ -88,7 +89,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// •`‰ææ‚ğØ‚è‘Ö‚¦‚é
 		ScreenFlip();
 	}
-
+	ResourceManager::GetInstance().End();
+	
 	pSceneMgr->End();
 
 	DxLib_End();				// DXƒ‰ƒCƒuƒ‰ƒŠ‚ÌI—¹ˆ—

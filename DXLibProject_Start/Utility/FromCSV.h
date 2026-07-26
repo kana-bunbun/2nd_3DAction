@@ -1,6 +1,7 @@
 #pragma once
 #include<cassert>
 #include<string>
+#include<type_traits>
 #include"Data.h"
 #include"CsvConvert.h"
 #include"../Data/CameraParam.h"
@@ -8,6 +9,8 @@
 #include"../Data/BlendRecipe.h"
 #include"Color.h"
 #include"../World/Component/Collision.h"
+#include"../World/GameObjectParam.h"
+
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐためにデータ変換に関する処理を記載する
@@ -20,6 +23,13 @@ namespace Data {
 				return T{};
 			}
 		};
+	/*	template<class T>
+		struct FromCsv {
+			static T Binding(const Csv::Row& row) {
+				static_assert(sizeof(T) == 0, "CsvBinding 定義されていない型");
+				return T{};
+			}
+		};*/
 		template<typename T>
 		T Get(const Csv::Row& row,  const std::string key) {
 			// keyの値をrowから探す
@@ -89,19 +99,48 @@ namespace Data {
 			}
 		};
 		template<>
-		struct FromCsv<AddCollisionAABBData> {
-			static AddCollisionAABBData Binding(const Csv::Row& row) {
-				AddCollisionAABBData param;
-				param.position = Get<Vector3>(row,"position");
-				param.size = Get<Vector3>(row,"size");
-				param.type = Get<CollisionType>(row,"type");
+		struct FromCsv<AddCollisionAABBData*> {
+			static AddCollisionAABBData* Binding(const Csv::Row& row) {
+				AddCollisionAABBData* param = new AddCollisionAABBData();
+				param->position = Get<Vector3>(row,"Param[0]");
+				param->size = Get<Vector3>(row,"Param[1]");
+				param->type = Get<CollisionType>(row,"CollisionTypeName");
 				return param;
 			}
 		};
 		template<>
-		struct FromCsv<Collision::Sphere> {
-			Collision::Sphere collision;
-			float size;
+		struct FromCsv<AddCollisionSphereData> {
+			static AddCollisionSphereData Binding(const Csv::Row& row) {
+				AddCollisionSphereData param;
+				param.radius = Get<float>(row,"Param[0]");
+				param.position = Get<Vector3>(row,"Param[1]");
+				param.type = Get<CollisionType>(row,"CollisionType");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<AddCollisionData*> {
+			static AddCollisionData* Binding(const Csv::Row& row) {
+				AddCollisionData* param = nullptr;
+				CollisionShape rangeType = static_cast<CollisionShape>(Get<int>(row, "RangeType"));
+				switch (rangeType)
+				{
+				case CollisionShape::Invalid:
+					break;
+				case CollisionShape::Sphere:
+					break;
+				case CollisionShape::AABB: {
+					param = FromCsv<AddCollisionAABBData*>().Binding(row);
+					break;
+				}
+				case CollisionShape::Max:
+					break;
+				default:
+					break;
+				}
+				return param;
+			}
+			
 		};
 	
 	}

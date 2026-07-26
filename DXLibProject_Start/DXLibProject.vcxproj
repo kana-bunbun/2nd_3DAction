@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\CollisionDataManager.cpp" />
     <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
     <ClCompile Include="System\Debug\ProfileScope.cpp" />
     <ClCompile Include="System\Debug\Profiler.cpp" />
@@ -258,6 +259,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System\CollisionDataManager.h" />
     <ClInclude Include="Data\CameraParam.h" />
     <ClInclude Include="System\Debug\MemoryProfiler.h" />
     <ClInclude Include="System\Debug\ProfileScope.h" />

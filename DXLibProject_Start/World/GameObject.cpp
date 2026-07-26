@@ -7,12 +7,15 @@
 #include"../Utility/Vector3.h"
 #include"../World/Component/Collision.h"
 #include"Map/MapManager.h"
-
+namespace {
+	constexpr int kInitcOllisionCount = 10;
+}
 
 GameObject::GameObject():
 m_transform(),
 m_isActive(true)
 {
+	m_collisions.reserve(kInitcOllisionCount);
 }
 
 void GameObject::End()
@@ -84,6 +87,22 @@ void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, Collision
 	assert(shape && "GameCbject::AddCOllision : shape null");
 
 	m_collisions.push_back({ std::move(shape),type });
+}
+
+void GameObject::AddCollision(const AddCollisionAABBData& addCollisionData)
+{
+	CollisionData collisionData;
+	collisionData.shape = std::make_unique<Collision::AABB>(addCollisionData.position, addCollisionData.size);
+	collisionData.type = addCollisionData.type;
+	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
+}
+
+void GameObject::AddCollision(const AddCollisionSphereData& addCollisionData)
+{
+	CollisionData collisionData;
+	collisionData.shape = std::make_unique<Collision::Sphere>(addCollisionData.position, addCollisionData.radius);
+	collisionData.type = addCollisionData.type;
+	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
 }
 
 int GameObject::GetOnTileID()

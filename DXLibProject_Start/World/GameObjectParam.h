@@ -1,5 +1,7 @@
 #pragma once
 #include"../Utility/Vector3.h"
+#include<memory>
+#include"Component/Collision.h"
 
 // 外部データからゲーム内のパラメータにアクセスする際の注意点
 // CSVやJsonからデータを取得してゲーム内のパラメータに設定する際に、
@@ -51,24 +53,28 @@
 		Heal,
 		Null,		// 当たり判定をチェックしない
 	};
-	enum class CollisionRangeType {
+	enum class CollisionShape {
 		Invalid = -1,
 		Sphere,
 		AABB,
 		Max,
 	};
-	struct AddCollisionAABBData
-	{
+	class AddCollisionData {
+	public:
 		Vector3 position;
+		CollisionType type;
+	};
+	class AddCollisionAABBData:public AddCollisionData
+	{
+	public:
 		Vector3 size;
-		CollisionType type;
 	};
-	struct AddCollisionSphereData
+	class AddCollisionSphereData :public AddCollisionData
 	{
-		Vector3 position;
+	public:
 		float radius;
-		CollisionType type;
 	};
+
 	enum class ModelName {
 		Invalid=-1,
 		Player,

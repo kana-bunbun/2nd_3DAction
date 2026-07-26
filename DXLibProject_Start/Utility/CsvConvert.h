@@ -8,6 +8,8 @@
 #include"Color.h"
 #include"../Data/BlendRecipe.h"
 #include"../World/GameObjectParam.h"
+#include"../World/GameObject.h"
+#include"../World/Component/Collision.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -118,6 +120,7 @@ namespace Data {
 			assert(0 && "Convert CollisionType key not found");
 			return CollisionType::Invalid;
 		}
+	
 	}
 
 }
