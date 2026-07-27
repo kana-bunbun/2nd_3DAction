@@ -1,12 +1,13 @@
 #pragma once
-#include "ItemObject.h"
-class MolotovCocktail :public ItemObject
+#include "ItemObjectBase.h"
+class FireBottle :public ItemObjectBase
 {
 public:
-	MolotovCocktail();
-	~MolotovCocktail();
+	FireBottle();
+	~FireBottle();
 
 	void Init()override;
+	void InitCollision()override;
 	void Update(float deltaTime)override;
 	void End()override;
 	void Draw()override;
@@ -22,7 +23,6 @@ public:
 	void EffectSetup()override;
 	void BeforeEffectUpdate(float deltaTime)override;
 	void EffectUpdate(float deltaTime)override;
-	bool IsTransparent()override { return m_isEffect; }
 private:
 
 	/// <summary>

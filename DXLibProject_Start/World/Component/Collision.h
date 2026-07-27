@@ -2,6 +2,8 @@
 #include"../../Utility/Vector3.h"
 #include"../../Utility/Color.h"
 #include"Transform.h"
+#include"../GameObjectParam.h"
+
 /// <summary>
 /// 衝突判定関連のデータや処理
 /// </summary>
@@ -148,7 +150,7 @@ namespace Collision {
 		Vector3 m_minPos;
 		Vector3 m_maxPos;
 		Vector3 m_halfSize;
-		Vector3 m_offSet;
+		Vector3 m_offset;
 	};
 
 	class Capsule :public Shape {

@@ -6,7 +6,6 @@
 #include"../../Utility/MyMath.h"
 
 namespace Collision {
-	// 球-----------------------------------------------------------------------------------
 	Collision::Result Sphere::CheckCollision(const Shape& other) const
 	{
 		// Collision::Resultを使わない場合の球同士の当たり判定
@@ -99,16 +98,17 @@ namespace Collision {
 
 		DrawSphere3D(GetPos().ToVECTOR(), m_radius, 10, color, color, false);
 	}
-	// 球-----------------------------------------------------------------------------------
-
+	
+	
+	
 	AABB::AABB(const Vector3& offset, const Vector3& size):
-		m_offSet(offset)
+		m_offset(offset)
 	{
 		SetSize(size);
-		SetPosition(offset);
+		//SetPosition(offset);
 	}
 
-	// AABB---------------------------------------------------------------------------------
+
 	Collision::Result AABB::CheckCollision(const Shape& other) const
 	{
 
@@ -236,9 +236,9 @@ namespace Collision {
 	void AABB::SetPosition(const Vector3& pos)
 	{
 		// 中心座標から半分の大きさを足した値
-		m_maxPos = pos + m_halfSize + m_offSet;
+		m_maxPos = pos + m_halfSize + m_offset;
 		// 中心座標から半分の大きさを引いた値
-		m_minPos = pos - m_halfSize + m_offSet;
+		m_minPos = pos - m_halfSize + m_offset;
 	}
 	void AABB::DebugDraw(int color) const
 	{

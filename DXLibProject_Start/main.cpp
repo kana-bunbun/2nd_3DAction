@@ -9,6 +9,8 @@
 #include"World/UI/BillboardManager.h"
 #include"World/Object/Item/BlendManager.h"
 #include"System/Debug/Profiler.h"
+#include"System/ActionEffectParamManager.h"
+#include"System/CollisionDataManager.h"
 #include"System/ResourceManager.h"
 #include<memory>
 
@@ -40,6 +42,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	TimeManager::Init();
 	BillboardManager::GetInstance().Init();
 	BlendManager::GetInstnce().Init();
+	CollisionDataManager::GetInstance();
+	ActionEffectParamManager::GetInstance();
 	// シーン制御のポインタを生成
 	std::unique_ptr<SceneManager> pSceneMgr;
 	pSceneMgr = std::make_unique<SceneManager>();
@@ -90,7 +94,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ScreenFlip();
 	}
 	ResourceManager::GetInstance().End();
-	
+	CollisionDataManager::GetInstance().End();
+	ActionEffectParamManager::GetInstance().End();
 	pSceneMgr->End();
 
 	DxLib_End();				// DXライブラリの終了処理

@@ -12,7 +12,7 @@
 #include"../CharacterManager.h"
 #include"../../Map/RouteSearcher.h"
 #include"../../Map/MapManager.h"
-
+#include"../../../System/CollisionDataManager.h"
 namespace {
 	const char* const kModelDataName = "DragonModel";
 	constexpr bool kLoopFrag[static_cast<int>(Status::Dragon::Max)]{
@@ -42,8 +42,6 @@ namespace {
 
 	// モデルの大きさ倍率
 	constexpr float kModelScale = 0.5f;
-	// 座標のオフセット
-	constexpr Vector3 kPosOffset = { 0.0f,0.0f,0.0f };
 
 	// プレイヤー追従関連
 
@@ -54,9 +52,9 @@ namespace {
 	// 追いかける距離の2乗
 	constexpr float kFollowSqLength = kFollowLength * kFollowLength;
 	// 追いかける距離(割り算時のキャッシュ)
-	constexpr float kFollowLengthRate = 1/kFollowLength;
+	constexpr float kFollowLengthRatio = 1/kFollowLength;
 	// 追いかける距離の2乗(割り算時のキャッシュ)
-	constexpr float kFollowSqLengthRate = kFollowLengthRate* kFollowLengthRate;
+	constexpr float kFollowSqLengthRatio = kFollowLengthRatio* kFollowLengthRatio;
 
 	// ターゲット追従関連
 
@@ -76,6 +74,7 @@ namespace {
 	// 攻撃間隔
 	constexpr float kAttackIntervalCount = 1.0f;
 
+	constexpr int kCollisionID = 10;
 }
 
 Dragon::Dragon():
@@ -105,8 +104,6 @@ Dragon::Dragon():
 	MV1SetScale(m_modelData->GetHandle(), modelScale.ToVECTOR());
 	// アニメーション初期化
 	m_animation.Init(m_modelData);
-	// 座標を設定
-	m_transform.position+=kPosOffset;
 
 	m_move.SetTransform(m_transform);
 	// 角度の補間速度を設定
@@ -121,9 +118,8 @@ Dragon::Dragon():
 	for (int i = 0; i < m_breath.size(); i++) {
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
-	float sizeAxis = 300;
-	Vector3 size = { sizeAxis,sizeAxis,sizeAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, size), CollisionType::Body);
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
 	m_collisionTag = CollisionTag::Dragon;
 }
 
@@ -312,7 +308,7 @@ Vector3 Dragon::CheckFollowOffset()
 	Transform targetTransform = m_pMaster->GetTransform();
 	Vector3 OffsetLeft = Vector3::zero;
 	Vector3 OffsetRight = Vector3::zero;
-	Vector3 myPos = m_transform.position-kPosOffset;
+	Vector3 myPos = m_transform.position;
 	Vector3  distance = myPos - targetTransform.position;
 	OffsetLeft.x = -sinf(targetTransform.rotation.y - DX_PI_F * 0.5f);
 	OffsetLeft.z = -cosf(targetTransform.rotation.y - DX_PI_F * 0.5f);
@@ -359,9 +355,8 @@ void Dragon::FollowPlayer()
 	assert(m_pMaster);
 
 	Vector3 myPos = m_transform.position;
-	myPos -= kPosOffset;
 	Vector3  distance = myPos - CheckFollowOffset();
-	float speed = distance.GetSqLength() * kFollowSqLengthRate;
+	float speed = distance.GetSqLength() * kFollowSqLengthRatio;
 	if (speed > 3) {
 		int i = 0;
 	}
@@ -392,14 +387,14 @@ void Dragon::FollowPlayer()
 
 void Dragon::FollowTarget(float deltaTime)
 {
-	Vector3 myPos = m_transform.position- kPosOffset;
+	Vector3 myPos = m_transform.position;
 	Vector3  distance = myPos - m_pTarget->GetTransform().position;
 	float angle = atan2(distance.x, distance.z);
 	float speed = kAttenuationSpeed * deltaTime;
 	m_speed *= MyMath::Clamp(speed,0.0f, kAttenuationMax);
 	m_move.SetDesireRad(angle);
 	if (distance.GetSqLength() > kTargetFollowSqLength) {
-		m_speed = distance.GetSqLength() * kFollowSqLengthRate;
+		m_speed = distance.GetSqLength() * kFollowSqLengthRatio;
 		m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 		float lerpSpeed = kLerpRad * MyMath::Clamp(m_speed,0.0f,1.0f);
 		m_move.SetLerpSpeed(lerpSpeed);
@@ -425,10 +420,9 @@ void Dragon::FollowRoute()
 
 	if (!moveData.size())return;
 	Vector3 myPos = m_transform.position;
-	myPos -= kPosOffset;
 	Vector3  distance = myPos - MapManager::GetInstance().GetWorldPosFromID(moveData[0].m_sourceSquareID);
 	Vector3  distancePlayer = myPos - m_pMaster->GetTransform().position;
-	m_speed = distancePlayer.GetSqLength() * kFollowSqLengthRate - 0.3f;
+	m_speed = distancePlayer.GetSqLength() * kFollowSqLengthRatio - 0.3f;
 	m_speed = MyMath::Clamp(m_speed, 0.0f, kMaxSpeedRate);
 	float angle = atan2(distance.x, distance.z);
 

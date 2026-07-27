@@ -93,6 +93,10 @@ public:
 	/// </summary>
 	std::vector<int>CheckChebyshevID(int centerID);
 	int DirectionToPosition(int ID, MapConst::eDirectionEight direction);
+	/// <summary>
+	/// 指定したID同士が隣り合っているかどうか
+	/// </summary>
+	bool IsChebyishevTile(int baseID, int checkID);
 public:
 	/// <summary>
 	/// タイルの最大数を取得

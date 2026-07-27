@@ -88,22 +88,22 @@ void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, Collision
 
 	m_collisions.push_back({ std::move(shape),type });
 }
-
-void GameObject::AddCollision(const AddCollisionAABBData& addCollisionData)
-{
-	CollisionData collisionData;
-	collisionData.shape = std::make_unique<Collision::AABB>(addCollisionData.position, addCollisionData.size);
-	collisionData.type = addCollisionData.type;
-	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
-}
-
-void GameObject::AddCollision(const AddCollisionSphereData& addCollisionData)
-{
-	CollisionData collisionData;
-	collisionData.shape = std::make_unique<Collision::Sphere>(addCollisionData.position, addCollisionData.radius);
-	collisionData.type = addCollisionData.type;
-	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
-}
+//
+//void GameObject::AddCollision(const AddCollisionAABBData& addCollisionData)
+//{
+//	CollisionData collisionData;
+//	collisionData.shape = std::make_unique<Collision::AABB>(addCollisionData.position, addCollisionData.size);
+//	collisionData.type = addCollisionData.type;
+//	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
+//}
+//
+//void GameObject::AddCollision(const AddCollisionSphereData& addCollisionData)
+//{
+//	CollisionData collisionData;
+//	collisionData.shape = std::make_unique<Collision::Sphere>(addCollisionData.position, addCollisionData.radius);
+//	collisionData.type = addCollisionData.type;
+//	m_collisions.push_back({ std::move(collisionData.shape),collisionData.type });
+//}
 
 int GameObject::GetOnTileID()
 {

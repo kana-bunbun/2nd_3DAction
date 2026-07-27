@@ -1,5 +1,5 @@
 #include "ItemObjectManager.h"
-#include "ItemObject.h"
+#include "ItemObjectBase.h"
 #include "../../GameObject.h"
 #include"../../UI/ItemCursor.h"
 
@@ -30,9 +30,10 @@ void ItemObjectManager::Update()
 
 void ItemObjectManager::Draw()
 {
+	printfDx("item active num : %d\n", m_items.size());
 }
 
-void ItemObjectManager::SetupItem(ItemObject* item, GameObject* obj)
+void ItemObjectManager::SetupItem(ItemObjectBase* item, GameObject* obj)
 {
 	item->Setup(obj->GetTransform());
 }

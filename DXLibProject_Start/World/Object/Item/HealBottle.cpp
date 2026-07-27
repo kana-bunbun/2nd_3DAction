@@ -1,6 +1,10 @@
 #include "HealBottle.h"
 #include "../../../System/ResourceManager.h"
+#include "../../../System/CollisionDataManager.h"
 #include"../../../Utility/MyRandom.h"
+#include"../../GameObjectManager.h"
+#include"../../../World/Action/ActionEffect_Heal.h"
+#include"../../../System/ActionEffectParamManager.h"
 namespace {
 	const char* const kModelPath = "HealBottleModel";
 
@@ -9,39 +13,60 @@ namespace {
 	// 落下速度
 	constexpr float kFallSpeed = kThrowPower *2.5f;
 
-	// 描画の中心となるフレームの位置
-	constexpr int kDrawCenterFrameNum = 1;
 	// 効果発動の最大カウント
 	constexpr float kEffectMaxCount = 3.0f;
 	// 透明度の最大値
 	constexpr float kAlphaMax = 0.5f;
-	// 効果の範囲
-	constexpr float kEffectRadius = 420;
-	// 回復処理発動インターバル
+	// 回復効果発動インターバル
 	constexpr float kEffectInterval = 0.3f;
-	constexpr float kBodyCollisionAxis = 30;
+	// 回復効果の当たり判定ID
+	constexpr int kEffectCollsionID = 100;
+	// アイテム本体の当たり判定ID
+	constexpr int kCollsionID = 101;
+	// 回復効果のID
+	constexpr int kEffectID = 0;
 
 }
 
 HealBottle::HealBottle() :
 	m_alpha(0),
-	m_isTrans(false)
+	m_isEffect(false)
 {
+	// 回転速度の初期化
 	m_rotateSpeed = Vector3::zero;
+	// モデルデータの取得
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius), CollisionType::Null);
-	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize), CollisionType::Invalid);
+	m_actionEffect = GameObjectManager::GetInstance().CreateObject<ActionEffect_Heal>();
+	Init();
+
 }
 
 HealBottle::~HealBottle()
 {
-	
+	delete m_modelData;
+	m_modelData = nullptr;
 }
 
 void HealBottle::Init()
 {
+	// 当たり判定の初期設定
+	InitCollision();
+}
 
+void HealBottle::InitCollision()
+{
+	// 本体の当たり判定の追加
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollsionID);
+	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
+	// エフェクトの当たり判定の追加
+	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollsionID);
+	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
+
+	// エフェクトの当たり判定のパラメータをキャッシュしておく
+	m_collisionParam = param;
+	m_actionEffect->SetCollision(m_collisions[1].shape.get());
+	m_actionEffect->SetCollisionParam(param);
+	m_actionEffect->SetActionEffectParam(ActionEffectParamManager::GetInstance().GetEffectParam(kEffectID));
 }
 
 void HealBottle::End()
@@ -59,38 +84,29 @@ void HealBottle::Setup(const Transform& transform)
 	m_transform.rotation = m_rotateSpeed;
 	m_moveVector.y = kThrowPower;
 
-	m_isEffect = false;
+	m_actionEffect->SetActive(false);
 	m_effectCount = kEffectMaxCount;
 
-	m_isTrans = false;
-	m_collisions[0].type = CollisionType::Null;
+	m_isEffect = false;
 
 }
 
 void HealBottle::Update(float deltaTime)
 {
+	m_isActive = false;
+	if (m_transform.position.y <= 0 && m_moveVector.y < 0)return;
+	m_isActive = true;
 	// 効果発動前の処理
 	BeforeEffectUpdate(deltaTime);
-	// 地面に落下した時
-	if (m_transform.position.y < 0&&m_moveVector.y<0) {
-		// 効果のセットアップ
-		EffectSetup();
-	}
 
-	// 効果発動中でなければ即時return
-	if (!m_isEffect)return;
-	// 効果の更新処理
-	EffectUpdate(deltaTime);
+
 }
 
 void HealBottle::Draw()
 {
 	printfDx("healBottle::CollisionType : %d\n", m_collisions[0].type);
 	printfDx("healBottle::TileID : %d\n", GetOnTileID());
-	if (m_isEffect) {
-		DrawEffect();
-	}
-	else {
+	if (!m_isEffect) {
 		DrawModel();
 	}
 }
@@ -103,14 +119,6 @@ void HealBottle::DrawModel()
 	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
 	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
 	MV1DrawModel(m_modelData->GetHandle());
-}
-
-void HealBottle::DrawEffect()
-{
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
-	DrawSphere3D(m_transform.position.ToVECTOR(), kEffectRadius, 10, Color::kGreen, Color::kGreen, TRUE);
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
-
 }
 
 void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)
@@ -140,18 +148,22 @@ void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myDa
 
 void HealBottle::EffectSetup()
 {
+	if (m_isEffect)return;
 	// 落下速度を0に
 	m_moveVector.y = 0;
 	// Y座標をクランプ
 	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
-	// エフェクトフラグを更新
+	// アクティブに設定
+	m_actionEffect->SetActive(true);
+	m_actionEffect->Reset();
+	m_actionEffect->SetPosition(m_transform.position);
 	m_isEffect = true;
 }
 
 void HealBottle::BeforeEffectUpdate(float deltaTime)
 {
 	// 効果発動中なら処理しない
-	if (m_isEffect)return;
+	if (m_actionEffect->IsActive())return;
 	// 回転させる
 	m_transform.rotation += m_rotateSpeed * deltaTime;
 	// 落下速度を更新
@@ -160,34 +172,10 @@ void HealBottle::BeforeEffectUpdate(float deltaTime)
 	m_transform.position.y += m_moveVector.y * deltaTime;
 	// 効果発動前は衝突判定をチェックしない
 	m_collisions[0].type = CollisionType::Null;
-}
+	// 地面に落下した時
+	if (m_transform.position.y < 0 && m_moveVector.y < 0) {
+		// 効果のセットアップ
+		EffectSetup();
 
-void HealBottle::EffectUpdate(float deltaTime)
-{
-	// 効果発動中は衝突判定をチェックする
-	m_collisions[0].type = CollisionType::Heal;
-	// カウントダウン
-	m_effectCount -= deltaTime;
-	// カウントに応じて透明度を求める
-	m_alpha = m_effectCount / kEffectMaxCount;
-	// 透明度をクランプ
-	m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
-	// 透明度フラグの更新
-	m_isTrans = true;
-	// 効果発動のカウントを更新
-	m_activationCount += deltaTime;
-	// 効果カウントがインターバルを超えたら
-	if (m_activationCount > kEffectInterval) {
-		m_activationCount = 0;
-	}
-	
-	// カウントが0になったら
-	if (m_effectCount <= 0) {
-		// カウントを0に
-		m_effectCount = 0;
-		// 効果発動フラグを更新
-		m_isEffect = false;
-		// 非アクティブにする
-		m_isActive = false;
 	}
 }

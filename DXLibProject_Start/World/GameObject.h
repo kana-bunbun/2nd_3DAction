@@ -85,8 +85,8 @@ public:
 	/// <param name="shape"></param>
 	/// <param name="type"></param>
 	void AddCollision(std::unique_ptr<Collision::Shape> shape,CollisionType type);
-	void AddCollision(const AddCollisionAABBData& addCollisionData);
-	void AddCollision(const AddCollisionSphereData& addCollisionData);
+	/*void AddCollision(const AddCollisionAABBData& addCollisionData);
+	void AddCollision(const AddCollisionSphereData& addCollisionData);*/
 
 	/// <summary>
 	/// 現在いるマスのIDを取得

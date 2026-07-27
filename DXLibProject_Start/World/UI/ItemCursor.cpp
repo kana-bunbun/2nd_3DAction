@@ -11,7 +11,7 @@
 #include"../Character/Player/Player.h"
 #include"../Object/Item/ItemObjectManager.h"
 #include"../Object/Item/HealBottle.h"
-#include"../Object/Item/MolotovCocktail.h"
+#include"../Object/Item/FireBottle.h"
 #include"../Character/CharacterManager.h"
 #include"ItemSlot.h"
 #include<string>
@@ -198,7 +198,7 @@ void ItemCursor::UseItem()
 		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
 		break;
 	case ItemData::Type::MolotovCocktail:
-		m_pItemObjectManager->CallItem<MolotovCocktail>(pPlayer);
+		m_pItemObjectManager->CallItem<FireBottle>(pPlayer);
 		break;
 	default:
 		return;

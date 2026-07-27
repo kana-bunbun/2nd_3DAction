@@ -13,6 +13,7 @@
 #include"../../../Camera/Camera.h"
 #include "../../../Utility/Data.h"
 #include "../../../Utility/FromCSV.h"
+#include"../../../System/CollisionDataManager.h"
 namespace {
 	const char* const kModelDataName = "PlayerModel";
 	// 各アニメーションのループフラグ
@@ -47,8 +48,6 @@ namespace {
 	constexpr Vector3 kModelScale = { 2.0f,2.0f,2.0f };
 	// 当たり判定のオフセット
 	constexpr Vector3 kModelOffset = { 0.0f,30.0f*kModelScale.y,0.0f };
-	// 当たり判定の大きさ
-	constexpr Vector3 kCollisionSize = { 100.0f,200.0f,100.0f };
 	// バリアのオフセット
 	constexpr Vector3 kBarrierOffset = { 0.0f,50.0f*kModelScale.y,0.0f };
 	// カプセルの半径
@@ -58,10 +57,7 @@ namespace {
 	// カプセルの長さ
 	constexpr float kCapsuleLength = 20 * kModelScale.y;
 
-	// 本体コリジョンのデータ
-	constexpr float kBodyCollisionOffsetY = 98.0f;
-	constexpr Vector3 kBodyCollisionSize = { 78.0f,195.0f,78.0f };
-
+	// モデルのフレームID
 	constexpr int kHeadFrameIndex = 6;
 	constexpr int kHatRightFrameIndex = 11;
 	constexpr int kHatLeftFrameIndex = 12;
@@ -69,7 +65,8 @@ namespace {
 
 	// パリィ溜め時のMP減少量
 	constexpr float kParryMPDecrease = 0.05f;
-	const char* const kCollisionPath = "CollisionData";
+
+	constexpr int kCollisionID = 0;
 }
 
 Player::Player(Vector3 position) :
@@ -87,34 +84,12 @@ Player::Player(Vector3 position) :
 	m_isGroud(true),
 	m_isJump(false)
 {
-	//// モデルの設定
-	//LoadModel();
-	//// トランスフォームの初期化処理
-	//m_transform.Reset();
-	//// 移動時の角度の補間割合を設定
-	//m_move.SetLerpSpeed(kLerpModelRadian);
-	////m_barrier = std::make_unique<Barrier>(kCollisionOffset);
-	//// カプセルの初期化
-	//Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
-	//Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
-	//m_capsule = Collision::Capsule(startPos, endPos, kCapsuleRadius);
-	//// ゲージの初期化
-	//m_HPGauge=std::make_unique<Gauge>();
-	//m_MPGauge=std::make_unique<Gauge>();
-	//// 当たり判定追加
-	////AddCollision(std::make_unique<Collision::AABB>(Vector3(0.0f, kBodyCollisionOffsetY, 0.0f), kBodyCollisionSize), CollisionType::Body);
-	//AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
-	//// 座標設定
-	//SetPosition(position);
-
-
 	// モデルの設定
 	LoadModel();
 	// トランスフォームの初期化処理
 	m_transform.Reset();
 	// 移動時の角度の補間割合を設定
 	m_move.SetLerpSpeed(kLerpModelRadian);
-	//m_barrier = std::make_unique<Barrier>(kCollisionOffset);
 	// カプセルの初期化
 	Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
 	Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
@@ -123,10 +98,9 @@ Player::Player(Vector3 position) :
 	m_HPGauge = std::make_unique<Gauge>();
 	m_MPGauge = std::make_unique<Gauge>();
 	// 当たり判定追加
-	AddCollisionAABBData param/* = Data::Csv::LoadCsvAs<AddCollisionAABBData>(kCollisionPath)[0]*/;
-	//for (const auto& obj : param) {
-	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), param.type);
-	//}
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
+
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
 	// 座標設定
 	SetPosition(Vector3::zero);
@@ -162,9 +136,9 @@ Player::Player() :
 	m_HPGauge = std::make_unique<Gauge>();
 	m_MPGauge = std::make_unique<Gauge>();
 	// 当たり判定追加
-	AddCollisionAABBData param /*= Data::Csv::LoadCsvAs<AddCollisionAABBData>(kCollisionPath)[2]*/;
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
 	//for (const auto& obj : param) {
-		AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), param.type);
 	//}
 	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
 	// 座標設定

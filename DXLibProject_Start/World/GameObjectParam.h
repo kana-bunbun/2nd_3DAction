@@ -59,20 +59,13 @@
 		AABB,
 		Max,
 	};
-	class AddCollisionData {
+
+	class CollisionParam {
 	public:
-		Vector3 position;
-		CollisionType type;
-	};
-	class AddCollisionAABBData:public AddCollisionData
-	{
-	public:
-		Vector3 size;
-	};
-	class AddCollisionSphereData :public AddCollisionData
-	{
-	public:
-		float radius;
+		int ID = -1;
+		Vector3 position = Vector3::zero;
+		Vector3 size = Vector3::zero;
+		float radius = 0;
 	};
 
 	enum class ModelName {

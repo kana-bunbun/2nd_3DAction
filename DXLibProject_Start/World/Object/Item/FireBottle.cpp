@@ -1,69 +1,89 @@
-#include "MolotovCocktail.h"
+#include "FireBottle.h"
 #include "ItemManager.h"
 #include "../../../System/ResourceManager.h"
 #include"../../GameObjectParam.h"
+#include"../../../System/CollisionDataManager.h"
 namespace {
-	const char* const kModelPath = "MolotovCocktailModel";
-
-	constexpr float kThrowRadian = 75 * MyMath::ToRadian;
+	const char* const kModelPath = "FireBottleModel";
+	// 投げる角度のオフセット
+	constexpr float kThrowOffsetRadian = 75 * MyMath::ToRadian;
+	// 移動速度
 	constexpr float kMoveSpeed = 1500.0f;
+	// 投げる角度の最大値
 	constexpr float kThrowMaxRadian = 180 * MyMath::ToRadian;
+	// 効果の発動限界時間
 	constexpr float kEffectMaxCount = 3.0f;
+	// エフェクト透明度の最大値
 	constexpr float kAlphaMax = 0.5f;
-	constexpr float kEffectRadius = 300;
-	constexpr float kBodyCollisionRadius = 30;
-	constexpr float kBodyCollisionAxis = 30;
 	// 攻撃のインターバル
 	constexpr float kAttackInterval = 0.5f;
+	// 落下速度
+	constexpr float kfallSpeed = 1.0f;
+
+	// エフェクトの当たり判定ID
+	constexpr int kEffectCollisionID = 110;
+	// 本体の当たり判定ID
+	constexpr int kCollisionID = 111;
+
 
 }
-MolotovCocktail::MolotovCocktail()
+FireBottle::FireBottle()
 {
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kEffectRadius),CollisionType::Null);
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, kBodyCollisionRadius),CollisionType::Attack);
-	Vector3 collisionSize = { kBodyCollisionAxis,kBodyCollisionAxis ,kBodyCollisionAxis };
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, collisionSize),CollisionType::Invalid);
+	Init();
 }
 
-MolotovCocktail::~MolotovCocktail()
+FireBottle::~FireBottle()
 {
 
 }
 
-void MolotovCocktail::Init()
+void FireBottle::Init()
 {
-
+	InitCollision();
 }
 
-void MolotovCocktail::Update(float deltaTime)
+void FireBottle::InitCollision()
+{
+	// 本体の当たり判定の追加
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Body);
+	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
+	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Null);
+	// エフェクトの当たり判定のパラメータをキャッシュしておく
+	m_collisionParam = param;
+
+	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, Vector3::zero),CollisionType::Invalid);
+}
+
+void FireBottle::Update(float deltaTime)
 {
 	BeforeEffectUpdate(deltaTime);
 	if (m_transform.position.y < 0) {
 
 	EffectSetup();
 	}
-	if (!m_isEffect)return;
+	if (!true)return;
 	EffectUpdate(deltaTime);
 }
 
-void MolotovCocktail::End()
+void FireBottle::End()
 {
 
 }
 
-void MolotovCocktail::Draw()
+void FireBottle::Draw()
 {
 	printfDx("molotov::CollisionType : %d\n", m_collisions[0].type);
 	printfDx("molotov::TileID : %d\n", GetOnTileID());
-	if (m_isEffect) {
+	if (true) {
 		DrawEffect();
 	}
 	else {
 		DrawModel();
 	}
 }
-void MolotovCocktail::DrawModel()
+void FireBottle::DrawModel()
 {
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelData->GetHandle() == -1)return;
@@ -73,14 +93,14 @@ void MolotovCocktail::DrawModel()
 	MV1DrawModel(m_modelData->GetHandle());
 }
 
-void MolotovCocktail::DrawEffect()
+void FireBottle::DrawEffect()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
-	DrawSphere3D(m_transform.position.ToVECTOR(), kEffectRadius, 10, Color::kRed, Color::kRed, TRUE);
+	DrawSphere3D(m_transform.position.ToVECTOR(), m_collisionParam.radius, 10, Color::kRed, Color::kRed, TRUE);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
 }
-void MolotovCocktail::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
+void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
 {
 	Vector3 push = result.normal * result.penetration;
 	switch (other.GetCollisionTag())
@@ -104,12 +124,12 @@ void MolotovCocktail::ResolveCollision(GameObject& other, const CollisionData& m
 	}
 }
 
-void MolotovCocktail::Setup(const Transform & transform)
+void FireBottle::Setup(const Transform & transform)
 {
 	Camera::CameraView view = ItemManager::GetInstance().GetCameraView();
 	Vector3 move=(view.target - view.position).Normalize();
 	Vector3 offset = Vector3::zero;
-	offset.y = sinf(kThrowRadian);
+	offset.y = sinf(kThrowOffsetRadian);
 	move += offset.Normalize();
 	m_activationCount = 0;
 	if (move.GetSqLength()) {
@@ -125,28 +145,26 @@ void MolotovCocktail::Setup(const Transform & transform)
 	m_transform.rotation = m_rotateSpeed;
 	m_effectCount = kEffectMaxCount;
 	m_isActive = true;
-	m_isEffect = false;
 }
 
-void MolotovCocktail::EffectSetup()
+void FireBottle::EffectSetup()
 {
-	m_isEffect = true;
 	m_moveVector = Vector3::zero;
 }
 
-void MolotovCocktail::BeforeEffectUpdate(float deltaTime)
+void FireBottle::BeforeEffectUpdate(float deltaTime)
 {
 	// 移動方向をキャッシュ
 	Vector3 moveValue = m_moveVector * deltaTime * kMoveSpeed;
 	// 座標の更新
 	m_transform.position += moveValue;
 	// Y軸方向(落下速度)を更新
-	m_moveVector.y -= deltaTime;
+	m_moveVector.y -= deltaTime * kfallSpeed;
 	// 回転させる
 	m_transform.rotation += m_rotateSpeed * deltaTime;
 }
 
-void MolotovCocktail::EffectUpdate(float deltaTime)
+void FireBottle::EffectUpdate(float deltaTime)
 {
 // カウントダウン
 	m_effectCount -= deltaTime;
@@ -165,8 +183,6 @@ void MolotovCocktail::EffectUpdate(float deltaTime)
 	if (m_effectCount < 0) {
 		// カウントを0に
 		m_effectCount = 0;
-		// 効果発動フラグの更新
-		m_isEffect = false;
 		// 非アクティブ状態にする
 		m_isActive = false;
 	}

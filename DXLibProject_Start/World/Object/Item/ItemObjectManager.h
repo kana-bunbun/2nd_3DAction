@@ -3,7 +3,7 @@
 #include<vector>
 #include<memory>
 #include <type_traits>
-#include"ItemObject.h"
+#include"ItemObjectBase.h"
 class GameObject;
 class ItemCursor;
 class ItemObjectManager
@@ -22,13 +22,13 @@ public:
 	// アイテム呼び出し
 	template<class T>
 	void CallItem(GameObject* obj);
-	void SetupItem(ItemObject* item, GameObject* obj);
+	void SetupItem(ItemObjectBase* item, GameObject* obj);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
 	
 private:
 	// 自身が管理するアイテムオブジェクトの配列
-	std::vector<ItemObject*>m_items;
+	std::vector<ItemObjectBase*>m_items;
 	// アイテムカーソル
 	std::unique_ptr<ItemCursor> m_pItemCursor;
 };
@@ -37,7 +37,7 @@ template<class T>
 inline T* ItemObjectManager::CreateItem(GameObject* obj)
 {
 	// 継承チェック
-	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム生成:アイテムの基底クラスを未継承");
+	static_assert(std::is_base_of<ItemObjectBase, T>::value, "アイテム生成:アイテムの基底クラスを未継承");
 	// オブジェクト生成
 	auto item = GameObjectManager::GetInstance().CreateObject<T>();
 	SetupItem(item, obj);
@@ -51,7 +51,7 @@ template<class T>
 inline void ItemObjectManager::CallItem(GameObject* obj)
 {
 	// 継承チェック
-	static_assert(std::is_base_of<ItemObject, T>::value, "アイテム呼び出し:アイテムの基底クラスを未継承");
+	static_assert(std::is_base_of<ItemObjectBase, T>::value, "アイテム呼び出し:アイテムの基底クラスを未継承");
 	// 再利用できるオブジェクトを探す
 	for (int i = 0; i < m_items.size();i++) {
 		// nullチェック

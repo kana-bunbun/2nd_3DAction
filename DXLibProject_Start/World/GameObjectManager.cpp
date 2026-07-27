@@ -7,6 +7,7 @@
 #include"../System/Debug/ProfileScope.h"
 #include"../System/Debug/Profiler.h"
 #include"Map/MapConst.h"
+#include"Map/MapManager.h"
 #include"GameObject.h"
 
 GameObjectManager& GameObjectManager::GetInstance()
@@ -185,6 +186,32 @@ void GameObjectManager::CheckCollision()
 
 }
 
+std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::Shape& collision)
+{
+	// 当たっているオブジェクトの配列を用意
+	std::vector<GameObject*> hitList;
+	hitList.reserve(m_objects.size());
+	// オブジェクトの数だけチェック
+	for (int objectID = 0; objectID < m_objects.size(); objectID++) {
+		// 現在いるマスが隣り合っていない場合スルー
+		GameObject* object = m_objects[objectID].get();
+		// 隣り合っていないマスならスキップ
+		if (!IsChebyishevTile(collision, object))continue;
+		// オブジェクトが持っている当たり判定だけ繰り返し
+		for (auto& objectCollision : m_objects[objectID]->GetCollisions()) {
+			Collision::Result result = objectCollision.shape->CheckCollision(collision);
+			// 当たっていなければスルー
+			if (!result.isHit)continue;
+			// 当たっていたら
+			// 配列に追加
+			hitList.emplace_back(m_objects[objectID].get());
+			// ループを抜ける
+			break;
+		}
+	}
+	return hitList;
+}
+
 void GameObjectManager::Clear()
 {
 	for (auto& obj : m_objects) {
@@ -256,13 +283,25 @@ bool GameObjectManager::IsChebyishevTile(GameObject* baseObj, GameObject* checkO
 	// 2つのオブジェクトのマスIDを取得
 	int baseID = baseObj->GetOnTileID();
 	int checkID = checkObj->GetOnTileID();
-	// 2つのオブジェクトのマスIDの差を取得
-	int differ = MyMath::Abs(baseID - checkID);
-	// IDの差が 1 以下の時(同じマスまたは左右に隣り合っている時)または
-	// 差が横幅-1 以上かつ横幅+1 以下の時(斜めまたは上下に隣り合っている時)true
-	if (differ <= 1||
-		(differ <= MapConst::MAP_SQUARE_WIDTH_COUNT - 1 &&
-		differ >= MapConst::MAP_SQUARE_WIDTH_COUNT + 1))return true;
-	// それ以外はfalse
-	return false;
+	// 2つのマスDIが隣り合っているかどうかを返す
+	bool isChebyshev = MapManager::GetInstance().IsChebyishevTile(baseID, checkID);
+	return isChebyshev;
+}
+
+bool GameObjectManager::IsChebyishevTile(const Collision::Shape& baseCollision, GameObject* checkObj)
+{
+	int baseID = MapManager::GetInstance().GetIDFromWorldPos(baseCollision.GetPos());
+	int checkID = checkObj->GetOnTileID();
+	// 2つのマスDIが隣り合っているかどうかを返す
+	bool isChebyshev = MapManager::GetInstance().IsChebyishevTile(baseID, checkID);
+	return isChebyshev;
+}
+
+bool GameObjectManager::IsChebyishevTile(const Collision::Shape& baseCollision, const Collision::Shape& checkCollision)
+{
+	int baseID = MapManager::GetInstance().GetIDFromWorldPos(baseCollision.GetPos());
+	int checkID = MapManager::GetInstance().GetIDFromWorldPos(checkCollision.GetPos());
+	// 2つのマスDIが隣り合っているかどうかを返す
+	bool isChebyshev = MapManager::GetInstance().IsChebyishevTile(baseID, checkID);
+	return isChebyshev;
 }

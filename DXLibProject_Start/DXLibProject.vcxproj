@@ -145,6 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
+    <ClCompile Include="World\Action\ActionEffectBase.cpp" />
+    <ClCompile Include="System\ActionEffectParamManager.cpp" />
     <ClCompile Include="System\CollisionDataManager.cpp" />
     <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
     <ClCompile Include="System\Debug\ProfileScope.cpp" />
@@ -156,10 +159,10 @@
     <ClCompile Include="Utility\FromCSV.cpp" />
     <ClCompile Include="Data\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
-    <ClCompile Include="World\Object\Item\MolotovCocktail.cpp" />
+    <ClCompile Include="World\Object\Item\FireBottle.cpp" />
     <ClCompile Include="World\Object\Item\ItemManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectManager.cpp" />
-    <ClCompile Include="World\Object\Item\ItemObject.cpp" />
+    <ClCompile Include="World\Object\Item\ItemObjectBase.cpp" />
     <ClCompile Include="World\Object\Item\HealBottle.cpp" />
     <ClCompile Include="Utility\CsvConvert.cpp" />
     <ClCompile Include="World\Character\Character.cpp" />
@@ -259,6 +262,10 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\Action\ActionEffect_Heal.h" />
+    <ClInclude Include="World\Action\ActionEffectBase.h" />
+    <ClInclude Include="Data\ActionEffectParam.h" />
+    <ClInclude Include="System\ActionEffectParamManager.h" />
     <ClInclude Include="System\CollisionDataManager.h" />
     <ClInclude Include="Data\CameraParam.h" />
     <ClInclude Include="System\Debug\MemoryProfiler.h" />
@@ -278,11 +285,11 @@
     <ClInclude Include="Data\BlendRecipe.h" />
     <ClInclude Include="World\GameObjectParam.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
-    <ClInclude Include="World\Object\Item\MolotovCocktail.h" />
+    <ClInclude Include="World\Object\Item\FireBottle.h" />
     <ClInclude Include="World\Object\Item\ItemData.h" />
     <ClInclude Include="World\Object\Item\ItemManager.h" />
     <ClInclude Include="World\Object\Item\ItemObjectManager.h" />
-    <ClInclude Include="World\Object\Item\ItemObject.h" />
+    <ClInclude Include="World\Object\Item\ItemObjectBase.h" />
     <ClInclude Include="World\Object\Item\HealBottle.h" />
     <ClInclude Include="Utility\CsvConvert.h" />
     <ClInclude Include="World\Character\Character.h" />

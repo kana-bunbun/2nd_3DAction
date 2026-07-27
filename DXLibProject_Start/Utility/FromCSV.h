@@ -7,6 +7,7 @@
 #include"../Data/CameraParam.h"
 #include"../Data/ModelPathParam.h"
 #include"../Data/BlendRecipe.h"
+#include"../Data/ActionEffectParam.h"
 #include"Color.h"
 #include"../World/Component/Collision.h"
 #include"../World/GameObjectParam.h"
@@ -99,50 +100,42 @@ namespace Data {
 			}
 		};
 		template<>
-		struct FromCsv<AddCollisionAABBData*> {
-			static AddCollisionAABBData* Binding(const Csv::Row& row) {
-				AddCollisionAABBData* param = new AddCollisionAABBData();
-				param->position = Get<Vector3>(row,"Param[0]");
-				param->size = Get<Vector3>(row,"Param[1]");
-				param->type = Get<CollisionType>(row,"CollisionTypeName");
-				return param;
-			}
-		};
-		template<>
-		struct FromCsv<AddCollisionSphereData> {
-			static AddCollisionSphereData Binding(const Csv::Row& row) {
-				AddCollisionSphereData param;
-				param.radius = Get<float>(row,"Param[0]");
-				param.position = Get<Vector3>(row,"Param[1]");
-				param.type = Get<CollisionType>(row,"CollisionType");
-				return param;
-			}
-		};
-		template<>
-		struct FromCsv<AddCollisionData*> {
-			static AddCollisionData* Binding(const Csv::Row& row) {
-				AddCollisionData* param = nullptr;
-				CollisionShape rangeType = static_cast<CollisionShape>(Get<int>(row, "RangeType"));
-				switch (rangeType)
-				{
-				case CollisionShape::Invalid:
-					break;
+		struct FromCsv<CollisionParam> {
+			static CollisionParam Binding(const Csv::Row& row) {
+				CollisionParam param;
+				param.ID = Get<int>(row, "ID");
+				CollisionShape shape = static_cast<CollisionShape>(Get<int>(row, "RangeType"));
+				switch (shape) {
 				case CollisionShape::Sphere:
+					Sphere(param, row);
 					break;
-				case CollisionShape::AABB: {
-					param = FromCsv<AddCollisionAABBData*>().Binding(row);
-					break;
-				}
-				case CollisionShape::Max:
-					break;
-				default:
+				case CollisionShape::AABB:
+					AABB(param, row);
 					break;
 				}
+
 				return param;
 			}
-			
+			static void Sphere(CollisionParam& param,const Csv::Row& row) {
+				param.radius = Get<float>(row, "Param[0]");
+				param.position = Get<Vector3>(row, "Param[1]");
+			}
+			static void AABB(CollisionParam& param,const Csv::Row& row) {
+				param.size = Get<Vector3>(row, "Param[0]");
+				param.position = Get<Vector3>(row, "Param[1]");
+			}
 		};
-	
+		template<>
+		struct FromCsv<ActionEffectParam> {
+			static ActionEffectParam Binding(const Csv::Row& row) {
+				ActionEffectParam param;
+				param.ID = Get<float>(row, "ID");
+				param.maxSecond = Get<float>(row, "maxSecond");
+				param.interval = Get<float>(row, "interval");
+				param.power = Get<float>(row, "power");
+				return param;
+			}
+		};
 	}
 }
 

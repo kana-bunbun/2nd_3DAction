@@ -1,12 +1,15 @@
 #pragma once
 #include"../../GameObject.h"
-class ItemObject :public GameObject
+#include"../../GameObjectParam.h"
+class ActionEffectBase;
+class ItemObjectBase :public GameObject
 {
 public:
 	/// <summary>
 	/// 使用時の初期化処理
 	/// </summary>
 	virtual void Setup(const Transform& transform) {}
+	virtual void InitCollision() {}
 	/// <summary>
 	/// 回転速度をランダムに求める
 	/// </summary>
@@ -31,10 +34,6 @@ protected:
 	// 回転速度
 	Vector3 m_rotateSpeed;
 	/// <summary>
-	/// 効果発動中かどうか
-	/// </summary>
-	bool m_isEffect;
-	/// <summary>
 	/// 効果発動の全体時間
 	/// </summary>
 	float m_effectCount;
@@ -42,5 +41,11 @@ protected:
 	/// 効果発動カウント
 	/// </summary>
 	float m_activationCount;
+	/// <summary>
+	/// 当たり判定のパラメータ
+	/// </summary>
+	CollisionParam m_collisionParam;
+
+
 };
 

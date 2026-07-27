@@ -201,7 +201,7 @@
     <ClCompile Include="World\Object\Item\HealBottle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\Object\Item\ItemObject.cpp">
+    <ClCompile Include="World\Object\Item\ItemObjectBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\Object\Item\ItemObjectManager.cpp">
@@ -213,7 +213,7 @@
     <ClCompile Include="Utility\FromCSV.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\Object\Item\MolotovCocktail.cpp">
+    <ClCompile Include="World\Object\Item\FireBottle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp">
@@ -244,6 +244,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="System\CollisionDataManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ActionEffectParamManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Action\ActionEffectBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Action\ActionEffect_Heal.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -551,7 +560,7 @@
     <ClInclude Include="World\Object\Item\HealBottle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\Object\Item\ItemObject.h">
+    <ClInclude Include="World\Object\Item\ItemObjectBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Object\Item\ItemObjectManager.h">
@@ -569,7 +578,7 @@
     <ClInclude Include="Utility\FromCSV.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\Object\Item\MolotovCocktail.h">
+    <ClInclude Include="World\Object\Item\FireBottle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Object\Item\ItemObjectField.h">
@@ -621,6 +630,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="System\CollisionDataManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\ActionEffectParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ActionEffectParamManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Action\ActionEffectBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Action\ActionEffect_Heal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

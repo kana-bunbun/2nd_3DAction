@@ -11,7 +11,7 @@ namespace {
 		"Pepper",
 		"Whiskey",
 		"HealBottle",
-		"MolotovCocktail",
+		"FireBottle",
 	};
 	const char* const kBackGroundPath = "Icon Background";
 	constexpr float kSlotScale = 0.05f * Game::kWindowScale;

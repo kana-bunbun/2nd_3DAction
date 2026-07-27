@@ -58,7 +58,6 @@ public:
 	void SetMin(float min);
 private:
 	/// <summary>
-	/// <summary>
 	/// ゲージの量
 	/// </summary>
 	float m_value;
