@@ -6,6 +6,7 @@
 #include"../Utility/Input.h"
 #include"../Camera/CameraManager.h"
 #include"../Camera/DebugCamera.h"
+
 namespace {
 
 	constexpr float kLineAreaSize = 10000.0f;	// 地面を描画する線のエリアの大きさ

@@ -101,7 +101,8 @@ Player::Player(Vector3 position) :
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
 
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
+	//AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::Capsule>(Vector3::zero, Vector3::zero, 60), CollisionType::Body);
 	// 座標設定
 	SetPosition(Vector3::zero);
 }
@@ -140,7 +141,8 @@ Player::Player() :
 	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
 	//for (const auto& obj : param) {
 	//}
-	AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
+	//AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::Capsule>(Vector3::zero, Vector3::zero, 60), CollisionType::Body);
 	// 座標設定
 	SetPosition(Vector3::zero);
 }
@@ -178,9 +180,6 @@ void Player::Init()
 
 	// タグをプレイヤーに設定
 	GameObject::m_collisionTag = CollisionTag::Player;
-
-
-	
 
 }
 
@@ -282,7 +281,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::Button::A, m_pad)|| Input::IsPressed(Input::Button::A, m_pad)) {
+	if (Input::IsDown(Input::Button::A, m_pad)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -453,11 +452,20 @@ void Player::UpdateCollision()
 	headFrame += (hatRightFrame + HatLeftFrame) * 0.5f;
 	headFrame *= 0.5f;
 	Vector3 waistFrame = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
-	m_capsule.SetStartPosition({ headFrame.x, headFrame.y, headFrame.z });
-	m_capsule.SetEndPosition({ waistFrame.x, waistFrame.y, waistFrame.z });
+	m_capsule.SetStartPosition(headFrame);
+	m_capsule.SetEndPosition(waistFrame);
+	Collision::Capsule* capsule = nullptr;
+	for (int i = 0; i < m_collisions.size(); i++) {
+		if (m_collisions[i].shape->GetType() != Collision::Type::Capsule)continue;
+		capsule = dynamic_cast<Collision::Capsule*>(m_collisions[i].shape.get());
+	}
 
 	for (auto& collision : m_collisions) {
 		collision.shape->SetPosition(m_transform.position);
+	}
+	if (capsule) {
+		capsule->SetStartPosition(headFrame);
+		capsule->SetEndPosition(waistFrame);
 	}
 
 	// カプセルのデバッグ表示

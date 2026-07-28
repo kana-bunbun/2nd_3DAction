@@ -56,8 +56,8 @@ inline void ItemObjectManager::CallItem(GameObject* obj)
 	for (int i = 0; i < m_items.size();i++) {
 		// nullチェック
 		if (!m_items[i])continue;
-		// アクティブ状態でないオブジェクトを探す
-		if (m_items[i]->IsActive())continue;
+		// 使用中でないオブジェクトを探す
+		if (m_items[i]->IsUsing())continue;
 		// 同じクラスかどうかチェック
 		if (!dynamic_cast<T*>(m_items[i])) continue;
 		//if (!std::is_same < T, typeid(item) > ::value)continue;

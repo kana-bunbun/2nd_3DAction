@@ -121,7 +121,19 @@ namespace MyMath {
 	constexpr const float Abs(float value) {
 		float res = value;
 		if (res < 0)res *= -1;
-		return res;
+		return (value<0)?-value:value;
 	}
+	template<typename T>
+	constexpr const bool NearlyEqual(const T& a, const T& b) {
+		return (a - b <= MyMath::Epsilon);
+	}
+	/// <summary>
+	/// 点から線分上の最近接点を求める
+	/// </summary>
+	/// <param name="point">調査する点の座標</param>
+	/// <param name="start">線分の開始座標</param>
+	/// <param name="end">線分の終了座標</param>
+	/// <returns></returns>
+	Vector3 ClosestPointOnSegment(const Vector3& point, const Vector3& start, const Vector3& end);
 }
 

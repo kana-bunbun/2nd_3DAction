@@ -55,6 +55,9 @@ namespace Input {
 		for (int i = 0; i < kPadNum; i++) {
 			for (int j = 0; j < kButtonNum; j++) {
 				HoldLog[i][j] = 0.0f;
+
+				ButtonsLog[i][0].Buttons[j] = false;
+				ButtonsLog[i][1].Buttons[j] = false;
 			}
 		}
 	
@@ -105,7 +108,7 @@ namespace Input {
 	}
 
 	bool IsDown(Button key, const Pad padNum) {
-
+		if (padNum==Pad::Invalid)return false;
 		// ƒgƒŠƒK[‚Ìê‡‚Í“|‚µ‚½Š„‡‚Å‚Æ‚é
 		if (key == Button::RT) {
 			// ˆê’è—Ê“|‚µ‚Ä‚¢‚½‚ç

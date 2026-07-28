@@ -20,10 +20,10 @@ namespace {
 	// 落下速度
 	constexpr float kfallSpeed = 1.0f;
 
-	// エフェクトの当たり判定ID
-	constexpr int kEffectCollisionID = 110;
 	// 本体の当たり判定ID
-	constexpr int kCollisionID = 111;
+	constexpr int kCollisionID = 210;
+	// エフェクトの当たり判定ID
+	constexpr int kEffectCollisionID = 211;
 
 
 }
@@ -58,13 +58,13 @@ void FireBottle::InitCollision()
 
 void FireBottle::Update(float deltaTime)
 {
-	BeforeEffectUpdate(deltaTime);
+	UpdateObject(deltaTime);
 	if (m_transform.position.y < 0) {
 
 	EffectSetup();
 	}
 	if (!true)return;
-	EffectUpdate(deltaTime);
+	UpdateEffect(deltaTime);
 }
 
 void FireBottle::End()
@@ -152,7 +152,7 @@ void FireBottle::EffectSetup()
 	m_moveVector = Vector3::zero;
 }
 
-void FireBottle::BeforeEffectUpdate(float deltaTime)
+void FireBottle::UpdateObject(float deltaTime)
 {
 	// 移動方向をキャッシュ
 	Vector3 moveValue = m_moveVector * deltaTime * kMoveSpeed;
@@ -164,7 +164,7 @@ void FireBottle::BeforeEffectUpdate(float deltaTime)
 	m_transform.rotation += m_rotateSpeed * deltaTime;
 }
 
-void FireBottle::EffectUpdate(float deltaTime)
+void FireBottle::UpdateEffect(float deltaTime)
 {
 // カウントダウン
 	m_effectCount -= deltaTime;

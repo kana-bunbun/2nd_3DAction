@@ -9,7 +9,7 @@
 #include"Map/MapConst.h"
 #include"Map/MapManager.h"
 #include"GameObject.h"
-
+#include"Character/Player/Player.h"
 GameObjectManager& GameObjectManager::GetInstance()
 {
 	static GameObjectManager instance;
@@ -195,6 +195,7 @@ std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::Shap
 	for (int objectID = 0; objectID < m_objects.size(); objectID++) {
 		// 現在いるマスが隣り合っていない場合スルー
 		GameObject* object = m_objects[objectID].get();
+
 		// 隣り合っていないマスならスキップ
 		if (!IsChebyishevTile(collision, object))continue;
 		// オブジェクトが持っている当たり判定だけ繰り返し

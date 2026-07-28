@@ -8,6 +8,7 @@
 #include"../Data/ModelPathParam.h"
 #include"../Data/BlendRecipe.h"
 #include"../Data/ActionEffectParam.h"
+#include"../Data/ActionIntervalParam.h"
 #include"Color.h"
 #include"../World/Component/Collision.h"
 #include"../World/GameObjectParam.h"
@@ -130,9 +131,17 @@ namespace Data {
 			static ActionEffectParam Binding(const Csv::Row& row) {
 				ActionEffectParam param;
 				param.ID = Get<float>(row, "ID");
-				param.maxSecond = Get<float>(row, "maxSecond");
-				param.interval = Get<float>(row, "interval");
 				param.power = Get<float>(row, "power");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<ActionIntervalParam> {
+			static ActionIntervalParam Binding(const Csv::Row& row) {
+				ActionIntervalParam param;
+				param.ID = Get<int>(row, "ID");
+				param.maxSecond = Get<float>(row, "maxSecond");
+				param.intervalSecond = Get<float>(row, "intervalSecond");
 				return param;
 			}
 		};

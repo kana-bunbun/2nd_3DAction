@@ -146,6 +146,11 @@ bool Vector3::IsLengthNearlyZero() const
 	return GetSqLength() < MyMath::Epsilon * MyMath::Epsilon;
 }
 
+float Vector3::Dot(const Vector3& vec) const
+{
+	return (x * vec.x) + (y * vec.y) + (z * vec.z);
+}
+
 VECTOR Vector3::ToVECTOR() const
 {
 	

@@ -21,18 +21,7 @@ public:
 		const Collision::Result& result
 	)override;
 	void EffectSetup()override;
-	void BeforeEffectUpdate(float deltaTime)override;
-	bool IsTransparent()override { return m_isEffect; }
-
-
-public:
-	// 描画の透明度
-	float m_alpha;
-	// 透明度を扱うかどうか
-	bool m_isEffect;
-	/// <summary>
-	/// 自身の効果
-	/// </summary>
-	ActionEffect_Heal* m_actionEffect;
+	void UpdateObject(float deltaTime)override;
+	bool IsUsing()override;
 };
 

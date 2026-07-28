@@ -2,6 +2,11 @@
 
 #include<vector>
 #include<string>
+
+// Dxライブラリではフォントのサイズ変更などは扱いづらい
+// https://dxlib.xsrv.jp/function/dxfunc_graph2.html#R17N7
+// 少しでも使いやすくするために読み込み対応やデータ対応をしておく
+
 /// <summary>
 /// フォントの情報を管理するクラス
 /// シングルトンで運用
@@ -36,6 +41,10 @@ public:
 	void Init();
 	void End();
 
+	/// <summary>
+	/// フォントの名前指定のフォントハンドル取得
+	/// 指定した名前のフォントがなければ新たに生成
+	/// </summary>
 	int GetFontHandle(const std::string& fontName,int size,int thickness);
 
 private:

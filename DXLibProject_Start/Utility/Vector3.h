@@ -76,10 +76,27 @@ public:
 	Vector3& operator/=(float value);			// ベクトルとスカラーの除算代入演算子
 	bool operator ==(const Vector3& vec)const;		// 2つのベクトルが等しいかどうか
 	bool operator !=(const Vector3& vec)const;		// 2つのベクトルが異なるかどうか
+
+
 	float GetLength()const;						// ベクトルの大きさを取得する関数
 	float GetSqLength()const;						// ベクトルの大きさを取得する関数
 	Vector3 Normalize()const;					// ベクトルを正規化する
 	bool IsLengthNearlyZero()const;					// ベクトルの長さが0に近しいかどうか
+	/// <summary>
+	/// 2つのベクトルの内積を求める
+	/// 
+	/// 内積 : 2つのベクトルがどれくらい同じ方向を向いているか
+	/// 2つのベクトルが同じ方向を向いていたら 正の数
+	/// 2つのベクトルが垂直なら0
+	/// 2つのベクトルが反対方向を向いていたら 負の数
+	/// ゲーム開発において最重要な数学の知識の1つ
+	/// キャラクターの視覚を表現する時やステージの形状、最近接点で使用
+	/// 
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
+	float Dot(const Vector3& vec)const;
+
 	/// <summary>
 	/// DxLibのVECTOR型に変換する関数
 	/// </summary>

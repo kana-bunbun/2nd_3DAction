@@ -19,24 +19,22 @@ namespace {
 	constexpr float kAlphaMax = 0.5f;
 	// 回復効果発動インターバル
 	constexpr float kEffectInterval = 0.3f;
-	// 回復効果の当たり判定ID
-	constexpr int kEffectCollsionID = 100;
 	// アイテム本体の当たり判定ID
-	constexpr int kCollsionID = 101;
+	constexpr int kCollsionID = 100;
+	// 回復効果の当たり判定ID
+	constexpr int kEffectCollsionID = 101;
 	// 回復効果のID
 	constexpr int kEffectID = 0;
 
 }
 
-HealBottle::HealBottle() :
-	m_alpha(0),
-	m_isEffect(false)
+HealBottle::HealBottle()
 {
 	// 回転速度の初期化
 	m_rotateSpeed = Vector3::zero;
 	// モデルデータの取得
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
-	m_actionEffect = GameObjectManager::GetInstance().CreateObject<ActionEffect_Heal>();
+	m_actionEffect = new ActionEffect_Heal();
 	Init();
 
 }
@@ -58,14 +56,11 @@ void HealBottle::InitCollision()
 	// 本体の当たり判定の追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollsionID);
 	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
-	// エフェクトの当たり判定の追加
-	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollsionID);
-	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
 
-	// エフェクトの当たり判定のパラメータをキャッシュしておく
-	m_collisionParam = param;
-	m_actionEffect->SetCollision(m_collisions[1].shape.get());
-	m_actionEffect->SetCollisionParam(param);
+	// エフェクトの当たり判定のパラメータを取得
+	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollsionID);
+	// エフェクトの当たり判定の追加
+
 	m_actionEffect->SetActionEffectParam(ActionEffectParamManager::GetInstance().GetEffectParam(kEffectID));
 }
 
@@ -76,39 +71,29 @@ void HealBottle::End()
 
 void HealBottle::Setup(const Transform& transform)
 {
+	// 自身をアクティブに
 	m_isActive = true;
-	m_transform.position = transform.position;
-	
-	// 回転速度をランダムに求める
+	// ランダムな回転速度を取得
 	RandomRotate();
 	m_transform.rotation = m_rotateSpeed;
+	// 指定座標に移動
+	m_transform.position = transform.position;
+	// 垂直方向に飛ばす
 	m_moveVector.y = kThrowPower;
-
-	m_actionEffect->SetActive(false);
-	m_effectCount = kEffectMaxCount;
-
-	m_isEffect = false;
-
+	// 発動効果を非アクティイブに
+	//if (!m_actionEffect)return;
+	//m_actionEffect->SetActive(true);
 }
 
 void HealBottle::Update(float deltaTime)
 {
-	m_isActive = false;
-	if (m_transform.position.y <= 0 && m_moveVector.y < 0)return;
-	m_isActive = true;
-	// 効果発動前の処理
-	BeforeEffectUpdate(deltaTime);
-
-
+	//if(m_actionEffect)
+	UpdateObject(deltaTime);
 }
 
 void HealBottle::Draw()
 {
-	printfDx("healBottle::CollisionType : %d\n", m_collisions[0].type);
-	printfDx("healBottle::TileID : %d\n", GetOnTileID());
-	if (!m_isEffect) {
-		DrawModel();
-	}
+	DrawModel();
 }
 
 void HealBottle::DrawModel()
@@ -132,14 +117,6 @@ void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myDa
 		SetPosition(m_transform.position + push);
 		EffectSetup();
 		break;
-	case CollisionTag::Player:
-	case CollisionTag::Dragon:
-	case CollisionTag::Enemy:
-		if (myData.type == CollisionType::Invalid)break;
-		if (m_activationCount)break;
-	// 一旦適当な値の回復処理を呼んでおく
-	other.Heal(2);
-		break;
 	default:
 		break;
 	}
@@ -148,34 +125,42 @@ void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myDa
 
 void HealBottle::EffectSetup()
 {
-	if (m_isEffect)return;
-	// 落下速度を0に
-	m_moveVector.y = 0;
-	// Y座標をクランプ
-	m_transform.position.y = MyMath::Clamp(m_transform.position.y, 0.0f, m_transform.position.y);
-	// アクティブに設定
-	m_actionEffect->SetActive(true);
-	m_actionEffect->Reset();
-	m_actionEffect->SetPosition(m_transform.position);
-	m_isEffect = true;
+	//// 発動効果がアクティブの場合は処理しない
+	//if (!m_actionEffect||
+	//	m_actionEffect->IsActive())return;
+	//// アクティブに設定
+	//m_actionEffect->SetActive(true);
+	//// 発動効果の初期化
+	//m_actionEffect->Reset();
+	//// 座標設定
+	//m_actionEffect->SetPosition(m_transform.position);
 }
 
-void HealBottle::BeforeEffectUpdate(float deltaTime)
+void HealBottle::UpdateObject(float deltaTime)
 {
-	// 効果発動中なら処理しない
-	if (m_actionEffect->IsActive())return;
-	// 回転させる
-	m_transform.rotation += m_rotateSpeed * deltaTime;
-	// 落下速度を更新
-	m_moveVector.y -= kFallSpeed * deltaTime;
-	// 落下させる
-	m_transform.position.y += m_moveVector.y * deltaTime;
-	// 効果発動前は衝突判定をチェックしない
-	m_collisions[0].type = CollisionType::Null;
-	// 地面に落下した時
-	if (m_transform.position.y < 0 && m_moveVector.y < 0) {
-		// 効果のセットアップ
+	// 地面に落下したとき効果発動
+	if (m_moveVector.y < 0 && m_transform.position.y < 0)
+	{
 		EffectSetup();
-
+		m_isActive = false;
+		return;
 	}
+
+	// 落下速度の更新
+	m_moveVector.y -= deltaTime * kFallSpeed;
+	// 座標更新
+	m_transform.position += m_moveVector*deltaTime;
+	
+	// 自身を回転させる
+	m_transform.rotation += m_rotateSpeed*deltaTime;
+
+}
+
+bool HealBottle::IsUsing()
+{
+	// 発動効果のポインタを持っていなかった時用
+	if (!m_actionEffect)return m_isActive;
+
+	// 自身か発動効果がアクティブの時true
+	//return (m_isActive || m_actionEffect->IsActive());
 }

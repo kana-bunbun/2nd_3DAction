@@ -19,15 +19,19 @@ public:
 	/// </summary>
 	virtual void EffectSetup() {}
 	/// <summary>
-	/// 効果発動前の更新処理
+	/// オブジェクト本体の更新処理
 	/// </summary>
 	/// <param name="deltaTime"></param>
-	virtual void BeforeEffectUpdate(float deltaTime){}
+	virtual void UpdateObject(float deltaTime){}
 	/// <summary>
-	/// 効果発動中の更新処理
+	/// 発動効果の更新処理
 	/// </summary>
 	/// <param name="deltaTime"></param>
-	virtual void EffectUpdate(float deltaTime){}
+	virtual void UpdateEffect(float deltaTime){}
+	/// <summary>
+	/// 使用中かどうか取得
+	/// </summary>
+	virtual bool IsUsing() { return false; }
 protected:
 	// 移動方向
 	Vector3 m_moveVector;
@@ -45,7 +49,10 @@ protected:
 	/// 当たり判定のパラメータ
 	/// </summary>
 	CollisionParam m_collisionParam;
-
+	/// <summary>
+/// 自身の効果
+/// </summary>
+	ActionEffectBase* m_actionEffect;
 
 };
 

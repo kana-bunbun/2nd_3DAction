@@ -145,17 +145,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
-    <ClCompile Include="World\Action\ActionEffectBase.cpp" />
+    <ClCompile Include="Scene\SceneUITest.cpp" />
+    <ClCompile Include="System\ActionIntervalParamManager.cpp" />
     <ClCompile Include="System\ActionEffectParamManager.cpp" />
     <ClCompile Include="System\CollisionDataManager.cpp" />
     <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
-    <ClCompile Include="System\Debug\ProfileScope.cpp" />
     <ClCompile Include="System\Debug\Profiler.cpp" />
+    <ClCompile Include="System\Debug\ProfileScope.cpp" />
+    <ClCompile Include="System\ExternalDataManager.cpp" />
+    <ClCompile Include="System\FontManager.cpp" />
+    <ClCompile Include="System\Resource.cpp" />
+    <ClCompile Include="System\ResourceManager.cpp" />
+    <ClCompile Include="System\SoundManager.cpp" />
+    <ClCompile Include="System\TimeManager.cpp" />
+    <ClCompile Include="World\UI\TestMenu.cpp" />
+    <ClCompile Include="World\UI\UIObject.cpp" />
+    <ClCompile Include="Utility\Vector2.cpp" />
+    <ClCompile Include="World\UI\TestText.cpp" />
+    <ClCompile Include="World\UI\TitleLogo.cpp" />
+    <ClCompile Include="World\Action\ActionInteval.cpp" />
+    <ClCompile Include="Utility\MyMath.cpp" />
+    <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
+    <ClCompile Include="World\Action\ActionEffectBase.cpp" />
     <ClCompile Include="Scene\SceneCollisionTest.cpp" />
     <ClCompile Include="Scene\SceneSelectDebug.cpp" />
-    <ClCompile Include="System\Resource.cpp" />
-    <ClCompile Include="System\ExternalDataManager.cpp" />
     <ClCompile Include="Utility\FromCSV.cpp" />
     <ClCompile Include="Data\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
@@ -169,7 +182,6 @@
     <ClCompile Include="World\Character\CharacterManager.cpp" />
     <ClCompile Include="Utility\Data.cpp" />
     <ClCompile Include="World\UI\ItemSlot.cpp" />
-    <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="Utility\PadManager.cpp" />
     <ClCompile Include="World\Object\Item\BlendManager.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
@@ -190,11 +202,9 @@
     <ClCompile Include="World\Map\RouteSearcher.cpp" />
     <ClCompile Include="World\Map\ManhattanMoveData.cpp" />
     <ClCompile Include="World\Map\ExpantionMethod.cpp" />
-    <ClCompile Include="System\TimeManager.cpp" />
     <ClCompile Include="World\Map\SquareData.cpp" />
     <ClCompile Include="World\Map\RoomData.cpp" />
     <ClCompile Include="World\Map\TileManager.cpp" />
-    <ClCompile Include="System\FontManager.cpp" />
     <ClCompile Include="World\Map\MapCreate.cpp" />
     <ClCompile Include="World\Map\MapManager.cpp" />
     <ClCompile Include="World\Map\MapTile.cpp" />
@@ -221,7 +231,6 @@
     <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTest.cpp" />
-    <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="Utility\GameSetting.cpp" />
     <ClCompile Include="Utility\Input.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
@@ -262,20 +271,33 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\SceneUITest.h" />
+    <ClInclude Include="System\ActionIntervalParamManager.h" />
+    <ClInclude Include="Data\ActionIntervalParam.h" />
+    <ClInclude Include="System\ActionEffectParamManager.h" />
+    <ClInclude Include="System\CollisionDataManager.h" />
+    <ClInclude Include="System\Debug\MemoryProfiler.h" />
+    <ClInclude Include="System\Debug\Profiler.h" />
+    <ClInclude Include="System\Debug\ProfileRecord.h" />
+    <ClInclude Include="System\Debug\ProfileScope.h" />
+    <ClInclude Include="System\ExternalDataManager.h" />
+    <ClInclude Include="System\FontManager.h" />
+    <ClInclude Include="System\Resource.h" />
+    <ClInclude Include="System\ResourceManager.h" />
+    <ClInclude Include="System\SoundManager.h" />
+    <ClInclude Include="System\TimeManager.h" />
+    <ClInclude Include="World\UI\TestMenu.h" />
+    <ClInclude Include="World\UI\UIObject.h" />
+    <ClInclude Include="Utility\Vector2.h" />
+    <ClInclude Include="World\UI\TestText.h" />
+    <ClInclude Include="World\UI\TitleLogo.h" />
+    <ClInclude Include="World\Action\ActionInteval.h" />
     <ClInclude Include="World\Action\ActionEffect_Heal.h" />
     <ClInclude Include="World\Action\ActionEffectBase.h" />
     <ClInclude Include="Data\ActionEffectParam.h" />
-    <ClInclude Include="System\ActionEffectParamManager.h" />
-    <ClInclude Include="System\CollisionDataManager.h" />
     <ClInclude Include="Data\CameraParam.h" />
-    <ClInclude Include="System\Debug\MemoryProfiler.h" />
-    <ClInclude Include="System\Debug\ProfileScope.h" />
-    <ClInclude Include="System\Debug\Profiler.h" />
     <ClInclude Include="Scene\SceneCollisionTest.h" />
     <ClInclude Include="Scene\SceneSelectDebug.h" />
-    <ClInclude Include="System\Debug\ProfileRecord.h" />
-    <ClInclude Include="System\Resource.h" />
-    <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="Utility\FromJson.h" />
     <ClInclude Include="Utility\JsonConvert.h" />
     <ClInclude Include="Utility\JsonLoader.h" />
@@ -296,7 +318,6 @@
     <ClInclude Include="World\Character\CharacterManager.h" />
     <ClInclude Include="Utility\Data.h" />
     <ClInclude Include="World\UI\ItemSlot.h" />
-    <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="Utility\PadManager.h" />
     <ClInclude Include="World\Object\Item\BlendManager.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
@@ -317,11 +338,9 @@
     <ClInclude Include="World\Map\RouteSearcher.h" />
     <ClInclude Include="World\Map\ManhattanMoveData.h" />
     <ClInclude Include="World\Map\ExpantionMethod.h" />
-    <ClInclude Include="System\TimeManager.h" />
     <ClInclude Include="World\Map\SquareData.h" />
     <ClInclude Include="World\Map\RoomData.h" />
     <ClInclude Include="World\Map\TileManager.h" />
-    <ClInclude Include="System\FontManager.h" />
     <ClInclude Include="World\Map\MapConst.h" />
     <ClInclude Include="World\Map\MapCreate.h" />
     <ClInclude Include="World\Map\MapManager.h" />
@@ -351,7 +370,6 @@
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\SceneTest.h" />
-    <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="Utility\Color.h" />
     <ClInclude Include="Utility\Game.h" />
     <ClInclude Include="Utility\GameSetting.h" />

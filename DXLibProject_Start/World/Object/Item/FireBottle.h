@@ -21,8 +21,8 @@ public:
 	)override;
 	void Setup(const Transform& transform)override;
 	void EffectSetup()override;
-	void BeforeEffectUpdate(float deltaTime)override;
-	void EffectUpdate(float deltaTime)override;
+	void UpdateObject(float deltaTime)override;
+	void UpdateEffect(float deltaTime)override;
 private:
 
 	/// <summary>

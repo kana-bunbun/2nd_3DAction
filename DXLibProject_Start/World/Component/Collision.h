@@ -4,10 +4,14 @@
 #include"Transform.h"
 #include"../GameObjectParam.h"
 
+
 /// <summary>
 /// 衝突判定関連のデータや処理
 /// </summary>
 namespace Collision {
+class Sphere;
+class AABB;
+class Capsule;
 
 
 	/// <summary>
@@ -55,6 +59,7 @@ namespace Collision {
 		/// </summary>
 		/// <returns></returns>
 		virtual Collision::Result CheckCollision(const Shape& other)const = 0;
+
 		/// <summary>
 		/// 座標を更新
 		/// </summary>
@@ -100,11 +105,14 @@ namespace Collision {
 		/// 半径の取得
 		/// </summary>
 		/// <returns></returns>
-		float GetRadus()const { return m_radius; }
+		float GetRadius()const { return m_radius; }
 		/// <summary>
 		/// 形状のデバッグ描画
 		/// </summary>
 		void DebugDraw(int color = Color::kWhite)const  override;
+		Collision::Result CheckSphere(const Collision::Sphere& other)const;
+		Collision::Result CheckCapsule(const Collision::Capsule& other)const;
+
 	private:
 		/// <summary>
 		/// 球の中心座標
@@ -173,6 +181,9 @@ namespace Collision {
 		/// </summary>
 		/// <param name="pos"></param>
 		void SetPosition(const Vector3& pos) override;
+		const Vector3& GetStartPosition()const { return m_startPos; }
+		const Vector3& GetEndPosition()const { return m_endPos; }
+		float GetRadius()const { return m_radius; }
 		void SetStartPosition(const Vector3& pos);
 		void SetEndPosition(const Vector3& pos);
 		/// <summary>
@@ -193,6 +204,8 @@ namespace Collision {
 
 	private:
 		void CheckEndPos();
+		Collision::Result CheckSphere(const Collision::Sphere& other)const;
+		Collision::Result CheckCapsule(const Collision::Capsule& other)const;
 	private:
 		Vector3 m_startPos;
 		Vector3 m_endPos;

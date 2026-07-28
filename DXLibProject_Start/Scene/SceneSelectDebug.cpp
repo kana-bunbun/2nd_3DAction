@@ -5,6 +5,7 @@
 #include"../Utility/Input.h"
 #include"SceneTest.h"
 #include"SceneCollisionTest.h"
+#include"SceneUITest.h"
 
 #include<functional>
 
@@ -74,7 +75,7 @@ void SceneSelectDebug::Init()
     m_sceneList.push_back({ "Test", []() {return std::make_unique<SceneTest>(); } });
     m_sceneList.push_back({ "Debug",GetSceneInvalid });
     m_sceneList.push_back({ "Collision",[]() {return std::make_unique<SceneCollisionTest>(); } });
-    m_sceneList.push_back({ "Debug", GetSceneInvalid });
+    m_sceneList.push_back({ "UI", []() {return std::make_unique<SceneUITest>(); } });
 
 }
 
