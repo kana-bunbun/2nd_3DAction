@@ -3,7 +3,7 @@
 #include<vector>
 #include"../World/Character/AnimationController.h"
 #include"../World/Character/Animation.h"
-#include"../Utility/Data.h"
+#include"../Utility/Loder/Data.h"
 #include"../Utility/ModelData.h"
 #include"Resource.h"
 

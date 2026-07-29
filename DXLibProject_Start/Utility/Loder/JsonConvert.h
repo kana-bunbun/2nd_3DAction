@@ -2,7 +2,7 @@
 #include<string>
 #include<cassert>
 
-#include"Vector3.h"
+#include"../Vector3.h"
 #include"Data.h"
 
 namespace Data{

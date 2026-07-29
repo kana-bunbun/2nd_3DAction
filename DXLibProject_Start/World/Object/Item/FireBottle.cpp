@@ -21,9 +21,9 @@ namespace {
 	constexpr float kfallSpeed = 1.0f;
 
 	// 本体の当たり判定ID
-	constexpr int kCollisionID = 210;
+	constexpr int kCollisionID = 200;
 	// エフェクトの当たり判定ID
-	constexpr int kEffectCollisionID = 211;
+	constexpr int kEffectCollisionID = 201;
 
 
 }

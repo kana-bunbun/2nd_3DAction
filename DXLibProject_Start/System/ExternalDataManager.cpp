@@ -1,5 +1,5 @@
 #include "ExternalDataManager.h"
-#include"../Utility/CsvLoader.h"
+#include"../Utility/Loder/CsvLoader.h"
 #include"../World/GameObjectParam.h"
 namespace {
 	// プレイヤーのパス情報のデータ名

@@ -1,17 +1,23 @@
 #include "ActionIntervalParamManager.h"
-#include "../Utility/CsvLoader.h"
+#include "../Utility/Loder/CsvLoader.h"
 namespace {
 	const char* const kDataName = "ActionIntervalParam";
 }
+ActionIntervalParamManager& ActionIntervalParamManager::GetInstance()
+{
+	static ActionIntervalParamManager instance;
+	return instance;
+}
 ActionIntervalParamManager::ActionIntervalParamManager()
 {
-
+	Load();
 }
 
 ActionIntervalParamManager::~ActionIntervalParamManager()
 {
 
 }
+
 
 void ActionIntervalParamManager::Load()
 {

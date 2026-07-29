@@ -8,10 +8,10 @@ public:
 	TitleLogo();
 	~TitleLogo() = default;
 	
-	void Init()override;
-	void End()override;
-	void Update(float deltaTime)override;
-	void Draw()override;
+	void OnInit()override;
+	void OnEnd()override;
+	void OnUpdate(float deltaTime)override;
+	void OnDraw()override;
 
 	
 private:

@@ -7,10 +7,10 @@ class TestText:public UIObject
 public:
 	TestText();
 	~TestText()=default;
-	void Init()override;
-	void Update(float deltaTime)override;
-	void Draw()override;
-	void End()override;
+	void OnInit()override;
+	void OnUpdate(float deltaTime)override;
+	void OnDraw()override;
+	void OnEnd()override;
 private:
 	std::string m_text;
 	float m_blinkTimer;

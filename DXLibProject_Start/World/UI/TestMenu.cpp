@@ -21,7 +21,7 @@ TestMenu::TestMenu():
 	Init();
 }
 
-void TestMenu::Init()
+void TestMenu::OnInit()
 {
 	int menuItemNum = static_cast<int>(TestMenu::MenuItem::Max);
 	m_items.reserve(menuItemNum);
@@ -30,12 +30,12 @@ void TestMenu::Init()
 	}
 }
 
-void TestMenu::End()
+void TestMenu::OnEnd()
 {
 
 }
 
-void TestMenu::Update(float deltaTime)
+void TestMenu::OnUpdate(float deltaTime)
 {
 	if (Input::IsPressed(Input::Button::Up, Input::Pad::P1))m_selectIndex--;
 	if (Input::IsPressed(Input::Button::Down, Input::Pad::P1))m_selectIndex++;
@@ -44,7 +44,7 @@ void TestMenu::Update(float deltaTime)
 	m_selectIndex = (m_selectIndex + menuMaxIndex) % menuMaxIndex;
 }
 
-void TestMenu::Draw()
+void TestMenu::OnDraw()
 {
 	if (!m_visible)return;
 

@@ -1,6 +1,6 @@
 #include "BlendManager.h"
-#include"../../../Utility/CsvLoader.h"
-#include"../../../Utility/Data.h"
+#include"../../../Utility/Loder/CsvLoader.h"
+#include"../../../Utility/Loder/Data.h"
 #include"../../../Data/BlendRecipe.h"
 
 #include<DxLib.h>

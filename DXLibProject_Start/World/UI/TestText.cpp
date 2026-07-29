@@ -11,10 +11,10 @@ TestText::TestText():
 
 }
 
-void TestText::Init()
+void TestText::OnInit()
 {}
 
-void TestText::Update(float deltaTime)
+void TestText::OnUpdate(float deltaTime)
 {
 	m_blinkTimer += deltaTime;
 	if (sinf(m_blinkTimer * kBlinkSpeed) > 0.0f) {
@@ -26,7 +26,7 @@ void TestText::Update(float deltaTime)
 
 }
 
-void TestText::Draw()
+void TestText::OnDraw()
 {
 	if (!m_visible)return;
 	DrawString(
@@ -37,5 +37,5 @@ void TestText::Draw()
 	);
 }
 
-void TestText::End()
+void TestText::OnEnd()
 {}

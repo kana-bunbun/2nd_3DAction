@@ -4,8 +4,9 @@
 #include"../Utility/MyMath.h"
 #include"../Utility/Input.h"
 #include"SceneTest.h"
-#include"SceneCollisionTest.h"
-#include"SceneUITest.h"
+#include"TestScene/SceneCollisionTest.h"
+#include"TestScene/SceneUITest.h"
+#include"TestScene/SceneTextTest.h"
 
 #include<functional>
 
@@ -76,6 +77,7 @@ void SceneSelectDebug::Init()
     m_sceneList.push_back({ "Debug",GetSceneInvalid });
     m_sceneList.push_back({ "Collision",[]() {return std::make_unique<SceneCollisionTest>(); } });
     m_sceneList.push_back({ "UI", []() {return std::make_unique<SceneUITest>(); } });
+    m_sceneList.push_back({ "Text", []() {return std::make_unique<SceneTextTest>(); } });
 
 }
 

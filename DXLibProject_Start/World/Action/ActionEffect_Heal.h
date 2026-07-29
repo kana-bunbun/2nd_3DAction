@@ -7,7 +7,6 @@ public:
 	~ActionEffect_Heal();
 
 	void Init();
-	void Update(float deltaTime);
 	void Draw(const Vector3& position);
 	void Reset();
 	void Execute(Collision::Shape* collision)override;

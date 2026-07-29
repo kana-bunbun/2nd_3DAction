@@ -4,6 +4,13 @@
 /// 色のデータ
 /// </summary>
 namespace Color {
+	/// <summary>
+	/// 外部データで色を指定する時に受け皿になる構造体
+	/// intで受け取ると整数データを受け取る際に影響が出るためこれで受け取る
+	/// </summary>
+	struct ColorData {
+		int value;
+	};
 
 	// 色の情報を定義
 	// 色の参照元

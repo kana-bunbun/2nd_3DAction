@@ -1,5 +1,5 @@
 #include "SceneUITest.h"
-#include "SceneSelectDebug.h"
+#include "../SceneSelectDebug.h"
 #include<DxLib.h>
 #include<memory>
 #include<vector>
@@ -10,7 +10,7 @@
 #include"../World/UI/TitleLogo.h"
 #include"../World/UI/TestText.h"
 #include"../World/UI/TestMenu.h"
-#include"SceneTest.h"
+#include"../SceneTest.h"
 namespace {
 	constexpr Vector2 kInitLogpPos = { 1000.0f,500.0f };
 	constexpr Vector2 kInitTextPos = { 1000.0f,600.0f };
@@ -31,6 +31,9 @@ void SceneUITest::Init()
 	m_pTestMenu->SetVisible(false);
 	// フェード開始処理
 	SceneBase::StartFadeIn();
+
+
+
 }
 
 void SceneUITest::End()

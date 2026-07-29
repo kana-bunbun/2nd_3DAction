@@ -4,12 +4,13 @@
 #include<sstream>
 #include<fstream>
 #include<cassert>
-#include"Vector3.h"
-#include"Color.h"
+#include"../Vector3.h"
+#include"../Color.h"
 #include"../Data/BlendRecipe.h"
 #include"../World/GameObjectParam.h"
 #include"../World/GameObject.h"
 #include"../World/Component/Collision.h"
+#include"../Utility/Color.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -119,6 +120,27 @@ namespace Data {
 			if (str == "Null")return CollisionType::Null;
 			assert(0 && "Convert CollisionType key not found");
 			return CollisionType::Invalid;
+		}
+	
+		/// <summary>
+		/// ColorDataに変換
+		/// プログラム上ではint型で扱っている
+		/// intで型変換をしようとすると整数int型変数への影響が出る
+		/// それを防ぐため専用の構造体を用いて変換する
+		/// </summary>
+		template<>
+		inline Color::ColorData Convert<Color::ColorData>(const std::string& str) {
+			if (str == "White")return { Color::kWhite };
+			if (str == "Black")return { Color::kBlack };
+			if (str == "Gray")return { Color::kGray };
+			if (str == "Red")return { Color::kRed };
+			if (str == "Green")return { Color::kGreen };
+			if (str == "Blue")return { Color::kBlue };
+			if (str == "Yellow")return { Color::kYellow };
+			if (str == "Cyan")return { Color::kCyan };
+			if (str == "Magenta")return { Color::kMagenta };
+			assert(0 && "Convert CollisionType key not found");
+			return { Color::kWhite };
 		}
 	
 	}

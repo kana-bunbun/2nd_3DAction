@@ -1,7 +1,7 @@
 #include "Resource.h"
 #include<DxLib.h>
 #include"ResourceManager.h"
-#include"../Utility/CsvLoader.h"
+#include"../Utility/Loder/CsvLoader.h"
 #include"../Data/ModelPathParam.h"
 namespace {
 	// データ読み込み時の不正値

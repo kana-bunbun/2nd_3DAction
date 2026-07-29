@@ -10,18 +10,18 @@ TitleLogo::TitleLogo():
 
 }
 
-void TitleLogo::Init()
+void TitleLogo::OnInit()
 {}
 
-void TitleLogo::End()
+void TitleLogo::OnEnd()
 {}
 
-void TitleLogo::Update(float deltaTime)
+void TitleLogo::OnUpdate(float deltaTime)
 {
 
 }
 
-void TitleLogo::Draw()
+void TitleLogo::OnDraw()
 {
 	if (!m_visible)return;
 

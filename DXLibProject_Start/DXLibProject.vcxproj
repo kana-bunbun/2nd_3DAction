@@ -145,9 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Scene\SceneUITest.cpp" />
-    <ClCompile Include="System\ActionIntervalParamManager.cpp" />
+    <ClCompile Include="System\ActionParamManager.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneTextTest.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneUITest.cpp" />
     <ClCompile Include="System\ActionEffectParamManager.cpp" />
+    <ClCompile Include="System\ActionIntervalParamManager.cpp" />
     <ClCompile Include="System\CollisionDataManager.cpp" />
     <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
     <ClCompile Include="System\Debug\Profiler.cpp" />
@@ -158,6 +160,9 @@
     <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="System\TimeManager.cpp" />
+    <ClCompile Include="World\UI\TestScreen.cpp" />
+    <ClCompile Include="World\UI\UIScreen.cpp" />
+    <ClCompile Include="World\UI\Text\UIText.cpp" />
     <ClCompile Include="World\UI\TestMenu.cpp" />
     <ClCompile Include="World\UI\UIObject.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
@@ -167,9 +172,9 @@
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
     <ClCompile Include="World\Action\ActionEffectBase.cpp" />
-    <ClCompile Include="Scene\SceneCollisionTest.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneCollisionTest.cpp" />
     <ClCompile Include="Scene\SceneSelectDebug.cpp" />
-    <ClCompile Include="Utility\FromCSV.cpp" />
+    <ClCompile Include="Utility\Loder\FromCSV.cpp" />
     <ClCompile Include="Data\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
     <ClCompile Include="World\Object\Item\FireBottle.cpp" />
@@ -177,10 +182,10 @@
     <ClCompile Include="World\Object\Item\ItemObjectManager.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectBase.cpp" />
     <ClCompile Include="World\Object\Item\HealBottle.cpp" />
-    <ClCompile Include="Utility\CsvConvert.cpp" />
+    <ClCompile Include="Utility\Loder\CsvConvert.cpp" />
     <ClCompile Include="World\Character\Character.cpp" />
     <ClCompile Include="World\Character\CharacterManager.cpp" />
-    <ClCompile Include="Utility\Data.cpp" />
+    <ClCompile Include="Utility\Loder\Data.cpp" />
     <ClCompile Include="World\UI\ItemSlot.cpp" />
     <ClCompile Include="Utility\PadManager.cpp" />
     <ClCompile Include="World\Object\Item\BlendManager.cpp" />
@@ -213,7 +218,7 @@
     <ClCompile Include="World\Character\Guardian\DragonAttack.cpp" />
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
     <ClCompile Include="World\UI\GaugePlayer.cpp" />
-    <ClCompile Include="Utility\CsvLoader.cpp" />
+    <ClCompile Include="Utility\Loder\CsvLoader.cpp" />
     <ClCompile Include="World\UI\UIManager.cpp" />
     <ClCompile Include="World\UI\Gauge.cpp" />
     <ClCompile Include="World\Object\Barrier.cpp" />
@@ -271,10 +276,14 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scene\SceneUITest.h" />
-    <ClInclude Include="System\ActionIntervalParamManager.h" />
+    <ClInclude Include="Data\ActionParam.h" />
+    <ClInclude Include="System\ActionParamManager.h" />
+    <ClInclude Include="Data\UITextParam.h" />
+    <ClInclude Include="Scene\TestScene\SceneTextTest.h" />
+    <ClInclude Include="Scene\TestScene\SceneUITest.h" />
     <ClInclude Include="Data\ActionIntervalParam.h" />
     <ClInclude Include="System\ActionEffectParamManager.h" />
+    <ClInclude Include="System\ActionIntervalParamManager.h" />
     <ClInclude Include="System\CollisionDataManager.h" />
     <ClInclude Include="System\Debug\MemoryProfiler.h" />
     <ClInclude Include="System\Debug\Profiler.h" />
@@ -286,6 +295,9 @@
     <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="System\TimeManager.h" />
+    <ClInclude Include="World\UI\TestScreen.h" />
+    <ClInclude Include="World\UI\UIScreen.h" />
+    <ClInclude Include="World\UI\Text\UIText.h" />
     <ClInclude Include="World\UI\TestMenu.h" />
     <ClInclude Include="World\UI\UIObject.h" />
     <ClInclude Include="Utility\Vector2.h" />
@@ -296,14 +308,14 @@
     <ClInclude Include="World\Action\ActionEffectBase.h" />
     <ClInclude Include="Data\ActionEffectParam.h" />
     <ClInclude Include="Data\CameraParam.h" />
-    <ClInclude Include="Scene\SceneCollisionTest.h" />
+    <ClInclude Include="Scene\TestScene\SceneCollisionTest.h" />
     <ClInclude Include="Scene\SceneSelectDebug.h" />
-    <ClInclude Include="Utility\FromJson.h" />
-    <ClInclude Include="Utility\JsonConvert.h" />
-    <ClInclude Include="Utility\JsonLoader.h" />
+    <ClInclude Include="Utility\Loder\FromJson.h" />
+    <ClInclude Include="Utility\Loder\JsonConvert.h" />
+    <ClInclude Include="Utility\Loder\JsonLoader.h" />
     <ClInclude Include="Utility\ModelData.h" />
     <ClInclude Include="Data\ModelPathParam.h" />
-    <ClInclude Include="Utility\FromCSV.h" />
+    <ClInclude Include="Utility\Loder\FromCSV.h" />
     <ClInclude Include="Data\BlendRecipe.h" />
     <ClInclude Include="World\GameObjectParam.h" />
     <ClInclude Include="World\Object\Item\ItemObjectField.h" />
@@ -313,10 +325,10 @@
     <ClInclude Include="World\Object\Item\ItemObjectManager.h" />
     <ClInclude Include="World\Object\Item\ItemObjectBase.h" />
     <ClInclude Include="World\Object\Item\HealBottle.h" />
-    <ClInclude Include="Utility\CsvConvert.h" />
+    <ClInclude Include="Utility\Loder\CsvConvert.h" />
     <ClInclude Include="World\Character\Character.h" />
     <ClInclude Include="World\Character\CharacterManager.h" />
-    <ClInclude Include="Utility\Data.h" />
+    <ClInclude Include="Utility\Loder\Data.h" />
     <ClInclude Include="World\UI\ItemSlot.h" />
     <ClInclude Include="Utility\PadManager.h" />
     <ClInclude Include="World\Object\Item\BlendManager.h" />
@@ -351,7 +363,7 @@
     <ClInclude Include="World\Character\Guardian\Dragon.h" />
     <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
-    <ClInclude Include="Utility\CsvLoader.h" />
+    <ClInclude Include="Utility\Loder\CsvLoader.h" />
     <ClInclude Include="World\UI\UIManager.h" />
     <ClInclude Include="World\UI\Gauge.h" />
     <ClInclude Include="World\Object\Barrier.h" />

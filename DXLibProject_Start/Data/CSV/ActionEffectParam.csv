@@ -1,3 +1,3 @@
-comment,ID,maxSecond,interval,power
-回復ボトルS,0,3,0.3,2
-火炎ボトルS,100,3,0.5,1
+ID,comment,power
+0,HPを2回復,2
+1,1ダメージを与える,1

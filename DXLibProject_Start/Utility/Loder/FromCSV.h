@@ -9,9 +9,10 @@
 #include"../Data/BlendRecipe.h"
 #include"../Data/ActionEffectParam.h"
 #include"../Data/ActionIntervalParam.h"
-#include"Color.h"
+#include"../Color.h"
 #include"../World/Component/Collision.h"
 #include"../World/GameObjectParam.h"
+#include"../Data/UITextParam.h"
 
 namespace Data {
 	namespace Csv {
@@ -142,6 +143,18 @@ namespace Data {
 				param.ID = Get<int>(row, "ID");
 				param.maxSecond = Get<float>(row, "maxSecond");
 				param.intervalSecond = Get<float>(row, "intervalSecond");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<UITextParam> {
+			static UITextParam Binding(const Csv::Row& row) {
+				UITextParam param;
+				param.normalColor = Get<Color::ColorData>(row, "normalColor").value;
+				param.selectedColor = Get<Color::ColorData>(row, "selectedColor").value;
+				param.fontName= Get<std::string> (row, "fontName");
+				param.fontSize = Get<int>(row, "fontSize");
+				param.thickness = Get<int>(row, "thickness");
 				return param;
 			}
 		};

@@ -1,5 +1,5 @@
 #include "SceneCollisionTest.h"
-#include "SceneSelectDebug.h"
+#include "../SceneSelectDebug.h"
 #include<DxLib.h>
 #include"../Utility/Color.h"
 #include"../Utility/MyMath.h"

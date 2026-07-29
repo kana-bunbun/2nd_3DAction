@@ -15,35 +15,6 @@ ActionEffect_Heal::~ActionEffect_Heal()
 
 }
 
-
-void ActionEffect_Heal::Update(float deltaTime)
-{
-	//// カウントダウン
-	//m_effectCount -= deltaTime;
-	//// カウントに応じて透明度を求める
-	//m_alpha = m_effectCount / m_param.maxSecond;
-	//// 透明度をクランプ
-	//m_alpha = MyMath::Clamp(m_alpha, 0.0f, kAlphaMax);
-	//// 透明度フラグの更新
-	//m_isTrans = true;
-	//// 効果発動のカウントを更新
-	//m_executeCount += deltaTime;
-	//// 効果カウントがインターバルを超えたら
-	//if (m_executeCount > m_param.interval) {
-	//	m_executeCount = 0;
-	//	Execute();
-	//}
-
-	//// カウントが0になったら
-	//if (m_effectCount <= 0) {
-	//	// カウントを0に
-	//	m_effectCount = 0;
-	//	// 非アクティブにする
-	//	m_isActive = false;
-	//}
-	//m_collision->SetPosition(m_transform.position);
-}
-
 void ActionEffect_Heal::Draw(const Vector3& position)
 {
 	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(255.0f * m_alpha));
