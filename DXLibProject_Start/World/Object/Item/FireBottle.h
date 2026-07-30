@@ -7,7 +7,7 @@ public:
 	~FireBottle();
 
 	void Init()override;
-	void InitCollision()override;
+	void InitParameter()override;
 	void Update(float deltaTime)override;
 	void End()override;
 	void Draw()override;

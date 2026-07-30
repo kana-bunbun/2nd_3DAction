@@ -225,7 +225,7 @@
     <ClCompile Include="Utility\MyMath.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\Action\ActionInteval.cpp">
+    <ClCompile Include="World\Action\ActionInterval.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\TestScene\SceneUITest.cpp">
@@ -650,7 +650,7 @@
     <ClInclude Include="World\Action\ActionEffect_Heal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\Action\ActionInteval.h">
+    <ClInclude Include="World\Action\ActionInterval.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Data\ActionIntervalParam.h">

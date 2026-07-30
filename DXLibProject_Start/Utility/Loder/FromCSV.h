@@ -13,6 +13,7 @@
 #include"../World/Component/Collision.h"
 #include"../World/GameObjectParam.h"
 #include"../Data/UITextParam.h"
+#include"../../Data/ActionParam.h"
 
 namespace Data {
 	namespace Csv {
@@ -155,6 +156,17 @@ namespace Data {
 				param.fontName= Get<std::string> (row, "fontName");
 				param.fontSize = Get<int>(row, "fontSize");
 				param.thickness = Get<int>(row, "thickness");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<ActionParam> {
+			static ActionParam Binding(const Csv::Row& row) {
+				ActionParam param;
+				param.ID = Get<int>(row, "ID");
+				param.collisionID = Get<int>(row, "collisionID");
+				param.effectID = Get<int>(row, "effectID");
+				param.intervalID = Get<int>(row, "intervalID");
 				return param;
 			}
 		};

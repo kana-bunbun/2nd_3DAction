@@ -1,6 +1,10 @@
 #pragma once
 #include"../../GameObject.h"
 #include"../../GameObjectParam.h"
+#include"../../../Data/ActionParam.h"
+#include"../../../Data/ActionIntervalParam.h"
+#include"../../../Data/ActionEffectParam.h"
+#include"../../Action/ActionInterval.h"
 class ActionEffectBase;
 class ItemObjectBase :public GameObject
 {
@@ -9,7 +13,7 @@ public:
 	/// 使用時の初期化処理
 	/// </summary>
 	virtual void Setup(const Transform& transform) {}
-	virtual void InitCollision() {}
+	virtual void InitParameter() {}
 	/// <summary>
 	/// 回転速度をランダムに求める
 	/// </summary>
@@ -50,9 +54,24 @@ protected:
 	/// </summary>
 	CollisionParam m_collisionParam;
 	/// <summary>
-/// 自身の効果
-/// </summary>
+	/// 効果量のパラメータ
+	/// </summary>
+	ActionEffectParam m_effectParam;
+	/// <summary>
+	/// 発動効果のパラメータ
+	/// </summary>
+	ActionParam m_actionParam;
+	/// <summary>
+	/// 効果発動インターバルのパラメータ
+	/// </summary>
+	ActionIntervalParam m_intervalParam;
+	/// <summary>
+	/// インターバル更新のパラメータ
+	/// </summary>
+	std::unique_ptr<ActionInterval> m_pInterval;
+	/// <summary>
+	/// 自身の効果
+	/// </summary>
 	ActionEffectBase* m_actionEffect;
-
 };
 

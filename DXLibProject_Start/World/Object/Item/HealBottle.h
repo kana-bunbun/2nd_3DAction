@@ -8,7 +8,7 @@ public:
 	~HealBottle();
 
 	void Init()override;
-	void InitCollision()override;
+	void InitParameter()override;
 	void End()override;
 	void Setup(const Transform& transform)override;
 	void Update(float deltaTime)override;

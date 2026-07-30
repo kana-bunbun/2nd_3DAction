@@ -28,7 +28,7 @@ CollisionParam CollisionDataManager::GetCollisionData(int ID)
 {
 	// 配列の範囲外かどうかチェック
 	CollisionParam param;
-	if (ID < 0 || ID >= m_addCollisions.size())return param;
+	if (ID < 0)return param;
 	for (auto& collisionData : m_addCollisions) {
 		if (collisionData.ID != ID)continue;
 		param = collisionData;

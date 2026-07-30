@@ -1,22 +1,22 @@
-#include "ActionInteval.h"
+#include "ActionInterval.h"
 #include "../../Utility/MyMath.h"
 #include "../../System/ActionIntervalParamManager.h"
-ActionInteval::ActionInteval()
+ActionInterval::ActionInterval()
 {
 
 }
 
-ActionInteval::~ActionInteval()
+ActionInterval::~ActionInterval()
 {
 
 }
 
-void ActionInteval::Init(int intervalID)
+void ActionInterval::Init(int intervalID)
 {
 	m_param = ActionIntervalParamManager::GetInstance().GetActionIntervalParam(intervalID);
 }
 
-void ActionInteval::Setup()
+void ActionInterval::Setup()
 {
 	m_effectCount = 0.0f;
 	m_intervalCount = 0.0f;
@@ -24,7 +24,7 @@ void ActionInteval::Setup()
 }
 
 
-void ActionInteval::Update(float deltaTime)
+void ActionInterval::Update(float deltaTime)
 {
 	UpdateCount(deltaTime);
 
@@ -34,7 +34,7 @@ void ActionInteval::Update(float deltaTime)
 	}
 }
 
-void ActionInteval::UpdateCount(float deltaTime)
+void ActionInterval::UpdateCount(float deltaTime)
 {
 	// カウントの更新処理
 	m_effectCount = MyMath::Clamp((m_effectCount + deltaTime), 0.0f, m_param.maxSecond);
@@ -42,7 +42,7 @@ void ActionInteval::UpdateCount(float deltaTime)
 	m_intervalCount = MyMath::Clamp((m_intervalCount + deltaTime), 0.0f, m_param.intervalSecond);
 }
 
-void ActionInteval::Execute()
+void ActionInterval::Execute()
 {
 	// カウントのリセット
 	m_effectCount = 0.0f;
@@ -51,7 +51,7 @@ void ActionInteval::Execute()
 
 }
 
-bool ActionInteval::IsFinish()
+bool ActionInterval::IsFinish()
 {
     return m_intervalCount>=m_param.maxSecond;
 }

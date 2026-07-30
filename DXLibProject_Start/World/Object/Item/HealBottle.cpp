@@ -5,6 +5,8 @@
 #include"../../GameObjectManager.h"
 #include"../../../World/Action/ActionEffect_Heal.h"
 #include"../../../System/ActionEffectParamManager.h"
+#include"../../../System/ActionParamManager.h"
+#include"../../../System/ActionIntervalParamManager.h"
 namespace {
 	const char* const kModelPath = "HealBottleModel";
 
@@ -13,16 +15,10 @@ namespace {
 	// 落下速度
 	constexpr float kFallSpeed = kThrowPower *2.5f;
 
-	// 効果発動の最大カウント
-	constexpr float kEffectMaxCount = 3.0f;
+	// アイテム自身の当たり判定
+	constexpr int kCollisionID = 100;
 	// 透明度の最大値
 	constexpr float kAlphaMax = 0.5f;
-	// 回復効果発動インターバル
-	constexpr float kEffectInterval = 0.3f;
-	// アイテム本体の当たり判定ID
-	constexpr int kCollsionID = 100;
-	// 回復効果の当たり判定ID
-	constexpr int kEffectCollsionID = 101;
 	// 回復効果のID
 	constexpr int kEffectID = 0;
 
@@ -36,6 +32,9 @@ HealBottle::HealBottle()
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
 	m_actionEffect = new ActionEffect_Heal();
 	Init();
+	// 本体の当たり判定の追加
+	CollisionParam param= CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
 
 }
 
@@ -47,21 +46,20 @@ HealBottle::~HealBottle()
 
 void HealBottle::Init()
 {
-	// 当たり判定の初期設定
-	InitCollision();
+	// パラメータの初期設定
+	InitParameter();
 }
 
-void HealBottle::InitCollision()
+void HealBottle::InitParameter()
 {
-	// 本体の当たり判定の追加
-	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollsionID);
-	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
-
-	// エフェクトの当たり判定のパラメータを取得
-	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollsionID);
-	// エフェクトの当たり判定の追加
-
+	// 発動効果のパラメータ読み込み
+	m_actionParam = ActionParamManager::GetInstance().GetActionParam(kEffectID);
+	// 発動効果の当たり判定のパラメータを取得
+	m_collisionParam= CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
+	// 発動効果の効果量を追加
 	m_actionEffect->SetActionEffectParam(ActionEffectParamManager::GetInstance().GetEffectParam(kEffectID));
+	// 効果の発動インターバルパラメータを取得
+	m_intervalParam = ActionIntervalParamManager::GetInstance().GetActionIntervalParam(m_actionParam.intervalID);
 }
 
 void HealBottle::End()

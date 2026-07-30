@@ -40,10 +40,10 @@ FireBottle::~FireBottle()
 
 void FireBottle::Init()
 {
-	InitCollision();
+	InitParameter();
 }
 
-void FireBottle::InitCollision()
+void FireBottle::InitParameter()
 {
 	// 本体の当たり判定の追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);

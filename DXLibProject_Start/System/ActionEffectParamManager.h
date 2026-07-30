@@ -7,7 +7,7 @@ public:
 	static ActionEffectParamManager& GetInstance();
 
 	void Load();
-	ActionEffectParam GetEffectParam(int ID);
+	const ActionEffectParam& GetEffectParam(int ID);
 	void End();
 private:
 	ActionEffectParamManager();

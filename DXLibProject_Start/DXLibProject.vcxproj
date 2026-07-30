@@ -168,7 +168,7 @@
     <ClCompile Include="Utility\Vector2.cpp" />
     <ClCompile Include="World\UI\TestText.cpp" />
     <ClCompile Include="World\UI\TitleLogo.cpp" />
-    <ClCompile Include="World\Action\ActionInteval.cpp" />
+    <ClCompile Include="World\Action\ActionInterval.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
     <ClCompile Include="World\Action\ActionEffectBase.cpp" />
@@ -303,7 +303,7 @@
     <ClInclude Include="Utility\Vector2.h" />
     <ClInclude Include="World\UI\TestText.h" />
     <ClInclude Include="World\UI\TitleLogo.h" />
-    <ClInclude Include="World\Action\ActionInteval.h" />
+    <ClInclude Include="World\Action\ActionInterval.h" />
     <ClInclude Include="World\Action\ActionEffect_Heal.h" />
     <ClInclude Include="World\Action\ActionEffectBase.h" />
     <ClInclude Include="Data\ActionEffectParam.h" />

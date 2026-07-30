@@ -27,7 +27,11 @@ void ActionIntervalParamManager::Load()
 const ActionIntervalParam& ActionIntervalParamManager::GetActionIntervalParam(int ID)
 {
 	ActionIntervalParam param;
-	if (ID < 0 || ID >= m_intervalParam.size())return param;
-	param = m_intervalParam[ID];
+	if (ID < 0)return param;
+	for (auto& interval : m_intervalParam) {
+		if (interval.ID != ID)continue;
+		param = interval;
+		break;
+	}
 	return param;
 }

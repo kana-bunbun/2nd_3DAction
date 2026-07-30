@@ -5,11 +5,11 @@
 /// <summary>
 ///  効果発動のタイミングを指示する
 /// </summary>
-class ActionInteval
+class ActionInterval
 {
 public:
-	ActionInteval();
-	~ActionInteval();
+	ActionInterval();
+	~ActionInterval();
 	/// <summary>
 	/// IDを指定し、インターバルのパラメータを設定する
 	/// </summary>
