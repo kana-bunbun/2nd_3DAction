@@ -145,9 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\Screen\IngameHudScreen.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneInGameUITest.cpp" />
+    <ClCompile Include="World\UI\UIButton.cpp" />
+    <ClCompile Include="World\UI\Image\ImageManager.cpp" />
     <ClCompile Include="System\ActionParamManager.cpp" />
     <ClCompile Include="Scene\TestScene\SceneTextTest.cpp" />
-    <ClCompile Include="Scene\TestScene\SceneUITest.cpp" />
     <ClCompile Include="System\ActionEffectParamManager.cpp" />
     <ClCompile Include="System\ActionIntervalParamManager.cpp" />
     <ClCompile Include="System\CollisionDataManager.cpp" />
@@ -160,14 +163,13 @@
     <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="System\TimeManager.cpp" />
-    <ClCompile Include="World\UI\TestScreen.cpp" />
+    <ClCompile Include="World\UI\Image\UIImage.cpp" />
+    <ClCompile Include="World\UI\UIGroup.cpp" />
+    <ClCompile Include="World\UI\Screen\TestScreen.cpp" />
     <ClCompile Include="World\UI\UIScreen.cpp" />
     <ClCompile Include="World\UI\Text\UIText.cpp" />
-    <ClCompile Include="World\UI\TestMenu.cpp" />
     <ClCompile Include="World\UI\UIObject.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
-    <ClCompile Include="World\UI\TestText.cpp" />
-    <ClCompile Include="World\UI\TitleLogo.cpp" />
     <ClCompile Include="World\Action\ActionInterval.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="World\Action\ActionEffect_Heal.cpp" />
@@ -250,6 +252,8 @@
     <Image Include="Resource\Enemy\Queen\Texture\T_GastaroidQueen_Occlusion.png" />
     <Image Include="Resource\Item\props_base_color.png" />
     <Image Include="Resource\main.png" />
+    <Image Include="Resource\Test\frameImage.png" />
+    <Image Include="Resource\Test\GameLogo.png" />
     <Image Include="Resource\title.jpeg" />
     <Image Include="Resource\UI\BillboardText_Stair.png" />
     <Image Include="Resource\UI\DoragonFace.png" />
@@ -277,10 +281,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\ActionParam.h" />
+    <ClInclude Include="World\UI\Screen\IngameHudScreen.h" />
+    <ClInclude Include="Scene\TestScene\SceneInGameUITest.h" />
+    <ClInclude Include="World\UI\UIButton.h" />
+    <ClInclude Include="World\UI\Image\ImageManager.h" />
     <ClInclude Include="System\ActionParamManager.h" />
     <ClInclude Include="Data\UITextParam.h" />
     <ClInclude Include="Scene\TestScene\SceneTextTest.h" />
-    <ClInclude Include="Scene\TestScene\SceneUITest.h" />
     <ClInclude Include="Data\ActionIntervalParam.h" />
     <ClInclude Include="System\ActionEffectParamManager.h" />
     <ClInclude Include="System\ActionIntervalParamManager.h" />
@@ -295,14 +302,13 @@
     <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="System\TimeManager.h" />
-    <ClInclude Include="World\UI\TestScreen.h" />
+    <ClInclude Include="World\UI\Image\UIImage.h" />
+    <ClInclude Include="World\UI\UIGroup.h" />
+    <ClInclude Include="World\UI\Screen\TestScreen.h" />
     <ClInclude Include="World\UI\UIScreen.h" />
     <ClInclude Include="World\UI\Text\UIText.h" />
-    <ClInclude Include="World\UI\TestMenu.h" />
     <ClInclude Include="World\UI\UIObject.h" />
     <ClInclude Include="Utility\Vector2.h" />
-    <ClInclude Include="World\UI\TestText.h" />
-    <ClInclude Include="World\UI\TitleLogo.h" />
     <ClInclude Include="World\Action\ActionInterval.h" />
     <ClInclude Include="World\Action\ActionEffect_Heal.h" />
     <ClInclude Include="World\Action\ActionEffectBase.h" />

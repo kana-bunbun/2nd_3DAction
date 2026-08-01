@@ -62,12 +62,13 @@ void UIText::OnUpdate(float deltaTime)
 void UIText::OnDraw()
 {
 	if (!m_visible)return;
-	std::string str = "handle" + std::to_string(m_fontHandle);
-	DrawString(500, 160, str.c_str(), Color::kWhite);
+
+	Vector2 worldPositon = GetWorldPosition();
+
 	int color = (isSelected) ? m_param.selectedColor : m_param.normalColor;
 	DrawStringToHandle(
-		static_cast<int>(m_position.x),
-		static_cast<int>(m_position.y),
+		static_cast<int>(worldPositon.x),
+		static_cast<int>(worldPositon.y),
 		m_text.c_str(),color, m_fontHandle
 	);
 

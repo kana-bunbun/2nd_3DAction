@@ -5,7 +5,9 @@
 #include"../Utility/MyMath.h"
 #include"../Utility/Vector2.h"
 #include"../../World/UI/Text/UIText.h"
-#include"../../World/UI/TestScreen.h"
+#include"../../World/UI/Screen/TestScreen.h"
+#include"../../Scene/SceneTest.h"
+#include"../../Scene/SceneSelectDebug.h"
 
 namespace {
 	constexpr Vector2 kInitPos{ 400.0f,400.0f };
@@ -62,21 +64,52 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 		m_pText->SetFontName(kFontName[m_textNameIndex]);
 		m_pText->Build();
 	}*/
-	if (Input::IsPressed(Input::Button::X, Input::Pad::P1)) {
-		if (m_pScreen->GetState() == TestScreen::ScreenState::ModeSelect) {
+	switch (m_pScreen->GetState())
+	{
+	case::TestScreen::ScreenState::PressStay:
+		if (Input::IsPressed(Input::Button::B, Input::Pad::P1)) {
+		m_pScreen->SetScreenState(TestScreen::ScreenState::ModeSelect);
+		m_pScreen->ShowModeSelect();
+
+		}
+		break;
+	case::TestScreen::ScreenState::ModeSelect:
+		if (Input::IsPressed(Input::Button::Up, Input::Pad::P1)) {
+			m_pScreen->SelectPrevButton();
+		}
+		if (Input::IsPressed(Input::Button::Down, Input::Pad::P1)) {
+			m_pScreen->SelectNextButton();
+		}
+		if (Input::IsDown(Input::Button::B, Input::Pad::P1)) {
+			m_pScreen->ExecuteButton();
+		}
+		if (Input::IsPressed(Input::Button::A, Input::Pad::P1)) {
 			m_pScreen->SetScreenState(TestScreen::ScreenState::PressStay);
 			m_pScreen->ShowPressStay();
 		}
-
-	}
-	if (Input::IsPressed(Input::Button::Y, Input::Pad::P1)) {
-		if (m_pScreen->GetState() == TestScreen::ScreenState::PressStay) {
-		m_pScreen->SetScreenState(TestScreen::ScreenState::ModeSelect);
-		m_pScreen->ShowModeSelect();
-		}
+		break;
+	default:
+		break;
 	}
 	m_pScreen->Update(deltaTime);
-
+	auto result = m_pScreen->ConsumeResult();
+	switch (result)
+	{
+	case TestScreen::ButtonResult::None:
+		break;
+	case TestScreen::ButtonResult::Start:
+		return std::make_unique<SceneTest>();
+		break;
+	case TestScreen::ButtonResult::Option:
+		break;
+	case TestScreen::ButtonResult::Exit:
+		return std::make_unique<SceneSelectDebug>();
+		break;
+	case TestScreen::ButtonResult::Max:
+		break;
+	default:
+		break;
+	}
     return nullptr;
 }
 
