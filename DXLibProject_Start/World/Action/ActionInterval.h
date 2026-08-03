@@ -31,6 +31,18 @@ public:
 	/// 発動効果が終了しているかどうか
 	/// </summary>
 	bool IsFinish();
+	/// <summary>
+	/// 効果発動可能か
+	/// </summary>
+	/// <returns></returns>
+	bool IsExecute() { return m_isExecute; }
+	/// <summary>
+	/// 発動効果が開始しているかどうか
+	/// </summary>
+	/// <returns></returns>
+	bool IsActive() { return m_isActive; }
+
+	void SetActive(bool active) { m_isActive = active; }
 private:
 	/// <summary>
 	/// インターバルのパラメータ
@@ -48,5 +60,9 @@ private:
 	/// 効果発動可能かどうか
 	/// </summary>
 	bool m_isExecute;
+	/// <summary>
+	/// アクティブかどうか
+	/// </summary>
+	bool m_isActive;
 };
 

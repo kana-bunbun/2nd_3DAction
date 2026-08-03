@@ -63,7 +63,6 @@ Enemy::Enemy():
 	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
-	m_HPGauge = std::make_unique<Gauge>();
 }
 
 Enemy::Enemy(const Transform& transform) :
@@ -84,7 +83,6 @@ Enemy::Enemy(const Transform& transform) :
 	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
-	m_HPGauge = std::make_unique<Gauge>();
 }
 
 Enemy::~Enemy()
@@ -207,10 +205,10 @@ void Enemy::UpdateAnimation(float deltaTime)
 	// アニメーションが終了していればアイドル状態に
 	if (!m_animation.IsPlaying())
 		nextStatus = Status::Queen::Neutral;
-	// HPが0なくなっていたら
-	if (!m_HPGauge->GetValue()) {
-		nextStatus = Status::Queen::Dead;
-	}
+	// HPがなくなっていたら
+	//if (!m_HPGauge->GetValue()) {
+	//	nextStatus = Status::Queen::Dead;
+	//}
 	// ステータスが異なっていたらアニメーションの変更
 	if (m_status != nextStatus) {
 		ChangeAnimation(nextStatus);
@@ -229,6 +227,5 @@ void Enemy::ChangeAnimation(const Status::Queen& status)
 
 void Enemy::Setup()
 {
-	m_HPGauge->SetValue(m_HPGauge->GetMax());
 }
 

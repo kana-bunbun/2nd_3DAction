@@ -1,8 +1,9 @@
 #pragma once
-#include"../UIScreen.h"
+#include"../Core/UIScreen.h"
 class UIButton;
 class IngameHudScreen :public UIScreen
 {
+public:
 	IngameHudScreen();
 	~IngameHudScreen()override = default;
 

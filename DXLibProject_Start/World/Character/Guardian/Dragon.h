@@ -4,7 +4,6 @@
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
-#include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
 #include"../../../Utility/Input.h"
 #include<array>

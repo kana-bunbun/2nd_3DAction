@@ -1,7 +1,5 @@
 #pragma once
 #include "../GameObject.h"
-#include"../UI/Gauge.h"
-class Gauge;
 class Character :public GameObject
 {
 public:
@@ -17,18 +15,18 @@ public:
 		return Type::Player;
 	}
 	// HP取得処理
-	Gauge* GetHP() { return m_HPGauge.get(); }
-	Gauge* GetMP() { return m_MPGauge.get(); }
+	//Gauge* GetHP() { return m_HPGauge.get(); }
+	//Gauge* GetMP() { return m_MPGauge.get(); }
 	// キャラクターのID
 	int m_ID;
-	void Damage(float damage)override { m_HPGauge->Decrease(damage); }
-	void Heal(float heal)override { m_HPGauge->Increase(heal); }
+	//void Damage(float damage)override { m_HPGauge->Decrease(damage); }
+	//void Heal(float heal)override { m_HPGauge->Increase(heal); }
 	virtual void Setup(){}
-	bool IsDead() { return (m_HPGauge && !m_HPGauge->GetValue()); }
+	//bool IsDead() { return (m_HPGauge && !m_HPGauge->GetValue()); }
 protected:
-	// HP
-	std::unique_ptr<Gauge> m_HPGauge;
-	// MP
-	std::unique_ptr<Gauge> m_MPGauge;
+	//// HP
+	//std::unique_ptr<Gauge> m_HPGauge;
+	//// MP
+	//std::unique_ptr<Gauge> m_MPGauge;
 };
 

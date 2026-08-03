@@ -111,7 +111,6 @@ Dragon::Dragon():
 	// 移動速度を設定
 	m_move.SetSpeed(kMoveSpeed);
 
-	m_HPGauge = std::make_unique<Gauge>();
 
 	AddCollision(std::make_unique<Collision::Sphere>(Vector3::zero, 30), CollisionType::Body);
 	// ブレスの初期化
@@ -148,8 +147,6 @@ void Dragon::Init()
 	m_status = Status::Dragon::Neutral;
 	// アニメーション再生
 	m_animation.PlayAnimation(m_animData[static_cast<int>(m_status)]);
-	m_HPGauge->SetMax(kHPMax);
-	m_HPGauge->SetValue(kHPMax);
 
 }
 
@@ -191,7 +188,6 @@ void Dragon::Update(float deltaTime)
 	if (m_status != Status::Dragon::Attack)
 		m_attackFlag = false;
 
-	m_HPGauge->Clamp();
 	/*printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z); 
 	printfDx("m_speed : %f\n", m_speed);
 	printfDx("followState : %d\n", m_followState);

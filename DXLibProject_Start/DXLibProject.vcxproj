@@ -145,10 +145,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\MPShow.cpp" />
+    <ClCompile Include="World\UI\HPShow.cpp" />
+    <ClCompile Include="System\ImageResource.cpp" />
+    <ClCompile Include="World\UI\Core\UICommand.cpp" />
+    <ClCompile Include="World\UI\Core\UIInput.cpp" />
     <ClCompile Include="World\UI\Screen\IngameHudScreen.cpp" />
     <ClCompile Include="Scene\TestScene\SceneInGameUITest.cpp" />
-    <ClCompile Include="World\UI\UIButton.cpp" />
-    <ClCompile Include="World\UI\Image\ImageManager.cpp" />
+    <ClCompile Include="World\UI\Screen\PauseScreen.cpp" />
+    <ClCompile Include="World\UI\Widget\UIButton.cpp" />
+    <ClCompile Include="System\ImageManager.cpp" />
     <ClCompile Include="System\ActionParamManager.cpp" />
     <ClCompile Include="Scene\TestScene\SceneTextTest.cpp" />
     <ClCompile Include="System\ActionEffectParamManager.cpp" />
@@ -163,12 +169,12 @@
     <ClCompile Include="System\ResourceManager.cpp" />
     <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="System\TimeManager.cpp" />
-    <ClCompile Include="World\UI\Image\UIImage.cpp" />
-    <ClCompile Include="World\UI\UIGroup.cpp" />
+    <ClCompile Include="World\UI\Widget\UIImage.cpp" />
+    <ClCompile Include="World\UI\Core\UIGroup.cpp" />
     <ClCompile Include="World\UI\Screen\TestScreen.cpp" />
-    <ClCompile Include="World\UI\UIScreen.cpp" />
-    <ClCompile Include="World\UI\Text\UIText.cpp" />
-    <ClCompile Include="World\UI\UIObject.cpp" />
+    <ClCompile Include="World\UI\Core\UIScreen.cpp" />
+    <ClCompile Include="World\UI\Widget\UIText.cpp" />
+    <ClCompile Include="World\UI\Core\UIObject.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
     <ClCompile Include="World\Action\ActionInterval.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
@@ -221,8 +227,7 @@
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
     <ClCompile Include="World\UI\GaugePlayer.cpp" />
     <ClCompile Include="Utility\Loder\CsvLoader.cpp" />
-    <ClCompile Include="World\UI\UIManager.cpp" />
-    <ClCompile Include="World\UI\Gauge.cpp" />
+    <ClCompile Include="World\UI\Core\UIManager.cpp" />
     <ClCompile Include="World\Object\Barrier.cpp" />
     <ClCompile Include="World\UI\GaugeShow.cpp" />
     <ClCompile Include="World\Character\CharacterMove.cpp" />
@@ -281,10 +286,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\ActionParam.h" />
+    <ClInclude Include="Data\GraphPathParam.h" />
+    <ClInclude Include="World\UI\MPShow.h" />
+    <ClInclude Include="World\UI\HPShow.h" />
+    <ClInclude Include="System\ImageResource.h" />
+    <ClInclude Include="World\UI\Core\UICommand.h" />
+    <ClInclude Include="World\UI\Core\UIInput.h" />
     <ClInclude Include="World\UI\Screen\IngameHudScreen.h" />
     <ClInclude Include="Scene\TestScene\SceneInGameUITest.h" />
-    <ClInclude Include="World\UI\UIButton.h" />
-    <ClInclude Include="World\UI\Image\ImageManager.h" />
+    <ClInclude Include="World\UI\Screen\PauseScreen.h" />
+    <ClInclude Include="World\UI\Widget\UIButton.h" />
+    <ClInclude Include="System\ImageManager.h" />
     <ClInclude Include="System\ActionParamManager.h" />
     <ClInclude Include="Data\UITextParam.h" />
     <ClInclude Include="Scene\TestScene\SceneTextTest.h" />
@@ -302,12 +314,12 @@
     <ClInclude Include="System\ResourceManager.h" />
     <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="System\TimeManager.h" />
-    <ClInclude Include="World\UI\Image\UIImage.h" />
-    <ClInclude Include="World\UI\UIGroup.h" />
+    <ClInclude Include="World\UI\Widget\UIImage.h" />
+    <ClInclude Include="World\UI\Core\UIGroup.h" />
     <ClInclude Include="World\UI\Screen\TestScreen.h" />
-    <ClInclude Include="World\UI\UIScreen.h" />
-    <ClInclude Include="World\UI\Text\UIText.h" />
-    <ClInclude Include="World\UI\UIObject.h" />
+    <ClInclude Include="World\UI\Core\UIScreen.h" />
+    <ClInclude Include="World\UI\Widget\UIText.h" />
+    <ClInclude Include="World\UI\Core\UIObject.h" />
     <ClInclude Include="Utility\Vector2.h" />
     <ClInclude Include="World\Action\ActionInterval.h" />
     <ClInclude Include="World\Action\ActionEffect_Heal.h" />
@@ -370,8 +382,7 @@
     <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
     <ClInclude Include="Utility\Loder\CsvLoader.h" />
-    <ClInclude Include="World\UI\UIManager.h" />
-    <ClInclude Include="World\UI\Gauge.h" />
+    <ClInclude Include="World\UI\Core\UIManager.h" />
     <ClInclude Include="World\Object\Barrier.h" />
     <ClInclude Include="World\UI\GaugeShow.h" />
     <ClInclude Include="World\Character\CharacterMove.h" />

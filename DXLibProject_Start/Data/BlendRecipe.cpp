@@ -4,7 +4,7 @@ namespace {
 	const char* const ItemName[static_cast<int>(ItemData::Type::Max)]{
 	"Honey",
 	"Jam",
-	"Pepper",
+	"ChiliPepper",
 	"Whiskey",
 	"HealBottle",
 	"MolotovCocktail",

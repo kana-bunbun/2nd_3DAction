@@ -62,6 +62,7 @@
 
 	class CollisionParam {
 	public:
+		CollisionShape shapeType;
 		int ID = -1;
 		Vector3 position = Vector3::zero;
 		Vector3 size = Vector3::zero;

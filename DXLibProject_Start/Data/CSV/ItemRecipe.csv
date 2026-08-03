@@ -1,7 +1,7 @@
-AddÅ_Base,Honey,Jam,Pepper,Whiskey,HealBottle,MolotovCocktail
+AddÅ_Base,Honey,Jam,ChiliPepper,Whiskey,HealBottle,MolotovCocktail
 Honey,Invalid,HealBottle,Invalid,Invalid,Invalid,Invalid
 Jam,HealBottle,Invalid,Invalid,Invalid,Invalid,Invalid
-Pepper,Invalid,Invalid,Invalid,MolotovCocktail,Invalid,Invalid
+ChiliPepper,Invalid,Invalid,Invalid,MolotovCocktail,Invalid,Invalid
 Whiskey,Invalid,Invalid,MolotovCocktail,Invalid,Invalid,Invalid
 HealBottle,Invalid,Invalid,Invalid,Invalid,Invalid,Invalid
 MolotovCocktail,Invalid,Invalid,Invalid,Invalid,Invalid,Invalid

@@ -5,7 +5,8 @@
 #include"../../../Data/ActionIntervalParam.h"
 #include"../../../Data/ActionEffectParam.h"
 #include"../../Action/ActionInterval.h"
-class ActionEffectBase;
+#include"../../Component/Collision.h"
+#include"../../../World/Action/ActionEffectBase.h"
 class ItemObjectBase :public GameObject
 {
 public:
@@ -25,12 +26,14 @@ public:
 	/// <summary>
 	/// オブジェクト本体の更新処理
 	/// </summary>
-	/// <param name="deltaTime"></param>
 	virtual void UpdateObject(float deltaTime){}
+	/// <summary>
+	/// 効果の発動インターバルの更新処理
+	/// </summary>
+	virtual void IntervalUpdate(float deltaTime);
 	/// <summary>
 	/// 発動効果の更新処理
 	/// </summary>
-	/// <param name="deltaTime"></param>
 	virtual void UpdateEffect(float deltaTime){}
 	/// <summary>
 	/// 使用中かどうか取得
@@ -50,28 +53,20 @@ protected:
 	/// </summary>
 	float m_activationCount;
 	/// <summary>
-	/// 当たり判定のパラメータ
-	/// </summary>
-	CollisionParam m_collisionParam;
-	/// <summary>
-	/// 効果量のパラメータ
-	/// </summary>
-	ActionEffectParam m_effectParam;
-	/// <summary>
 	/// 発動効果のパラメータ
 	/// </summary>
 	ActionParam m_actionParam;
 	/// <summary>
-	/// 効果発動インターバルのパラメータ
-	/// </summary>
-	ActionIntervalParam m_intervalParam;
-	/// <summary>
-	/// インターバル更新のパラメータ
+	/// インターバル更新クラス
 	/// </summary>
 	std::unique_ptr<ActionInterval> m_pInterval;
 	/// <summary>
 	/// 自身の効果
 	/// </summary>
-	ActionEffectBase* m_actionEffect;
+	std::unique_ptr<ActionEffectBase> m_pActionEffect;
+	/// <summary>
+	/// 発動効果の当たり判定
+	/// </summary>
+	std::unique_ptr<Collision::Shape>m_pEffectCollision;
 };
 

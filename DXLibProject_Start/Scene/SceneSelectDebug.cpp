@@ -6,6 +6,7 @@
 #include"SceneTest.h"
 #include"TestScene/SceneCollisionTest.h"
 #include"TestScene/SceneTextTest.h"
+#include"TestScene/SceneInGameUITest.h"
 
 #include<functional>
 
@@ -76,6 +77,7 @@ void SceneSelectDebug::Init()
     m_sceneList.push_back({ "Debug",GetSceneInvalid });
     m_sceneList.push_back({ "Collision",[]() {return std::make_unique<SceneCollisionTest>(); } });
     m_sceneList.push_back({ "Text", []() {return std::make_unique<SceneTextTest>(); } });
+    m_sceneList.push_back({ "InGameUI", []() {return std::make_unique<SceneInGameUITest>(); } });
 
 }
 
@@ -91,7 +93,11 @@ std::unique_ptr<SceneBase> SceneSelectDebug::Update(float deltaTime)
         // 決定ボタンを押していないとき
         
         // 上を押したら選択中のインデックスを減らす
-        if (Input::IsPressed(Input::Button::Up, Input::Pad::P1))m_selectIndex--;
+        if (Input::IsDown(Input::Button::Up, Input::Pad::P1)) {
+            int i = 0;
+        }
+        if (Input::IsPressed(Input::Button::Up, Input::Pad::P1))
+            m_selectIndex--;
         // 下を押したら選択中のインデックスを増やす
         if (Input::IsPressed(Input::Button::Down, Input::Pad::P1))m_selectIndex++;
         // 一定範囲内でループ

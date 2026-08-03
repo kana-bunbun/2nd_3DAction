@@ -1,5 +1,5 @@
 #pragma once
-#include "../UIObject.h"
+#include "../Core/UIObject.h"
 #include"../../../Data/UITextParam.h"
 #include<string>
 /// <summary>

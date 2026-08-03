@@ -10,7 +10,7 @@ namespace {
 	const char* const ItemName[kTypeMax]{
 		"Honey",
 		"Jam",
-		"Pepper",
+		"ChiliPepper",
 		"Whiskey",
 		"HealBottle",
 		"MolotovCocktail",

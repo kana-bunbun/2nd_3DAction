@@ -45,15 +45,15 @@ void FireBottle::Init()
 
 void FireBottle::InitParameter()
 {
-	// 本体の当たり判定の追加
-	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Body);
-	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
-	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Null);
-	// エフェクトの当たり判定のパラメータをキャッシュしておく
-	m_collisionParam = param;
+	//// 本体の当たり判定の追加
+	//CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	//AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Body);
+	//param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
+	//AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Null);
+	//// エフェクトの当たり判定のパラメータをキャッシュしておく
+	//m_collisionParam = param;
 
-	AddCollision(std::make_unique<Collision::AABB>(m_transform.position, Vector3::zero),CollisionType::Invalid);
+	//AddCollision(std::make_unique<Collision::AABB>(m_transform.position, Vector3::zero),CollisionType::Invalid);
 }
 
 void FireBottle::Update(float deltaTime)
@@ -95,9 +95,9 @@ void FireBottle::DrawModel()
 
 void FireBottle::DrawEffect()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
-	DrawSphere3D(m_transform.position.ToVECTOR(), m_collisionParam.radius, 10, Color::kRed, Color::kRed, TRUE);
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
+	//DrawSphere3D(m_transform.position.ToVECTOR(), m_collisionParam.radius, 10, Color::kRed, Color::kRed, TRUE);
+	//SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
 }
 void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)

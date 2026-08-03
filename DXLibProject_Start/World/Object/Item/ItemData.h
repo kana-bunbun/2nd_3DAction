@@ -8,7 +8,7 @@ public:
 		Invalid = -1,
 		Honey,
 		Jam,
-		Pepper,
+		ChiliPepper,
 		Whiskey,
 		HealBottle,
 		MolotovCocktail,

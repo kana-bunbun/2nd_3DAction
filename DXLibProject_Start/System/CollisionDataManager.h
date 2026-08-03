@@ -1,6 +1,7 @@
 #pragma once
 #include"../World/GameObjectParam.h"
 #include<vector>
+#include<memory>
 #include<type_traits>
 
 class CollisionDataManager
@@ -17,6 +18,7 @@ public:
 	// 指定IDのコリジョンのパラメータを返す
 	CollisionParam GetCollisionData(int ID);
 	void End();
+	std::unique_ptr<Collision::Shape> GetCollision(int ID);
 private:
 	CollisionDataManager(const CollisionDataManager&) = delete;
 	CollisionDataManager& operator =(const CollisionDataManager&) = delete;

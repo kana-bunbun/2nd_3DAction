@@ -1,6 +1,6 @@
 #pragma once
 #include"../Utility/Vector3.h"
-
+struct UIInput;
 
 /// <summary>
 /// “ü—Íî•ñ‚Ìæ“¾EXV‚ğ‚·‚é
@@ -94,7 +94,7 @@ namespace Input {
 	/// </summary>
 	void Debug();
 
-
+	const UIInput& GetUIInput(const Input::Pad& pad=Input::Pad::P1);
 
 }
 

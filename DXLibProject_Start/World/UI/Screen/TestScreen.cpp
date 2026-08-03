@@ -1,9 +1,9 @@
 #include "TestScreen.h"
-#include"../Text/UIText.h"
-#include"../Image/UIImage.h"
-#include"../UIButton.h"
-#include"../Image/ImageManager.h"
-#include"../UIGroup.h"
+#include"../Widget/UIText.h"
+#include"../Widget/UIImage.h"
+#include"../Widget/UIButton.h"
+#include"../../../System/ImageManager.h"
+#include"../Core/UIGroup.h"
 #include"../../../Utility/Loder/CsvLoader.h"
 namespace {
 	const char* const kDataName = "TextUIParam";
@@ -15,8 +15,8 @@ namespace {
 	const char* const kSelectStartText = "Game Start";
 	const char* const kSelectOptionText = "Option";
 	const char* const kSelectExitText = "Exit";
-	const char* const kLogoPath = "Resource\\Test\\GameLogo.png";
-	const char* const kFramePath = "Resource\\Test\\frameImage.png";
+	constexpr int kLogoPathID = 0;
+	constexpr int kFramePathID = 1;
 	constexpr Vector2 kLogoPos{ 350.0f,200.0f };
 	constexpr Vector2 kPressPos{ 350.0f,450.0f };
 	constexpr Vector2 kSelectStartPos{ 0.0f,0.0f };
@@ -41,8 +41,8 @@ void TestScreen::Init()
 
 	// UIの登録
 	m_pPressText = CreateUIObject<UIText>(kPressText, data[0], kPressPos);
-	int handle = ImageManager::GetInstance().GetGraphHandle(kLogoPath);
-	int frameHandle = ImageManager::GetInstance().GetGraphHandle(kFramePath);
+	auto handle = ImageManager::GetInstance().GetImage(kLogoPathID);
+	auto frameHandle = ImageManager::GetInstance().GetImage(kFramePathID);
 	m_pLogoImage = CreateUIObject<UIImage>(handle, kLogoPos);
 	m_pGorupText = CreateUIObject<UIGroup>(kGroupPos);
 

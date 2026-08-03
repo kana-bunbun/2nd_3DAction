@@ -30,7 +30,6 @@ HealBottle::HealBottle()
 	m_rotateSpeed = Vector3::zero;
 	// モデルデータの取得
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
-	m_actionEffect = new ActionEffect_Heal();
 	Init();
 	// 本体の当たり判定の追加
 	CollisionParam param= CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
@@ -54,12 +53,14 @@ void HealBottle::InitParameter()
 {
 	// 発動効果のパラメータ読み込み
 	m_actionParam = ActionParamManager::GetInstance().GetActionParam(kEffectID);
-	// 発動効果の当たり判定のパラメータを取得
-	m_collisionParam= CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
+	// 発動効果の当たり判定追加
+	m_pEffectCollision=std::move(CollisionDataManager::GetInstance().GetCollision(m_actionParam.collisionID));
 	// 発動効果の効果量を追加
-	m_actionEffect->SetActionEffectParam(ActionEffectParamManager::GetInstance().GetEffectParam(kEffectID));
-	// 効果の発動インターバルパラメータを取得
-	m_intervalParam = ActionIntervalParamManager::GetInstance().GetActionIntervalParam(m_actionParam.intervalID);
+	m_pActionEffect = std::make_unique<ActionEffect_Heal>();
+	m_pActionEffect->Init(m_actionParam.effectID);
+	// 効果の発動インターバルパラメータ追加
+	m_pInterval = std::make_unique<ActionInterval>();
+	m_pInterval->Init(m_actionParam.intervalID);
 }
 
 void HealBottle::End()
@@ -78,6 +79,7 @@ void HealBottle::Setup(const Transform& transform)
 	m_transform.position = transform.position;
 	// 垂直方向に飛ばす
 	m_moveVector.y = kThrowPower;
+	m_pInterval->Setup();
 	// 発動効果を非アクティイブに
 	//if (!m_actionEffect)return;
 	//m_actionEffect->SetActive(true);
@@ -85,20 +87,23 @@ void HealBottle::Setup(const Transform& transform)
 
 void HealBottle::Update(float deltaTime)
 {
-	//if(m_actionEffect)
+	IntervalUpdate(deltaTime);
 	UpdateObject(deltaTime);
+	m_pEffectCollision->SetPosition(m_transform.position);
+
 }
 
 void HealBottle::Draw()
 {
 	DrawModel();
+	m_pActionEffect->Draw(m_transform.position);
 }
 
 void HealBottle::DrawModel()
 {
 	// モデルが読み込まれているかどうかチェック
 	if (m_modelData->GetHandle() == -1)return;
-
+	if (m_pInterval->IsActive())return;
 	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
 	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
 	MV1DrawModel(m_modelData->GetHandle());
@@ -123,15 +128,10 @@ void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myDa
 
 void HealBottle::EffectSetup()
 {
-	//// 発動効果がアクティブの場合は処理しない
-	//if (!m_actionEffect||
-	//	m_actionEffect->IsActive())return;
-	//// アクティブに設定
-	//m_actionEffect->SetActive(true);
-	//// 発動効果の初期化
-	//m_actionEffect->Reset();
-	//// 座標設定
-	//m_actionEffect->SetPosition(m_transform.position);
+	// 座標設定
+	m_pEffectCollision->SetPosition(m_transform.position);
+	// インターバルをアクティブに設定
+	m_pInterval->SetActive(true);
 }
 
 void HealBottle::UpdateObject(float deltaTime)
@@ -140,7 +140,6 @@ void HealBottle::UpdateObject(float deltaTime)
 	if (m_moveVector.y < 0 && m_transform.position.y < 0)
 	{
 		EffectSetup();
-		m_isActive = false;
 		return;
 	}
 
@@ -156,9 +155,9 @@ void HealBottle::UpdateObject(float deltaTime)
 
 bool HealBottle::IsUsing()
 {
-	// 発動効果のポインタを持っていなかった時用
-	if (!m_actionEffect)return m_isActive;
+	// インターバルを持っていなかった時用
+	if (!m_pInterval)return m_isActive;
 
-	// 自身か発動効果がアクティブの時true
-	//return (m_isActive || m_actionEffect->IsActive());
+	// 自身かインターバルがアクティブの時true
+	return (m_isActive || m_pInterval->IsActive());
 }

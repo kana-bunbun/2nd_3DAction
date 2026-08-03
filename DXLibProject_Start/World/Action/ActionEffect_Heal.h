@@ -6,8 +6,8 @@ public:
 	ActionEffect_Heal();
 	~ActionEffect_Heal();
 
-	void Init();
-	void Draw(const Vector3& position);
+	void Init(int paramID)override;
+	void Draw(const Vector3& position)override;
 	void Reset();
 	void Execute(Collision::Shape* collision)override;
 
@@ -15,5 +15,7 @@ public:
 public:
 	float m_alpha;
 	bool m_isTrans;
+	Vector3 pos;
+	float radius;
 };
 

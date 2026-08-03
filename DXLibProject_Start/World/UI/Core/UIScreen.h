@@ -3,6 +3,8 @@
 #include<memory>
 #include<type_traits>
 #include"UIObject.h"
+#include"UIInput.h"
+#include"UICommand.h"
 /// <summary>
 /// UIObjectをまとめて管理するクラス
 /// 1画面につき１つのインスタンスを作成
@@ -19,7 +21,7 @@ public:
 	virtual ~UIScreen() = default;
 
 	virtual void Init() {};
-	virtual void Update(float deltaTime);
+	virtual void Update(float deltaTime,const UIInput& input);
 	virtual void Draw();
 
 	/// <summary>
@@ -27,6 +29,9 @@ public:
 	/// </summary>
 	template<class T,class... Args>
 	T* CreateUIObject(Args&&... args);
+
+	UICommand ConsumeCommand();
+
 protected:
 
 	/// <summary>
@@ -34,12 +39,23 @@ protected:
 	/// </summary>
 	/// <param name="object"></param>
 	void AddUIObject(std::unique_ptr<UIObject> object);
+	/// <summary>
+	/// コマンドの設定
+	/// </summary>
+	/// <param name="command"></param>
+	void SetUICommand(const UICommand& command) { m_command = command; }
 
 protected:
 	/// <summary>
 	/// このクラスで管理するUIObject
 	/// </summary>
 	std::vector<std::unique_ptr<UIObject>>m_rootObjects;
+
+	/// <summary>
+	/// 外部に送るUIのコマンド
+	/// </summary>
+	UICommand m_command=UICommand::None;
+
 };
 
 template<class T, class ...Args>

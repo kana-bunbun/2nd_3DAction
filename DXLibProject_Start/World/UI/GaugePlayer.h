@@ -21,8 +21,8 @@ public:
 private:
 
 	// ゲージの配列
-	GaugeShow* m_HPGauge;
-	GaugeShow* m_MPGauge;
+	std::unique_ptr<HPShow> m_HPGauge;
+	std::unique_ptr<MPShow> m_MPGauge;
 
 };
 

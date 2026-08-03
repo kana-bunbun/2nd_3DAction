@@ -41,3 +41,22 @@ CollisionParam CollisionDataManager::GetCollisionData(int ID)
 void CollisionDataManager::End()
 {
 }
+
+std::unique_ptr<Collision::Shape> CollisionDataManager::GetCollision(int ID)
+{
+	CollisionParam param = GetCollisionData(ID);
+	switch (param.shapeType)
+	{
+	case CollisionShape::Sphere: {
+		std::unique_ptr<Collision::Sphere>sphere=std::make_unique<Collision::Sphere>(param.position,param.radius);
+		return sphere;
+	}
+	case CollisionShape::AABB: {
+		std::unique_ptr<Collision::AABB>aabb = std::make_unique<Collision::AABB>(param.position, param.size);
+		return aabb;
+	}
+	default:
+		break;
+	}
+	return nullptr;
+}

@@ -14,6 +14,7 @@
 #include"../World/GameObjectParam.h"
 #include"../Data/UITextParam.h"
 #include"../../Data/ActionParam.h"
+#include"../../Data/GraphPathParam.h"
 
 namespace Data {
 	namespace Csv {
@@ -107,8 +108,8 @@ namespace Data {
 			static CollisionParam Binding(const Csv::Row& row) {
 				CollisionParam param;
 				param.ID = Get<int>(row, "ID");
-				CollisionShape shape = static_cast<CollisionShape>(Get<int>(row, "RangeType"));
-				switch (shape) {
+				param.shapeType= static_cast<CollisionShape>(Get<int>(row, "RangeType"));
+				switch (param.shapeType) {
 				case CollisionShape::Sphere:
 					Sphere(param, row);
 					break;
@@ -165,8 +166,17 @@ namespace Data {
 				ActionParam param;
 				param.ID = Get<int>(row, "ID");
 				param.collisionID = Get<int>(row, "collisionID");
-				param.effectID = Get<int>(row, "effectID");
+				param.effectID = Get<int>(row, "effectParamID");
 				param.intervalID = Get<int>(row, "intervalID");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<GraphPathParam> {
+			static GraphPathParam Binding(const Csv::Row& row) {
+				GraphPathParam param;
+				param.ID = Get<int>(row, "ID");
+				param.graphName= Get<int>(row, "graphName");
 				return param;
 			}
 		};

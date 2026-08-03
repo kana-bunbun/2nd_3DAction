@@ -1,6 +1,6 @@
 #include "UIScreen.h"
 
-void UIScreen::Update(float deltaTime)
+void UIScreen::Update(float deltaTime, const UIInput& input)
 {
 	for (auto& object : m_rootObjects) {
 		if (!object)continue;
@@ -14,6 +14,13 @@ void UIScreen::Draw()
 		if (!object)continue;
 		object->Draw();
 	}
+}
+
+UICommand UIScreen::ConsumeCommand()
+{
+	UICommand command = m_command;
+	m_command = UICommand::None;
+	return command;
 }
 
 void UIScreen::AddUIObject(std::unique_ptr<UIObject> object)

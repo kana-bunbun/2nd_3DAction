@@ -1,70 +1,46 @@
 #include "GaugeShow.h"
-#include "Gauge.h"
 #include<string>
 #include<DxLib.h>
 #include"../../Utility/MyMath.h"
 #include"GaugeParam.h"
+#include"../../System/ImageManager.h"
 namespace {
-	// ファイルパス
-	const char* const kFilePath = "Resource\\Graph\\";
-	const char* const kTypePath[static_cast<int>(GaugeType::Max)] = {
-	 "HP",
-	 "MP",
-	};
-	const char* const kGaugePath = "Gauge";
-	const char* const kHeadPath = "Head.png";
-	const char* const kBodyPath = "Body.png";
-	const char* const kFramePath = "Frame.png";
-	const char* const kFrontPath = "Front.png";
+
 
 
 	constexpr float kGaugeLerp = 15.0f;
-
-
-	
 }
 
 GaugeShow::GaugeShow() :
 	//m_gauge(nullptr),
-	m_bodyHandle(-1),
-	m_headHandle(-1),
-	m_frameHandle(-1),
-	m_frontHandle(-1),
+	m_bodyImage(nullptr),
+	m_headImage(nullptr),
+	m_frameImage(nullptr),
+	m_frontImage(nullptr),
 	m_drawPos(Vector3::zero),
 	m_rate(0)
 {
 
 }
 
-GaugeShow::GaugeShow(Vector3 position,int type):
-	m_gauge(nullptr),
-	m_bodyHandle(-1),
-	m_frameHandle(-1),
-	m_frontHandle(-1),
+GaugeShow::GaugeShow(const Vector3& position):
+	m_bodyImage(nullptr),
+	m_frameImage(nullptr),
+	m_frontImage(nullptr),
 	m_drawPos(position),
 	m_rate(0)
 {
-	// ファイルパスを組み立てる
-	std::string filePath;
-	filePath = kFilePath;
-	filePath += kTypePath[type];
 	// ゲージの枠のグラフィックハンドルの読み込み
-	m_frameHandle = LoadGraph((filePath + kFramePath).c_str());
-	m_frontHandle = LoadGraph((filePath + kFrontPath).c_str());
-	filePath += kGaugePath;
+	m_frameImage = ImageManager::GetInstance().GetImage(0);
+	m_frontImage = ImageManager::GetInstance().GetImage(0);
 	// ゲージ本体のグラフィックハンドルの読み込み
-	m_bodyHandle = LoadGraph((filePath + kBodyPath).c_str());
-	m_headHandle = LoadGraph((filePath + kHeadPath).c_str());
-	GetGraphSize(m_frameHandle, &m_graphSizeX, &m_graphSizeY);
+	m_bodyImage = ImageManager::GetInstance().GetImage(0);
+	m_headImage = ImageManager::GetInstance().GetImage(0);
+	GetGraphSize(m_frameImage->GetHandle(), &m_graphSizeX, &m_graphSizeY);
 }
 
 GaugeShow::~GaugeShow()
 {
-
-	DeleteGraph(m_bodyHandle);
-	DeleteGraph(m_headHandle);
-	DeleteGraph(m_frameHandle);
-	DeleteGraph(m_frontHandle);
 }
 
 void GaugeShow::Init()
@@ -79,25 +55,25 @@ void GaugeShow::End()
 
 void GaugeShow::Update(float deltaTime)
 {
-	//DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
-	float lerp = m_gauge->GetRate() - m_rate;
-	if (MyMath::Abs(lerp) < 0.001f)
-		m_rate = m_gauge->GetRate();
-	else {
-		lerp *= MyMath::Clamp(kGaugeLerp * deltaTime,0.0f,1.0f);
-	m_rate += lerp;
-	}
+	////DrawRotaGraph(m_drawPos.x, m_drawPos.y, 1, 0, m_gaugeHandle, TRUE);
+	//float lerp = m_targetRate - m_rate;
+	////if (MyMath::Abs(lerp) < 0.001f)
+	////	m_rate = m_gauge->GetRate();
+	//else {
+	//	lerp *= MyMath::Clamp(kGaugeLerp * deltaTime,0.0f,1.0f);
+	//m_rate += lerp;
+	//}
 }
 
 void GaugeShow::Draw()
 {
-	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frameHandle, TRUE);
+	DrawRotaGraph(m_drawPos.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frameImage->GetHandle(), TRUE);
 
 
 	float rate = 1 - m_rate;
 	int sizeX;
 	int sizeY;
-	GetGraphSize(m_bodyHandle, &sizeX, &sizeY);
+	GetGraphSize(m_bodyImage->GetHandle(), &sizeX, &sizeY);
 	sizeX *= GaugeParam::kPlayerGaugeScale;
 	sizeY *= GaugeParam::kPlayerGaugeScale;
 	Vector3 pos1 = m_drawPos - Vector3(sizeX, sizeY, 0) * 0.5f;
@@ -106,9 +82,9 @@ void GaugeShow::Draw()
 	pos1.x += sizeX * rate;
 	float addPosY = sizeY * 0.5f;
 	//DrawRectGraph(posX, posY, (m_graphSizeX * rate), 0, m_graphSizeX, m_graphSizeY, m_bodyHandle, TRUE, FALSE);
-	DrawExtendGraph(pos1.x, pos1.y, pos2.x, pos2.y, m_bodyHandle, TRUE);
-	DrawRotaGraph(pos1.x, pos1.y+addPosY, GaugeParam::kPlayerGaugeScale, 0, m_headHandle, TRUE);
-	DrawRotaGraph(pos2.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frontHandle, TRUE);
+	DrawExtendGraph(pos1.x, pos1.y, pos2.x, pos2.y, m_bodyImage->GetHandle(), TRUE);
+	DrawRotaGraph(pos1.x, pos1.y+addPosY, GaugeParam::kPlayerGaugeScale, 0, m_headImage->GetHandle(), TRUE);
+	DrawRotaGraph(pos2.x, m_drawPos.y, GaugeParam::kPlayerGaugeScale, 0, m_frontImage->GetHandle(), TRUE);
 
 
 }

@@ -1,0 +1,24 @@
+ID,comment,graphName
+1500,アイテムスロットの背景,Icon Background
+1501,アイテムスロットのカーソル,ItemCursor
+1800,マップ上のキャラクターカーソル,MapPlayerCursor
+1900,アイテム回収のUI画像,BillboardText_Collection
+1901,階段移動のUI画像,BillboardText_Stair
+2000,ゲージ背景,GaugeBack
+2001,顔画像背景,FaceBack
+2002,プレイヤーの顔画像,PlayerFace
+2003,ドラゴンの顔画像,DoragonFace
+2010,HPゲージの端,HPGaugeHead
+2011,HPゲージの真ん中,HPGaugeBody
+2012,HPゲージの装飾,HPFront
+2013,HPゲージの枠,HPFrame
+2020,MPゲージの端,MPGaugeHead
+2021,MPゲージの真ん中,MPGaugeBody
+2022,MPゲージの装飾,MPFront
+2023,MPゲージの枠,MPFrame
+3000,アイテム画像 ハチミツ,Honey
+3001,アイテム画像 ジャム,Jam
+3002,アイテム画像 トウガラシ,ChiliPepper
+3003,アイテム画像 酒,Whiskey
+3004,アイテム画像 回復瓶,HealBottle
+3005,アイテム画像 火炎瓶,FireBottle

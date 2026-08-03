@@ -1,13 +1,14 @@
 #include "UIImage.h"
-
+#include"../../../System/ImageResource.h"
 UIImage::UIImage():
-	m_graphHandle(-1)
+	m_image()
 {
 
 }
 
-UIImage::UIImage(int handle, const Vector2 & position):
-	m_graphHandle(handle)
+
+UIImage::UIImage(std::shared_ptr<ImageResource> image, const Vector2& position):
+	m_image(image)
 {
 	SetPosition(position);
 }
@@ -31,7 +32,7 @@ void UIImage::OnDraw()
 	DrawGraph(
 		static_cast<int>(worldPositon.x),
 		static_cast<int>(worldPositon.y),
-		m_graphHandle,TRUE
+		m_image->GetHandle(), TRUE
 	);
 }
 

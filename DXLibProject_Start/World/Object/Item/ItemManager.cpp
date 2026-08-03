@@ -10,7 +10,7 @@
 namespace {
 	constexpr int kDropItemTypeMax = 4;
 
-	ItemData::Type kDropItemType[kDropItemTypeMax] = { ItemData::Type::Honey,ItemData::Type::Jam,ItemData::Type::Pepper,ItemData::Type::Whiskey };
+	ItemData::Type kDropItemType[kDropItemTypeMax] = { ItemData::Type::Honey,ItemData::Type::Jam,ItemData::Type::ChiliPepper,ItemData::Type::Whiskey };
 
 }
 ItemManager::ItemManager():

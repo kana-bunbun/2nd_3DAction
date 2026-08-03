@@ -133,8 +133,8 @@ Character* CharacterManager::CheckNearestCharacter(const Vector3& basePosition, 
 		// キャラクターの種類が指定されている時、かつ指定した種類のキャラクターでなければスルー
 		if (characterType != Character::Type::Invalid &&
 			m_characters[i]->GetCharacterType() != characterType)continue;
-		// 死亡しているキャラクターはスルー
-		if (!m_characters[i]->GetHP()->GetValue())continue;
+		//// 死亡しているキャラクターはスルー
+		//if (!m_characters[i]->GetHP()->GetValue())continue;
 		// 距離の差を取得
 		Vector3 differ = (basePosition - m_characters[i]->GetTransform().position);
 		differ.y = 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include"../../Utility/Vector3.h"
+#include"../../System/ImageResource.h"
 #include<memory>
 class Gauge;
 
@@ -15,7 +16,7 @@ class GaugeShow
 {
 public:
 	GaugeShow();
-	GaugeShow(Vector3 position,int type);
+	GaugeShow(const Vector3& position);
 	~GaugeShow();
 	void Init();
 	void End();
@@ -23,16 +24,15 @@ public:
 	void Draw();
 
 public:		// ゲッター・セッター
-	void SetGauge(Gauge* gauge) { m_gauge = gauge; }
 	void SetPosition(const Vector3& position) { m_drawPos = position; }
 	Vector3 GetPosition() { return m_drawPos; }
 	Vector3 GetGaugeSize() { return Vector3(m_graphSizeX, m_graphSizeY, 0.0f); }
-private:
-	Gauge* m_gauge;
-	int m_bodyHandle;
-	int m_headHandle;
-	int m_frameHandle;
-	int m_frontHandle;
+protected:
+	float m_targetRate;
+	std::shared_ptr<ImageResource> m_bodyImage;
+	std::shared_ptr<ImageResource> m_headImage;
+	std::shared_ptr<ImageResource> m_frameImage;
+	std::shared_ptr<ImageResource> m_frontImage;
 	Vector3 m_drawPos;
 	int m_graphSizeX;
 	int m_graphSizeY;

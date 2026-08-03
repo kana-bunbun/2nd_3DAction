@@ -69,16 +69,13 @@
     <ClCompile Include="World\Object\Barrier.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\Gauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Camera\Camera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Camera\FollowCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\UIManager.cpp">
+    <ClCompile Include="World\UI\Core\UIManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Utility\Loder\CsvLoader.cpp">
@@ -231,7 +228,7 @@
     <ClCompile Include="Utility\Vector2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\UIObject.cpp">
+    <ClCompile Include="World\UI\Core\UIObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\TestScene\SceneTextTest.cpp">
@@ -273,10 +270,10 @@
     <ClCompile Include="System\Debug\ProfileScope.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\Text\UIText.cpp">
+    <ClCompile Include="World\UI\Widget\UIText.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\UIScreen.cpp">
+    <ClCompile Include="World\UI\Core\UIScreen.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\UI\Screen\TestScreen.cpp">
@@ -285,22 +282,40 @@
     <ClCompile Include="System\ActionParamManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\UIGroup.cpp">
+    <ClCompile Include="World\UI\Core\UIGroup.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\Image\UIImage.cpp">
+    <ClCompile Include="World\UI\Widget\UIImage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\Image\ImageManager.cpp">
+    <ClCompile Include="System\ImageManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="World\UI\UIButton.cpp">
+    <ClCompile Include="World\UI\Widget\UIButton.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\TestScene\SceneInGameUITest.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\UI\Screen\IngameHudScreen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\UI\Screen\PauseScreen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\UI\Core\UIInput.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\UI\Core\UICommand.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ImageResource.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\UI\HPShow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="World\UI\MPShow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -476,16 +491,13 @@
     <ClInclude Include="World\Object\Barrier.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\Gauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Camera\Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Camera\FollowCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\UIManager.h">
+    <ClInclude Include="World\UI\Core\UIManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Utility\Loder\CsvLoader.h">
@@ -671,7 +683,7 @@
     <ClInclude Include="Utility\Vector2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\UIObject.h">
+    <ClInclude Include="World\UI\Core\UIObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\TestScene\SceneTextTest.h">
@@ -716,13 +728,13 @@
     <ClInclude Include="System\Debug\ProfileScope.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\Text\UIText.h">
+    <ClInclude Include="World\UI\Widget\UIText.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Data\UITextParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\UIScreen.h">
+    <ClInclude Include="World\UI\Core\UIScreen.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\UI\Screen\TestScreen.h">
@@ -734,22 +746,43 @@
     <ClInclude Include="Data\ActionParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\UIGroup.h">
+    <ClInclude Include="World\UI\Core\UIGroup.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\Image\UIImage.h">
+    <ClInclude Include="World\UI\Widget\UIImage.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\Image\ImageManager.h">
+    <ClInclude Include="System\ImageManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="World\UI\UIButton.h">
+    <ClInclude Include="World\UI\Widget\UIButton.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\TestScene\SceneInGameUITest.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\UI\Screen\IngameHudScreen.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\Screen\PauseScreen.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\Core\UIInput.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\Core\UICommand.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ImageResource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\GraphPathParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\HPShow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="World\UI\MPShow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

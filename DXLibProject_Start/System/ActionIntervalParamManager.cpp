@@ -21,7 +21,7 @@ ActionIntervalParamManager::~ActionIntervalParamManager()
 
 void ActionIntervalParamManager::Load()
 {
-
+	m_intervalParam = Data::Csv::LoadCsvAs<ActionIntervalParam>(kDataName);
 }
 
 const ActionIntervalParam& ActionIntervalParamManager::GetActionIntervalParam(int ID)

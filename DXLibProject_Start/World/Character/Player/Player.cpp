@@ -94,9 +94,6 @@ Player::Player(Vector3 position) :
 	Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
 	Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
 	m_capsule = Collision::Capsule(startPos, endPos, kCapsuleRadius);
-	// ゲージの初期化
-	m_HPGauge = std::make_unique<Gauge>();
-	m_MPGauge = std::make_unique<Gauge>();
 	// 当たり判定追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
@@ -133,9 +130,6 @@ Player::Player() :
 	Vector3 startPos = MV1GetFramePosition(m_modelData->GetHandle(), kWaistFrameIndex);
 	Vector3 endPos = MV1GetFramePosition(m_modelData->GetHandle(), kHeadFrameIndex);
 	m_capsule = Collision::Capsule(startPos,endPos,kCapsuleRadius);
-	// ゲージの初期化
-	m_HPGauge = std::make_unique<Gauge>();
-	m_MPGauge = std::make_unique<Gauge>();
 	// 当たり判定追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
@@ -225,8 +219,7 @@ void Player::Update(float deltaTime)
 	
 
 	// MPの自動回復
-	if(m_status!=Status::Player::Parry)
-	m_MPGauge->Increase(deltaTime);
+	if(m_status!=Status::Player::Parry){}
 
 	//m_animation.Debug();
 }
@@ -269,8 +262,7 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if ((!Input::IsDown(Input::Button::A, m_pad)&&m_charge) ||
-		!m_MPGauge->GetRate()) {
+	if ((!Input::IsDown(Input::Button::A, m_pad)&&m_charge)){
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
@@ -288,7 +280,6 @@ void Player::Parry()
 		float animSpeed = (kParryStopTime - m_animation.GetPlayCount()) / kParryStopTime;
 		// アニメーションの再生速度を設定
 		m_animation.SetAnimSpeed(animSpeed);
-		m_MPGauge->Decrease(kParryMPDecrease);
 		// アニメーションのカウントが一定以上いかないようにする(一応)
 		if (m_animation.GetPlayCount() > kParryStopTime)
 			m_animation.ResetPlayCount(kParryStopTime);

@@ -8,7 +8,7 @@ namespace {
 	const char* const kItemPath[static_cast<int>(ItemData::Type::Max)] = {
 		"Honey",
 		"Jam",
-		"Pepper",
+		"ChiliPepper",
 		"Whiskey",
 		"HealBottle",
 		"FireBottle",

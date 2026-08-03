@@ -1,7 +1,6 @@
 #include"../../GameObject.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
-#include"../../UI/Gauge.h"
 #include"../../UI/GaugeShow.h"
 #include"../../../Utility/Input.h"
 #include"../../../Camera/Camera.h"

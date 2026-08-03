@@ -4,7 +4,7 @@
 #include"../Utility/Color.h"
 #include"../Utility/MyMath.h"
 #include"../Utility/Vector2.h"
-#include"../../World/UI/Text/UIText.h"
+#include"../../World/UI/Widget/UIText.h"
 #include"../../World/UI/Screen/TestScreen.h"
 #include"../../Scene/SceneTest.h"
 #include"../../Scene/SceneSelectDebug.h"
@@ -91,7 +91,8 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 	default:
 		break;
 	}
-	m_pScreen->Update(deltaTime);
+	UIInput input=Input::GetUIInput();
+	m_pScreen->Update(deltaTime, input);
 	auto result = m_pScreen->ConsumeResult();
 	switch (result)
 	{

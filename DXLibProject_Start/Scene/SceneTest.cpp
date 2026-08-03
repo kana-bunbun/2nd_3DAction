@@ -27,7 +27,6 @@
 #include"../World/Character/Player/Player.h"
 #include"../World/Character/Guardian/Dragon.h"
 #include"../World/Object/Barrier.h"
-#include"../World/UI/UIManager.h"
 #include"../World/Map/TileManager.h"
 #include"../World/Map/MapCreate.h"
 #include"../World/Map/MapManager.h"
@@ -63,7 +62,7 @@ SceneTest::SceneTest() :
 	m_pDragon(nullptr),
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
-	m_pUiManager(nullptr),
+	//m_pUiManager(nullptr),
 	m_pPadManager(nullptr),
 	m_playerNum(0)
 {
@@ -92,7 +91,7 @@ SceneTest::SceneTest() :
 
 
 	m_pCameraMgr = std::make_unique<CameraManager>();
-	m_pUiManager = std::make_unique<UIManager>();
+	//m_pUiManager = std::make_unique<UIManager>();
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
 	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
@@ -117,8 +116,8 @@ void SceneTest::Init() {
 	GameObjectManager::GetInstance().Init();
 	m_pDragon->SetMaster(m_pPlayer);
 	m_pPlayer->SetBarrier(m_pBarrier);
-	m_pUiManager->SetPlayer(m_pPlayer);
-	m_pUiManager->SetDragon(m_pDragon);
+	//m_pUiManager->SetPlayer(m_pPlayer);
+	//m_pUiManager->SetDragon(m_pDragon);
 	m_pPadManager->SetItemCursor(ItemManager::GetInstance().GetItemCursor());
 	m_pPadManager->SetTileManager(m_pTileManager.get());
 	m_pPadManager->Init();
@@ -157,7 +156,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pCameraMgr->Update(deltaTime);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pUiManager->Update(deltaTime);
+	//m_pUiManager->Update(deltaTime);
 	m_pTileManager->Update(deltaTime);
 	
 	GameObjectManager::GetInstance().Update(deltaTime);
@@ -198,7 +197,7 @@ void SceneTest::Draw() {
 	}
 	ItemManager::GetInstance().Draw();
 	// ƒQ[ƒWŠÖ˜A‚Ì•`‰æˆ—
-	m_pUiManager->Draw();
+	//m_pUiManager->Draw();
 
 
 }

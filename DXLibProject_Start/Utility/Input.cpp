@@ -3,6 +3,7 @@
 #include"Input.h"
 #include"MyMath.h"
 #include"../System/TimeManager.h"
+#include"../World/UI/Core/UIInput.h"
 //#include<vector>
 
 // 無名名前空間
@@ -72,9 +73,9 @@ namespace Input {
 		for (int i = 0; i < padNum; i++) {
 
 			// ボタンの数だけ繰り返し
-			for (int j = 0; j < kLogNum - 1; j++) {
+			for (int j = kLogNum - 1; j > 0; j--) {
 				// ボタンの入力状況の更新
-				ButtonsLog[i][kLogNum - (j + 1)] = ButtonsLog[i][kLogNum - (j + 2)];
+				ButtonsLog[i][j] = ButtonsLog[i][j - 1];
 			}
 			int pad = 0;
 			switch (i)
@@ -84,8 +85,10 @@ namespace Input {
 					break;
 				case 1:
 					pad = DX_INPUT_PAD2;
+					break;
 				case 2:
 					pad = DX_INPUT_PAD3;
+					break;
 				case 3:
 					pad = DX_INPUT_PAD4;
 					break;
@@ -252,13 +255,29 @@ namespace Input {
 		DrawFormatString(0, 232, Color, "ThumbRX:%d ThumbRY:%d",
 			ButtonsLog[i][0].ThumbRX, ButtonsLog[i][0].ThumbRY);
 		DrawString(0, 264, "Button", Color);
-		for (int j = 0; j < 16; j++)
+		
+		for(int j=0;j<3;j++){
+		for (int k = 0; k < 16; k++)
 		{
-			DrawFormatString(64 + j % 8 * 64, 64 + j / 8 * 16 + 200, Color,
-				"%2d:%d", j, ButtonsLog[i][0].Buttons[j]);
+			DrawFormatString(64 + k % 8 * 64, 64 + k / 8 * 16 + 200 + (50 * j), Color,
+				"%2d:%d", k, ButtonsLog[i][j].Buttons[k]);
+		}
 		}
 		}
 
+	}
+
+	const UIInput& GetUIInput(const Input::Pad& pad)
+	{
+		UIInput input;
+
+		input.up = IsDown(Input::Button::Up,pad);
+		input.down= IsDown(Input::Button::Down, pad);
+		input.right = IsDown(Input::Button::Right, pad);
+		input.left = IsDown(Input::Button::Left, pad);
+		input.decide= IsDown(Input::Button::B, pad);
+		input.cancel= IsDown(Input::Button::A, pad);
+		return input;
 	}
 
 }
