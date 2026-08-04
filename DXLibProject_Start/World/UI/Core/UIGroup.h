@@ -15,7 +15,7 @@ public:
 protected:
 	/// <summary>
 	/// UIGroupクラスでは描画しない
-	/// からの処理にしておく
+	/// 空の処理にしておく
 	/// </summary>
 	void OnDraw()override {};
 };

@@ -1,7 +1,7 @@
 #include "UIImage.h"
 #include"../../../System/ImageResource.h"
 UIImage::UIImage():
-	m_image()
+	m_image(nullptr)
 {
 
 }

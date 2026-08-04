@@ -17,7 +17,7 @@ public:
 public:
 	int GetHoldNum() { return m_holdNum; }
 	void SetPosition(const Vector3& const position) { m_drawPos = position; }
-	ItemData::Type GetItemType() { return m_itemData.m_type; }
+	ItemData::Type GetItemType() { return m_itemData.GetType(); }
 	void SetItemType(ItemData::Type type);
 private:
 	// 固定サイズの画像の大きさを取得

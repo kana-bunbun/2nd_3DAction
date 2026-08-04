@@ -34,7 +34,9 @@
 #include"../World/Object/Item/BlendManager.h"
 #include"../World/Object/Item/ItemManager.h"
 #include"../World/Object/Item/ItemObjectManager.h"
-#include"../world/GameObjectManager.h"
+#include"../World/GameObjectManager.h"
+#include"../World/UI/Core/UIManager.h"
+#include"../World/UI/Screen/InGameMainScreen.h"
 #include<cassert>
 #include<memory>
 #include<DxLib.h>
@@ -62,7 +64,7 @@ SceneTest::SceneTest() :
 	m_pDragon(nullptr),
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
-	//m_pUiManager(nullptr),
+	m_pUIManager(nullptr),
 	m_pPadManager(nullptr),
 	m_playerNum(0)
 {
@@ -91,7 +93,8 @@ SceneTest::SceneTest() :
 
 
 	m_pCameraMgr = std::make_unique<CameraManager>();
-	//m_pUiManager = std::make_unique<UIManager>();
+	m_pUIManager = std::make_unique<UIManager>();
+	m_pUIManager->PushScreen(std::make_unique<InGameMainScreen>());
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
 	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
@@ -156,7 +159,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pCameraMgr->Update(deltaTime);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	//m_pUiManager->Update(deltaTime);
+	m_pUIManager->Update(deltaTime,Input::GetUIInput());
 	m_pTileManager->Update(deltaTime);
 	
 	GameObjectManager::GetInstance().Update(deltaTime);
@@ -197,7 +200,7 @@ void SceneTest::Draw() {
 	}
 	ItemManager::GetInstance().Draw();
 	// ƒQ[ƒWŠÖ˜A‚Ì•`‰æˆ—
-	//m_pUiManager->Draw();
+	m_pUIManager->Draw();
 
 
 }

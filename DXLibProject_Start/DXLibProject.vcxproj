@@ -145,6 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\UI\Object\UIItemCursor.cpp" />
+    <ClCompile Include="World\UI\Group\UIItemList.cpp" />
+    <ClCompile Include="World\UI\Object\ItemSlotBack.cpp" />
+    <ClCompile Include="World\Object\Item\ItemList.cpp" />
+    <ClCompile Include="World\UI\Object\UIItemSlot.cpp" />
+    <ClCompile Include="World\UI\Screen\InGameMainScreen.cpp" />
     <ClCompile Include="World\UI\MPShow.cpp" />
     <ClCompile Include="World\UI\HPShow.cpp" />
     <ClCompile Include="System\ImageResource.cpp" />
@@ -287,6 +293,12 @@
   <ItemGroup>
     <ClInclude Include="Data\ActionParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
+    <ClInclude Include="World\UI\Object\UIItemCursor.h" />
+    <ClInclude Include="World\UI\Group\UIItemList.h" />
+    <ClInclude Include="World\UI\Object\ItemSlotBack.h" />
+    <ClInclude Include="World\Object\Item\ItemList.h" />
+    <ClInclude Include="World\UI\Object\UIItemSlot.h" />
+    <ClInclude Include="World\UI\Screen\InGameMainScreen.h" />
     <ClInclude Include="World\UI\MPShow.h" />
     <ClInclude Include="World\UI\HPShow.h" />
     <ClInclude Include="System\ImageResource.h" />

@@ -1,5 +1,7 @@
 #pragma once
 #include "../GameObject.h"
+#include"../Object/Item/ItemList.h"
+#include<functional>
 class Character :public GameObject
 {
 public:
@@ -14,19 +16,15 @@ public:
 	virtual const Type& GetCharacterType() {
 		return Type::Player;
 	}
-	// HP取得処理
-	//Gauge* GetHP() { return m_HPGauge.get(); }
-	//Gauge* GetMP() { return m_MPGauge.get(); }
 	// キャラクターのID
 	int m_ID;
-	//void Damage(float damage)override { m_HPGauge->Decrease(damage); }
-	//void Heal(float heal)override { m_HPGauge->Increase(heal); }
 	virtual void Setup(){}
-	//bool IsDead() { return (m_HPGauge && !m_HPGauge->GetValue()); }
+	const ItemList& GetItemList() { return m_itemList; }
+	// アイテムの追加処理を渡す
+	const std::function<void(const ItemData::Type&, int)>& GetAddItem();
+	// アイテムの消費処理を渡す
+	const std::function<void(int, int)>& GetSubItem();
 protected:
-	//// HP
-	//std::unique_ptr<Gauge> m_HPGauge;
-	//// MP
-	//std::unique_ptr<Gauge> m_MPGauge;
+	ItemList m_itemList;
 };
 

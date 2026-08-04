@@ -1,23 +1,25 @@
 #pragma once
 #include"GaugeShow.h"
 #include"CharaGauge.h"
-#include<array>
 #include<vector>
+#include<memory>
 /// <summary>
 /// プレイヤーのHP・MPを描画する
 /// </summary>
 class GaugeShow;
 class Player;
+class HPShow;
+class MPShow;
 class GaugePlayer:public CharaGauge
 {
 public:
 	GaugePlayer();
 	~GaugePlayer();
-	void Init()override;
+	void OnInit()override;
 	void SetPlayer(Player* player);
-	void End()override;
-	void Update(float deltaTime)override;
-	void Draw()override;
+	void OnEnd()override;
+	void OnUpdate(float deltaTime)override;
+	void OnDraw()override;
 private:
 
 	// ゲージの配列

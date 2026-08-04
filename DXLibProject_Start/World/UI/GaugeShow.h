@@ -18,15 +18,15 @@ public:
 	GaugeShow();
 	GaugeShow(const Vector3& position);
 	~GaugeShow();
-	void Init();
-	void End();
-	void Update(float deltaTime);
-	void Draw();
+	virtual void Init();
+	virtual void End();
+	virtual void Update(float deltaTime);
+	virtual void Draw();
 
 public:		// ゲッター・セッター
 	void SetPosition(const Vector3& position) { m_drawPos = position; }
 	Vector3 GetPosition() { return m_drawPos; }
-	Vector3 GetGaugeSize() { return Vector3(m_graphSizeX, m_graphSizeY, 0.0f); }
+	const Vector3& GetGaugeSize() { return Vector3(m_graphSizeX, m_graphSizeY, 0.0f); }
 protected:
 	float m_targetRate;
 	std::shared_ptr<ImageResource> m_bodyImage;

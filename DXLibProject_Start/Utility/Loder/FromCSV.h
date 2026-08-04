@@ -176,7 +176,7 @@ namespace Data {
 			static GraphPathParam Binding(const Csv::Row& row) {
 				GraphPathParam param;
 				param.ID = Get<int>(row, "ID");
-				param.graphName= Get<int>(row, "graphName");
+				param.graphName= Get<std::string>(row, "graphName");
 				return param;
 			}
 		};

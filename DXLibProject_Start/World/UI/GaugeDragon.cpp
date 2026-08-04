@@ -31,7 +31,7 @@ GaugeDragon::~GaugeDragon()
 	}
 }
 
-void GaugeDragon::Init()
+void GaugeDragon::OnInit()
 {
 
 }
@@ -46,19 +46,19 @@ void GaugeDragon::SetDragon(Dragon * dragon)
 	
 }
 
-void GaugeDragon::End()
+void GaugeDragon::OnEnd()
 {
 	if (m_gauge)
 		m_gauge->End();
 }
 
-void GaugeDragon::Update(float deltaTime)
+void GaugeDragon::OnUpdate(float deltaTime)
 {
 	if (m_gauge)
 		m_gauge->Update(deltaTime);
 }
 
-void GaugeDragon::Draw()
+void GaugeDragon::OnDraw()
 {
 	// 描画の中心座標を求める
 	Vector3 pos = GaugeParam::kDragonGaugePos;

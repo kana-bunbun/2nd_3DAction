@@ -1,5 +1,6 @@
 #pragma once
 #include"../../System/ImageResource.h"
+#include"Core/UIObject.h"
 #include<memory>
 namespace {
 	// 顔背景の画像ID
@@ -8,16 +9,13 @@ namespace {
 	constexpr int kGaugeBackGraphID = 2001;
 
 }
-class CharaGauge
+class CharaGauge:public UIObject
 {
 public:
 	CharaGauge()=default;
 	~CharaGauge()=default;
 
-	virtual void Init() = 0;
-	virtual void End() = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual void Draw() = 0;
+
 
 protected:
 	// キャラクターの顔画像

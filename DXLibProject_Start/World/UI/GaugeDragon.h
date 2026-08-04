@@ -11,11 +11,11 @@ public:
 	GaugeDragon();
 	~GaugeDragon();
 	
-	void Init()override;
+	void OnInit()override;
 	void SetDragon(Dragon* dragon);
-	void End()override;
-	void Update(float deltaTime)override;
-	void Draw()override;
+	void OnEnd()override;
+	void OnUpdate(float deltaTime)override;
+	void OnDraw()override;
 private:
 	// ゲージのポインタ
 	GaugeShow* m_gauge;

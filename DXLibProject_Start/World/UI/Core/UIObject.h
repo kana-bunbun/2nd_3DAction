@@ -24,6 +24,7 @@ public:
 	void Draw();
 	void End();
 	void SetPosition(const Vector2& position) { m_position = position; }
+	const Vector2& GetPosition() { return m_position; }
 protected:
 	// 派生クラス拡張用の関数
 

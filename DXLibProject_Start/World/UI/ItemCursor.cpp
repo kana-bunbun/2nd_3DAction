@@ -247,25 +247,25 @@ Vector3 ItemCursor::GetSelectPos(int selectIndex)
 
 bool ItemCursor::AddItem(const ItemData::Type& type)
 {
-	if (type == ItemData::Type::Invalid)return false;
-	// 同じアイテムをすでに所持しているときは所持数に加算する
-	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->GetItemType() != type)continue;
-		// 所持数に加算
-		m_slots[i]->Add();
-		// 追加できたのでtrue
-		return true;
-	}
-	// 同じアイテムを所持していないとき
-	// nullptrの要素を探して追加
-	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->GetItemType() !=ItemData::Type::Invalid)continue;
-		// アイテム情報を生成し追加
-		m_slots[i]->SetItemType(type);
-		m_slots[i]->Add();
-		// 追加できたのでtrue
-		return true;
-	}
+	//if (type == ItemData::Type::Invalid)return false;
+	//// 同じアイテムをすでに所持しているときは所持数に加算する
+	//for (int i = 0; i < m_slots.size(); i++) {
+	//	if (m_slots[i]->GetItemType() != type)continue;
+	//	// 所持数に加算
+	//	m_slots[i]->Add();
+	//	// 追加できたのでtrue
+	//	return true;
+	//}
+	//// 同じアイテムを所持していないとき
+	//// nullptrの要素を探して追加
+	//for (int i = 0; i < m_slots.size(); i++) {
+	//	if (m_slots[i]->GetItemType() !=ItemData::Type::Invalid)continue;
+	//	// アイテム情報を生成し追加
+	//	m_slots[i]->SetItemType(type);
+	//	m_slots[i]->Add();
+	//	// 追加できたのでtrue
+	//	return true;
+	//}
 
 	// 追加できなかったのでfalse
 	return false;
@@ -274,18 +274,18 @@ bool ItemCursor::AddItem(const ItemData::Type& type)
 bool ItemCursor::SubItem(const ItemData::Type& type)
 {
 
-	// そのアイテムをすでに所持しているときは所持数を減らす
-	for (int i = 0; i < m_slots.size(); i++) {
-		if (m_slots[i]->m_itemData.m_type != type)continue;
-		// 所持数を減らす
-		m_slots[i]->Sub();
+	//// そのアイテムをすでに所持しているときは所持数を減らす
+	//for (int i = 0; i < m_slots.size(); i++) {
+	//	if (m_slots[i]->m_itemData.GetType != type)continue;
+	//	// 所持数を減らす
+	//	m_slots[i]->Sub();
 
-		if (m_slots[i]->GetHoldNum() <= 0) {
-			Cancel(type);
-		}
-		// 減少できたのでtrue
-		return true;
-	}
+	//	if (m_slots[i]->GetHoldNum() <= 0) {
+	//		Cancel(type);
+	//	}
+	//	// 減少できたのでtrue
+	//	return true;
+	//}
 	// 同じアイテムを所持していないときfalse
 	return false;
 }

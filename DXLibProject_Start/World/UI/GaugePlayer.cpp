@@ -7,6 +7,7 @@
 #include"MPShow.h"
 #include"GaugeParam.h"
 #include<string>
+#include<memory>
 
 namespace{
 	// プレイヤー顔画像のパスID
@@ -29,7 +30,7 @@ GaugePlayer::~GaugePlayer()
 {
 }
 
-void GaugePlayer::Init()
+void GaugePlayer::OnInit()
 {
 }
 
@@ -49,7 +50,7 @@ void GaugePlayer::SetPlayer(Player* player)
 	}
 }
 
-void GaugePlayer::End()
+void GaugePlayer::OnEnd()
 {
 	// ゲージの終了処理を行う
 	m_HPGauge->End();
@@ -57,14 +58,14 @@ void GaugePlayer::End()
 
 }
 
-void GaugePlayer::Update(float deltaTime)
+void GaugePlayer::OnUpdate(float deltaTime)
 {
 	// ゲージの更新処理を行う
 	m_HPGauge->Update(deltaTime);
 	m_MPGauge->Update(deltaTime);
 }
 
-void GaugePlayer::Draw()
+void GaugePlayer::OnDraw()
 {
 	// 描画の中心座標を求める
 	Vector3 pos = (m_HPGauge->GetPosition() + m_MPGauge->GetPosition())*0.5f;

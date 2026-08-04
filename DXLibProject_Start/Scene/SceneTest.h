@@ -108,7 +108,7 @@ private:
 	int m_playerNum;
 
 	Barrier* m_pBarrier;
-	//std::unique_ptr<UIManager> m_pUiManager;
+	std::unique_ptr<UIManager> m_pUIManager;
 
 	std::unique_ptr<TileManager>m_pTileManager;
 	std::unique_ptr<PadManager> m_pPadManager;

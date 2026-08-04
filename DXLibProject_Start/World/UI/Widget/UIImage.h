@@ -12,7 +12,6 @@ public:
 	UIImage(std::shared_ptr<ImageResource> image ,const Vector2& position);
 	virtual ~UIImage()override = default;
 
-	//
 	void OnInit()override;
 	void OnUpdate(float deltaTime)override;
 	void OnDraw()override;
