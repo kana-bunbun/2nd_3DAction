@@ -11,13 +11,17 @@ public:
 		ChiliPepper,
 		Whiskey,
 		HealBottle,
-		MolotovCocktail,
+		FireBottle,
 		Max,
 	};
 	// アイテムの種類を取得
 	const Type& GetType() { return m_type; }
 	// アイテムの種類を設定
-	void SetType(const Type& type) { m_type = m_type; }
+	void SetType(const Type& type) { 
+		m_type = type; 
+		int io = 0;
+	}
+
 	// アイテムの所持数を取得
 	int GetItemNum() { return m_num; }
 	// 所持数に加算

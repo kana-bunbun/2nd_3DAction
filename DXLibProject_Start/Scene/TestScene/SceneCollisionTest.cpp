@@ -47,7 +47,7 @@ void SceneCollisionTest::End()
 
 std::unique_ptr<SceneBase> SceneCollisionTest::Update(float deltaTime)
 {
-    if (Input::IsPressed(Input::Button::Back, Input::Pad::P1))
+    if (Input::IsPressed(Input::Key::Back, Input::Pad::P1))
         return std::make_unique<SceneSelectDebug>();
 
 	m_pCameraManager->Update(deltaTime);

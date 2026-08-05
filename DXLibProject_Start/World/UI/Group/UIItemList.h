@@ -11,6 +11,8 @@ class UIItemList: public UIObject
 {
 public:
 	UIItemList();
+	void OnInit()override;
+	void OnUpdate(float deltatime)override;
 	void SelectPrevIndex();
 	void SelectNextIndex();
 private:

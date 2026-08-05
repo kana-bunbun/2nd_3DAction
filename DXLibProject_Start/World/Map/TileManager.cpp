@@ -126,7 +126,7 @@ void TileManager::Update(float deltaTime)
 	//}
 
 
-	if (Input::IsPressed(Input::Button::B, m_pad)) {
+	if (Input::IsPressed(Input::Key::B, m_pad)) {
 		if (m_pStair->IsHit()) {
 			// フロア生成
 			SetUpFloor();

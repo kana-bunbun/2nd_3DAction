@@ -66,6 +66,7 @@ void CharacterManager::SetPad(Input::Pad pad)
 
 Character* CharacterManager::GetCharacter(int ID)
 {
+	m_characters = GameObjectManager::GetInstance().GetCharacters();
 	// 配列に対して有効な値かどうかをチェック
 	if (ID >= 0 && ID < m_characters.size()) {
 		// 有効な値なら指定したIDのキャラクターを返す
@@ -77,6 +78,7 @@ Character* CharacterManager::GetCharacter(int ID)
 
 Player* CharacterManager::GetPlayer()
 {
+	m_characters = GameObjectManager::GetInstance().GetCharacters();
 	// プレイヤーのポインタがないとき
 	if (!m_pPlayer) {
 		// キャラクターの配列を総当たりして調べる
@@ -98,6 +100,7 @@ Player* CharacterManager::GetPlayer()
 
 Dragon* CharacterManager::GetDragon()
 {
+	m_characters = GameObjectManager::GetInstance().GetCharacters();
 	// ドラゴンのポインタがないとき
 	if (!m_pDragon) {
 		// キャラクターの配列を総当たりして調べる

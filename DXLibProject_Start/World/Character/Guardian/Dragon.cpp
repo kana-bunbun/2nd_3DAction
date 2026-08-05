@@ -213,7 +213,7 @@ void Dragon::TileIDUpdate()
 void Dragon::UpdateFromInput()
 {
 
-	if (Input::IsPressed(Input::Button::RT, Input::Pad::P1)) {
+	if (Input::IsPressed(Input::Key::RT, Input::Pad::P1)) {
 		if (m_followState!=FollowState::Attack&&m_status!=Status::Dragon::Attack) {
 			SetTarget(CharacterManager::GetInstance().CheckNearestCharacter(m_transform.position, Character::Type::Enemy));
 			Call();

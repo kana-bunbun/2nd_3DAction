@@ -83,13 +83,13 @@ void PauseScreen::Draw()
 
 void PauseScreen::Update(float deltaTime, const UIInput& input)
 {
-	if (input.up) {
+	if (input.key[static_cast<int>(UIInputState::Key::Up)][UIInputState::IsDown]) {
 		SelectPrevButton();
 	}
-	if (input.down) {
+	if (input.key[static_cast<int>(UIInputState::Key::Down)][UIInputState::IsDown]) {
 		SelectNextButton();
 	}
-	if (input.decide) {
+	if (input.key[static_cast<int>(UIInputState::Key::Decide)][UIInputState::IsDown]) {
 		ExecuteButton();
 	}
 	UIScreen::Update(deltaTime,input);

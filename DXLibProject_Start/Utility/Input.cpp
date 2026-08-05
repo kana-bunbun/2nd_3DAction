@@ -98,7 +98,7 @@ namespace Input {
 			// コントローラーの入力状況を保存
 			GetJoypadXInputState(pad, &ButtonsLog[i][0]);
 			for (int button=0; button < kButtonNum; button++) {
-				Input::Button buttonIndex = static_cast<Input::Button>(button);
+				Input::Key buttonIndex = static_cast<Input::Key>(button);
 				if (IsDown(buttonIndex, static_cast<Input::Pad>(i))) {
 					HoldLog[i][button] += TimeManager::GetDeltaTime();
 				}
@@ -110,14 +110,14 @@ namespace Input {
 
 	}
 
-	bool IsDown(Button key, const Pad padNum) {
+	bool IsDown(Key key, const Pad padNum) {
 		if (padNum==Pad::Invalid)return false;
 		// トリガーの場合は倒した割合でとる
-		if (key == Button::RT) {
+		if (key == Key::RT) {
 			// 一定量倒していたら
 			return (ButtonsLog[static_cast<int>(padNum)][0].RightTrigger > trrgerInput);
 		}
-		if (key == Button::LT) {
+		if (key == Key::LT) {
 			// 一定量倒していたら
 			return (ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger > trrgerInput);
 		}
@@ -127,18 +127,18 @@ namespace Input {
 		return (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 	}
 
-	bool IsPressed(Button key, const Pad padNum) {
+	bool IsPressed(Key key, const Pad padNum) {
 		// 現在の入力情報
 		bool isNow = static_cast<bool>(ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 		// 1回前の入力情報
 		bool isLast = static_cast<bool>(ButtonsLog[static_cast<int>(padNum)][1].Buttons[static_cast<int>(key)]);
 
 		// トリガーの場合は割合でとる
-		if (key == Button::RT) {
+		if (key == Key::RT) {
 			return (ButtonsLog[static_cast<int>(padNum)][0].RightTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][1].RightTrigger < trrgerInput);
 		}
-		if (key == Button::LT) {
+		if (key == Key::LT) {
 			return (ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][1].LeftTrigger < trrgerInput);
 		}
@@ -150,19 +150,19 @@ namespace Input {
 
 	}
 
-	bool IsReleased(Button key, const Pad padNum) {
+	bool IsReleased(Key key, const Pad padNum) {
 
 		// 現在の入力情報
 		bool isNow = (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 		// 1回前の入力情報
 		bool isLast = (ButtonsLog[static_cast<int>(padNum)][1].Buttons[static_cast<int>(key)]);
 		// トリガーの場合は割合でとる
-		if (key == Button::RT) {
+		if (key == Key::RT) {
 			// 前回の更新時に押していて現在の更新時は押されていない場合true
 			return (ButtonsLog[static_cast<int>(padNum)][1].RightTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][0].RightTrigger < trrgerInput);
 		}
-		if (key == Button::LT) {
+		if (key == Key::LT) {
 			// 前回の更新時に押していて現在の更新時は押されていない場合true
 			return (ButtonsLog[static_cast<int>(padNum)][1].LeftTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger < trrgerInput);
@@ -173,7 +173,7 @@ namespace Input {
 	}
 
 	// 長押しを判定する関数
-	bool Hold(Input::Button key, const Pad padNum, float holdCount)
+	bool IsHold(Input::Key key, const Pad padNum, float holdCount)
 	{
 		bool result = HoldLog[static_cast<int>(padNum)][static_cast<int>(key)] >= holdCount;
 		// 長押ししている判定
@@ -270,13 +270,49 @@ namespace Input {
 	const UIInput& GetUIInput(const Input::Pad& pad)
 	{
 		UIInput input;
+		int upKey = static_cast<int>(UIInputState::Key::Up);
+		int rightKey = static_cast<int>(UIInputState::Key::Right);
+		int downKey = static_cast<int>(UIInputState::Key::Down);
+		int leftKey = static_cast<int>(UIInputState::Key::Left);
+		int decideKey = static_cast<int>(UIInputState::Key::Decide);
+		int cancelKey = static_cast<int>(UIInputState::Key::Cancel);
+		int menuKey = static_cast<int>(UIInputState::Key::Menu);
 
-		input.up = IsDown(Input::Button::Up,pad);
-		input.down= IsDown(Input::Button::Down, pad);
-		input.right = IsDown(Input::Button::Right, pad);
-		input.left = IsDown(Input::Button::Left, pad);
-		input.decide= IsDown(Input::Button::B, pad);
-		input.cancel= IsDown(Input::Button::A, pad);
+		input.key[upKey][UIInputState::IsDown] = IsDown(Input::Key::Up, pad);
+		input.key[upKey][UIInputState::IsPressed] = IsPressed(Input::Key::Up, pad);
+		input.key[upKey][UIInputState::IsReleased] = IsReleased(Input::Key::Up, pad);
+		input.key[upKey][UIInputState::IsHold] = IsHold(Input::Key::Up, pad);
+
+		input.key[rightKey][UIInputState::IsDown] = IsDown(Input::Key::Right, pad);
+		input.key[rightKey][UIInputState::IsPressed] = IsPressed(Input::Key::Right, pad);
+		input.key[rightKey][UIInputState::IsReleased] = IsReleased(Input::Key::Right, pad);
+		input.key[rightKey][UIInputState::IsHold] = IsHold(Input::Key::Right, pad);
+
+		input.key[downKey][UIInputState::IsDown] = IsDown(Input::Key::Down, pad);
+		input.key[downKey][UIInputState::IsPressed] = IsPressed(Input::Key::Down, pad);
+		input.key[downKey][UIInputState::IsReleased] = IsReleased(Input::Key::Down, pad);
+		input.key[downKey][UIInputState::IsHold] = IsHold(Input::Key::Down, pad);
+
+		input.key[leftKey][UIInputState::IsDown] = IsDown(Input::Key::Left, pad);
+		input.key[leftKey][UIInputState::IsPressed] = IsPressed(Input::Key::Left, pad);
+		input.key[leftKey][UIInputState::IsReleased] = IsReleased(Input::Key::Left, pad);
+		input.key[leftKey][UIInputState::IsHold] = IsHold(Input::Key::Left, pad);
+
+		input.key[decideKey][UIInputState::IsDown] = IsDown(Input::Key::B, pad);
+		input.key[decideKey][UIInputState::IsPressed] = IsPressed(Input::Key::B, pad);
+		input.key[decideKey][UIInputState::IsReleased] = IsReleased(Input::Key::B, pad);
+		input.key[decideKey][UIInputState::IsHold] = IsHold(Input::Key::B, pad);
+
+		input.key[cancelKey][UIInputState::IsDown] = IsDown(Input::Key::A, pad);
+		input.key[cancelKey][UIInputState::IsPressed] = IsPressed(Input::Key::A, pad);
+		input.key[cancelKey][UIInputState::IsReleased] = IsReleased(Input::Key::A, pad);
+		input.key[cancelKey][UIInputState::IsHold] = IsHold(Input::Key::A, pad);
+
+		input.key[menuKey][UIInputState::IsDown] = IsDown(Input::Key::Y, pad);
+		input.key[menuKey][UIInputState::IsPressed] = IsPressed(Input::Key::Y, pad);
+		input.key[menuKey][UIInputState::IsReleased] = IsReleased(Input::Key::Y, pad);
+		input.key[menuKey][UIInputState::IsHold] = IsHold(Input::Key::Y, pad);
+
 		return input;
 	}
 

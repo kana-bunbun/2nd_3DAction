@@ -1,6 +1,6 @@
 #pragma once
 #include"../Utility/Vector3.h"
-struct UIInput;
+#include"../World/UI/Core/UIInput.h"
 
 /// <summary>
 /// 入力情報の取得・更新をする
@@ -19,7 +19,7 @@ namespace Input {
 	};
 	
 	//// 使用するボタン
-	enum class Button {	
+	enum class Key {	
 		B = XINPUT_BUTTON_B,				// Bボタン
 		A = XINPUT_BUTTON_A,				// Aボタン
 		Y = XINPUT_BUTTON_Y,				// Yボタン
@@ -54,21 +54,21 @@ namespace Input {
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 押されていたらtrue</returns>
-	bool IsDown(Input::Button key, const Pad padNum);
+	bool IsDown(Input::Key key, const Pad padNum);
 
 	/// <summary>
 	/// キーが押されているかどうかを調べる
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 押された瞬間だったらtrue</returns>
-	bool IsPressed(Input::Button key, const Pad padNum);
+	bool IsPressed(Input::Key key, const Pad padNum);
 
 	/// <summary>
 	/// キーが押されているかどうかを調べる
 	/// </summary>
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 離された瞬間だったらtrue</returns>
-	bool IsReleased(Input::Button key, const Pad padNum);
+	bool IsReleased(Input::Key key, const Pad padNum);
 
 	/// <summary>
 	/// キーが長押しされているかどうか調べる
@@ -76,7 +76,7 @@ namespace Input {
 	/// <param name="key">入力されたキー</param>
 	/// <returns>入力結果 長押しされていたらtrue</returns>
 	constexpr float kHoldCount = 0.3f;
-	bool Hold(Input::Button key, const Pad padNum,float holdCount=kHoldCount);
+	bool IsHold(Input::Key key, const Pad padNum,float holdCount=kHoldCount);
 
 	/// <summary>
 	/// アナログレバーの入力角度を調べる
@@ -95,6 +95,5 @@ namespace Input {
 	void Debug();
 
 	const UIInput& GetUIInput(const Input::Pad& pad=Input::Pad::P1);
-
 }
 

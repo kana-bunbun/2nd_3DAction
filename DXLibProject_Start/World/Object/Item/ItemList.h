@@ -40,6 +40,7 @@ public:
 	bool CanUseItem(int itemIndex,int useCount);
 
 	const std::array<ItemData, kItemSlotNum> GetItemData() { return m_items; }
+	void Debug();
 private:
 	/// <summary>
 	/// 所持しているアイテムの配列

@@ -94,10 +94,10 @@ SceneTest::SceneTest() :
 
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	m_pUIManager = std::make_unique<UIManager>();
-	m_pUIManager->PushScreen(std::make_unique<InGameMainScreen>());
 	m_pPadManager= std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
 	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
+	m_pUIManager->PushScreen(std::make_unique<InGameMainScreen>());
 
 
 }

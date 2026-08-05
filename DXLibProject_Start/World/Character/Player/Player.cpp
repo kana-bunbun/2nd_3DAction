@@ -191,6 +191,10 @@ void Player::LoadModel()
 	// 読み込んだ値を元にエミッシブカラーを設定
 	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color.ToCOLOR_F());
 	MV1SetScale(m_modelData->GetHandle(), kModelScale.ToVECTOR());
+	m_itemList.AddItem(ItemData::Type::ChiliPepper, 144);
+	m_itemList.AddItem(ItemData::Type::HealBottle, 6534);
+	m_itemList.AddItem(ItemData::Type::Honey, 34);
+	m_itemList.AddItem(ItemData::Type::FireBottle, 877);
 }
 
 void Player::Update(float deltaTime)
@@ -214,7 +218,7 @@ void Player::Update(float deltaTime)
 	}
 
 	printfDx("status : %d\n", m_status);
-
+	m_itemList.Debug();
 	// ゲージが上限・下限を超えないようにする
 	
 
@@ -233,7 +237,7 @@ void Player::UpdateAction()
 		break;
 	case Status::Player::Walk: {
 		// 歩き状態の時にボタンを押すとダッシュ
-		if (Input::IsPressed(Input::Button::LThumb, m_pad)) {
+		if (Input::IsPressed(Input::Key::LThumb, m_pad)) {
 			m_dashFlag ^= 1;
 		}
 		// 移動速度の速さに応じてアニメーションの再生速度を計算
@@ -262,7 +266,7 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if ((!Input::IsDown(Input::Button::A, m_pad)&&m_charge)){
+	if ((!Input::IsDown(Input::Key::A, m_pad)&&m_charge)){
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
@@ -273,7 +277,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::Button::A, m_pad)) {
+	if (Input::IsDown(Input::Key::A, m_pad)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -339,7 +343,7 @@ void Player::UpdateAnimation(float deltaTime)
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
 	// パリィ時またはボタンを押した瞬間
-	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Button::A, m_pad))) {
+	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Key::A, m_pad))) {
 		// パリィ状態に
 		nextStatus = Status::Player::Parry;
 	}

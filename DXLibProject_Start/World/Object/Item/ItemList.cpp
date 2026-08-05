@@ -1,5 +1,5 @@
 #include "ItemList.h"
-
+#include<DxLib.h>
 ItemList::ItemList()
 {
 
@@ -29,6 +29,7 @@ void ItemList::AddItem(const ItemData::Type & type, int addNum)
 		if (holdNum)continue;
 		// 空のアイテム枠があれば加算して終了
 		m_items[i].Add(addNum);
+		m_items[i].SetType(type);
 		return;
 	}
 }
@@ -49,6 +50,10 @@ void ItemList::UseItem(int itemIndex, int subNum)
 	if (!CanUseItem(itemIndex, subNum))return;
 	// アイテムの消費
 	m_items[itemIndex].Sub(subNum);
+
+	if (m_items[itemIndex].GetItemNum() > 0)return;
+	// アイテムの所持数が無くなったらアイテムの種類を不正値に設定
+	m_items[itemIndex].SetType(ItemData::Type::Invalid);
 }
 
 bool ItemList::CanUseItem(int itemIndex, int useCount)
@@ -61,6 +66,16 @@ bool ItemList::CanUseItem(int itemIndex, int useCount)
 	if (data.GetItemNum()<useCount)return false;
 	// ここまで来たら使用可能
 	return true;
+}
+
+void ItemList::Debug()
+{
+	printfDx("ItemData::Type::Honey : %d\n",m_items[static_cast<int>(ItemData::Type::Honey)].GetItemNum());
+	printfDx("ItemData::Type::Jam : %d\n",m_items[static_cast<int>(ItemData::Type::Jam)].GetItemNum());
+	printfDx("ItemData::Type::ChiliPepper : %d\n", m_items[static_cast<int>(ItemData::Type::ChiliPepper)].GetItemNum());
+	printfDx("ItemData::Type::Whiskey : %d\n", m_items[static_cast<int>(ItemData::Type::Whiskey)].GetItemNum());
+	printfDx("ItemData::Type::HealBottle : %d\n", m_items[static_cast<int>(ItemData::Type::HealBottle)].GetItemNum());
+	printfDx("ItemData::Type::FireBottle : %d\n", m_items[static_cast<int>(ItemData::Type::FireBottle)].GetItemNum());
 }
 
 
