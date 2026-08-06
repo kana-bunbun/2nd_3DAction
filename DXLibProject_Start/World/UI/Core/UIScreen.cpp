@@ -2,6 +2,7 @@
 
 void UIScreen::Update(float deltaTime, const UIInput& input)
 {
+
 	for (auto& object : m_rootObjects) {
 		if (!object)continue;
 		object->Update(deltaTime);

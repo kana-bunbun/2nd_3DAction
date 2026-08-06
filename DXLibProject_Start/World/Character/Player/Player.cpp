@@ -174,7 +174,11 @@ void Player::Init()
 
 	// タグをプレイヤーに設定
 	GameObject::m_collisionTag = CollisionTag::Player;
-
+	m_itemList = std::make_unique<ItemList>();
+	m_itemList->AddItem(ItemData::Type::ChiliPepper, 144);
+	m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
+	m_itemList->AddItem(ItemData::Type::Honey, 34);
+	m_itemList->AddItem(ItemData::Type::FireBottle, 877);
 }
 
 void Player::LoadModel()
@@ -191,10 +195,7 @@ void Player::LoadModel()
 	// 読み込んだ値を元にエミッシブカラーを設定
 	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color.ToCOLOR_F());
 	MV1SetScale(m_modelData->GetHandle(), kModelScale.ToVECTOR());
-	m_itemList.AddItem(ItemData::Type::ChiliPepper, 144);
-	m_itemList.AddItem(ItemData::Type::HealBottle, 6534);
-	m_itemList.AddItem(ItemData::Type::Honey, 34);
-	m_itemList.AddItem(ItemData::Type::FireBottle, 877);
+
 }
 
 void Player::Update(float deltaTime)
@@ -218,7 +219,7 @@ void Player::Update(float deltaTime)
 	}
 
 	printfDx("status : %d\n", m_status);
-	m_itemList.Debug();
+	m_itemList->Debug();
 	// ゲージが上限・下限を超えないようにする
 	
 

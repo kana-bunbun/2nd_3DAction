@@ -30,6 +30,10 @@ public:
 	void Sub(int subVallue = 1) { m_num -= subVallue; }
 	// 使用できるかどうか
 	bool CanUse(int useCount = 1) { return m_num >= useCount; }
+	/// <summary>
+	/// 自身がアイテムの情報を持っているかどうか取得
+	/// </summary>
+	bool ExistItem();
 private:
 	// 自身の種類
 	Type m_type = Type::Invalid;

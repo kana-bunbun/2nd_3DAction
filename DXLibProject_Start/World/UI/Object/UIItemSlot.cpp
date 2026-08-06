@@ -36,21 +36,20 @@ void UIItemSlot::OnDraw()
 {
 	// スロット背景の描画
 	DrawRotaGraph(m_position.x, m_position.y, kSlotScale, 0, m_backGroundImage->GetHandle(), TRUE);
-	if (!m_character)return;
-	// アイテムのリスト取得
-	ItemList itemlist=m_character->GetItemList();
-	// 自身が担当するアイテムのデータ取得
-	ItemData item = itemlist.GetItemData()[m_slotID];
 	// 自身が担当しているスロットにアイテムがなければ即時return
-	if (item.GetItemNum() <= 0)return;
+	if (!m_itemData.ExistItem())return;
 	// 描画する画像を取得
-	std::shared_ptr<ImageResource> itemGraph = ImageManager::GetInstance().GetImage(kItemPathID[static_cast<int>(item.GetType())]);
+	int itemGraphID = kItemPathID[static_cast<int>(m_itemData.GetType())];
+	std::shared_ptr<ImageResource> itemGraph = ImageManager::GetInstance().GetImage(itemGraphID);
 	// 描画座標を求める
 	Vector2 drawPos = m_position;
 	//if (m_select)drawPos += kSelectIconOffset;
 
 	// アイテムアイコン描画
-	DrawRotaGraph(drawPos.x, drawPos.y, GetNormalizeGraphScale(itemGraph->GetHandle()), 0, itemGraph->GetHandle(), TRUE);
+	DrawRotaGraph(
+		drawPos.x, drawPos.y,
+		GetNormalizeGraphScale(itemGraph->GetHandle()),
+		0, itemGraph->GetHandle(), TRUE);
 }
 
 float UIItemSlot::GetNormalizeGraphScale(int graphHandle)
@@ -62,6 +61,9 @@ float UIItemSlot::GetNormalizeGraphScale(int graphHandle)
 	GetGraphSize(graphHandle, &sizeX, &sizeY);
 	// 指定画像の縦か横の大きい方を基準の大きさとする
 	float baseSize = (sizeX > sizeY) ? sizeX : sizeY;
+	// 0での除算回避用の処理
+	if (!baseSize)return 0.0f;
+
 	// アイテムスロットに合うサイズを返す
 	return static_cast<float>(kNormalIconSize)/baseSize;
 }

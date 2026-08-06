@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Object\Item\ItemData.cpp" />
     <ClCompile Include="World\UI\Object\UIItemCursor.cpp" />
     <ClCompile Include="World\UI\Group\UIItemList.cpp" />
     <ClCompile Include="World\UI\Object\ItemSlotBack.cpp" />

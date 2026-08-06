@@ -27,6 +27,7 @@ void UIObject::Update(float deltaTime)
 		if (!child)continue;
 		child->Update(deltaTime);
 	}
+	AfterUpdate(deltaTime);
 }
 
 void UIObject::Draw()

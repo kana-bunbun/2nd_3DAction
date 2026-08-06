@@ -38,8 +38,10 @@ public:
 	/// <param name="useCount">消費量</param>
 	/// <returns></returns>
 	bool CanUseItem(int itemIndex,int useCount);
-
-	const std::array<ItemData, kItemSlotNum> GetItemData() { return m_items; }
+	/// <summary>
+	/// 配列内の指定IDのアイテム情報取得
+	/// </summary>
+	const ItemData& GetItemData(int ID)const;
 	void Debug();
 private:
 	/// <summary>

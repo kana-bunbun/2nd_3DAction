@@ -68,6 +68,12 @@ bool ItemList::CanUseItem(int itemIndex, int useCount)
 	return true;
 }
 
+const ItemData& ItemList::GetItemData(int ID) const
+{
+	if (ID <= 0 || ID >= m_items.size())return ItemData();
+	return m_items[ID];
+}
+
 void ItemList::Debug()
 {
 	printfDx("ItemData::Type::Honey : %d\n",m_items[static_cast<int>(ItemData::Type::Honey)].GetItemNum());

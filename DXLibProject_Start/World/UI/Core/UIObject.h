@@ -32,6 +32,7 @@ protected:
 	// 個別で処理したいことがあればoverrideで記載
 	virtual void OnInit() {};
 	virtual void OnUpdate(float deltaTime) {};
+	virtual void AfterUpdate(float deltaTime) {};
 	virtual void OnDraw() {};
 	virtual void OnEnd() {};
 

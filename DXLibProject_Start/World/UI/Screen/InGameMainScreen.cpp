@@ -19,12 +19,12 @@ void InGameMainScreen::Init()
 	//auto frameHandle = ImageManager::GetInstance().GetImage(kLogoPathID);
 	//auto startText = std::make_unique <UIText>(kSelectExitText, data[0], kInitPos);
 	//auto startImage = std::make_unique<UIImage>(frameHandle, kInitPos);
-	CreateUIObject<UIItemList>();
+	m_pItemList = CreateUIObject<UIItemList>();
 
 }
 
 void InGameMainScreen::Update(float deltaTime, const UIInput& input)
 {
-	//if ();
+	
 	UIScreen::Update(deltaTime,input);
 }

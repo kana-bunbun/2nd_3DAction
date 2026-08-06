@@ -16,16 +16,16 @@ public:
 	/// </summary>
 	void OnDraw()override;
 	/// <summary>
-	/// 所持アイテムのリストを取得するためキャラクターのポインタを取得
+	/// 所持アイテムのリストを設定
 	/// </summary>
-	/// <param name="character"></param>
-	void SetCharacter(Character* character) { m_character = character; }
+	void SetItemData(const ItemData& itemData) { m_itemData= itemData; }
 	/// <summary>
 	/// 指定した画像がアイテムスロットに合うようなスケール値を取得
 	/// </summary>
 	float GetNormalizeGraphScale(int graphHandle);
+	int GetID() { return m_slotID; }
 private:
-	Character* m_character;
+	ItemData m_itemData;
 	/// <summary>
 	/// 自身のスロット番号
 	/// </summary>

@@ -156,6 +156,7 @@ void SceneTest::End() {
 }
 
 std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
+	ProfileScope("Update");
 	m_pCameraMgr->Update(deltaTime);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
@@ -184,6 +185,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 }
 
 void SceneTest::Draw() {
+	ProfileScope("Draw");
 	//DrawGround();
 	// ƒJƒƒ‰‚Ì•`‰æ
 	m_pCameraMgr->Apply();

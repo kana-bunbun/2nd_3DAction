@@ -9,6 +9,7 @@
 #include"World/UI/BillboardManager.h"
 #include"World/Object/Item/BlendManager.h"
 #include"System/Debug/Profiler.h"
+#include"System/Debug/ProfileScope.h"
 #include"System/ActionEffectParamManager.h"
 #include"System/CollisionDataManager.h"
 #include"System/ResourceManager.h"
@@ -53,19 +54,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 描画先を裏面にセット
 	SetDrawScreen(DX_SCREEN_BACK);
-
 	// メインループ
 	while (ProcessMessage() == 0) {
-
 		ClearDrawScreen();		// 画面の初期化
 		clsDx();				// デバッグ文字の初期化
-
+		
+		Profiler::BeginFrame();
 		// 入力更新
 		Input::Update();
 		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
 		
-		Profiler::BeginFrame();
 
 
 		pSceneMgr->Update(deltaTime);
@@ -81,7 +80,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		auto records = Profiler::GetRecords();
 		int count = 0;
-
 		for (const auto& record : records) {
 			count++;
 			std::string recordName = record.name;
