@@ -1,6 +1,7 @@
 #include "CameraManager.h"
 #include"../Utility/MyMath.h"
 #include<cassert>
+#include<EffekseerForDXLib.h>
 namespace {
 	constexpr float kNearDistance = 5.0f;	// カメラの手前のクリップ距離
 	constexpr float kFarDistance = 20000.0f;	// カメラの奥のクリップ距離
@@ -50,6 +51,8 @@ void CameraManager::Apply()
 
 	// カメラの視野角を設定
 	SetupCamera_Perspective(m_currentView.fov * MyMath::ToRadian);
+	// Effekseerのカメラと同期
+	Effekseer_Sync3DSetting();
 }
 
 

@@ -13,8 +13,20 @@
 #include"System/ActionEffectParamManager.h"
 #include"System/CollisionDataManager.h"
 #include"System/ResourceManager.h"
+#include<EffekseerForDXLib.h>
+
 #include<memory>
 
+// 追加のインクルードディレクトリ
+// 現在Dxライブラリを使用するにあたってC/C++、リンカーにて設定している
+// この設定は複数設定して良いもの
+// ただし追加しすぎると同じファイル名同氏の競合を起こす危険性があるので使いすぎには注意
+// この設定をすることでインクルードの開始地点を増やすことができる
+// 
+
+namespace {
+	constexpr int kParticleMax = 10000;
+}
 
 //========================================================
 // WinMain関数　ここからプログラムが始まる
@@ -25,9 +37,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	GameSetting::InitWindow();
 
+	// Effekseerを使用するためDirectX11を使用
+	SetUseDirect3DVersion(DX_DIRECT3D_11);
+
+
 	if (DxLib_Init() == -1) {	// DXライブラリ初期化処理
 
 		return -1;				// 初期化に失敗したら強制終了
+	}
+
+	// Effecseerの初期設定
+	// 引数は画面に表示するパーティクルの最大数を設定
+	if (Effekseer_Init(kParticleMax) == -1) {
+		return -1;
 	}
 
 	// ゲーム設定クラスのポインタを生成
@@ -36,6 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// ゲームの3Dの初期設定
 	pSetting->InitDxLib3D();
+	pSetting->InitEffekseer();
 
 	// 乱数の初期化
 	MyRandom::Init();
@@ -95,7 +118,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CollisionDataManager::GetInstance().End();
 	ActionEffectParamManager::GetInstance().End();
 	pSceneMgr->End();
-
+	Effkseer_End();
 	DxLib_End();				// DXライブラリの終了処理
 	return 0;					// ソフトの終了 
 }

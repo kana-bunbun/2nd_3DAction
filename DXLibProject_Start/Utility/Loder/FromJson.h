@@ -3,8 +3,8 @@
 #include<cassert>
 #include"Data.h"
 #include"JsonConvert.h"
-#include"../Data/CameraParam.h"
-#include"../Data/ModelPathParam.h"
+#include"Data/CameraParam.h"
+#include"Data/ModelPathParam.h"
 
 namespace Data {
 	namespace Json {

@@ -1,11 +1,11 @@
 #include "SceneCollisionTest.h"
 #include "../SceneSelectDebug.h"
 #include<DxLib.h>
-#include"../Utility/Color.h"
-#include"../Utility/MyMath.h"
-#include"../Utility/Input.h"
-#include"../Camera/CameraManager.h"
-#include"../Camera/DebugCamera.h"
+#include"Utility/Color.h"
+#include"Utility/MyMath.h"
+#include"Utility/Input.h"
+#include"Camera/CameraManager.h"
+#include"Camera/DebugCamera.h"
 
 namespace {
 

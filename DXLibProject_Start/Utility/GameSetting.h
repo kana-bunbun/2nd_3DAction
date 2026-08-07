@@ -22,4 +22,6 @@ public:
 	static void InitDxLib3D();
 
 
+	static void InitEffekseer();
+
 };

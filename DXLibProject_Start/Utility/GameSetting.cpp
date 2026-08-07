@@ -3,7 +3,7 @@
 #include "../Utility/Vector3.h"
 #include "Game.h"
 
-
+#include<EffekseerForDXLib.h>
 
 namespace {
 	constexpr int BackGroundR=112/*128*/;
@@ -35,5 +35,18 @@ void GameSetting::InitDxLib3D()
 
 	// 確認用に背景色を設定
 	SetBackgroundColor(BackGroundR, BackGroundG, BackGroundB);
+}
+
+void GameSetting::InitEffekseer()
+{
+	// フルスクリーンウィンドウの切り替えでリソースが消えるのを防ぐ
+	SetChangeScreenModeGraphicsSystemResetFlag(false);
+	// DXライブラリのデバイスロストをした時のコールバックを設定
+	// ウィンドウとフルスクリーンの切り替えが発生する場合は必ず実行する
+	// ただし、DirectX11を使用する際は実行する必要はない
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
+	// 後はDXライブラリのカメラとEffekseerのカメラを同期する必要がある
+	// ↑はここではなく、CameraManagerで行う
+
 }
 

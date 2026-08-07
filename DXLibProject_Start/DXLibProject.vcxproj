@@ -76,14 +76,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\DxLib;$(ProjectDir)Include\Effekseer;$(ProjectDir)Include\imgui;$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Include\DxLib;$(ProjectDir)Include\Effekseer;$(ProjectDir)Include\imgui;$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -113,14 +114,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\DxLib;$(ProjectDir)Include\Effekseer;$(ProjectDir)Include\imgui;$(ProjectDir)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)Include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Include\DxLib;$(ProjectDir)Include\Effekseer;$(ProjectDir)Include\imgui;$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -145,6 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\EffectManager.cpp" />
+    <ClCompile Include="System\EffectInstance.cpp" />
+    <ClCompile Include="System\EffectResource.cpp" />
+    <ClCompile Include="System\EffectResourceManager.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneEffekseerTest.cpp" />
     <ClCompile Include="World\Object\Item\ItemData.cpp" />
     <ClCompile Include="World\UI\Object\UIItemCursor.cpp" />
     <ClCompile Include="World\UI\Group\UIItemList.cpp" />
@@ -293,7 +300,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\ActionParam.h" />
+    <ClInclude Include="Data\EffectPathParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
+    <ClInclude Include="System\EffectManager.h" />
+    <ClInclude Include="System\EffectInstance.h" />
+    <ClInclude Include="System\EffectResource.h" />
+    <ClInclude Include="System\EffectResourceManager.h" />
+    <ClInclude Include="Scene\TestScene\SceneEffekseerTest.h" />
     <ClInclude Include="World\UI\Object\UIItemCursor.h" />
     <ClInclude Include="World\UI\Group\UIItemList.h" />
     <ClInclude Include="World\UI\Object\ItemSlotBack.h" />

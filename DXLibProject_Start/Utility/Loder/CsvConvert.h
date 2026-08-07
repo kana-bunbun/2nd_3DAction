@@ -6,11 +6,11 @@
 #include<cassert>
 #include"../Vector3.h"
 #include"../Color.h"
-#include"../Data/BlendRecipe.h"
-#include"../World/GameObjectParam.h"
-#include"../World/GameObject.h"
-#include"../World/Component/Collision.h"
-#include"../Utility/Color.h"
+#include"Data/BlendRecipe.h"
+#include"World/GameObjectParam.h"
+#include"World/GameObject.h"
+#include"World/Component/Collision.h"
+#include"Utility/Color.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する

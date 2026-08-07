@@ -1,8 +1,8 @@
 #pragma once
 #include "../SceneBase.h"
-#include "../Utility/Vector3.h"
-#include "../Utility/Input.h"
-#include"../World/Component/Collision.h"
+#include "Utility/Vector3.h"
+#include "Utility/Input.h"
+#include"World/Component/Collision.h"
 #include<memory>
 
 

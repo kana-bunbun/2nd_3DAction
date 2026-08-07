@@ -4,17 +4,18 @@
 #include<type_traits>
 #include"Data.h"
 #include"CsvConvert.h"
-#include"../Data/CameraParam.h"
-#include"../Data/ModelPathParam.h"
-#include"../Data/BlendRecipe.h"
-#include"../Data/ActionEffectParam.h"
-#include"../Data/ActionIntervalParam.h"
+#include"Data/CameraParam.h"
+#include"Data/ModelPathParam.h"
+#include"Data/BlendRecipe.h"
+#include"Data/ActionEffectParam.h"
+#include"Data/ActionIntervalParam.h"
 #include"../Color.h"
-#include"../World/Component/Collision.h"
-#include"../World/GameObjectParam.h"
-#include"../Data/UITextParam.h"
-#include"../../Data/ActionParam.h"
-#include"../../Data/GraphPathParam.h"
+#include"World/Component/Collision.h"
+#include"World/GameObjectParam.h"
+#include"Data/UITextParam.h"
+#include"Data/ActionParam.h"
+#include"Data/GraphPathParam.h"
+#include"Data/EffectPathParam.h"
 
 namespace Data {
 	namespace Csv {
@@ -177,6 +178,15 @@ namespace Data {
 				GraphPathParam param;
 				param.ID = Get<int>(row, "ID");
 				param.graphName= Get<std::string>(row, "graphName");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<EffectPathParam> {
+			static EffectPathParam Binding(const Csv::Row& row) {
+				EffectPathParam param;
+				param.ID = Get<int>(row, "ID");
+				param.effectName= Get<std::string>(row, "effectName");
 				return param;
 			}
 		};

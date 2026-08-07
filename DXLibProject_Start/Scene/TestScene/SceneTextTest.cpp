@@ -1,13 +1,13 @@
 #include "SceneTextTest.h"
-#include "../SceneSelectDebug.h"
-#include"../Utility/Input.h"
-#include"../Utility/Color.h"
-#include"../Utility/MyMath.h"
-#include"../Utility/Vector2.h"
-#include"../../World/UI/Widget/UIText.h"
-#include"../../World/UI/Screen/TestScreen.h"
-#include"../../Scene/SceneTest.h"
-#include"../../Scene/SceneSelectDebug.h"
+#include "Scene/SceneSelectDebug.h"
+#include"Utility/Input.h"
+#include"Utility/Color.h"
+#include"Utility/MyMath.h"
+#include"Utility/Vector2.h"
+#include"World/UI/Widget/UIText.h"
+#include"World/UI/Screen/TestScreen.h"
+#include"Scene/SceneTest.h"
+#include"Scene/SceneSelectDebug.h"
 
 namespace {
 	constexpr Vector2 kInitPos{ 400.0f,400.0f };

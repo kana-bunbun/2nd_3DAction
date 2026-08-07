@@ -11,7 +11,7 @@ namespace {
 	constexpr Vector2 kInitPos{ 300.0f,400.0f };
 
 	const char* const kSelectExitText = "Exit";
-	constexpr int kLogoPathID = 0;
+	constexpr int kLogoPathID = 1901;
 }
 IngameHudScreen::IngameHudScreen():
 	m_pButton(nullptr)

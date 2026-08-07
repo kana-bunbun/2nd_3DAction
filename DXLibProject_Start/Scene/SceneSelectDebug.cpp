@@ -7,6 +7,7 @@
 #include"TestScene/SceneCollisionTest.h"
 #include"TestScene/SceneTextTest.h"
 #include"TestScene/SceneInGameUITest.h"
+#include"TestScene/SceneEffekseerTest.h"
 
 #include<functional>
 
@@ -78,6 +79,7 @@ void SceneSelectDebug::Init()
     m_sceneList.push_back({ "Collision",[]() {return std::make_unique<SceneCollisionTest>(); } });
     m_sceneList.push_back({ "Text", []() {return std::make_unique<SceneTextTest>(); } });
     m_sceneList.push_back({ "InGameUI", []() {return std::make_unique<SceneInGameUITest>(); } });
+    m_sceneList.push_back({ "EffekseerTest", []() {return std::make_unique<SceneEffekseerTest>(); } });
 
 }
 
