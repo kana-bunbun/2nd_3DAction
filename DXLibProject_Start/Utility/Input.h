@@ -94,6 +94,5 @@ namespace Input {
 	/// </summary>
 	void Debug();
 
-	const UIInput& GetUIInput(const Input::Pad& pad=Input::Pad::P1);
 }
 

@@ -160,7 +160,7 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	m_pCameraMgr->Update(deltaTime);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pUIManager->Update(deltaTime,Input::GetUIInput());
+	m_pUIManager->Update(deltaTime,UIInput());
 	m_pTileManager->Update(deltaTime);
 	
 	GameObjectManager::GetInstance().Update(deltaTime);

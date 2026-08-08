@@ -91,8 +91,7 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 	default:
 		break;
 	}
-	UIInput input=Input::GetUIInput();
-	m_pScreen->Update(deltaTime, input);
+	m_pScreen->Update(deltaTime, UIInput());
 	auto result = m_pScreen->ConsumeResult();
 	switch (result)
 	{

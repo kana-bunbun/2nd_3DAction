@@ -267,54 +267,5 @@ namespace Input {
 
 	}
 
-	const UIInput& GetUIInput(const Input::Pad& pad)
-	{
-		UIInput input;
-		int upKey = static_cast<int>(UIInputState::Key::Up);
-		int rightKey = static_cast<int>(UIInputState::Key::Right);
-		int downKey = static_cast<int>(UIInputState::Key::Down);
-		int leftKey = static_cast<int>(UIInputState::Key::Left);
-		int decideKey = static_cast<int>(UIInputState::Key::Decide);
-		int cancelKey = static_cast<int>(UIInputState::Key::Cancel);
-		int menuKey = static_cast<int>(UIInputState::Key::Menu);
-
-		input.key[upKey][UIInputState::IsDown] = IsDown(Input::Key::Up, pad);
-		input.key[upKey][UIInputState::IsPressed] = IsPressed(Input::Key::Up, pad);
-		input.key[upKey][UIInputState::IsReleased] = IsReleased(Input::Key::Up, pad);
-		input.key[upKey][UIInputState::IsHold] = IsHold(Input::Key::Up, pad);
-
-		input.key[rightKey][UIInputState::IsDown] = IsDown(Input::Key::Right, pad);
-		input.key[rightKey][UIInputState::IsPressed] = IsPressed(Input::Key::Right, pad);
-		input.key[rightKey][UIInputState::IsReleased] = IsReleased(Input::Key::Right, pad);
-		input.key[rightKey][UIInputState::IsHold] = IsHold(Input::Key::Right, pad);
-
-		input.key[downKey][UIInputState::IsDown] = IsDown(Input::Key::Down, pad);
-		input.key[downKey][UIInputState::IsPressed] = IsPressed(Input::Key::Down, pad);
-		input.key[downKey][UIInputState::IsReleased] = IsReleased(Input::Key::Down, pad);
-		input.key[downKey][UIInputState::IsHold] = IsHold(Input::Key::Down, pad);
-
-		input.key[leftKey][UIInputState::IsDown] = IsDown(Input::Key::Left, pad);
-		input.key[leftKey][UIInputState::IsPressed] = IsPressed(Input::Key::Left, pad);
-		input.key[leftKey][UIInputState::IsReleased] = IsReleased(Input::Key::Left, pad);
-		input.key[leftKey][UIInputState::IsHold] = IsHold(Input::Key::Left, pad);
-
-		input.key[decideKey][UIInputState::IsDown] = IsDown(Input::Key::B, pad);
-		input.key[decideKey][UIInputState::IsPressed] = IsPressed(Input::Key::B, pad);
-		input.key[decideKey][UIInputState::IsReleased] = IsReleased(Input::Key::B, pad);
-		input.key[decideKey][UIInputState::IsHold] = IsHold(Input::Key::B, pad);
-
-		input.key[cancelKey][UIInputState::IsDown] = IsDown(Input::Key::A, pad);
-		input.key[cancelKey][UIInputState::IsPressed] = IsPressed(Input::Key::A, pad);
-		input.key[cancelKey][UIInputState::IsReleased] = IsReleased(Input::Key::A, pad);
-		input.key[cancelKey][UIInputState::IsHold] = IsHold(Input::Key::A, pad);
-
-		input.key[menuKey][UIInputState::IsDown] = IsDown(Input::Key::Y, pad);
-		input.key[menuKey][UIInputState::IsPressed] = IsPressed(Input::Key::Y, pad);
-		input.key[menuKey][UIInputState::IsReleased] = IsReleased(Input::Key::Y, pad);
-		input.key[menuKey][UIInputState::IsHold] = IsHold(Input::Key::Y, pad);
-
-		return input;
-	}
-
 }
 
