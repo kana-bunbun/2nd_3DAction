@@ -16,6 +16,9 @@
 #include"Data/ActionParam.h"
 #include"Data/GraphPathParam.h"
 #include"Data/EffectPathParam.h"
+#include"Input/InputConst.h"
+#include"Input/InputKeyParam.h"
+#include"Input/ActionKeyParam.h"
 
 namespace Data {
 	namespace Csv {
@@ -187,6 +190,28 @@ namespace Data {
 				EffectPathParam param;
 				param.ID = Get<int>(row, "ID");
 				param.effectName= Get<std::string>(row, "effectName");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<InputKeyParam> {
+			static InputKeyParam Binding(const Csv::Row& row) {
+				InputKeyParam param;
+				param.device = Get<Input::Device>(row, "Device");
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<ActionKeyParam> {
+			static ActionKeyParam Binding(const Csv::Row& row) {
+				ActionKeyParam param;
+				int keyMax = Get<int>(row, "ActionKeyMaxCount");
+				for (int i = 0; i < keyMax; i++) {
+					std::string keyID = "KeyID[" + std::to_string(i) + "]";
+					Input::Key key = Get<Input::Key>(row, keyID);
+					if(key==Input::Key::Invalid)
+					param.key.push_back(key);
+				}
 				return param;
 			}
 		};

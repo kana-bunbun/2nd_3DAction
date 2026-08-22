@@ -1,0 +1,8 @@
+ActionID,Action,Key[0],Key[1],Key[2],Key[3],Key[4],Key[5],KeyID[0],KeyID[1],KeyID[2],KeyID[3],KeyID[4],KeyID[5],ActionKeyMaxCount
+0,Up,GpUp,GpLeftThumbUp,Invalid,Invalid,Invalid,Invalid,0,20,-1,-1,-1,-1,6
+1,Right,GpRight,GpLeftThumbRight,Invalid,Invalid,Invalid,Invalid,1,21,-1,-1,-1,-1,
+2,Down,GpDown,GpLeftThumbDown,Invalid,Invalid,Invalid,Invalid,2,22,-1,-1,-1,-1,
+3,Left,GpLeft,GpLeftThumbLeft,Invalid,Invalid,Invalid,Invalid,3,23,-1,-1,-1,-1,
+4,Decide,GpEast,Invalid,Invalid,Invalid,Invalid,Invalid,5,-1,-1,-1,-1,-1,
+5,Cancel,GpStart,Invalid,Invalid,Invalid,Invalid,Invalid,8,-1,-1,-1,-1,-1,
+6,Menu,GpNorth,Invalid,Invalid,Invalid,Invalid,Invalid,4,-1,-1,-1,-1,-1,

@@ -11,6 +11,7 @@
 #include"World/GameObject.h"
 #include"World/Component/Collision.h"
 #include"Utility/Color.h"
+#include"Input/InputConst.h"
 namespace Data {
 	namespace Csv {
 		// 肥大化を防ぐために型変換に関する処理を記載する
@@ -141,6 +142,17 @@ namespace Data {
 			if (str == "Magenta")return { Color::kMagenta };
 			assert(0 && "Convert CollisionType key not found");
 			return { Color::kWhite };
+		}
+		template<>
+		inline Input::Key Convert<Input::Key>(const std::string& str) {
+			return static_cast<Input::Key>(stoi(str));
+		}
+		template<>
+		inline Input::Device Convert<Input::Device>(const std::string& str) {
+			if (str == "GamePad")return Input::Device::GamePad;
+			if (str == "Keyboard")return Input::Device::Keyboard;
+			if (str == "Mouce")return Input::Device::Mouce;
+			return Input::Device::Invalid;
 		}
 	
 	}

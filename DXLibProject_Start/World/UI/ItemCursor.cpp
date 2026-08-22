@@ -125,20 +125,20 @@ void ItemCursor::UpdateToInput()
 	// コントローラーが割り当てられているとき処理を行う
 	if (m_pad == Input::Pad::Invalid)return;
 
-	if (Input::IsHold(Input::Key::Left, m_pad)) {
+	if (Input::IsHold(Input::PadKey::Left, m_pad)) {
 		m_holdLeftCount += TimeManager::GetDeltaTime();
 	}
-	if (Input::IsHold(Input::Key::Right, m_pad)) {
+	if (Input::IsHold(Input::PadKey::Right, m_pad)) {
 		m_holdRightCount += TimeManager::GetDeltaTime();
 	}
 
 	// 入力に応じて選択中のインデックスを更新
-	if (Input::IsPressed(Input::Key::Left, m_pad)||
+	if (Input::IsPressed(Input::PadKey::Left, m_pad)||
 		m_holdLeftCount>=kHoldArrowInterval) {
 		m_selectIndex--;
 		m_holdLeftCount = 0.0f;
 	}
-	if (Input::IsPressed(Input::Key::Right, m_pad) ||
+	if (Input::IsPressed(Input::PadKey::Right, m_pad) ||
 		m_holdRightCount >= kHoldArrowInterval) {
 		m_selectIndex++;
 		m_holdRightCount = 0.0f;
@@ -147,20 +147,20 @@ void ItemCursor::UpdateToInput()
 	NormalizeIndex();
 	// メニュー選択状態でなければ
 	if (!m_isBlendMenu) {
-		if (Input::IsPressed(Input::Key::X, m_pad)) {
+		if (Input::IsPressed(Input::PadKey::X, m_pad)) {
 			UseItem();
 		}
 		return;
 	}
-	if (Input::IsPressed(Input::Key::Y, m_pad)) {
+	if (Input::IsPressed(Input::PadKey::Y, m_pad)) {
 		Cancel();
 	}
 
-	if (Input::IsPressed(Input::Key::A, m_pad)) {
+	if (Input::IsPressed(Input::PadKey::A, m_pad)) {
 		Cancel();
 	}
 
-	if (Input::IsPressed(Input::Key::B, m_pad)) {
+	if (Input::IsPressed(Input::PadKey::B, m_pad)) {
 
 		if (m_slots[m_selectIndex]->GetItemType() != ItemData::Type::Invalid)
 			if (m_slots[m_selectIndex]->GetHoldNum() > 0) {
@@ -168,7 +168,7 @@ void ItemCursor::UpdateToInput()
 				Select();
 			}
 	}
-	if (Input::IsPressed(Input::Key::X, m_pad)) {
+	if (Input::IsPressed(Input::PadKey::X, m_pad)) {
 		BlendItem();
 	}
 }

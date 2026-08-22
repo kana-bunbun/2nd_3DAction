@@ -175,10 +175,10 @@ std::unique_ptr<SceneBase> SceneInGameUITest::Update(float deltaTime) {
 
 	m_pUIManager->Update(deltaTime, UIInput());
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	if (Input::IsPressed(Input::Key::Start, Input::Pad::P1)) {
+	if (Input::IsPressed(Input::PadKey::Start, Input::Pad::P1)) {
 		m_pUIManager->PushScreen(std::make_unique<PauseScreen>());
 	}
-	else if (Input::IsReleased(Input::Key::Start, Input::Pad::P1)) {
+	else if (Input::IsReleased(Input::PadKey::Start, Input::Pad::P1)) {
 		m_pUIManager->PopScreen();
 	}
 

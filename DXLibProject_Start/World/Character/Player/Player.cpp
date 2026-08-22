@@ -238,7 +238,7 @@ void Player::UpdateAction()
 		break;
 	case Status::Player::Walk: {
 		// 歩き状態の時にボタンを押すとダッシュ
-		if (Input::IsPressed(Input::Key::LThumb, m_pad)) {
+		if (Input::IsPressed(Input::PadKey::LThumb, m_pad)) {
 			m_dashFlag ^= 1;
 		}
 		// 移動速度の速さに応じてアニメーションの再生速度を計算
@@ -267,7 +267,7 @@ void Player::Parry()
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if ((!Input::IsDown(Input::Key::A, m_pad)&&m_charge)){
+	if ((!Input::IsDown(Input::PadKey::A, m_pad)&&m_charge)){
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
@@ -278,7 +278,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::Key::A, m_pad)) {
+	if (Input::IsDown(Input::PadKey::A, m_pad)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -344,7 +344,7 @@ void Player::UpdateAnimation(float deltaTime)
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
 	// パリィ時またはボタンを押した瞬間
-	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::Key::A, m_pad))) {
+	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::PadKey::A, m_pad))) {
 		// パリィ状態に
 		nextStatus = Status::Player::Parry;
 	}

@@ -98,7 +98,7 @@ namespace Input {
 			// コントローラーの入力状況を保存
 			GetJoypadXInputState(pad, &ButtonsLog[i][0]);
 			for (int button=0; button < kButtonNum; button++) {
-				Input::Key buttonIndex = static_cast<Input::Key>(button);
+				Input::PadKey buttonIndex = static_cast<Input::PadKey>(button);
 				if (IsDown(buttonIndex, static_cast<Input::Pad>(i))) {
 					HoldLog[i][button] += TimeManager::GetDeltaTime();
 				}
@@ -110,14 +110,14 @@ namespace Input {
 
 	}
 
-	bool IsDown(Key key, const Pad padNum) {
+	bool IsDown(PadKey key, const Pad padNum) {
 		if (padNum==Pad::Invalid)return false;
 		// トリガーの場合は倒した割合でとる
-		if (key == Key::RT) {
+		if (key == PadKey::RT) {
 			// 一定量倒していたら
 			return (ButtonsLog[static_cast<int>(padNum)][0].RightTrigger > trrgerInput);
 		}
-		if (key == Key::LT) {
+		if (key == PadKey::LT) {
 			// 一定量倒していたら
 			return (ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger > trrgerInput);
 		}
@@ -127,18 +127,18 @@ namespace Input {
 		return (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 	}
 
-	bool IsPressed(Key key, const Pad padNum) {
+	bool IsPressed(PadKey key, const Pad padNum) {
 		// 現在の入力情報
 		bool isNow = static_cast<bool>(ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 		// 1回前の入力情報
 		bool isLast = static_cast<bool>(ButtonsLog[static_cast<int>(padNum)][1].Buttons[static_cast<int>(key)]);
 
 		// トリガーの場合は割合でとる
-		if (key == Key::RT) {
+		if (key == PadKey::RT) {
 			return (ButtonsLog[static_cast<int>(padNum)][0].RightTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][1].RightTrigger < trrgerInput);
 		}
-		if (key == Key::LT) {
+		if (key == PadKey::LT) {
 			return (ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][1].LeftTrigger < trrgerInput);
 		}
@@ -150,19 +150,19 @@ namespace Input {
 
 	}
 
-	bool IsReleased(Key key, const Pad padNum) {
+	bool IsReleased(PadKey key, const Pad padNum) {
 
 		// 現在の入力情報
 		bool isNow = (ButtonsLog[static_cast<int>(padNum)][0].Buttons[static_cast<int>(key)]);
 		// 1回前の入力情報
 		bool isLast = (ButtonsLog[static_cast<int>(padNum)][1].Buttons[static_cast<int>(key)]);
 		// トリガーの場合は割合でとる
-		if (key == Key::RT) {
+		if (key == PadKey::RT) {
 			// 前回の更新時に押していて現在の更新時は押されていない場合true
 			return (ButtonsLog[static_cast<int>(padNum)][1].RightTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][0].RightTrigger < trrgerInput);
 		}
-		if (key == Key::LT) {
+		if (key == PadKey::LT) {
 			// 前回の更新時に押していて現在の更新時は押されていない場合true
 			return (ButtonsLog[static_cast<int>(padNum)][1].LeftTrigger > trrgerInput &&
 				ButtonsLog[static_cast<int>(padNum)][0].LeftTrigger < trrgerInput);
@@ -173,7 +173,7 @@ namespace Input {
 	}
 
 	// 長押しを判定する関数
-	bool IsHold(Input::Key key, const Pad padNum, float holdCount)
+	bool IsHold(Input::PadKey key, const Pad padNum, float holdCount)
 	{
 		bool result = HoldLog[static_cast<int>(padNum)][static_cast<int>(key)] >= holdCount;
 		// 長押ししている判定
@@ -266,6 +266,47 @@ namespace Input {
 		}
 
 	}
-
+//
+//	const Input::Key& GetKey(const UIInput::Key& key)
+//	{
+//		switch (key)
+//		{
+//		case UIInput::Key::Up:
+//			return Input::Key::Up;
+//			break;
+//		case UIInput::Key::Right:
+//			return Input::Key::Right;
+//			break;
+//		case UIInput::Key::Down:
+//			return Input::Key::Down;
+//			break;
+//		case UIInput::Key::Left:
+//			return Input::Key::Left;
+//			break;
+//		case UIInput::Key::Decide:
+//			return Input::Key::B;
+//			break;
+//		case UIInput::Key::Cancel:
+//			return Input::Key::A;
+//			break;
+//		case UIInput::Key::Menu:
+//			return Input::Key::Y;
+//			break;
+//		default:
+//			break;
+//		}
+//	}
+//
+//	const UIInput& GetUIInput()
+//	{
+//		UIInput input;
+//		for (int i = 0; i < static_cast<int>(UIInput::Key::Max); i++) {
+//			int key=static_cast<int>(GetKey(static_cast<UIInput::Key>(i)));
+//			input.keys[i].keyState[UIInputKey::CurrentState] = ButtonsLog[static_cast<int>(padNum)][0].Buttons[key];
+//			input.keys[i].keyState[UIInputKey::PrevState] = ButtonsLog[static_cast<int>(padNum)][1].Buttons[key];
+//		}
+//		return input;
+//	}
+//
 }
 

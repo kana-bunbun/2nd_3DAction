@@ -91,17 +91,17 @@ void SceneSelectDebug::End()
 std::unique_ptr<SceneBase> SceneSelectDebug::Update(float deltaTime)
 {
     // 選択項目の更新
-    if (!Input::IsPressed(Input::Key::B, Input::Pad::P1)) {
+    if (!Input::IsPressed(Input::PadKey::B, Input::Pad::P1)) {
         // 決定ボタンを押していないとき
         
         // 上を押したら選択中のインデックスを減らす
-        if (Input::IsDown(Input::Key::Up, Input::Pad::P1)) {
+        if (Input::IsDown(Input::PadKey::Up, Input::Pad::P1)) {
             int i = 0;
         }
-        if (Input::IsPressed(Input::Key::Up, Input::Pad::P1))
+        if (Input::IsPressed(Input::PadKey::Up, Input::Pad::P1))
             m_selectIndex--;
         // 下を押したら選択中のインデックスを増やす
-        if (Input::IsPressed(Input::Key::Down, Input::Pad::P1))m_selectIndex++;
+        if (Input::IsPressed(Input::PadKey::Down, Input::Pad::P1))m_selectIndex++;
         // 一定範囲内でループ
         m_selectIndex = (m_sceneList.size() + m_selectIndex) % m_sceneList.size();
         return nullptr;

@@ -49,7 +49,7 @@ void SceneTextTest::End()
 
 std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 {
-	if (Input::IsPressed(Input::Key::Back, Input::Pad::P1))
+	if (Input::IsPressed(Input::PadKey::Back, Input::Pad::P1))
 		return std::make_unique<SceneSelectDebug>();
 
 	/*if (Input::IsPressed(Input::Button::X, Input::Pad::P1)) {
@@ -67,23 +67,23 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 	switch (m_pScreen->GetState())
 	{
 	case::TestScreen::ScreenState::PressStay:
-		if (Input::IsPressed(Input::Key::B, Input::Pad::P1)) {
+		if (Input::IsPressed(Input::PadKey::B, Input::Pad::P1)) {
 		m_pScreen->SetScreenState(TestScreen::ScreenState::ModeSelect);
 		m_pScreen->ShowModeSelect();
 
 		}
 		break;
 	case::TestScreen::ScreenState::ModeSelect:
-		if (Input::IsPressed(Input::Key::Up, Input::Pad::P1)) {
+		if (Input::IsPressed(Input::PadKey::Up, Input::Pad::P1)) {
 			m_pScreen->SelectPrevButton();
 		}
-		if (Input::IsPressed(Input::Key::Down, Input::Pad::P1)) {
+		if (Input::IsPressed(Input::PadKey::Down, Input::Pad::P1)) {
 			m_pScreen->SelectNextButton();
 		}
-		if (Input::IsDown(Input::Key::B, Input::Pad::P1)) {
+		if (Input::IsDown(Input::PadKey::B, Input::Pad::P1)) {
 			m_pScreen->ExecuteButton();
 		}
-		if (Input::IsPressed(Input::Key::A, Input::Pad::P1)) {
+		if (Input::IsPressed(Input::PadKey::A, Input::Pad::P1)) {
 			m_pScreen->SetScreenState(TestScreen::ScreenState::PressStay);
 			m_pScreen->ShowPressStay();
 		}

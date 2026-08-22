@@ -6,9 +6,8 @@
 /// 2次元ベクトル構造体
 /// UI実装の際に使用する想定
 /// </summary>
-class Vector2
+struct Vector2
 {
-
 public:
 
 	float x,y;

@@ -31,7 +31,7 @@ void PadManager::Update()
 {
 	
 
-	if (Input::IsPressed(Input::Key::Y, Input::Pad::P1)) {
+	if (Input::IsPressed(Input::PadKey::Y, Input::Pad::P1)) {
 		if (m_padState==PadState::ItemMenu) {
 		}
 		else {
@@ -39,7 +39,7 @@ void PadManager::Update()
 		}
 	}
 
-	if (Input::IsPressed(Input::Key::A, Input::Pad::P1)) {
+	if (Input::IsPressed(Input::PadKey::A, Input::Pad::P1)) {
 		if(m_padState==PadState::ItemMenu)
 			ChangePadState(PadManager::PadState::Player);
 	}

@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\Device\GamePad.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="System\EffectManager.cpp" />
     <ClCompile Include="System\EffectInstance.cpp" />
     <ClCompile Include="System\EffectResource.cpp" />
@@ -302,11 +304,18 @@
     <ClInclude Include="Data\ActionParam.h" />
     <ClInclude Include="Data\EffectPathParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
+    <ClInclude Include="Input\ActionKeyParam.h" />
+    <ClInclude Include="Input\Device\GamePad.h" />
+    <ClInclude Include="Input\Device\InputDevice.h" />
+    <ClInclude Include="Input\InputKeyParam.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Input\InputConst.h" />
     <ClInclude Include="System\EffectManager.h" />
     <ClInclude Include="System\EffectInstance.h" />
     <ClInclude Include="System\EffectResource.h" />
     <ClInclude Include="System\EffectResourceManager.h" />
     <ClInclude Include="Scene\TestScene\SceneEffekseerTest.h" />
+    <ClInclude Include="Utility\UIInputKey.h" />
     <ClInclude Include="World\UI\Object\UIItemCursor.h" />
     <ClInclude Include="World\UI\Group\UIItemList.h" />
     <ClInclude Include="World\UI\Object\ItemSlotBack.h" />
