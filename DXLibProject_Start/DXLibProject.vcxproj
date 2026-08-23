@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\Device\GamePad\InputTrigger.cpp" />
+    <ClCompile Include="Input\Device\GamePad\InputThumb.cpp" />
+    <ClCompile Include="Input\Device\GamePad\GamePadState.cpp" />
     <ClCompile Include="Input\Device\GamePad.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="System\EffectManager.cpp" />
@@ -198,7 +201,6 @@
     <ClCompile Include="World\Action\ActionEffectBase.cpp" />
     <ClCompile Include="Scene\TestScene\SceneCollisionTest.cpp" />
     <ClCompile Include="Scene\SceneSelectDebug.cpp" />
-    <ClCompile Include="Utility\Loder\FromCSV.cpp" />
     <ClCompile Include="Data\BlendRecipe.cpp" />
     <ClCompile Include="World\Object\Item\ItemObjectField.cpp" />
     <ClCompile Include="World\Object\Item\FireBottle.cpp" />
@@ -304,10 +306,13 @@
     <ClInclude Include="Data\ActionParam.h" />
     <ClInclude Include="Data\EffectPathParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
-    <ClInclude Include="Input\ActionKeyParam.h" />
+    <ClInclude Include="Data\ActionKeyParam.h" />
+    <ClInclude Include="Input\Device\GamePad\InputTrigger.h" />
+    <ClInclude Include="Input\Device\GamePad\InputThumb.h" />
+    <ClInclude Include="Input\Device\GamePad\GamePadState.h" />
     <ClInclude Include="Input\Device\GamePad.h" />
     <ClInclude Include="Input\Device\InputDevice.h" />
-    <ClInclude Include="Input\InputKeyParam.h" />
+    <ClInclude Include="Data\InputKeyParam.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Input\InputConst.h" />
     <ClInclude Include="System\EffectManager.h" />

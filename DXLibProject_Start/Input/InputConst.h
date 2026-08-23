@@ -76,14 +76,14 @@ namespace Input{
 		East,
 		West,
 		North,
-		RightThumbUp,
-		RightThumbRight,
-		RightThumbDown,
-		RightThumbLeft,
 		LeftThumbUp,
 		LeftThumbRight,
 		LeftThumbDown,
 		LeftThumbLeft,
+		RightThumbUp,
+		RightThumbRight,
+		RightThumbDown,
+		RightThumbLeft,
 		Max,
 	};
 	constexpr int kActionMaxNum = static_cast<int>(Action::Max);
@@ -122,6 +122,19 @@ namespace Input{
 		Invalid=-1,
 		Left,
 		Right,
+		Max,
+	};
+
+	enum class DirectionHolizontal{//…•½•ûŒü
+		Invalid=-1,
+		Left,
+		Right,
+		Max,
+	};
+	enum class DirectionVertical{// ‚’¼•ûŒü
+		Invalid=-1,
+		Up,
+		Down,
 		Max,
 	};
 
