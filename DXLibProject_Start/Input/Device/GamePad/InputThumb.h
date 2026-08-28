@@ -7,7 +7,7 @@ public:
 	InputThumb();
 	InputThumb(int holizontal = 0, int vertical = 0);
 	/// <summary>
-	/// 傾けた量
+	/// 傾けた�?
 	/// </summary>
 	Vector2 tilt;
 	/// <summary>
@@ -15,15 +15,15 @@ public:
 	/// </summary>
 	float tiltRadian;
 	/// <summary>
-	/// 入力割合
+	/// 入力割�?
 	/// </summary>
 	float tiltRatio;
 	/// <summary>
-	/// 4方向の入力方向
+	/// 4方向�?入力方�?
 	/// </summary>
 	Input::DirectionFour directionFour;
 	/// <summary>
-	/// 8方向の入力方向
+	/// 8方向�?入力方�?
 	/// </summary>
 	Input::DirectionEight directionEight;
 };

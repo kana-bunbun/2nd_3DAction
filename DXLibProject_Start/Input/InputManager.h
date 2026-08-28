@@ -24,16 +24,5 @@ public:
 private:
 	static int GetKeyCode(const Input::Key& key);
 private:
-	/// <summary>
-	/// 入力の情報
-	/// </summary>
-	static std::vector <std::unique_ptr<GamePad>>m_gamePad;
-	/// <summary>
-	/// キーの情報
-	/// </summary>
-	static std::vector <InputKeyParam>m_keyParam;
-	/// <summary>
-	/// アクションごとのキー情報
-	/// </summary>
-	static std::vector<ActionKeyParam>m_actionParam;
+
 };

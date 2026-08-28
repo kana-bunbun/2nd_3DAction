@@ -8,5 +8,5 @@ public:
 	virtual bool IsPressed(int deviceKeyID) = 0;
 	virtual bool IsReleased(int deviceKeyID) = 0;
 	virtual bool IsHold(int deviceKeyID, int holdCount = Input::kHoldDefaultCount) = 0;
-	virtual Vector2 GetVector(const Input::DirectionHolizontal& direction)=0;
-}
+	virtual Vector2 GetVector(const Input::DirectionHolizontal& direction) = 0;
+};

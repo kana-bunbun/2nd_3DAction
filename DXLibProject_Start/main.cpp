@@ -13,6 +13,8 @@
 #include"System/ActionEffectParamManager.h"
 #include"System/CollisionDataManager.h"
 #include"System/ResourceManager.h"
+#include"Input/InputManager.h"
+#include"Input/InputConst.h"
 #include<EffekseerForDXLib.h>
 
 #include<memory>
@@ -87,6 +89,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Input::Update();
 		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
+		InputManager::Update(deltaTime);
 		
 
 

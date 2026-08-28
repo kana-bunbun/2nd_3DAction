@@ -37,6 +37,7 @@
 #include"../World/GameObjectManager.h"
 #include"../World/UI/Core/UIManager.h"
 #include"../World/UI/Screen/InGameMainScreen.h"
+#include"Input/InputManager.h"
 #include<cassert>
 #include<memory>
 #include<DxLib.h>
@@ -172,6 +173,15 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	
+	// 入力デバッグ
+	if (InputManager::IsDown(Input::Action::Decide)) {
+		DrawString(1000, 1000, "Decide : Push", 0x000000);
+	}
+	else {
+
+		DrawString(1000, 1000, "Decide : NotPush", 0x000000);
+	}
+
 	
 	// フェード中はコントローラー入力情報をだれにも渡さない
 	if (IsFading()) {

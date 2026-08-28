@@ -9,6 +9,18 @@ namespace{
 	constexpr int kLeftTrigger = 11;
 	const char* const kKeyDataPath = "KeyCode";
 	const char* const kActionDataPath = "ActionKey";
+	/// <summary>
+	/// 入力の情報
+	/// </summary>
+	static std::vector <std::unique_ptr<GamePad>>m_gamePad;
+	/// <summary>
+	/// キーの情報
+	/// </summary>
+	static std::vector <InputKeyParam>m_keyParam;
+	/// <summary>
+	/// アクションごとのキー情報
+	/// </summary>
+	static std::vector<ActionKeyParam>m_actionParam;
 }
 InputManager::InputManager()
 {
