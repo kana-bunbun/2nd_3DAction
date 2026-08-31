@@ -1,6 +1,8 @@
 #pragma once
 #include"Input/InputConst.h"
 #include<vector>
+namespace {
+}
 /// <summary>
 /// アクション単位が保持する情報
 /// </summary>

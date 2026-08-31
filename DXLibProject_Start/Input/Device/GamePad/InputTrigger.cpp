@@ -7,6 +7,6 @@ namespace {
 InputTrigger::InputTrigger(int input)
 {
 	// 入力量を計算
-	inputRatio = static_cast<float>(input / kTriggerInputMax);
+	m_inputRatio = static_cast<float>(input / kTriggerInputMax);
 }
 

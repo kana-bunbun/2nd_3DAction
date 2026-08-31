@@ -68,6 +68,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	TimeManager::Init();
 	BillboardManager::GetInstance().Init();
 	BlendManager::GetInstnce().Init();
+	InputManager::Init();
 	CollisionDataManager::GetInstance();
 	ActionEffectParamManager::GetInstance();
 	// シーン制御のポインタを生成

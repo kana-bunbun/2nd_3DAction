@@ -1,29 +1,34 @@
 #pragma once
 #include"Utility/Vector2.h"
+#include"Utility/MyMath.h"
 #include"Input/InputConst.h"
-
+struct ThumbData {
+	/// <summary>
+	/// 入力量
+	/// </summary>
+	Vector2 tilt=Vector2::Zero;
+	/// <summary>
+	/// 入力角度(ラジアン)
+	/// </summary>
+	float tiltRadian=0.0f;
+	/// <summary>
+	/// 入力割合
+	/// </summary>
+	float tiltRatio=0.0f;
+	/// <summary>
+	/// 4方向のスティック入力
+	/// </summary>
+	DirectionFour directionFour=DirectionFour::Invalid;
+	/// <summary>
+	/// 8方向のスティック入力
+	/// </summary>
+	DirectionEight directionEight = DirectionEight::Invalid;
+};
 class InputThumb {
 public:
 	InputThumb();
 	InputThumb(int holizontal = 0, int vertical = 0);
-	/// <summary>
-	/// 蛯ｾ縺代◆驥?
-	/// </summary>
-	Vector2 tilt;
-	/// <summary>
-	/// 蜈･蜉幄ｧ貞ｺｦ
-	/// </summary>
-	float tiltRadian;
-	/// <summary>
-	/// 蜈･蜉帛牡蜷?
-	/// </summary>
-	float tiltRatio;
-	/// <summary>
-	/// 4譁ｹ蜷代?蜈･蜉帶婿蜷?
-	/// </summary>
-	Input::DirectionFour directionFour;
-	/// <summary>
-	/// 8譁ｹ蜷代?蜈･蜉帶婿蜷?
-	/// </summary>
-	Input::DirectionEight directionEight;
+	const ThumbData GetThumbData()const { return m_thumbData; }
+private:
+	ThumbData m_thumbData;
 };

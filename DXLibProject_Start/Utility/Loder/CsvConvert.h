@@ -149,10 +149,8 @@ namespace Data {
 		}
 		template<>
 		inline Input::Device Convert<Input::Device>(const std::string& str) {
-			if (str == "GamePad")return Input::Device::GamePad;
-			if (str == "Keyboard")return Input::Device::Keyboard;
-			if (str == "Mouce")return Input::Device::Mouce;
-			return Input::Device::Invalid;
+			return static_cast<Input::Device>(stoi(str));
+
 		}
 	
 	}

@@ -10,35 +10,29 @@ namespace {
 }
 
 InputThumb::InputThumb():
-	tilt(Vector2::Zero),
-	tiltRadian(0.0f),
-	tiltRatio(0.0f)
+m_thumbData()
 {}
 
 InputThumb::InputThumb(int holizontal, int vertical) :
-	tilt(Vector2::Zero),
-	tiltRadian(0.0f),
-	tiltRatio(0.0f)
+	m_thumbData()
 {
 	if (holizontal)
 	{
 		// 水平方向の入力があれば入力割合を取得
-		tilt.x = MyMath::Clamp(static_cast<float>(holizontal / kThumbInputMax), -1.0f, 1.0f);
+		m_thumbData.tilt.x = MyMath::Clamp(static_cast<float>(holizontal) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
 	}
 	if (vertical)
 	{
 		// 垂直方向の入力があれば入力割合を取得
-		tilt.y = MyMath::Clamp(static_cast<float>(vertical / kThumbInputMax), -1.0f, 1.0f);
+		m_thumbData.tilt.y = MyMath::Clamp(static_cast<float>(vertical) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
 	}
 	// 入力角度を求める
-	tiltRadian = atan2(tilt.y, tilt.x);
-	// 4方向の入力方向を取得
-	int direction = static_cast<int>((tiltRadian - kDirectonFourCalculateValue) / (kDirectonFourCalculateValue * 2.0f));
-	directionFour = static_cast<Input::DirectionFour>(direction);
-	// 8方向の入力方向を取得
-	direction = static_cast<int>((tiltRadian - kDirectonEightCalculateValue) / (kDirectonEightCalculateValue * 2.0f));
-	directionEight = static_cast<Input::DirectionEight>(direction);
+	m_thumbData.tiltRadian = atan2(m_thumbData.tilt.y, m_thumbData.tilt.x);
 	// 入力があれば入力量を計算
-	if (!tilt.x && !tilt.y)return;
-	tiltRatio = tilt.GetLength() / static_cast<float>(kThumbInputMax);
+	if (m_thumbData.tilt.GetSqLength()<MyMath::Epsilon)return;
+	// 4方向の入力方向を取得
+	m_thumbData.directionFour = MyMath::RadianToDirectionFour(m_thumbData.tiltRadian);
+	// 8方向の入力方向を取得
+	m_thumbData.directionEight = MyMath::RadianToDirectionEight(m_thumbData.tiltRadian);
+	m_thumbData.tiltRatio = m_thumbData.tilt.GetLength() / static_cast<float>(kThumbInputMax);
 }

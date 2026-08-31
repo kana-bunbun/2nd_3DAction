@@ -172,14 +172,23 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 
 
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	
+	InputData inputData = InputManager::GetInputData();
+	Input::Action testAction = Input::Action::Up;
 	// 入力デバッグ
-	if (InputManager::IsDown(Input::Action::Decide)) {
-		DrawString(1000, 1000, "Decide : Push", 0x000000);
+	if (inputData.IsPressed(testAction)) {
+
+		DrawString(1000, 400, "testAction : Pressed", 0x000000);
+	}
+	else if (inputData.IsReleased(testAction)) {
+
+		DrawString(1000, 400, "testAction : Released", 0x000000);
+	}
+	else if (inputData.IsDown(testAction)) {
+		DrawString(1000, 400, "testAction : Down", 0x000000);
 	}
 	else {
 
-		DrawString(1000, 1000, "Decide : NotPush", 0x000000);
+		DrawString(1000, 400, "testAction : None", 0x000000);
 	}
 
 	

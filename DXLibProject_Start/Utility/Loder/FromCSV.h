@@ -197,7 +197,9 @@ namespace Data {
 		struct FromCsv<InputKeyParam> {
 			static InputKeyParam Binding(const Csv::Row& row) {
 				InputKeyParam param;
-				param.device = Get<Input::Device>(row, "Device");
+				const int kActionKeyMax = 6;
+				param.device = Get<Input::Device>(row, "DeviceID");
+				param.ID = Get<int>(row, "KeyID");
 				param.keyID = Get<int>(row, "DeviceKeyID");
 				return param;
 			}
@@ -206,11 +208,11 @@ namespace Data {
 		struct FromCsv<ActionKeyParam> {
 			static ActionKeyParam Binding(const Csv::Row& row) {
 				ActionKeyParam param;
-				int keyMax = Get<int>(row, "ActionKeyMaxCount");
-				for (int i = 0; i < keyMax; i++) {
+				
+				for (int i = 0; i < Input::kActionKeyMax; i++) {
 					std::string keyID = "KeyID[" + std::to_string(i) + "]";
 					Input::Key key = Get<Input::Key>(row, keyID);
-					if(key==Input::Key::Invalid)
+					if (key == Input::Key::Invalid)continue;
 					param.keys.push_back(key);
 				}
 				return param;

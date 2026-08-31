@@ -4,6 +4,9 @@
 #include "Utility/Loder/CsvLoader.h"
 #include "Data/InputKeyParam.h"
 #include "Data/ActionKeyParam.h"
+#include "Input/ActionInputState.h"
+#include "Input/InputData.h"
+#include<array>
 namespace{ 
 	constexpr int kRightTrigger = 10;
 	constexpr int kLeftTrigger = 11;
@@ -21,17 +24,17 @@ namespace{
 	/// アクションごとのキー情報
 	/// </summary>
 	static std::vector<ActionKeyParam>m_actionParam;
-}
-InputManager::InputManager()
-{
-	Init();
+	/// <summary>
+	/// 全アクションの入力情報
+	/// </summary>
+	static InputData m_inputData;
 }
 void InputManager::Init()
 {
 	m_keyParam = Data::Csv::LoadCsvAs<InputKeyParam>(kKeyDataPath);
 	m_actionParam = Data::Csv::LoadCsvAs<ActionKeyParam>(kActionDataPath);
 	for (int i = 0; i < 1; i++) {
-		m_gamePad.push_back(std::make_unique<GamePad>(i));
+		m_gamePad.push_back(std::make_unique<GamePad>(i+1));
 	}
 }
 
@@ -43,20 +46,26 @@ void InputManager::Update(float deltaTime)
 	for (int i = 0; i < m_gamePad.size(); i++) {
 		m_gamePad[i]->Update(deltaTime);
 	}
+	// 全アクション入力情報の更新
+	UpdateInputData();
 }
 
 bool InputManager::IsDown(const Input::Key& key, const Input::GamePad& pad)
 {
 	Input::Device device=m_keyParam[static_cast<int>(key)].device;
 	int keyIndex = static_cast<int>(key);
-	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_actionParam.size())) {
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
 		assert(false && "IsDown key OutOfRange");
 	}
 	int keyID = m_keyParam[keyIndex].keyID;
 	switch (device) {
 	case Input::Device::GamePad:
-		return 	m_gamePad[static_cast<int>(pad)]->IsDown(keyID);
+	{
+		int padID=static_cast<int>(pad);
+		if (pad == Input::GamePad::None)padID = static_cast<int>(Input::GamePad::Pad1);
+		if (m_gamePad[padID]->IsDown(keyID))return true;
 		break;
+	}
 	case Input::Device::Keyboard:
 		break;
 	case Input::Device::Mouce:
@@ -69,13 +78,13 @@ bool InputManager::IsPressed(const Input::Key& key, const Input::GamePad& pad)
 {
 	Input::Device device = m_keyParam[static_cast<int>(key)].device;
 	int keyIndex = static_cast<int>(key);
-	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_actionParam.size())) {
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
 		assert(false && "IsPressed key OutOfRange");
 	}
 	int keyID = m_keyParam[keyIndex].keyID;
 	switch (device) {
 	case Input::Device::GamePad:
-		return 	m_gamePad[static_cast<int>(pad)]->IsPressed(keyID);
+		if (m_gamePad[static_cast<int>(pad)]->IsPressed(keyID))return true;
 		break;
 	case Input::Device::Keyboard:
 		break;
@@ -89,13 +98,13 @@ bool InputManager::IsReleased(const Input::Key& key, const Input::GamePad& pad)
 {
 	Input::Device device = m_keyParam[static_cast<int>(key)].device;
 	int keyIndex = static_cast<int>(key);
-	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_actionParam.size())) {
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
 		assert(false && "IsReleased key OutOfRange");
 	}
 	int keyID = m_keyParam[keyIndex].keyID;
 	switch (device) {
 	case Input::Device::GamePad:
-		return 	m_gamePad[static_cast<int>(pad)]->IsReleased(keyID);
+		if(m_gamePad[static_cast<int>(pad)]->IsReleased(keyID))return true;
 		break;
 	case Input::Device::Keyboard:
 		break;
@@ -110,13 +119,13 @@ bool InputManager::IsHold(const Input::Key& key, const Input::GamePad& pad)
 {
 	Input::Device device = m_keyParam[static_cast<int>(key)].device;
 	int keyIndex = static_cast<int>(key);
-	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_actionParam.size())) {
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
 		assert(false && "IdHold key OutOfRange");
 	}
 	int keyID = m_keyParam[keyIndex].keyID;
 	switch (device) {
 	case Input::Device::GamePad:
-		return 	m_gamePad[static_cast<int>(pad)]->IsHold(keyID);
+		if(m_gamePad[static_cast<int>(pad)]->IsHold(keyID))return true;
 		break;
 	case Input::Device::Keyboard:
 		break;
@@ -152,7 +161,8 @@ bool InputManager::IsPressed(const Input::Action& action, const Input::GamePad& 
 	for (int i = 0; i < m_actionParam[actionIndex].keys.size(); i++) {
 		Input::Key key = m_actionParam[actionIndex].keys[i];
 
-		if (IsPressed(key, pad))return true;
+		if (IsPressed(key, pad))
+			return true;
 	}
 	return false;
 }
@@ -185,4 +195,23 @@ bool InputManager::IsHold(const Input::Action& action, const Input::GamePad& pad
 		if (IsHold(key, pad))return true;
 	}
 	return false;
+}
+
+const InputData InputManager::GetInputData()
+{
+	return m_inputData;
+}
+
+void InputManager::UpdateInputData()
+{
+	std::array<ActionInputState,static_cast<int>(Input::Action::Max)> inputData;
+	// 全アクションの入力情報を調べる
+	for (int i = 0; i < static_cast<int>(Input::Action::Max); i++) {
+		// アクションを取得
+		Input::Action action = static_cast<Input::Action>(i);
+		// アクションの入力を設定
+		inputData[i] = ActionInputState(IsDown(action), IsPressed(action), IsReleased(action), IsHold(action));
+	}
+	// 入力情報の設定
+	m_inputData.Init(inputData);
 }

@@ -8,5 +8,5 @@ public:
 	/// <summary>
 	/// 入力量
 	/// </summary>
-	float inputRatio;
+	float m_inputRatio;
 };

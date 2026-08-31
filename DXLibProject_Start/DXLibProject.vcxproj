@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\ActionInputState.cpp" />
+    <ClCompile Include="Input\InputData.cpp" />
     <ClCompile Include="Input\Device\GamePad\InputTrigger.cpp" />
     <ClCompile Include="Input\Device\GamePad\InputThumb.cpp" />
     <ClCompile Include="Input\Device\GamePad\GamePadState.cpp" />
@@ -307,6 +309,8 @@
     <ClInclude Include="Data\EffectPathParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
     <ClInclude Include="Data\ActionKeyParam.h" />
+    <ClInclude Include="Input\ActionInputState.h" />
+    <ClInclude Include="Input\InputData.h" />
     <ClInclude Include="Input\Device\GamePad\InputTrigger.h" />
     <ClInclude Include="Input\Device\GamePad\InputThumb.h" />
     <ClInclude Include="Input\Device\GamePad\GamePadState.h" />

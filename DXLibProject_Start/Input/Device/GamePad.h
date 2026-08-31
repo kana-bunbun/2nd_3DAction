@@ -1,5 +1,6 @@
 #pragma once
 #include<array>
+#include<string>
 #include"InputDevice.h"
 #include"Input/InputConst.h"
 #include"Utility/Vector2.h"
@@ -17,6 +18,7 @@ public:
 	bool IsReleased(int deviceKeyID)override;
 	bool IsHold(int deviceKeyID, int holdCount = Input::kHoldDefaultCount)override;
 	Vector2 GetVector(const Input::DirectionHolizontal& direction);
+	std::string GetDirectionText(DirectionFour direction);
 private:
 	/// <summary>
 	/// 自身が調べるコントローラーの番号

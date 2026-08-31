@@ -3,6 +3,10 @@
 struct InputKeyParam {
 public:
 	/// <summary>
+	/// キー全体のID
+	/// </summary>
+	int ID = -1;
+	/// <summary>
 	/// 対応しているデバイス
 	/// </summary>
 	Input::Device device = Input::Device::Invalid;

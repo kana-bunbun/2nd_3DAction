@@ -2,6 +2,29 @@
 
 #include"../Utility/Vector3.h"
 #include<math.h>
+namespace {
+	// “ü—Í•ûŒü
+	enum class DirectionFour {	// 4•ûŒü
+		Invalid = -1,
+		Up,
+		Right,
+		Down,
+		left,
+		Max,
+	};
+	enum class DirectionEight {	// 8•ûŒü
+		Invalid = -1,
+		Up,
+		UpRight,
+		Right,
+		DownRight,
+		Down,
+		DownLeft,
+		left,
+		UpLeft,
+		Max,
+	};
+}
 
 namespace MyMath {
 
@@ -135,5 +158,29 @@ namespace MyMath {
 	/// <param name="end">ü•ª‚ÌI—¹À•W</param>
 	/// <returns></returns>
 	Vector3 ClosestPointOnSegment(const Vector3& point, const Vector3& start, const Vector3& end);
+	DirectionFour AngleToDirectionFour(float angle) {
+		angle = NormalizeAngle(angle);
+		if (angle < 45.0f && angle >= -45.0f)return DirectionFour::Right;
+		else if (angle >= -135.0f && angle < -45.0f)return DirectionFour::Down;
+		else if (angle < 135.0f && angle >= 45.0f)return DirectionFour::Up;
+		else return DirectionFour::left;
+	}
+	DirectionFour RadianToDirectionFour(float radian) {
+		return AngleToDirectionFour(radian * ToDegree);
+	}
+	DirectionEight AngleToDirectionEight(float angle) {
+		angle = NormalizeAngle(angle);
+		if (angle < 22.5f || angle >= -22.5f)return DirectionEight::Right;
+		else if (angle >= -67.5&&angle<-22.5f)return DirectionEight::DownRight;
+		else if (angle >= -112.5f&&angle<-67.5f)return DirectionEight::Down;
+		else if (angle >= -157.5&&angle<-112.5f)return DirectionEight::DownLeft;
+		else if (angle < 67.5&&angle<22.5f)return DirectionEight::UpRight;
+		else if (angle < 112.5f && angle < 67.5f)return DirectionEight::Up;
+		else if (angle < 157.5f && angle < 112.5f)return DirectionEight::UpLeft;
+		else return DirectionEight::left;
+	}
+	DirectionEight RadianToDirectionEight(float radian) {
+		return AngleToDirectionEight(radian * ToDegree);
+	}
 }
 
