@@ -2,20 +2,22 @@
 #include<memory>
 #include<vector>
 #include"UIInput.h"
-#include"UICommand.h"
+#include"ScreenCommand.h"
+#include"Input/InputManager.h"
 class UIScreen;
+class Screen;
 /// <summary>
 /// UIの管理を行う
 /// 複数のUIScreenを同時に扱う際はstack構造で管理する
 /// </summary>
-class UIManager {
+class ScreenManager {
 public:
-	UIManager();
-	~UIManager();
+	ScreenManager();
+	~ScreenManager();
 	/// <summary>
 	/// 最前面のUIScreenを更新
 	/// </summary>
-	void Update(float deltaTime,const UIInput& uiInput);
+	void Update(float deltaTime,const InputData& inputData);
 	/// <summary>
 	/// 管理しているUIScreenを描画
 	/// </summary>
@@ -23,16 +25,16 @@ public:
 	/// <summary>
 	/// UIScreenを最前面に登録する
 	/// </summary>
-	void PushScreen(std::unique_ptr<UIScreen> pScreen);
+	void PushScreen(std::unique_ptr<Screen> pScreen);
 	/// <summary>
 	/// 最前面のUIScreenを解放する
 	/// </summary>
 	void PopScreen();
 	/// <summary>
-	/// 最前面のUIScreenを取得する
+	/// 最前面のScreenを取得する
 	/// </summary>
 	/// <returns></returns>
-	UIScreen* GetTopScreen();
+	Screen* GetTopScreen();
 	/// <summary>
 	/// 管理中のUIScreenが空かどうか取得
 	/// </summary>
@@ -42,13 +44,13 @@ public:
 	/// 最前面にあるコマンド取得後、値をリセット
 	/// </summary>
 	/// <returns></returns>
-	UICommand ConsumeCommand();
+	ScreenCommand ConsumeCommand();
 private:
 
 	/// <summary>
 	/// 管理しているUIscreen群
 	/// </summary>
-	std::vector<std::unique_ptr<UIScreen>>m_screens;
+	std::vector<std::unique_ptr<Screen>>m_screens;
 
 
 };

@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update(float deltaTime)override;
+	void Update(float deltaTime,const InputData&inputData)override;
 	void UpdateBillboard(float deltaTime);
 	/// <summary>
 	/// 当たり判定の更新処理

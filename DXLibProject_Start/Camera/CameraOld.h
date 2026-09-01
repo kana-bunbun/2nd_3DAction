@@ -1,6 +1,6 @@
 #pragma once
 #include"../Utility/Game.h"
-#include"../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../World/Component/Transform.h"
 // 前方宣言
 class Player;
@@ -29,7 +29,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update();
+	void Update(const InputData& inputData);
 
 	/// <summary>
 	/// 描画
@@ -42,12 +42,6 @@ public:
 	/// <returns>カメラの水平アングル</returns>
 	float GetHRadian()const { return m_transform.rotation.y; }
 
-	/// <summary>
-	/// コントローラーを割り当てる
-	/// </summary>
-	/// <param name="padNum">コントローラーの番号</param>
-	/// <returns></returns>
-	void SetPad(const Input::Pad padNum) { m_pad = padNum; }
 	/// <summary>
 	/// カメラの水平方向(ヨー)のラジアン角を取得する関数
 	/// </summary>
@@ -74,7 +68,7 @@ private:
 	/// <summary>
 	/// 入力に基づいたカメラの角度を更新
 	/// </summary>
-	void UpdateAngleInput();
+	void UpdateAngleInput(InputData inputData);
 	/// <summary>
 	/// 補間での角度の更新処理
 	/// </summary>
@@ -129,10 +123,7 @@ private:
 	Player* m_pPlayer;
 
 	Transform m_target;
-	/// <summary>
-	/// 自身を操作するコントローラー
-	/// </summary>
-	Input::Pad m_pad;
+
 	/// <summary>
 	/// 入力に基づいた角度の更新処理をするかどうかのフラグ
 	/// </summary>

@@ -1,7 +1,7 @@
 #pragma once
 #include"../Component/Transform.h"
 #include"../../Utility/Vector3.h"
-#include"../../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../GameObject.h"
 #include<memory>
 #include<vector>
@@ -17,7 +17,7 @@ public:
 	~TileManager();
 	void Init();
 	void SetUpFloor();
-	void Update(float deltaTime);
+	void Update(float deltaTime,InputData inputData);
 	void Draw();
 	void DrawMiniMap();
 	bool InDevideList(size_t id);
@@ -29,7 +29,6 @@ public:
 	int RandomRoomID();
 public:
 	void SetPlayer(Player* pPlayer) { m_pPlayer = pPlayer; }
-	void SetPad(Input::Pad pad) { m_pad = pad; }
 	bool IsUpStair() { return m_upStair; }
 	TileObject* GetObj() { return m_pTiles[0]; }
 private:
@@ -43,6 +42,5 @@ private:
 	bool m_upStair;
 	int m_stairID;
 	Player* m_pPlayer;
-	Input::Pad m_pad;
 };
 

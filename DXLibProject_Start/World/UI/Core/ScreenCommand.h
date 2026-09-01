@@ -3,7 +3,7 @@
 /// <summary>
 /// UIManagerから他のクラスに送る内容をまとめて管理する
 /// </summary>
-enum class UICommand
+enum class ScreenCommand
 {
 	None,
 	ResumeGame,			// ゲーム画面に戻る

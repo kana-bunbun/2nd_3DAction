@@ -2,7 +2,8 @@
 #include<DxLib.h>
 #include"../Utility/Color.h"
 #include"../Utility/MyMath.h"
-#include"../Utility/Input.h"
+#include"Input/InputData.h"
+#include"Input/InputManager.h"
 #include"SceneTest.h"
 #include"TestScene/SceneCollisionTest.h"
 #include"TestScene/SceneTextTest.h"
@@ -90,25 +91,22 @@ void SceneSelectDebug::End()
 
 std::unique_ptr<SceneBase> SceneSelectDebug::Update(float deltaTime)
 {
+    InputData inputData = InputManager::GetInputData();
     // 選択項目の更新
-    if (!Input::IsPressed(Input::PadKey::B, Input::Pad::P1)) {
-        // 決定ボタンを押していないとき
-        
-        // 上を押したら選択中のインデックスを減らす
-        if (Input::IsDown(Input::PadKey::Up, Input::Pad::P1)) {
-            int i = 0;
-        }
-        if (Input::IsPressed(Input::PadKey::Up, Input::Pad::P1))
-            m_selectIndex--;
-        // 下を押したら選択中のインデックスを増やす
-        if (Input::IsPressed(Input::PadKey::Down, Input::Pad::P1))m_selectIndex++;
-        // 一定範囲内でループ
-        m_selectIndex = (m_sceneList.size() + m_selectIndex) % m_sceneList.size();
-        return nullptr;
+    if (inputData.IsPressed(Input::Action::Decide))return m_sceneList[m_selectIndex].createScenefunc();
+    // 決定ボタンを押していないとき
+
+    // 上を押したら選択中のインデックスを減らす
+    if (inputData.IsDown(Input::Action::Up)) {
+        int i = 0;
     }
-
-
-    return m_sceneList[m_selectIndex].createScenefunc();
+    if (inputData.IsPressed(Input::Action::Up))
+        m_selectIndex--;
+    // 下を押したら選択中のインデックスを増やす
+    if (inputData.IsPressed(Input::Action::Down))m_selectIndex++;
+    // 一定範囲内でループ
+    m_selectIndex = (m_sceneList.size() + m_selectIndex) % m_sceneList.size();
+    return nullptr;
 }
 
 void SceneSelectDebug::Draw()

@@ -1,5 +1,5 @@
 #pragma once
-#include"Utility/Input.h"
+#include"Input/InputData.h"
 #include<unordered_map>
 #include"Utility/UIInputKey.h"
 /// <summary>

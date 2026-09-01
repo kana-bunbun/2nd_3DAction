@@ -2,7 +2,7 @@
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../UI/GaugeShow.h"
-#include"../../../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../../../Camera/Camera.h"
 #include"../../GameObjectParam.h"
 #include"../Character.h"
@@ -34,15 +34,15 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update(float deltaTime)override;
+	void Update(float deltaTime,const InputData& inputData)override;
 	/// <summary>
 	/// ステータスに応じた行動の更新処理
 	/// </summary>
-	void UpdateAction();
+	void UpdateAction(InputData inputData);
 	/// <summary>
 	/// はじき返しの処理
 	/// </summary>
-	void Parry();
+	void Parry(InputData inputData);
 	/// <summary>
 	/// フラグ管理の処理
 	/// </summary>
@@ -50,11 +50,11 @@ public:
 	/// <summary>
 	/// トランスフォームの更新処理
 	/// </summary>
-	void UpdateTransform(float deltaTime);
+	void UpdateTransform(float deltaTime,InputData inputData);
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
-	void UpdateAnimation(float deltaTime);
+	void UpdateAnimation(float deltaTime,InputData inputData);
 	/// <summary>
 	/// アニメーションの変更を行う処理
 	/// </summary>
@@ -84,9 +84,8 @@ public:
 
 	void SetBarrier(Barrier* barrier);
 	 bool GetIsGround()const { return m_isGroud; }
-	 void SetPad(Input::Pad pad) { m_pad = pad; }
 private:
-	Input::Pad m_pad;
+	
 	/// <summary>
 	/// アニメーションの管理を行う
 	/// </summary>

@@ -7,7 +7,7 @@ public:
 	InGameMainScreen();
 	~InGameMainScreen();
 	void Init()override;
-	void Update(float deltaTime, const UIInput& input)override;
+	void Update(float deltaTime, const InputData& input)override;
 private:
 	UIItemList* m_pItemList;
 };

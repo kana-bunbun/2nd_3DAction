@@ -1,17 +1,21 @@
 #pragma once
 #include"../Utility/Vector3.h"
+#include"World/Component/Transform.h"
+#include"Input/InputData.h"
 #include<cassert>
+
+
 namespace Camera{
 	struct CameraView
 	{
-		Vector3 position;	// 座標
+		Transform transform;// 座標
 		Vector3 target;		// 注視点
 		float fov;			// 視野角 field of view
 
 		Vector3 GetForward() const
 		{
 			Vector3 dir;
-			dir = position - target;
+			dir = transform.position - target;
 			// 0割り対策
 			if (dir.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
@@ -56,7 +60,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(float deltaTime, const InputData& inputData) = 0;
 	/// <summary>
 	/// 現在のカメラデータを取得
 	/// </summary>

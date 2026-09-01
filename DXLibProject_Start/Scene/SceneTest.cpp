@@ -2,11 +2,9 @@
 #include "SceneTest.h"
 #include "SceneBase.h"
 #include "../Utility/Vector3.h"
-#include "../Utility/Input.h"
 #include "../Utility/Color.h"
 #include "../Utility/GameSetting.h"
 #include "../Utility/MyRandom.h"
-#include "../Utility/PadManager.h"
 #include "../Utility/Loder/Data.h"
 #include "../Utility/Loder/FromCSV.h"
 #include "../Utility/Loder/CSVLoader.h"
@@ -35,9 +33,11 @@
 #include"../World/Object/Item/ItemManager.h"
 #include"../World/Object/Item/ItemObjectManager.h"
 #include"../World/GameObjectManager.h"
-#include"../World/UI/Core/UIManager.h"
+#include"../World/UI/Core/ScreenManager.h"
 #include"../World/UI/Screen/InGameMainScreen.h"
+#include"../World/UI/Screen/MainScreen.h"
 #include"Input/InputManager.h"
+#include"Input/InputData.h"
 #include<cassert>
 #include<memory>
 #include<DxLib.h>
@@ -56,173 +56,55 @@ namespace {
 	constexpr int kFontSize = 50;
 	constexpr int kFontThickness = 50;
 
-	const char* const kcameraParamPath = "CameraParam";
+
 }
 
-SceneTest::SceneTest() :
-	m_pBarrier(nullptr),
-	m_pCameraMgr(nullptr),
-	m_pDragon(nullptr),
-	m_pPlayer(nullptr),
-	m_pTileManager(nullptr),
-	m_pUIManager(nullptr),
-	m_pPadManager(nullptr),
-	m_playerNum(0)
+SceneTest::SceneTest():
+	m_pScreenManager(nullptr)
 {
-	// ライトの向きを設定
-	Vector3 lightVec= Vector3::YAxis*-1;
-	ChangeLightTypeDir(lightVec.ToVECTOR());
-	// 最初に接続しているコントローラーの数で初期化
-	m_playerNum = 1;
-	//m_playerNum = GetJoypadNum();
-	// コントローラー接続が失敗していたら警告
-	if (!m_playerNum) {
-
-		assert(false && "コントローラー 接続失敗");
-	}
-	
-	m_pBarrier = GameObjectManager::GetInstance().CreateObject<Barrier>();
-	m_pDragon = GameObjectManager::GetInstance().CreateObject<Dragon>();
-	
-	GameObjectManager::GetInstance().CreateObject<Enemy>();
-	GameObjectManager::GetInstance().CreateObject<Enemy>();
-	GameObjectManager::GetInstance().CreateObject<Enemy>();
-
-
-	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
-	//const auto& scameraParam = Data::Json::LoadJsonAs<FollowCameraParam>(kcameraParamPath);
-
-
-	m_pCameraMgr = std::make_unique<CameraManager>();
-	m_pUIManager = std::make_unique<UIManager>();
-	m_pPadManager= std::make_unique<PadManager>();
-	m_pTileManager = std::make_unique<TileManager>();
-	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
-	m_pUIManager->PushScreen(std::make_unique<InGameMainScreen>());
-
+	m_pScreenManager = std::make_unique<ScreenManager>();
+	m_pScreenManager->PushScreen(std::make_unique<MainScreen>());
 
 }
 
 SceneTest::~SceneTest() {}
 
 void SceneTest::Init() {
-	m_pTileManager->Init();
-	//m_pPlayer->SetCamera(m_pCamera[0].get());
-	//m_pSound->LoadSe();
-	//m_pSound->LoadBGM();
-	m_pCameraMgr->Init();
-	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
-	m_pCameraMgr->AddCamera(Camera::CameraType::Follow,std::make_unique<FollowCamera>(&m_pPlayer->GetTransform(),cameraParam[0]));
-	m_pCameraMgr->AddCamera(Camera::CameraType::Debug, std::make_unique<DebugCamera>());
+
 	SoundManager::GetInstance().LoadBGM();
 	SoundManager::GetInstance().LoadSe();
-
-	GameObjectManager::GetInstance().Init();
-	m_pDragon->SetMaster(m_pPlayer);
-	m_pPlayer->SetBarrier(m_pBarrier);
-	//m_pUiManager->SetPlayer(m_pPlayer);
-	//m_pUiManager->SetDragon(m_pDragon);
-	m_pPadManager->SetItemCursor(ItemManager::GetInstance().GetItemCursor());
-	m_pPadManager->SetTileManager(m_pTileManager.get());
-	m_pPadManager->Init();
-	m_pTileManager->SetPlayer(m_pPlayer);
-	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
 }
 
 void SceneTest::End() {
-	for (int i = 0; i < m_playerNum; i++) {
-
-		//delete m_pCamera.get();
-		//m_pCamera = nullptr;
-
-	}
-
-
-	//delete m_pGrassMgr.get();			// ポインタの削除
-	//m_pGrassMgr = nullptr;			// ポインタをnullptrで初期化
-
 	SoundManager::GetInstance().Release();
 
-	//m_pSound->Release();
-	//delete m_pSound;
-	//m_pSound = nullptr;
-	
 	GameObjectManager::GetInstance().End();
 	ItemManager::GetInstance().End();
-	m_pPadManager->End();
-
 }
 
 std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	ProfileScope("Update");
-	m_pCameraMgr->Update(deltaTime);
-	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
-	m_pUIManager->Update(deltaTime,UIInput());
-	m_pTileManager->Update(deltaTime);
-	
-	GameObjectManager::GetInstance().Update(deltaTime);
-	ItemManager::GetInstance().Update();
-	m_pPadManager->Update();
 
-	GameObjectManager::GetInstance().CheckCollision();
-
-
-	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	InputData inputData = InputManager::GetInputData();
-	Input::Action testAction = Input::Action::Up;
-	// 入力デバッグ
-	if (inputData.IsPressed(testAction)) {
-
-		DrawString(1000, 400, "testAction : Pressed", 0x000000);
-	}
-	else if (inputData.IsReleased(testAction)) {
-
-		DrawString(1000, 400, "testAction : Released", 0x000000);
-	}
-	else if (inputData.IsDown(testAction)) {
-		DrawString(1000, 400, "testAction : Down", 0x000000);
-	}
-	else {
-
-		DrawString(1000, 400, "testAction : None", 0x000000);
-	}
-
+	m_pScreenManager->Update(deltaTime, inputData);
 	
-	// フェード中はコントローラー入力情報をだれにも渡さない
-	if (IsFading()) {
-		m_pPadManager->ChangePadState(PadManager::PadState::Invalid);
-	}
-	// フェードイン終了直後はコントローラー入力情報をプレイヤーに渡す
-	else if(IsFadeEnd()){
-		m_pPadManager->ChangePadState(PadManager::PadState::Player);
-	}
+	ItemManager::GetInstance().Update();
 	return nullptr;
 }
 
 void SceneTest::Draw() {
 	ProfileScope("Draw");
-	//DrawGround();
-	// カメラの描画
-	m_pCameraMgr->Apply();
-	// マップの描画処理
-	// ゲームオブジェクトの描画処理
-	GameObjectManager::GetInstance().Draw();
-	
-	m_pTileManager->Draw();
-	// アイテムメニュー中は画面を少し暗くする
-	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, Color::kBlack, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	ItemManager::GetInstance().Draw();
-	// ゲージ関連の描画処理
-	m_pUIManager->Draw();
 
+	//ItemManager::GetInstance().Draw();
+	// 描画処理
+	m_pScreenManager->Draw();
+	InputData inputData = InputManager::GetInputData();
+	float inputRadian = inputData.GetRadian(Input::Action::Move);
+	printfDx("LeftTrigger : Radian : %f\n", inputRadian);
+	printfDx("LeftTrigger :  angle : %f\n", inputRadian*MyMath::ToDegree);
 
 }
 

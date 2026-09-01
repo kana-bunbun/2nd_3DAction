@@ -14,7 +14,7 @@ public:
 
 	void Init()override;
 	void End()override;
-	void Update(float deltaTime)override;
+	void Update(float deltaTime,const InputData&inputData)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

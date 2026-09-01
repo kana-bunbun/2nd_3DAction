@@ -44,7 +44,6 @@ TileManager::TileManager() :
 	m_pStair(nullptr),
 	m_upStair(false),
 	m_pPlayer(nullptr),
-	m_pad(Input::Pad::Invalid),
 	m_stairID(-1)
 {
 	m_cursorHandle = LoadGraph(kCursorPath);
@@ -118,15 +117,9 @@ void TileManager::SetUpFloor()
 	ItemManager::GetInstance().CreateFielditemFloor(5);
 }
 
-void TileManager::Update(float deltaTime)
+void TileManager::Update(float deltaTime, InputData inputData)
 {
-	// マップの描画処理
-	//for (auto& tile : m_pTiles) {
-	//	tile->Update(deltaTime);
-	//}
-
-
-	if (Input::IsPressed(Input::PadKey::B, m_pad)) {
+	if (inputData.IsPressed(Input::Action::Decide)) {
 		if (m_pStair->IsHit()) {
 			// フロア生成
 			SetUpFloor();

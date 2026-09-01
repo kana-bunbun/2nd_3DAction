@@ -31,12 +31,12 @@ void GameObjectManager::End()
 	Clear();
 }
 
-void GameObjectManager::Update(float deltaTime)
+void GameObjectManager::Update(float deltaTime, const InputData& inputData)
 {
 	for (auto& obj : m_objects) {
 		if (!obj->IsActive())continue;
 		obj->UpdateHitData();
-		obj->Update(deltaTime);
+		obj->Update(deltaTime,inputData);
 		obj->UpdateCollision();
 	}
 }

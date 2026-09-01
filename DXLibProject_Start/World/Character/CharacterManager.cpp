@@ -58,12 +58,6 @@ void CharacterManager::SetRandomPos()
 	m_pDragon->SetPosition(playerPos);
 }
 
-void CharacterManager::SetPad(Input::Pad pad)
-{
-	if (m_pPlayer)
-		m_pPlayer->SetPad(pad);
-}
-
 Character* CharacterManager::GetCharacter(int ID)
 {
 	m_characters = GameObjectManager::GetInstance().GetCharacters();

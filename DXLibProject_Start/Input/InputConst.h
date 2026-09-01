@@ -19,7 +19,7 @@ namespace Input{
 	enum class Key{
 		Invalid ,
 
-		// ゲームパッドのボタン一覧
+		// ゲームパッドのボタン一覧====================================
 		GpUp,	
 		GpRight,
 		GpDown,	
@@ -46,6 +46,9 @@ namespace Input{
 		GpRightThumbRight,
 		GpRightThumbDown,
 		GpRightThumbLeft,
+		// ゲームパッドの十字キー
+		GpCross,
+		// ============================================================
 		Max,
 	};
 	constexpr int kKeyMaxNum = static_cast<int>(Key::Max);
@@ -60,9 +63,20 @@ namespace Input{
 		Decide,
 		Cancel,
 		Menu,
-
+		Start,
+		Move,
+		SelectMove,
+		Camera,
+		DragonCall,
+		Dash,
+		Parry,
 		Max,
 	};
+	enum class VectorAction {
+		Invalid,
+		Max,
+	};
+
 	enum GamePadKey {
 		Invalid = -1,
 		Up,
@@ -89,6 +103,7 @@ namespace Input{
 		RightThumbRight,
 		RightThumbDown,
 		RightThumbLeft,
+		Cross,
 		Max,
 	};
 	constexpr int kActionMaxNum = static_cast<int>(Action::Max);

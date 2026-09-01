@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include "../Utility/Vector3.h"
-#include "../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../World/Component/Collision.h"
 #include<memory>
 
@@ -25,7 +25,7 @@ class CharaGaugeManager;
 class CharacterManager;
 class Bee;
 class Barrier;
-class UIManager;
+class ScreenManager;
 class TileManager;
 class FloorBlock;
 class PadManager;
@@ -93,24 +93,6 @@ private:
 	/// <summary>
 	/// Cameraクラスのポインタ
 	/// </summary>
-	//std::unique_ptr<CameraOld> m_pCamera[static_cast<int>(Pad::Player::Max)];
-	//std::unique_ptr<CameraManager> m_pCameraMgr;
-	//std::shared_ptr<Player> m_pPlayer;
-	//std::shared_ptr<Dragon> m_pDragon;
-	//std::shared_ptr<CharaGaugeManager> m_pGaugeManager;
-	//std::shared_ptr<EnemyManager> m_pEnemyManager;
-	std::unique_ptr<CameraManager> m_pCameraMgr;
-	Player* m_pPlayer;
-	Dragon* m_pDragon;
-	/// <summary>
-	/// プレイヤーの数
-	/// </summary>
-	int m_playerNum;
-
-	Barrier* m_pBarrier;
-	std::unique_ptr<UIManager> m_pUIManager;
-
-	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<PadManager> m_pPadManager;
+	std::unique_ptr<ScreenManager> m_pScreenManager;
 
 };

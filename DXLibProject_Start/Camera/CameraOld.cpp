@@ -4,7 +4,7 @@
 #include <math.h>
 #include <cassert>
 #include"../World/Character/Player/Player.h"
-#include "../Utility/Input.h"
+#include"Input/InputData.h"
 #include "../Utility/MyMath.h"
 #include "../Utility/Game.h"
 
@@ -40,7 +40,6 @@ CameraOld::CameraOld() :
 	m_lerpDistance(kDefoultLerp),
 	m_pPlayer(nullptr),
 	m_target(),
-	m_pad(Input::Pad::P1),
 	m_input(true)
 {
 }
@@ -69,12 +68,12 @@ void CameraOld::Init( Player* pPlayer )
 
 void CameraOld::End(){}
 
-void CameraOld::Update()
+void CameraOld::Update(const InputData& inputData)
 {
 
 	UpdateDistance();
 	if (m_input) {
-		UpdateAngleInput();
+		UpdateAngleInput(inputData);
 	}
 	else {
 		UpdateAngleLerp();
@@ -109,10 +108,10 @@ void CameraOld::UpdateDistance()
 	m_currentDistance = MyMath::Clamp(m_currentDistance, minDistance, maxDistance);
 }
 
-void CameraOld::UpdateAngleInput()
+void CameraOld::UpdateAngleInput(InputData inputData)
 {
-
-	float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1) * MyMath::ToRadian;
+	Vector2 inputVector = inputData.GetVector(Input::Action::Camera);
+	float inputRadian = atan2(inputVector.y, inputVector.x);
 
 	// ŒvZ—p‚ÌVECTOR
 	Vector3 m_moveVector = { 0.0f,0.0f,0.0f };
@@ -123,7 +122,7 @@ void CameraOld::UpdateAngleInput()
 	// ³‹K‰»
 	m_moveVector = m_moveVector.Normalize();
 	// ˆÚ“®—Ê‚ÌŒvZ ƒŒƒo[‚ğ“|‚µ‚½Š„‡‚É‚©‚¯‚é
-	float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * kAngleSpeed;
+	float moveAmount = inputData.GetInputRatio(Input::Action::Move) * kAngleSpeed;
 	// ˆÚ“®‘¬“x‚ğ‚©‚¯‚é
 	m_moveVector = (m_moveVector * moveAmount);
 

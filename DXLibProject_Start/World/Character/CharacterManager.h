@@ -3,7 +3,7 @@
 #include<vector>
 #include"../GameObject.h"
 #include"../GameObjectManager.h"
-#include"../../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../Character/Character.h"
 class Player;
 class Dragon;
@@ -15,7 +15,6 @@ public:
 	~CharacterManager();
 	void Init();
 	void SetRandomPos();
-	void SetPad(Input::Pad pad);
 	Character* GetCharacter(int ID);
 	Player* GetPlayer();
 	Dragon* GetDragon();

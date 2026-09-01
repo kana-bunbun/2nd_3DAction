@@ -48,7 +48,7 @@ public:
 	/// 回転の値をデグリー角で取得する関数
 	/// </summary>
 	/// <returns>デグリー角の回転成分</returns>
-	Vector3 VetRotateDeg()const { return rotation * MyMath::ToRadian; }
+	Vector3 GetRotateDeg()const { return rotation * MyMath::ToRadian; }
 	/// <summary>
 	/// 各値の初期化
 	/// </summary>

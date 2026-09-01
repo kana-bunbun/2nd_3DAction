@@ -115,7 +115,7 @@ void Enemy::LoadModel()
 
 }
 
-void Enemy::Update(float deltaTime)
+void Enemy::Update(float deltaTime, const InputData& inputData)
 {
 	m_animation.SetAnimSpeed(kDefaultAnimSpeed);
 	// アニメーション速度を初期化
@@ -125,6 +125,7 @@ void Enemy::Update(float deltaTime)
 	//printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
 	UpdateBillboard(deltaTime);
 }
+
 
 void Enemy::UpdateBillboard(float deltaTime)
 {

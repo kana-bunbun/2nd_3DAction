@@ -16,7 +16,7 @@ public:
 	~PauseScreen()override = default;
 	void Init()override;
 	void Draw()override;
-	void Update(float deltaTime,const UIInput& input)override;
+	void Update(float deltaTime,const InputData& input)override;
 	void SelectNextButton();
 	void SelectPrevButton();
 	void ExecuteButton();

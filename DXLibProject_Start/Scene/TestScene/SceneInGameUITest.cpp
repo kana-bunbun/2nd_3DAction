@@ -3,11 +3,9 @@
 #include "../SceneTest.h"
 #include "../SceneBase.h"
 #include "Utility/Vector3.h"
-#include "Utility/Input.h"
 #include "Utility/Color.h"
 #include "Utility/GameSetting.h"
 #include "Utility/MyRandom.h"
-#include "Utility/PadManager.h"
 #include "Utility/Loder/Data.h"
 #include "Utility/Loder/FromCSV.h"
 #include "Utility/Loder/CSVLoader.h"
@@ -28,7 +26,7 @@
 #include"World/Character/Player/Player.h"
 #include"World/Character/Guardian/Dragon.h"
 #include"World/Object/Barrier.h"
-#include"World/UI/Core/UIManager.h"
+#include"World/UI/Core/ScreenManager.h"
 #include"World/Map/TileManager.h"
 #include"World/Map/MapCreate.h"
 #include"World/Map/MapManager.h"
@@ -41,6 +39,7 @@
 #include"../../World/UI/Screen/PauseScreen.h"
 #include"../../World/UI/Core/UIInput.h"
 #include"../../Scene/SceneSelectDebug.h"
+#include"Input/InputManager.h"
 #include<cassert>
 #include<memory>
 #include<DxLib.h>
@@ -59,7 +58,7 @@ namespace {
 	constexpr int kFontSize = 50;
 	constexpr int kFontThickness = 50;
 
-	const char* const kcameraParamPath = "CameraParam";
+	const char* const kCameraParamPath = "CameraParam";
 }
 
 SceneInGameUITest::SceneInGameUITest() :
@@ -69,7 +68,6 @@ SceneInGameUITest::SceneInGameUITest() :
 	m_pPlayer(nullptr),
 	m_pTileManager(nullptr),
 	m_pUIManager(nullptr),
-	m_pPadManager(nullptr),
 	m_playerNum(0)
 {
 	// ライトの向きを設定
@@ -87,13 +85,12 @@ SceneInGameUITest::SceneInGameUITest() :
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 
 
-	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
+	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kCameraParamPath);
 	//const auto& scameraParam = Data::Json::LoadJsonAs<FollowCameraParam>(kcameraParamPath);
 
 
 	m_pCameraMgr = std::make_unique<CameraManager>();
 	//m_pUiManager = std::make_unique<UIManager>();
-	m_pPadManager = std::make_unique<PadManager>();
 	m_pTileManager = std::make_unique<TileManager>();
 	m_pPlayer = GameObjectManager::GetInstance().CreateObject<Player>(Vector3::zero);
 
@@ -108,7 +105,7 @@ void SceneInGameUITest::Init() {
 	//m_pSound->LoadSe();
 	//m_pSound->LoadBGM();
 	m_pCameraMgr->Init();
-	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kcameraParamPath);
+	const auto& cameraParam = Data::Csv::LoadCsvAs<FollowCameraParam>(kCameraParamPath);
 	m_pCameraMgr->AddCamera(Camera::CameraType::Follow, std::make_unique<FollowCamera>(&m_pPlayer->GetTransform(), cameraParam[0]));
 	m_pCameraMgr->AddCamera(Camera::CameraType::Debug, std::make_unique<DebugCamera>());
 	SoundManager::GetInstance().LoadBGM();
@@ -119,13 +116,10 @@ void SceneInGameUITest::Init() {
 	m_pPlayer->SetBarrier(m_pBarrier);
 	//m_pUiManager->SetPlayer(m_pPlayer);
 	//m_pUiManager->SetDragon(m_pDragon);
-	m_pPadManager->SetItemCursor(ItemManager::GetInstance().GetItemCursor());
-	m_pPadManager->SetTileManager(m_pTileManager.get());
-	m_pPadManager->Init();
 	m_pTileManager->SetPlayer(m_pPlayer);
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 
-	m_pUIManager= std::make_unique<UIManager>();
+	m_pUIManager= std::make_unique<ScreenManager>();
 	m_pUIManager->PushScreen(std::make_unique<IngameHudScreen>());
 
 	// フェード処理開始
@@ -152,8 +146,6 @@ void SceneInGameUITest::End() {
 
 	GameObjectManager::GetInstance().End();
 	ItemManager::GetInstance().End();
-	m_pPadManager->End();
-
 }
 
 std::unique_ptr<SceneBase> SceneInGameUITest::Update(float deltaTime) {
@@ -161,51 +153,42 @@ std::unique_ptr<SceneBase> SceneInGameUITest::Update(float deltaTime) {
 	// 現在最前面に表示しているのがPauseScreenかどうかチェック
 	// 表示していたらポインタ取得
 
-	UICommand command = m_pUIManager->ConsumeCommand();
+	ScreenCommand command = m_pUIManager->ConsumeCommand();
 	switch (command)
 	{
-	case UICommand::ResumeGame:
+	case ScreenCommand::ResumeGame:
 		break;
-	case UICommand::LoadDebugScene:
+	case ScreenCommand::LoadDebugScene:
 		return std::make_unique<SceneSelectDebug>();
 		break;
 	default:
 		break;
 	}
-
-	m_pUIManager->Update(deltaTime, UIInput());
+	InputData inputData = InputManager::GetInputData();
+	m_pUIManager->Update(deltaTime, InputManager::GetInputData());
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	if (Input::IsPressed(Input::PadKey::Start, Input::Pad::P1)) {
+	if (inputData.IsPressed(Input::Action::Menu)) {
 		m_pUIManager->PushScreen(std::make_unique<PauseScreen>());
 	}
-	else if (Input::IsReleased(Input::PadKey::Start, Input::Pad::P1)) {
+	else if (inputData.IsReleased(Input::Action::Menu)) {
 		m_pUIManager->PopScreen();
 	}
 
-	UpdateInGame(deltaTime);
+	UpdateInGame(deltaTime, inputData);
 
-	// フェード中はコントローラー入力情報をだれにも渡さない
-	if (IsFading()) {
-		m_pPadManager->ChangePadState(PadManager::PadState::Invalid);
-	}
-	// フェードイン終了直後はコントローラー入力情報をプレイヤーに渡す
-	else if (IsFadeEnd()) {
-		m_pPadManager->ChangePadState(PadManager::PadState::Player);
-	}
 	return nullptr;
 }
 
-void SceneInGameUITest::UpdateInGame(float deltaTime)
+void SceneInGameUITest::UpdateInGame(float deltaTime, InputData inputData)
 {
-	m_pCameraMgr->Update(deltaTime);
+	m_pCameraMgr->Update(deltaTime,inputData);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	//m_pUiManager->Update(deltaTime);
-	m_pTileManager->Update(deltaTime);
+	m_pTileManager->Update(deltaTime, inputData);
 
-	GameObjectManager::GetInstance().Update(deltaTime);
+	GameObjectManager::GetInstance().Update(deltaTime,inputData);
 	ItemManager::GetInstance().Update();
-	m_pPadManager->Update();
 
 	GameObjectManager::GetInstance().CheckCollision();
 
@@ -220,12 +203,6 @@ void SceneInGameUITest::Draw() {
 	GameObjectManager::GetInstance().Draw();
 
 	m_pTileManager->Draw();
-	// アイテムメニュー中は画面を少し暗くする
-	if (m_pPadManager->GetPadState() == PadManager::PadState::ItemMenu) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, Color::kBlack, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
 	ItemManager::GetInstance().Draw();
 	// ゲージ関連の描画処理
 	//m_pUiManager->Draw();

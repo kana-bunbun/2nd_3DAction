@@ -154,6 +154,8 @@
     <ClCompile Include="Input\Device\GamePad\GamePadState.cpp" />
     <ClCompile Include="Input\Device\GamePad.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="World\UI\Screen\MainScreen.cpp" />
+    <ClCompile Include="World\UI\Core\Screen.cpp" />
     <ClCompile Include="System\EffectManager.cpp" />
     <ClCompile Include="System\EffectInstance.cpp" />
     <ClCompile Include="System\EffectResource.cpp" />
@@ -169,7 +171,6 @@
     <ClCompile Include="World\UI\MPShow.cpp" />
     <ClCompile Include="World\UI\HPShow.cpp" />
     <ClCompile Include="System\ImageResource.cpp" />
-    <ClCompile Include="World\UI\Core\UICommand.cpp" />
     <ClCompile Include="World\UI\Core\UIInput.cpp" />
     <ClCompile Include="World\UI\Screen\IngameHudScreen.cpp" />
     <ClCompile Include="Scene\TestScene\SceneInGameUITest.cpp" />
@@ -215,7 +216,6 @@
     <ClCompile Include="World\Character\CharacterManager.cpp" />
     <ClCompile Include="Utility\Loder\Data.cpp" />
     <ClCompile Include="World\UI\ItemSlot.cpp" />
-    <ClCompile Include="Utility\PadManager.cpp" />
     <ClCompile Include="World\Object\Item\BlendManager.cpp" />
     <ClCompile Include="World\UI\ItemCursor.cpp" />
     <ClCompile Include="World\UI\BillboardManager.cpp" />
@@ -247,7 +247,7 @@
     <ClCompile Include="World\Character\Guardian\Dragon.cpp" />
     <ClCompile Include="World\UI\GaugePlayer.cpp" />
     <ClCompile Include="Utility\Loder\CsvLoader.cpp" />
-    <ClCompile Include="World\UI\Core\UIManager.cpp" />
+    <ClCompile Include="World\UI\Core\ScreenManager.cpp" />
     <ClCompile Include="World\Object\Barrier.cpp" />
     <ClCompile Include="World\UI\GaugeShow.cpp" />
     <ClCompile Include="World\Character\CharacterMove.cpp" />
@@ -264,7 +264,6 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTest.cpp" />
     <ClCompile Include="Utility\GameSetting.cpp" />
-    <ClCompile Include="Utility\Input.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +318,9 @@
     <ClInclude Include="Data\InputKeyParam.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Input\InputConst.h" />
+    <ClInclude Include="Input\VectorState.h" />
+    <ClInclude Include="World\UI\Screen\MainScreen.h" />
+    <ClInclude Include="World\UI\Core\Screen.h" />
     <ClInclude Include="System\EffectManager.h" />
     <ClInclude Include="System\EffectInstance.h" />
     <ClInclude Include="System\EffectResource.h" />
@@ -334,7 +336,7 @@
     <ClInclude Include="World\UI\MPShow.h" />
     <ClInclude Include="World\UI\HPShow.h" />
     <ClInclude Include="System\ImageResource.h" />
-    <ClInclude Include="World\UI\Core\UICommand.h" />
+    <ClInclude Include="World\UI\Core\ScreenCommand.h" />
     <ClInclude Include="World\UI\Core\UIInput.h" />
     <ClInclude Include="World\UI\Screen\IngameHudScreen.h" />
     <ClInclude Include="Scene\TestScene\SceneInGameUITest.h" />
@@ -392,7 +394,6 @@
     <ClInclude Include="World\Character\CharacterManager.h" />
     <ClInclude Include="Utility\Loder\Data.h" />
     <ClInclude Include="World\UI\ItemSlot.h" />
-    <ClInclude Include="Utility\PadManager.h" />
     <ClInclude Include="World\Object\Item\BlendManager.h" />
     <ClInclude Include="World\UI\ItemCursor.h" />
     <ClInclude Include="World\UI\BillboardManager.h" />
@@ -426,7 +427,7 @@
     <ClInclude Include="World\UI\GaugeParam.h" />
     <ClInclude Include="World\UI\GaugePlayer.h" />
     <ClInclude Include="Utility\Loder\CsvLoader.h" />
-    <ClInclude Include="World\UI\Core\UIManager.h" />
+    <ClInclude Include="World\UI\Core\ScreenManager.h" />
     <ClInclude Include="World\Object\Barrier.h" />
     <ClInclude Include="World\UI\GaugeShow.h" />
     <ClInclude Include="World\Character\CharacterMove.h" />
@@ -446,7 +447,6 @@
     <ClInclude Include="Utility\Color.h" />
     <ClInclude Include="Utility\Game.h" />
     <ClInclude Include="Utility\GameSetting.h" />
-    <ClInclude Include="Utility\Input.h" />
     <ClInclude Include="Utility\MyMath.h" />
     <ClInclude Include="Utility\Vector3.h" />
   </ItemGroup>

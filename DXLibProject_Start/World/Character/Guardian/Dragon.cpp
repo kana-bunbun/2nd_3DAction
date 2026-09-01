@@ -7,7 +7,6 @@
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
 #include"DragonBreath.h"
-#include"../../../Utility/Input.h"
 #include"../../GameObjectManager.h"
 #include"../CharacterManager.h"
 #include"../../Map/RouteSearcher.h"
@@ -90,8 +89,7 @@ Dragon::Dragon():
 	m_attackFlag(false),
 	m_canAttackFlag(false),
 	m_speed(),
-	m_breath(),
-	m_pad(Input::Pad::Invalid)
+	m_breath()
 {
 	m_transform.Reset();
 
@@ -150,12 +148,12 @@ void Dragon::Init()
 
 }
 
-void Dragon::Update(float deltaTime)
+void Dragon::Update(float deltaTime, const InputData& inputData)
 {
 	// タイルIDの更新処理
 	TileIDUpdate();
 	// 入力による更新処理
-	UpdateFromInput();
+	UpdateFromInput(inputData);
 
 	// アニメーション速度を初期化
 	m_animation.SetAnimSpeed();
@@ -210,10 +208,10 @@ void Dragon::TileIDUpdate()
 	
 }
 
-void Dragon::UpdateFromInput()
+void Dragon::UpdateFromInput(const InputData& inputData)
 {
-
-	if (Input::IsPressed(Input::PadKey::RT, Input::Pad::P1)) {
+	InputData input = inputData;
+	if (input.IsPressed(Input::Action::DragonCall)) {
 		if (m_followState!=FollowState::Attack&&m_status!=Status::Dragon::Attack) {
 			SetTarget(CharacterManager::GetInstance().CheckNearestCharacter(m_transform.position, Character::Type::Enemy));
 			Call();

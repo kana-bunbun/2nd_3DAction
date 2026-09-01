@@ -11,7 +11,7 @@ public:
 	void InitParameter()override;
 	void End()override;
 	void Setup(const Transform& transform)override;
-	void Update(float deltaTime)override;
+	void Update(float deltaTime, const InputData& inputData)override;
 	void Draw()override;
 	void DrawModel();
 	void ResolveCollision(

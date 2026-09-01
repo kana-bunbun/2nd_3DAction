@@ -1,6 +1,5 @@
 #include "SceneTextTest.h"
 #include "Scene/SceneSelectDebug.h"
-#include"Utility/Input.h"
 #include"Utility/Color.h"
 #include"Utility/MyMath.h"
 #include"Utility/Vector2.h"
@@ -8,6 +7,8 @@
 #include"World/UI/Screen/TestScreen.h"
 #include"Scene/SceneTest.h"
 #include"Scene/SceneSelectDebug.h"
+#include"Input/InputManager.h"
+#include"Input/InputData.h"
 
 namespace {
 	constexpr Vector2 kInitPos{ 400.0f,400.0f };
@@ -49,7 +50,8 @@ void SceneTextTest::End()
 
 std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 {
-	if (Input::IsPressed(Input::PadKey::Back, Input::Pad::P1))
+	InputData inputData=InputManager::GetInputData();
+	if (inputData.IsPressed(Input::Action::Menu))
 		return std::make_unique<SceneSelectDebug>();
 
 	/*if (Input::IsPressed(Input::Button::X, Input::Pad::P1)) {
@@ -67,23 +69,23 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 	switch (m_pScreen->GetState())
 	{
 	case::TestScreen::ScreenState::PressStay:
-		if (Input::IsPressed(Input::PadKey::B, Input::Pad::P1)) {
+		if (inputData.IsPressed(Input::Action::Decide)) {
 		m_pScreen->SetScreenState(TestScreen::ScreenState::ModeSelect);
 		m_pScreen->ShowModeSelect();
 
 		}
 		break;
 	case::TestScreen::ScreenState::ModeSelect:
-		if (Input::IsPressed(Input::PadKey::Up, Input::Pad::P1)) {
+		if (inputData.IsPressed(Input::Action::Up)) {
 			m_pScreen->SelectPrevButton();
 		}
-		if (Input::IsPressed(Input::PadKey::Down, Input::Pad::P1)) {
+		if (inputData.IsPressed(Input::Action::Down)) {
 			m_pScreen->SelectNextButton();
 		}
-		if (Input::IsDown(Input::PadKey::B, Input::Pad::P1)) {
+		if (inputData.IsPressed(Input::Action::Decide)) {
 			m_pScreen->ExecuteButton();
 		}
-		if (Input::IsPressed(Input::PadKey::A, Input::Pad::P1)) {
+		if (inputData.IsPressed(Input::Action::Cancel)) {
 			m_pScreen->SetScreenState(TestScreen::ScreenState::PressStay);
 			m_pScreen->ShowPressStay();
 		}
@@ -91,7 +93,8 @@ std::unique_ptr<SceneBase> SceneTextTest::Update(float deltaTime)
 	default:
 		break;
 	}
-	m_pScreen->Update(deltaTime, UIInput());
+
+	m_pScreen->Update(deltaTime, InputManager::GetInputData());
 	auto result = m_pScreen->ConsumeResult();
 	switch (result)
 	{

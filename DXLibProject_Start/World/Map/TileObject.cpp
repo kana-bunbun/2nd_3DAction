@@ -48,7 +48,7 @@ void TileObject::End()
 
 }
 
-void TileObject::Update(float deltaTime)
+void TileObject::Update(float deltaTime, const InputData& inputData)
 {
 }
 

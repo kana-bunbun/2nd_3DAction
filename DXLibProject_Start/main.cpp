@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "Utility/Game.h"
-#include "Utility/Input.h"
+#include"Input/InputData.h"
 #include "Utility/GameSetting.h"
 #include "Scene/SceneManager.h"
 #include"Utility/MyRandom.h"
@@ -64,7 +64,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 乱数の初期化
 	MyRandom::Init();
-	Input::Init();
 	TimeManager::Init();
 	BillboardManager::GetInstance().Init();
 	BlendManager::GetInstnce().Init();
@@ -86,10 +85,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		clsDx();				// デバッグ文字の初期化
 		
 		Profiler::BeginFrame();
-		// 入力更新
-		Input::Update();
 		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
+		// 入力更新
 		InputManager::Update(deltaTime);
 		
 

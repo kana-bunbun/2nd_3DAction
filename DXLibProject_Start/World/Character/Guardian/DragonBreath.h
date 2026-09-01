@@ -14,7 +14,7 @@ public:
 	/// <param name="RegistPos">生成座標</param>
 	/// <param name="moveVec">移動方向</param>
 	void Setup(const Vector3& RegistPos, const Vector3& moveVec);
-	void Update(float deltaTime)override;
+	void Update(float deltaTime,const InputData& inputData)override;
 	void Draw()override;
 	void ResolveCollision(
 		GameObject& other,

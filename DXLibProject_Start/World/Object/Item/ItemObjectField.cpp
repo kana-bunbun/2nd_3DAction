@@ -1,7 +1,5 @@
 #include "ItemObjectField.h"
-#include "../../../Utility/PadManager.h"
 #include "../../UI/ItemCursor.h"
-#include "../../../Utility/Input.h"
 namespace {
 	constexpr float kSphereRadius = 50.0f;
 	constexpr Vector3 kCollisionSize = { 100,300,100 };
@@ -26,11 +24,11 @@ void ItemObjectField::End()
 
 }
 
-void ItemObjectField::Update(float deltaTime)
+void ItemObjectField::Update(float deltaTime, const InputData& inputData)
 {
 	m_hitLog[0] = m_hitLog[1];
 	m_hitLog[1] = false;
-	PickUpItem();
+	PickUpItem(inputData);
 }
 
 void ItemObjectField::Draw()
@@ -52,10 +50,11 @@ void ItemObjectField::ResolveCollision(GameObject & other, const CollisionData &
 	}
 }
 
-void ItemObjectField::PickUpItem()
+void ItemObjectField::PickUpItem(const InputData& inputData)
 {
+	InputData input = inputData;
 	if (!m_hitLog[0])return;
-	if (!Input::IsPressed(Input::PadKey::B, Input::Pad::P1))return;
+	if (!input.IsPressed(Input::Action::Decide))return;
 
 	if (!m_pItemCursor || !m_pItemCursor->AddItem(m_type))return;
 	m_isActive = false;

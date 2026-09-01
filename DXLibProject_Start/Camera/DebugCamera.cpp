@@ -5,7 +5,7 @@
 #include"../Utility/MyMath.h"
 #include<DxLib.h>
 #include<cmath>
-#include"../Utility/Input.h"
+#include"Input/InputData.h"
 
 namespace {
     constexpr float kMoveSpeed = 5.0f;
@@ -35,17 +35,17 @@ DebugCamera::~DebugCamera()
 
 }
 
-void DebugCamera::Update(float deltaTime)
+void DebugCamera::Update(float deltaTime, const InputData& inputData)
+
 {
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_rotSpeed;
-    float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, Input::Pad::P1);
-    if (!moveAmount && !analogAmount)return;
-    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1) * MyMath::ToRadian;
-    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1);
+    float moveAmount = inputData.GetInputRatio(Input::Action::Camera) * m_rotSpeed;
+    if (!moveAmount)return;
+    float inputRadian = inputData.GetRadian(Input::Action::Camera);
+    float inputValue = inputData.GetInputRatio(Input::Action::Camera);
     float pitchRad = m_transform.rotation.x;
     float yawRad = m_transform.rotation.y;
-    // 計算用のVECTOR
+    // 計算用のVector
     Vector3 m_moveVector = Vector3::zero;
     // 入力角度からX,Y方向の移動量を計算
     m_moveVector.x = -sinf(inputRadian);
@@ -74,29 +74,13 @@ void DebugCamera::Update(float deltaTime)
     right.z = -sinf(yawRad);
     right = right.Normalize();
 
-    Vector3 move=Vector3::zero;
 
     // 入力量を取得
     // 入力角度を取得
-    float analogAngle = Input::AnalogAngle(Input::Joystick::Left, Input::Pad::P1);
-    // 角度をラジアン角に変更
-    analogAngle *= MyMath::ToRadian;
+    float analogRadian = inputData.GetRadian(Input::Action::Camera);
     // カメラの角度で回転するように
-    analogAngle += m_transform.rotation.y;
+    analogRadian += m_transform.rotation.y;
 
-
-    // 移動をする
-    //m_move.Update();
-
-    //float deltaTime = Time::GetInstance().GetDeltaTime();
-
-    Vector3 moveVec = Vector3::zero;
-    moveVec.x = -sinf(analogAngle);
-    moveVec.z = -cosf(analogAngle);
-    moveVec *= 10*analogAmount;
-    move= moveVec * deltaTime;
-
-    //m_view.GetForward();
 
     Vector3 forward;
     forward.x = cosf(pitchRad) * sinf(yawRad);
@@ -119,6 +103,7 @@ void DebugCamera::Update(float deltaTime)
     printfDx("z : %f\n", m_transform.rotation.z);
     UpdatePos();
 }
+
 
 Camera::CameraView DebugCamera::GetView() const
 {
@@ -149,7 +134,7 @@ void DebugCamera::UpdatePos()
     cameraPos += m_view.target;
     cameraPos = (cameraPos + rotate);
 
-    m_view.position = cameraPos;
+    m_view.transform.position = cameraPos;
     //m_view.target = m_view.target;
     m_transform.position = cameraPos;
 

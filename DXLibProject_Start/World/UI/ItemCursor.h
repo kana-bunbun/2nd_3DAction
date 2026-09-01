@@ -1,5 +1,5 @@
 #pragma once
-#include"../../Utility/Input.h"
+#include"Input/InputData.h"
 #include"../../Utility/Vector3.h"
 #include"../Object/Item/BlendManager.h"
 #include<array>
@@ -56,7 +56,6 @@ public:
 public:
 	bool GetIsBlendMenu() { return m_isBlendMenu; }
 	void SetIsBlendMenu(bool isblend) { m_isBlendMenu = isblend; }
-	void SetPad(Input::Pad pad) { m_pad = pad; }
 	void SetItemObjectManager(ItemObjectManager* pItemObjectManager) { m_pItemObjectManager = pItemObjectManager; }
 private:
 	bool BlendItem();
@@ -69,8 +68,6 @@ private:
 	int m_cursorHandle;
 	// カーソルの描画座標
 	Vector3 m_cursorPosition;
-	// 割り当てられたコントローラー
-	Input::Pad m_pad;
 	// 所持しているアイテムの種類
 	std::array < ItemSlot*, kSlotMax > m_slots;
 	std::array<ItemData::Type, kSelectMax>m_selected;

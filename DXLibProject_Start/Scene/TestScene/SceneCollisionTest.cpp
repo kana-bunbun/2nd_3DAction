@@ -3,7 +3,8 @@
 #include<DxLib.h>
 #include"Utility/Color.h"
 #include"Utility/MyMath.h"
-#include"Utility/Input.h"
+#include"Input/InputData.h"
+#include"Input/InputManager.h"
 #include"Camera/CameraManager.h"
 #include"Camera/DebugCamera.h"
 
@@ -21,7 +22,7 @@ namespace {
 	constexpr int kFontSize = 50;
 	constexpr int kFontThickness = 50;
 
-	const char* const kcameraParamPath = "CameraParam";
+	const char* const kCameraParamPath = "CameraParam";
 }
 SceneCollisionTest::SceneCollisionTest():
 	m_pCameraManager(nullptr)
@@ -47,10 +48,11 @@ void SceneCollisionTest::End()
 
 std::unique_ptr<SceneBase> SceneCollisionTest::Update(float deltaTime)
 {
-    if (Input::IsPressed(Input::PadKey::Back, Input::Pad::P1))
+	InputData inputData = InputManager::GetInputData();
+    if (inputData.IsPressed(Input::Action::Menu))
         return std::make_unique<SceneSelectDebug>();
 
-	m_pCameraManager->Update(deltaTime);
+	m_pCameraManager->Update(deltaTime,inputData);
     return nullptr;
 }
 

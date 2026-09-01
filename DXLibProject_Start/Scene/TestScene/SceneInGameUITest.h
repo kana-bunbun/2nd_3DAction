@@ -1,7 +1,7 @@
 #pragma once
 #include "../SceneBase.h"
 #include "Utility/Vector3.h"
-#include "Utility/Input.h"
+#include"Input/InputData.h"
 #include"World/Component/Collision.h"
 #include<memory>
 
@@ -16,15 +16,14 @@ class CharaGaugeManager;
 class CharacterManager;
 class Bee;
 class Barrier;
-class UIManager;
+class ScreenManager;
 class TileManager;
 class FloorBlock;
-class PadManager;
 class GameObjectManager;
 class GameObject;
 class IngameHudScreen;
 class PauseScreen;
-class UIManager;
+class ScreenManager;
 
 
 /// <summary>
@@ -62,7 +61,7 @@ public:
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
 	std::unique_ptr<SceneBase> Update(float deltaTime)override;
-	void UpdateInGame(float deltaTime);
+	void UpdateInGame(float deltaTime,InputData inputData);
 	/// <summary>
 	/// SceneTest画面の描画を行う
 	/// </summary>
@@ -88,7 +87,6 @@ private:
 	Barrier* m_pBarrier;
 
 	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<PadManager> m_pPadManager;
-	std::unique_ptr<UIManager> m_pUIManager;
+	std::unique_ptr<ScreenManager> m_pUIManager;
 
 };

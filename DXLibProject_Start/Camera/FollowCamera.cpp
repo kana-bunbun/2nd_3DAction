@@ -7,11 +7,14 @@
 #include<cassert>
 #include<math.h>
 
-#include "../Utility/Input.h"
+#include"Input/InputData.h"
 #include "../Utility/MyMath.h"
 #include "../Utility/MyRandom.h"
 #include "../Data/CameraParam.h"
-
+namespace {
+    constexpr float kRotateSpeedHolizontal = 30000.0f;
+    constexpr float kRotateSpeedVertical = 10000.0f;
+}
 
 FollowCamera::FollowCamera(const Transform* target):
     m_target(target),
@@ -43,10 +46,10 @@ FollowCamera::~FollowCamera()
 
 }
 
-void FollowCamera::Update(float deltaTime)
+void FollowCamera::Update(float deltaTime, const InputData& inputData)
 {
     UpdateDistance(deltaTime);
-    UpdateAngle(deltaTime);
+    UpdateAngle(deltaTime, inputData);
     UpdatePosition(deltaTime);
     //printfDx("/////transform/////\n");
     //printfDx("rotation  X : %f\n",m_transform.rotation.x * MyMath::ToDegree);
@@ -71,34 +74,32 @@ void FollowCamera::UpdateDistance(float deltaTime)
     m_distance = MyMath::Clamp(m_distance, minDistance, maxDistance);
 }
 
-void FollowCamera::UpdateAngle(float deltaTime)
+void FollowCamera::UpdateAngle(float deltaTime, InputData inputData)
 {
 
-    float inputRadian = Input::AnalogAngle(Input::Joystick::Right, Input::Pad::P1)*MyMath::ToRadian;
-    float inputValue = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1);
+    float inputRadian = inputData.GetRadian(Input::Action::Camera);
+    float inputValue = inputData.GetInputRatio(Input::Action::Camera);
     float pitchRad = m_transform.rotation.x;
     float yawRad = m_transform.rotation.y;
     // 計算用のVECTOR
     Vector3 m_moveVector = Vector3::zero;
     // 入力角度からX,Y方向の移動量を計算
-    m_moveVector.x = -sinf(inputRadian);
-    m_moveVector.y = -cosf(inputRadian);
+    m_moveVector.x = -cosf(inputRadian);
+    m_moveVector.y = -sinf(inputRadian);
     // 正規化
     m_moveVector = m_moveVector.Normalize();
     // 移動量の計算 レバーを倒した割合にかける
-    float moveAmount = Input::PadAnalogAmount(Input::Joystick::Right, Input::Pad::P1) * m_param.rotateSpeedDeg;
+    float moveAmount = inputData.GetInputRatio(Input::Action::Camera) * m_param.rotateSpeedDeg;
     // 移動速度をかける
     m_moveVector = (m_moveVector * moveAmount);
-    pitchRad += m_moveVector.y * deltaTime;
+    pitchRad += m_moveVector.y * deltaTime*kRotateSpeedVertical;
     pitchRad = MyMath::Clamp(pitchRad, m_param.minPitchDegAngle*MyMath::ToRadian, m_param.maxPitchDegAngle * MyMath::ToRadian);
     m_transform.rotation.x = pitchRad;
 
     yawRad = MyMath::NormalizeRadian(yawRad);
 
 
-
-
-    yawRad -= m_moveVector.x * deltaTime;
+    yawRad -= m_moveVector.x * deltaTime*kRotateSpeedHolizontal;
     // 水平方向の角度を範囲内に収める
     yawRad = MyMath::NormalizeAngle(yawRad);
     m_transform.rotation.y = yawRad /** MyMath::ToRadian*/;
@@ -133,7 +134,8 @@ void FollowCamera::UpdatePosition(float deltaTime)
     cameraPos += m_target->position;
     cameraPos = (cameraPos + rotate);
 
-    m_view.position = cameraPos;
+    m_view.transform.position = cameraPos;
+    m_view.transform.rotation = m_transform.rotation;
     m_view.target = m_target->position;
     m_view.target += m_param.offsetPos;
     m_transform.position = cameraPos;
@@ -145,4 +147,8 @@ void FollowCamera::UpdatePosition(float deltaTime)
     {
         m_transform.position.y = 0;
     }
+
+    printfDx("FollowCamera rotate.y : %f\n", m_transform.rotation.y);
+    printfDx("FollowCamera  angle.y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
+
 }

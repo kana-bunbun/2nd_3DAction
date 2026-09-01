@@ -197,6 +197,43 @@ bool InputManager::IsHold(const Input::Action& action, const Input::GamePad& pad
 	return false;
 }
 
+Vector2 InputManager::GetVector(const Input::Action& action, const Input::GamePad& pad)
+{
+	int actionIndex = static_cast<int>(action);
+	if (actionIndex < 0 || actionIndex >= m_actionParam.size()) {
+
+		assert(false && "IsHold action Out Of Range");
+	}
+	Vector2 max = Vector2::Zero;
+	for (int i = 0; i < m_actionParam[actionIndex].keys.size(); i++) {
+		Input::Key key = m_actionParam[actionIndex].keys[i];
+		Vector2 vec = GetVector(key, pad);
+
+		if (max.GetSqLength() < vec.GetSqLength())
+			max = vec;
+	}
+	return max;
+}
+
+Vector2 InputManager::GetVector(const Input::Key& key, const Input::GamePad& pad)
+{
+	Input::Device device = m_keyParam[static_cast<int>(key)].device;
+	int keyIndex = static_cast<int>(key);
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
+		assert(false && "GetVector key OutOfRange");
+	}
+	int keyID = m_keyParam[keyIndex].keyID;
+	switch (device) {
+	case Input::Device::GamePad:{}
+		return m_gamePad[static_cast<int>(pad)]->GetVectorState(keyID).vector;
+	case Input::Device::Keyboard:
+		break;
+	case Input::Device::Mouce:
+		break;
+	}
+	return Vector2::Zero;
+}
+
 const InputData InputManager::GetInputData()
 {
 	return m_inputData;
@@ -205,13 +242,54 @@ const InputData InputManager::GetInputData()
 void InputManager::UpdateInputData()
 {
 	std::array<ActionInputState,static_cast<int>(Input::Action::Max)> inputData;
+	std::array<VectorState,static_cast<int>(Input::Action::Max)> radian;
 	// 全アクションの入力情報を調べる
 	for (int i = 0; i < static_cast<int>(Input::Action::Max); i++) {
 		// アクションを取得
 		Input::Action action = static_cast<Input::Action>(i);
 		// アクションの入力を設定
 		inputData[i] = ActionInputState(IsDown(action), IsPressed(action), IsReleased(action), IsHold(action));
+		radian[i] = GetVectorState(action);
 	}
 	// 入力情報の設定
-	m_inputData.Init(inputData);
+	m_inputData.Init(inputData,radian);
+}
+
+VectorState InputManager::GetVectorState(const Input::Action& action, const Input::GamePad& pad)
+{
+	int actionIndex = static_cast<int>(action);
+	if (actionIndex < 0 || actionIndex >= m_actionParam.size()) {
+
+		assert(false && "IsHold action Out Of Range");
+	}
+	VectorState max = VectorState();
+	for (int i = 0; i < m_actionParam[actionIndex].keys.size(); i++) {
+		Input::Key key = m_actionParam[actionIndex].keys[i];
+		VectorState state = GetVectorState(key, pad);
+
+		if (max.vector.GetSqLength() < state.vector.GetSqLength())
+			max = state;
+	}
+	return max;
+}
+
+VectorState InputManager::GetVectorState(const Input::Key& key, const Input::GamePad& pad)
+{
+	Input::Device device = m_keyParam[static_cast<int>(key)].device;
+	int keyIndex = static_cast<int>(key);
+	if (keyIndex < 0 || keyIndex >= static_cast<int>(m_keyParam.size())) {
+		assert(false && "GetVector key OutOfRange");
+	}
+	int keyID = m_keyParam[keyIndex].keyID;
+	switch (device) {
+	case Input::Device::GamePad:
+		return m_gamePad[static_cast<int>(pad)]->GetVectorState(keyID);
+
+		break;
+	case Input::Device::Keyboard:
+		break;
+	case Input::Device::Mouce:
+		break;
+	}
+	return VectorState();
 }

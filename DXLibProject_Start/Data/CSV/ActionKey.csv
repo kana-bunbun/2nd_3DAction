@@ -6,3 +6,10 @@ ActionID,Action,Key[0],Key[1],Key[2],Key[3],Key[4],Key[5],KeyID[0],KeyID[1],KeyI
 4,Decide,GpEast,Invalid,Invalid,Invalid,Invalid,Invalid,6,0,0,0,0,0
 5,Cancel,GpStart,Invalid,Invalid,Invalid,Invalid,Invalid,9,0,0,0,0,0
 6,Menu,GpNorth,Invalid,Invalid,Invalid,Invalid,Invalid,5,0,0,0,0,0
+7,Start,GpStart,Invalid,Invalid,Invalid,Invalid,Invalid,9,0,0,0,0,0
+8,Move,GpLeftThumb,Invalid,Invalid,Invalid,Invalid,Invalid,15,0,0,0,0,0
+9,SelectMove,GpLeftThumb,GpCross,Invalid,Invalid,Invalid,Invalid,15,25,0,0,0,0
+10,Camera,GpRightThumb,Invalid,Invalid,Invalid,Invalid,Invalid,16,0,0,0,0,0
+11,DragonCall,GpRightTrigger,Invalid,Invalid,Invalid,Invalid,Invalid,14,0,0,0,0,0
+12,Dash,GpRightThumb,Invalid,Invalid,Invalid,Invalid,Invalid,16,0,0,0,0,0
+13,Parry,GpRightThumb,Invalid,Invalid,Invalid,Invalid,Invalid,16,0,0,0,0,0

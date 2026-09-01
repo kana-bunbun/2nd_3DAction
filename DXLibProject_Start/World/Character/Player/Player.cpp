@@ -4,7 +4,6 @@
 #include<vector>
 #include"../../../Data/ModelPathParam.h"
 #include"../Animation.h"
-#include"../../../Utility/Input.h"
 #include"../../../Camera/CameraOld.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
@@ -198,20 +197,20 @@ void Player::LoadModel()
 
 }
 
-void Player::Update(float deltaTime)
+void Player::Update(float deltaTime, const InputData& inputData)
 {
 
 	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
 
 	// ステータスに応じた更新処理
-	UpdateAction();
+	UpdateAction(inputData);
 	// フラグの更新
 	UpdateFlag();
 	// トランスフォームの更新
-	UpdateTransform(deltaTime);
+	UpdateTransform(deltaTime, inputData);
 	// アニメーションの更新
-	UpdateAnimation(deltaTime);
+	UpdateAnimation(deltaTime, inputData);
 
 	// バリアの座標を設定
 	if (m_pBarrier) {
@@ -222,6 +221,8 @@ void Player::Update(float deltaTime)
 	m_itemList->Debug();
 	// ゲージが上限・下限を超えないようにする
 	
+	printfDx("Player Rotate.y : %f\n", m_transform.rotation.y);
+	printfDx("Player Angle.y  : %f\n", m_transform.rotation.y * MyMath::ToDegree);
 
 	// MPの自動回復
 	if(m_status!=Status::Player::Parry){}
@@ -229,7 +230,7 @@ void Player::Update(float deltaTime)
 	//m_animation.Debug();
 }
 
-void Player::UpdateAction()
+void Player::UpdateAction(InputData inputData)
 {
 	// ステータスによって行動を分岐
 	switch (m_status)
@@ -238,7 +239,7 @@ void Player::UpdateAction()
 		break;
 	case Status::Player::Walk: {
 		// 歩き状態の時にボタンを押すとダッシュ
-		if (Input::IsPressed(Input::PadKey::LThumb, m_pad)) {
+		if (inputData.IsPressed(Input::Action::Dash)) {
 			m_dashFlag ^= 1;
 		}
 		// 移動速度の速さに応じてアニメーションの再生速度を計算
@@ -249,7 +250,7 @@ void Player::UpdateAction()
 	}
 	case Status::Player::Parry:
 		// パリィ時の更新処理
-		Parry();
+		Parry(inputData);
 		break;
 	case Status::Player::Damage:
 		break;
@@ -261,13 +262,13 @@ void Player::UpdateAction()
 		break;
 	}
 }
-void Player::Parry()
+void Player::Parry(InputData inputData)
 {
 	// パリィ時のアニメーションの再生速度を設定
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
 	if (m_parry)return;
 	// ボタンを離した瞬間
-	if ((!Input::IsDown(Input::PadKey::A, m_pad)&&m_charge)){
+	if ((!inputData.IsDown(Input::Action::Parry)&&m_charge)){
 		// アニメーションの再生カウントを設定
 		m_animation.ResetPlayCount(kParryStopTime);
 		// フラグをtrueに
@@ -278,7 +279,7 @@ void Player::Parry()
 		return;
 	}
 	// 押している間
-	if (Input::IsDown(Input::PadKey::A, m_pad)) {
+	if (inputData.IsDown(Input::Action::Parry)) {
 		// フラグをfalseに
 		m_parry = false;
 		// アニメーションの再生速度を計算し一定カウントを越さないようにする
@@ -292,16 +293,14 @@ void Player::Parry()
 	}
 }
 
-void Player::UpdateTransform(float deltaTime)
+void Player::UpdateTransform(float deltaTime, InputData inputData)
 {
 	// 入力量を取得
-	float analogAmount = Input::PadAnalogAmount(Input::Joystick::Left, m_pad);
+	float analogAmount = inputData.GetInputRatio(Input::Action::Move);
 	// 入力角度を取得
-	float analogAngle = Input::AnalogAngle(Input::Joystick::Left, m_pad);
-	// 角度をラジアン角に変更
-	analogAngle *= MyMath::ToRadian;
+	float analogRadian = inputData.GetRadian(Input::Action::Move);
 	// カメラの角度で回転するように
-		analogAngle += CameraRotaY();
+	analogRadian += CameraRotaY();
 
 	// 移動速度を減衰させる
 	m_speed *= kAttenuation;
@@ -312,7 +311,8 @@ void Player::UpdateTransform(float deltaTime)
 	// 移動の入力がされていて、かつ歩き状態時のみ移動
 	if (analogAmount && m_status == Status::Player::Walk) {
 		// 入力角度まで補間するように
-		m_move.SetDesireRad(analogAngle);
+		m_move.SetDesireRad(analogRadian);
+		//m_transform.rotation.y -= (DX_PI_F * 0.5f);
 		// 入力量だけ移動速度を設定
 		m_speed = analogAmount * kMoveSpeed*(1+m_dashFlag*1.5f);
 	}
@@ -331,7 +331,7 @@ void Player::UpdateTransform(float deltaTime)
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);*/
 }
 
-void Player::UpdateAnimation(float deltaTime)
+void Player::UpdateAnimation(float deltaTime, InputData inputData)
 {
 
 	// アニメーションの更新
@@ -344,12 +344,12 @@ void Player::UpdateAnimation(float deltaTime)
 	Status::Player nextStatus;
 	nextStatus = Status::Player::Neutral;
 	// パリィ時またはボタンを押した瞬間
-	if (m_status == Status::Player::Parry || (Input::IsPressed(Input::PadKey::A, m_pad))) {
+	if (m_status == Status::Player::Parry || (inputData.IsPressed(Input::Action::Parry))) {
 		// パリィ状態に
 		nextStatus = Status::Player::Parry;
 	}
 	// 移動の入力があるとき
-	else if (Input::PadAnalogAmount(Input::Joystick::Left, m_pad)) {
+	else if (inputData.GetInputRatio(Input::Action::Move)) {
 		// 移動ステータスに
 		nextStatus = Status::Player::Walk;
 	}
@@ -372,6 +372,7 @@ void Player::UpdateFlag()
 	if (m_status != Status::Player::Parry)
 		m_parry = false;
 }
+
 
 void Player::ChangeAnimation(const Status::Player& status)
 {
@@ -471,9 +472,8 @@ void Player::UpdateCollision()
 float Player::CameraRotaY()
 {
 	float yawRad = 0.0f;
-	Vector3 forwaard = m_cameraView.GetForward();
-	yawRad = atan2(forwaard.x,forwaard.z);
-
+	yawRad = m_cameraView.transform.rotation.y;
+	printfDx("Camera YawRad : %f\n", yawRad*MyMath::ToDegree);
 	return yawRad;
 }
 

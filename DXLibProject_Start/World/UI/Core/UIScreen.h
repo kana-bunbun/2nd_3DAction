@@ -3,8 +3,9 @@
 #include<memory>
 #include<type_traits>
 #include"UIObject.h"
-#include"UIInput.h"
-#include"UICommand.h"
+#include"Input/InputData.h"
+#include"ScreenCommand.h"
+#include"Screen.h"
 /// <summary>
 /// UIObjectをまとめて管理するクラス
 /// 1画面につき１つのインスタンスを作成
@@ -14,15 +15,15 @@
 /// 複数のUIObjectを一括で管理するマネージャーのような内容だが
 /// あくまで画面を管理するクラスとして使用
 /// </summary>
-class UIScreen
+class UIScreen:public Screen
 {
 public:
 	UIScreen()=default;
-	virtual ~UIScreen() = default;
+	~UIScreen() = default;
 
-	virtual void Init() {};
-	virtual void Update(float deltaTime,const UIInput& input);
-	virtual void Draw();
+	void Init() override {};
+	void Update(float deltaTime,const InputData& input) override;
+	void Draw() override;
 
 	/// <summary>
 	/// UIオブジェクトの生成
@@ -30,7 +31,7 @@ public:
 	template<class T,class... Args>
 	T* CreateUIObject(Args&&... args);
 
-	UICommand ConsumeCommand();
+	ScreenCommand ConsumeCommand()override;
 
 protected:
 
@@ -43,7 +44,7 @@ protected:
 	/// コマンドの設定
 	/// </summary>
 	/// <param name="command"></param>
-	void SetUICommand(const UICommand& command) { m_command = command; }
+	void SetUICommand(const ScreenCommand& command) { m_command = command; }
 
 protected:
 	/// <summary>
@@ -51,10 +52,7 @@ protected:
 	/// </summary>
 	std::vector<std::unique_ptr<UIObject>>m_rootObjects;
 
-	/// <summary>
-	/// 外部に送るUIのコマンド
-	/// </summary>
-	UICommand m_command=UICommand::None;
+
 
 };
 

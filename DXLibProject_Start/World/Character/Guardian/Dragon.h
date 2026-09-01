@@ -5,7 +5,7 @@
 #include"../CharacterMove.h"
 #include"DragonAttack.h"
 #include"../../UI/GaugeShow.h"
-#include"../../../Utility/Input.h"
+#include"Input/InputData.h"
 #include<array>
 namespace {
 	enum FollowState {
@@ -28,10 +28,10 @@ public:
 	~Dragon();
 
 	void Init()override;
-	void Update(float deltaTime)override;
+	void Update(float deltaTime,const InputData& inputData)override;
 	void TileIDUpdate();
 	const Character::Type& GetCharacterType()override { return Character::Type::Dragon; }
-	void UpdateFromInput();
+	void UpdateFromInput(const InputData& inputData);
 	/// <summary>
 	/// 追従時の更新処理
 	/// </summary>
@@ -60,7 +60,6 @@ public:
 	void SetMaster(GameObject* pMaster) { m_pMaster = pMaster; }
 	Vector3 CheckFollowOffset();
 	void SetPosition(const Vector3& pos)override;
-	void SetPad(Input::Pad pad) { m_pad = pad; }
 	void SetTarget(GameObject* target) { m_pTarget = target; }
 private:
 	void FollowPlayer();
@@ -115,7 +114,6 @@ private:
 
 	std::array<DragonBreath*, kBleathCount> m_breath;
 
-	Input::Pad m_pad;
 	std::vector<ManhattanMoveData> moveData;
 	int m_routeSearchTileID;
 	int m_routeSearchPlayerTileID;

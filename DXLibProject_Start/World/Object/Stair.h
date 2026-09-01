@@ -1,6 +1,6 @@
 #pragma once
 #include"../GameObject.h"
-#include"../../Utility/Input.h"
+
 /// <summary>
 /// 階段オブジェクトの処理を行う
 /// </summary>
@@ -11,7 +11,7 @@ public:
 	~Stair();
 
 	void Init()override;
-	void Update(float deltaTime)override;
+	void Update(float deltaTime, const InputData& inputData)override;
 	void Draw()override;
 
 	void ResolveCollision(GameObject& other, const Collision::Result& result);
@@ -35,7 +35,6 @@ private:
 	bool m_isHit;
 	bool m_isHitOld;
 	float m_alpha;
-	Input::Pad m_pad;
 	Vector3 m_billboardPos;
 };
 

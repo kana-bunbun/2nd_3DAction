@@ -50,7 +50,6 @@ ItemCursor::ItemCursor():
 	m_showSelectIndex(m_selectIndex),
 	m_cursorHandle(-1),
 	m_cursorPosition(GetSelectPos(0)),
-	m_pad(Input::Pad::Invalid),
 	m_isBlendMenu(false),
 	m_holdLeftCount(0.0f),
 	m_holdRightCount(0.0f),
@@ -109,8 +108,9 @@ void ItemCursor::UpdateCursor()
 	float deltaTime = TimeManager::GetRawDeltaTime();
 	// 補間での移動割合を値域内で収める
 	float lerpValue = MyMath::Clamp(deltaTime * kCursorLerpSpeed, 0.0f, 1.0f);
-	// 誤差の範囲内なら同じ座標にする
+
 	if (differ.GetSqLength() < MyMath::Epsilon* MyMath::Epsilon) {
+		// 誤差の範囲内なら同じ座標にする
 		m_cursorPosition = desirePos;
 	}
 	else {
@@ -122,55 +122,55 @@ void ItemCursor::UpdateCursor()
 
 void ItemCursor::UpdateToInput()
 {
-	// コントローラーが割り当てられているとき処理を行う
-	if (m_pad == Input::Pad::Invalid)return;
-
-	if (Input::IsHold(Input::PadKey::Left, m_pad)) {
-		m_holdLeftCount += TimeManager::GetDeltaTime();
-	}
-	if (Input::IsHold(Input::PadKey::Right, m_pad)) {
-		m_holdRightCount += TimeManager::GetDeltaTime();
-	}
-
-	// 入力に応じて選択中のインデックスを更新
-	if (Input::IsPressed(Input::PadKey::Left, m_pad)||
-		m_holdLeftCount>=kHoldArrowInterval) {
-		m_selectIndex--;
-		m_holdLeftCount = 0.0f;
-	}
-	if (Input::IsPressed(Input::PadKey::Right, m_pad) ||
-		m_holdRightCount >= kHoldArrowInterval) {
-		m_selectIndex++;
-		m_holdRightCount = 0.0f;
-	}
-	// 選択中インデックスの更新処理
-	NormalizeIndex();
-	// メニュー選択状態でなければ
-	if (!m_isBlendMenu) {
-		if (Input::IsPressed(Input::PadKey::X, m_pad)) {
-			UseItem();
-		}
-		return;
-	}
-	if (Input::IsPressed(Input::PadKey::Y, m_pad)) {
-		Cancel();
-	}
-
-	if (Input::IsPressed(Input::PadKey::A, m_pad)) {
-		Cancel();
-	}
-
-	if (Input::IsPressed(Input::PadKey::B, m_pad)) {
-
-		if (m_slots[m_selectIndex]->GetItemType() != ItemData::Type::Invalid)
-			if (m_slots[m_selectIndex]->GetHoldNum() > 0) {
-
-				Select();
-			}
-	}
-	if (Input::IsPressed(Input::PadKey::X, m_pad)) {
-		BlendItem();
-	}
+//	// コントローラーが割り当てられているとき処理を行う
+//	if (m_pad == Input::Pad::Invalid)return;
+//
+//	if (Input::IsHold(Input::PadKey::Left, m_pad)) {
+//		m_holdLeftCount += TimeManager::GetDeltaTime();
+//	}
+//	if (Input::IsHold(Input::PadKey::Right, m_pad)) {
+//		m_holdRightCount += TimeManager::GetDeltaTime();
+//	}
+//
+//	// 入力に応じて選択中のインデックスを更新
+//	if (Input::IsPressed(Input::PadKey::Left, m_pad)||
+//		m_holdLeftCount>=kHoldArrowInterval) {
+//		m_selectIndex--;
+//		m_holdLeftCount = 0.0f;
+//	}
+//	if (Input::IsPressed(Input::PadKey::Right, m_pad) ||
+//		m_holdRightCount >= kHoldArrowInterval) {
+//		m_selectIndex++;
+//		m_holdRightCount = 0.0f;
+//	}
+//	// 選択中インデックスの更新処理
+//	NormalizeIndex();
+//	// メニュー選択状態でなければ
+//	if (!m_isBlendMenu) {
+//		if (Input::IsPressed(Input::PadKey::X, m_pad)) {
+//			UseItem();
+//		}
+//		return;
+//	}
+//	if (Input::IsPressed(Input::PadKey::Y, m_pad)) {
+//		Cancel();
+//	}
+//
+//	if (Input::IsPressed(Input::PadKey::A, m_pad)) {
+//		Cancel();
+//	}
+//
+//	if (Input::IsPressed(Input::PadKey::B, m_pad)) {
+//
+//		if (m_slots[m_selectIndex]->GetItemType() != ItemData::Type::Invalid)
+//			if (m_slots[m_selectIndex]->GetHoldNum() > 0) {
+//
+//				Select();
+//			}
+//	}
+//	if (Input::IsPressed(Input::PadKey::X, m_pad)) {
+//		BlendItem();
+//	}
 }
 
 void ItemCursor::NormalizeIndex()
@@ -210,30 +210,30 @@ void ItemCursor::UseItem()
 void ItemCursor::Draw()
 {
 
-	int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
+	//int handle = FontManager::GetInstance().GetFontHandle(kFontName, kFontSize, kFontThickness);
 
-	for (int i = 0; i < kSlotMax;i++) {
-		int holdNum = m_slots[i]->GetHoldNum();
-		// スロットの描画処理を行う
-		m_slots[i]->Draw();
-		if (m_slots[i]->m_select) {
-			continue;
-		}
-			//DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_slots[i]->m_type)], TRUE);
-		if (!holdNum)continue;
-		
-		Vector3 textPos = GetSelectPos(i) + kHoldNumTextOffset;
-		// 所持数のテキストを用意
-		std::string numText = std::to_string(holdNum);
-		// 文字数を取得
-		int length=numText.length();
-		textPos.x -= kHoldNumTextOffset.x * length;
-		std::string holdText = "x"+numText;
+	//for (int i = 0; i < kSlotMax;i++) {
+	//	int holdNum = m_slots[i]->GetHoldNum();
+	//	// スロットの描画処理を行う
+	//	m_slots[i]->Draw();
+	//	if (m_slots[i]->m_select) {
+	//		continue;
+	//	}
+	//		//DrawRotaGraph(graphPos.x, graphPos.y, kCursorScale, 0, m_itemHandles[static_cast<int>(m_slots[i]->m_type)], TRUE);
+	//	if (!holdNum)continue;
+	//	
+	//	Vector3 textPos = GetSelectPos(i) + kHoldNumTextOffset;
+	//	// 所持数のテキストを用意
+	//	std::string numText = std::to_string(holdNum);
+	//	// 文字数を取得
+	//	int length=numText.length();
+	//	textPos.x -= kHoldNumTextOffset.x * length;
+	//	std::string holdText = "x"+numText;
 
-		DrawStringToHandle(textPos.x, textPos.y, holdText.c_str(), Color::kWhite, handle);
-	}
-		DrawRotaGraph(m_cursorPosition.x, m_cursorPosition.y, kCursorScale, 0, m_cursorHandle, TRUE);
-		BlendManager::GetInstnce().Debug();
+	//	DrawStringToHandle(textPos.x, textPos.y, holdText.c_str(), Color::kWhite, handle);
+	//}
+	//	DrawRotaGraph(m_cursorPosition.x, m_cursorPosition.y, kCursorScale, 0, m_cursorHandle, TRUE);
+	//	BlendManager::GetInstnce().Debug();
 }
 
 Vector3 ItemCursor::GetSelectPos(int selectIndex)

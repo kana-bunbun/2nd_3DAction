@@ -27,7 +27,7 @@ void CameraManager::Init()
 	SetCameraNearFar(kNearDistance, kFarDistance);
 }
 
-void CameraManager::Update(float deltaTime)
+void CameraManager::Update(float deltaTime, const InputData& inputData)
 {
 	assert(!m_cameras.empty());
 	//if (m_cameras.empty())return;
@@ -35,7 +35,7 @@ void CameraManager::Update(float deltaTime)
 	//m_currentView=m_cameras[m_activeIndex]->GetView();
 	size_t index = static_cast<size_t>(m_cameraType);
 	if (!m_cameras[index])return;
-	m_cameras[index]->Update(deltaTime);
+	m_cameras[index]->Update(deltaTime,inputData);
 	m_currentView = m_cameras[index]->GetView();
 }
 
@@ -45,7 +45,7 @@ void CameraManager::Apply()
 	if (!m_cameras[index])return;
 
 	SetCameraPositionAndTarget_UpVecY(
-		m_currentView.position.ToVECTOR(),
+		m_currentView.transform.position.ToVECTOR(),
 		m_currentView.target.ToVECTOR()
 	);
 

@@ -6,6 +6,7 @@
 #include"../World/Component/Collision.h"
 #include"GameObjectParam.h"
 #include"../System/Resource.h"
+#include"Input/InputData.h"
 /// <summary>
 /// ゲームで扱うオブジェクトの基本クラス
 /// 座標・モデル・衝突判定・ライフサイクルを管理する
@@ -39,7 +40,7 @@ public:
 
 	virtual void Init() = 0;
 	virtual void End();
-	virtual void Update(float deltaTime) {};
+	virtual void Update(float deltaTime, const InputData& inputData) {};
 	virtual void UpdateCollision();
 	virtual void LateUpdate(float deltaTime) {};	// 最後に行いたい更新処理
 	virtual void Draw();

@@ -56,7 +56,7 @@ void FireBottle::InitParameter()
 	//AddCollision(std::make_unique<Collision::AABB>(m_transform.position, Vector3::zero),CollisionType::Invalid);
 }
 
-void FireBottle::Update(float deltaTime)
+void FireBottle::Update(float deltaTime,const InputData& inputData)
 {
 	UpdateObject(deltaTime);
 	if (m_transform.position.y < 0) {
@@ -127,7 +127,7 @@ void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData
 void FireBottle::Setup(const Transform & transform)
 {
 	Camera::CameraView view = ItemManager::GetInstance().GetCameraView();
-	Vector3 move=(view.target - view.position).Normalize();
+	Vector3 move=(view.target - view.transform.position).Normalize();
 	Vector3 offset = Vector3::zero;
 	offset.y = sinf(kThrowOffsetRadian);
 	move += offset.Normalize();

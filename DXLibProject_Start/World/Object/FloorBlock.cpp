@@ -21,7 +21,7 @@ void FloorBlock::Init()
 
 }
 
-void FloorBlock::Update(float deltaTime)
+void FloorBlock::Update(float deltaTime, const InputData& inputData)
 {
 }
 

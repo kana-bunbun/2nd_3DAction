@@ -14,7 +14,6 @@ Stair::Stair():
 	m_isHitOld(false),
 	m_isHit(false),
 	m_alpha(0),
-	m_pad(Input::Pad::Invalid),
 	m_billboardPos(Vector3::zero)
 {
 	m_transform.Reset();
@@ -38,7 +37,7 @@ void Stair::Init()
 
 }
 
-void Stair::Update(float deltaTime)
+void Stair::Update(float deltaTime, const InputData& inputData)
 {
 	m_isHitOld = m_isHit;
 	// アルファ値の増減量を求める

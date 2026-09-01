@@ -2,19 +2,12 @@
 #include"Utility/Vector2.h"
 #include"Utility/MyMath.h"
 #include"Input/InputConst.h"
+#include"Input/VectorState.h"
 struct ThumbData {
 	/// <summary>
-	/// 入力量
+	///ベクトルの入力情報
 	/// </summary>
-	Vector2 tilt=Vector2::Zero;
-	/// <summary>
-	/// 入力角度(ラジアン)
-	/// </summary>
-	float tiltRadian=0.0f;
-	/// <summary>
-	/// 入力割合
-	/// </summary>
-	float tiltRatio=0.0f;
+	VectorState vectorState;
 	/// <summary>
 	/// 4方向のスティック入力
 	/// </summary>

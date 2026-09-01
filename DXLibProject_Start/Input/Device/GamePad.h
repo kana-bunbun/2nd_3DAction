@@ -17,8 +17,10 @@ public:
 	bool IsPressed(int deviceKeyID)override;
 	bool IsReleased(int deviceKeyID)override;
 	bool IsHold(int deviceKeyID, int holdCount = Input::kHoldDefaultCount)override;
-	Vector2 GetVector(const Input::DirectionHolizontal& direction);
+	VectorState GetVectorState(int deviceKeyID)override;
 	std::string GetDirectionText(DirectionFour direction);
+private:
+	VectorState GetCrossVectorState();
 private:
 	/// <summary>
 	/// 自身が調べるコントローラーの番号

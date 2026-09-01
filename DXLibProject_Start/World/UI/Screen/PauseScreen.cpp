@@ -49,7 +49,7 @@ void PauseScreen::Init()
 	pResumeButton->AddChild(std::move(resumeImage));
 	pResumeButton->SetOnClick([this]() {
 		m_result = ButtonResult::Resume;
-		UIScreen::SetUICommand(UICommand::ResumeGame);
+		UIScreen::SetUICommand(ScreenCommand::ResumeGame);
 		});
 
 	// pExitButtonの登録・追加
@@ -61,7 +61,7 @@ void PauseScreen::Init()
 	pExitButton->AddChild(std::move(exiImage));
 	pExitButton->SetOnClick([this]() {
 		m_result = ButtonResult::Exit; 
-		UIScreen::SetUICommand(UICommand::LoadDebugScene);
+		UIScreen::SetUICommand(ScreenCommand::LoadDebugScene);
 		});
 	// Resumeボタンを選択肢に追加
 	UIButton* pResume = pResumeButton.get();
@@ -81,7 +81,7 @@ void PauseScreen::Draw()
 	UIScreen::Draw();
 }
 
-void PauseScreen::Update(float deltaTime, const UIInput& input)
+void PauseScreen::Update(float deltaTime, const InputData& input)
 {
 	//if (input.key[static_cast<int>(UIInputState::Key::Up)][UIInputState::IsDown]) {
 	//	SelectPrevButton();

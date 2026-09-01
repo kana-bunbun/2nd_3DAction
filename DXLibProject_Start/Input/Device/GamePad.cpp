@@ -35,8 +35,9 @@ void GamePad::Update(float deltaTime)
 	printfDx("LeftTumb dir : %d\n", leftThumbData.directionFour);
 	printfDx("RightTumb dir : %s\n", GetDirectionText(rightThumbData.directionFour).c_str());
 	printfDx("RightTumb dir : %d\n",rightThumbData.directionFour);
-	printfDx("LeftThumb sqLength : %f\n", leftThumbData.tilt.GetSqLength());
-	printfDx("LeftThumb tiltRatio : %f\n", leftThumbData.tiltRatio);
+	VectorState vectorState = GetVectorState(static_cast<int>(Input::GamePadKey::LeftThumb));
+	printfDx("LeftThumb sqLength : %f\n", leftThumbData.vectorState.vector.GetSqLength());
+	printfDx("LeftThumb tiltRatio : %f\n", leftThumbData.vectorState.ratio);
 }
 
 bool GamePad::IsDown(int deviceKeyID)
@@ -87,13 +88,16 @@ bool GamePad::IsHold(int deviceKeyID, int holdCount)
 	return hold;
 }
 
-Vector2 GamePad::GetVector(const Input::DirectionHolizontal& direction)
+VectorState GamePad::GetVectorState(int deviceKeyID)
 {
+	Input::GamePadKey key = static_cast<Input::GamePadKey>(deviceKeyID);
 	// 指定方向のスティックの入力ベクトルを返す
-	if (direction == Input::DirectionHolizontal::Right)return m_inputState.m_rightThumb.GetThumbData().tilt;
-	if (direction == Input::DirectionHolizontal::Left)return m_inputState.m_leftThumb.GetThumbData().tilt;
-	// 左右どちらでもない場合は未入力を返す
-	return Vector2::Zero;
+	if (key == Input::GamePadKey::RightThumb)return m_inputState.m_rightThumb.GetThumbData().vectorState;
+	if (key == Input::GamePadKey::LeftThumb)return m_inputState.m_leftThumb.GetThumbData().vectorState;
+	// 十字が指定されていたら十字の入力結果を返す
+	if (key == Input::GamePadKey::Cross)return GetCrossVectorState();
+	// どれでもない場合は未入力を返す
+	return VectorState();
 }
 
 std::string GamePad::GetDirectionText(DirectionFour direction)
@@ -115,5 +119,17 @@ std::string GamePad::GetDirectionText(DirectionFour direction)
 		break;
 	}
 	return "";
+}
+
+VectorState GamePad::GetCrossVectorState()
+{
+	Vector2 input = Vector2::Zero;
+	if (IsDown(static_cast<int>(Input::GamePadKey::Right)))input.x += 1.0f;
+	if (IsDown(static_cast<int>(Input::GamePadKey::Left)))input.x -= 1.0f;
+	if (IsDown(static_cast<int>(Input::GamePadKey::Up)))input.y += 1.0f;
+	if (IsDown(static_cast<int>(Input::GamePadKey::Down)))input.y -= 1.0f;
+	float radian = atan2(input.y, input.x);
+	float ratio = (input.GetSqLength()) ? 1.0f : 0.0f;
+	return { input,radian,ratio };
 }
 

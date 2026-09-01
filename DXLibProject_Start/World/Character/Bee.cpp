@@ -64,7 +64,7 @@ void Bee::Init()
 	), CollisionType::Body);
 }
 
-void Bee::Update(float deltaTime)
+void Bee::Update(float deltaTime, const InputData& inputData)
 {
 
 	// アニメーションの更新処理

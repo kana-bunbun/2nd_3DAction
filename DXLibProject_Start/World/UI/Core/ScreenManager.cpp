@@ -1,31 +1,31 @@
-#include "UIManager.h"
-#include"UIScreen.h"
-UIManager::UIManager()
+#include "ScreenManager.h"
+#include"Screen.h"
+ScreenManager::ScreenManager()
 {
 
 }
 
-UIManager::~UIManager()
+ScreenManager::~ScreenManager()
 {
 
 }
 
-void UIManager::Update(float deltaTime, const UIInput& uiInput)
+void ScreenManager::Update(float deltaTime, const InputData& inputData)
 {
 	// 管理しているUIScreenが空なら即時return
 	if (Empty())return;
 	// 最前面のUIScreenを更新する
-	m_screens.back()->Update(deltaTime,uiInput);
+	m_screens.back()->Update(deltaTime,inputData);
 }
 
-void UIManager::Draw()
+void ScreenManager::Draw()
 {
 	for (auto& screen : m_screens) {
 		screen->Draw();
 	}
 }
 
-void UIManager::PushScreen(std::unique_ptr<UIScreen> pScreen)
+void ScreenManager::PushScreen(std::unique_ptr<Screen> pScreen)
 {
 	// 渡されたUIScreenがnullptrなら即時return
 	if (!pScreen)return;
@@ -37,7 +37,7 @@ void UIManager::PushScreen(std::unique_ptr<UIScreen> pScreen)
 
 }
 
-void UIManager::PopScreen()
+void ScreenManager::PopScreen()
 {
 	// 管理しているUIScreenが空なら即時return
 	if (Empty())return;
@@ -45,7 +45,7 @@ void UIManager::PopScreen()
 	m_screens.pop_back();
 }
 
-UIScreen* UIManager::GetTopScreen()
+Screen* ScreenManager::GetTopScreen()
 {
 	// 管理しているUIScreenが空なら即時return
 	if (Empty())return nullptr;
@@ -53,8 +53,8 @@ UIScreen* UIManager::GetTopScreen()
 	return m_screens.back().get();
 }
 
-UICommand UIManager::ConsumeCommand()
+ScreenCommand ScreenManager::ConsumeCommand()
 {
-	if (m_screens.empty())return UICommand::None;
+	if (m_screens.empty())return ScreenCommand::None;
 	return m_screens.back()->ConsumeCommand();
 }

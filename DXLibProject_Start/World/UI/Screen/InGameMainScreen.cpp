@@ -23,7 +23,7 @@ void InGameMainScreen::Init()
 
 }
 
-void InGameMainScreen::Update(float deltaTime, const UIInput& input)
+void InGameMainScreen::Update(float deltaTime, const InputData& input)
 {
 	
 	UIScreen::Update(deltaTime,input);

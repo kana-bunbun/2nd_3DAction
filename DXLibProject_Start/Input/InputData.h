@@ -1,7 +1,9 @@
 #pragma once
 #include"Input/InputConst.h"
 #include"Input/ActionInputState.h"
+#include"Utility/Vector2.h"
 #include<array>
+#include"VectorState.h"
 /// <summary>
 /// äeâÊñ èÛë‘Ç…ìnÇ∑ì¸óÕèÓïÒ
 /// </summary>
@@ -9,12 +11,16 @@ class InputData
 {
 public:
 	InputData();
-	void Init(std::array<ActionInputState, static_cast<int>(Input::Action::Max)>inputState);
+	void Init(std::array<ActionInputState, static_cast<int>(Input::Action::Max)>inputState, std::array<VectorState, static_cast<int>(Input::Action::Max)> vector);
 	bool IsDown(const Input::Action& action) { return m_actionInputState[static_cast<int>(action)].IsDown(); }
 	bool IsPressed(const Input::Action& action) { return m_actionInputState[static_cast<int>(action)].IsPressed(); }
 	bool IsReleased(const Input::Action& action) { return m_actionInputState[static_cast<int>(action)].IsReleased(); }
 	bool IsHold(const Input::Action& action) { return m_actionInputState[static_cast<int>(action)].IsHold(); }
+	const Vector2 GetVector(const Input::Action& action)const;
+	float GetRadian(const Input::Action& action)const;
+	float GetInputRatio(const Input::Action& action)const;
 private:
 	std::array<ActionInputState,static_cast<int>(Input::Action::Max)> m_actionInputState;
+	std::array<VectorState, static_cast<int>(Input::Action::Max)> m_vectorState;
 };
 
