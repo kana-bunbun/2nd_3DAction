@@ -103,8 +103,9 @@ void SceneTest::Draw() {
 	m_pScreenManager->Draw();
 	InputData inputData = InputManager::GetInputData();
 	float inputRadian = inputData.GetRadian(Input::Action::Move);
-	printfDx("LeftTrigger : Radian : %f\n", inputRadian);
-	printfDx("LeftTrigger :  angle : %f\n", inputRadian*MyMath::ToDegree);
+	printfDx("LeftThumb : Radian : %f\n", inputRadian);
+	printfDx("LeftThumb :  angle : %f\n", inputRadian*MyMath::ToDegree);
+	printfDx("LeftThumb :  ratio : %f\n", inputData.GetInputRatio(Input::Action::Move));
 
 }
 

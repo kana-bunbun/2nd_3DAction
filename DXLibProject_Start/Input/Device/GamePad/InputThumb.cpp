@@ -29,7 +29,14 @@ InputThumb::InputThumb(int holizontal, int vertical) :
 	// 入力角度を求める
 	m_thumbData.vectorState.radian = atan2(m_thumbData.vectorState.vector.y, m_thumbData.vectorState.vector.x);
 	// 入力があれば入力量を計算
-	if (m_thumbData.vectorState.vector.GetSqLength()<MyMath::Epsilon)return;
+	if (m_thumbData.vectorState.vector.GetSqLength() < MyMath::Epsilon) {
+		{
+			m_thumbData.vectorState.vector = Vector2::Zero;
+			m_thumbData.vectorState.radian = 0.0f;
+			m_thumbData.vectorState.ratio = 0.0f;
+			return;
+		} }
+
 	// 4方向の入力方向を取得
 	m_thumbData.directionFour = MyMath::RadianToDirectionFour(m_thumbData.vectorState.radian);
 	// 8方向の入力方向を取得
