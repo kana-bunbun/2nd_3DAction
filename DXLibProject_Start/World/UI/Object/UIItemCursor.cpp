@@ -42,5 +42,4 @@ void UIItemCursor::OnDraw()
 {
 	if (m_image->GetHandle() == -1)return;
 	DrawRotaGraph(m_position.x, m_position.y, kCursorGraphScale, 0, m_image->GetHandle(), TRUE);
-	DrawCircle(m_position.x, m_position.y, 10, GetColor(255, 0, 0), TRUE);
 }
