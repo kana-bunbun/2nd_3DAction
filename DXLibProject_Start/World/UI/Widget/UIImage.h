@@ -13,7 +13,7 @@ public:
 	virtual ~UIImage()override = default;
 
 	void OnInit()override;
-	void OnUpdate(float deltaTime)override;
+	void OnUpdate(float deltaTime, const InputData& inputData)override;
 	void OnDraw()override;
 	void OnEnd()override;
 public:

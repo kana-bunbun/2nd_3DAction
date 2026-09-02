@@ -329,6 +329,10 @@ void Player::UpdateTransform(float deltaTime, InputData inputData)
 	SetPosition(transform.position);
 	/*printfDx("m_transform position\n");
 	printfDx("x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);*/
+	printfDx("position x : %f / y : %f / z : %f\n", m_transform.position.x, m_transform.position.y, m_transform.position.z);
+	printfDx("rotation x : %f / y : %f / z : %f\n", m_transform.rotation.x * MyMath::ToDegree, m_transform.rotation.y * MyMath::ToDegree, m_transform.rotation.z * MyMath::ToDegree);
+	printfDx("Player Speed : %f\n", m_speed);
+	printfDx("InputRatio   : %f\n", analogAmount);
 }
 
 void Player::UpdateAnimation(float deltaTime, InputData inputData)
@@ -472,8 +476,8 @@ void Player::UpdateCollision()
 float Player::CameraRotaY()
 {
 	float yawRad = 0.0f;
-	yawRad = m_cameraView.transform.rotation.y;
-	printfDx("Camera YawRad : %f\n", yawRad*MyMath::ToDegree);
+	Vector3 forward = m_cameraView.GetForward();
+	yawRad = atan2(forward.x, forward.z);
 	return yawRad;
 }
 

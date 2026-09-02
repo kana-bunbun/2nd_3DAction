@@ -6,7 +6,7 @@
 namespace {
 	constexpr int kCursorGraphPathID = 1501;
 	constexpr float kCursorGraphScale = 1.3f * Game::kWindowScale;
-	constexpr float kLerpTime = 1.0f/0.2f;
+	constexpr float kLerpTime = 15;
 }
 
 UIItemCursor::UIItemCursor()
@@ -24,7 +24,7 @@ void UIItemCursor::OnEnd()
 
 }
 
-void UIItemCursor::OnUpdatate(float deltaTime)
+void UIItemCursor::OnUpdate(float deltaTime, const InputData& inputData)
 {
 	Vector2 differ = m_desirePosition - m_position;
 	float sqLength = differ.GetSqLength();
@@ -42,4 +42,5 @@ void UIItemCursor::OnDraw()
 {
 	if (m_image->GetHandle() == -1)return;
 	DrawRotaGraph(m_position.x, m_position.y, kCursorGraphScale, 0, m_image->GetHandle(), TRUE);
+	DrawCircle(m_position.x, m_position.y, 10, GetColor(255, 0, 0), TRUE);
 }

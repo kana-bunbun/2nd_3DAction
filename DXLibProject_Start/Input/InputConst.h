@@ -48,6 +48,10 @@ namespace Input{
 		GpRightThumbLeft,
 		// ゲームパッドの十字キー
 		GpCross,
+		// 左スティックの傾き
+		GpLeftVector,
+		// 右スティックの傾き
+		GpRightVector,
 		// ============================================================
 		Max,
 	};
@@ -104,6 +108,8 @@ namespace Input{
 		RightThumbDown,
 		RightThumbLeft,
 		Cross,
+		LeftVector,
+		RightVector,
 		Max,
 	};
 	constexpr int kActionMaxNum = static_cast<int>(Action::Max);

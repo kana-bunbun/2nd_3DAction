@@ -52,7 +52,7 @@ void GaugeDragon::OnEnd()
 		m_gauge->End();
 }
 
-void GaugeDragon::OnUpdate(float deltaTime)
+void GaugeDragon::OnUpdate(float deltaTime, const InputData& inputData)
 {
 	if (m_gauge)
 		m_gauge->Update(deltaTime);

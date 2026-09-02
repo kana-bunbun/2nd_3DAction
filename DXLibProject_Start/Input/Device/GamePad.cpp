@@ -24,6 +24,32 @@ void GamePad::Update(float deltaTime)
 	for (int i = 0; i < m_inputState.m_isKeyDown.size(); i++) {
 		// 長押し時間を更新
 		m_holdTime[0][i] += deltaTime;
+		Input::Key key = static_cast<Input::Key>(i);
+
+		if (key == Input::Key::GpCross) {
+			// 十字のいずれかが入力されていれば入力されている
+			m_inputState.m_isKeyDown[i] = (
+				IsDown(static_cast<int>(Input::Key::GpUp)) ||
+				IsDown(static_cast<int>(Input::Key::GpRight)) ||
+				IsDown(static_cast<int>(Input::Key::GpDown)) ||
+				IsDown(static_cast<int>(Input::Key::GpLeft)));
+		}
+		if (key == Input::Key::GpRightVector) {
+			// 右スティック4方向のいずれかが入力されていれば入力されている
+			m_inputState.m_isKeyDown[i] = (
+				IsDown(static_cast<int>(Input::Key::GpRightThumbUp)) ||
+				IsDown(static_cast<int>(Input::Key::GpRightThumbRight)) ||
+				IsDown(static_cast<int>(Input::Key::GpRightThumbDown)) ||
+				IsDown(static_cast<int>(Input::Key::GpRightThumbLeft)));
+		}
+		if (key == Input::Key::GpLeftVector) {
+			// 左スティック4方向のいずれかが入力されていれば入力されている
+			m_inputState.m_isKeyDown[i] = (
+				IsDown(static_cast<int>(Input::Key::GpLeftThumbUp)) ||
+				IsDown(static_cast<int>(Input::Key::GpLeftThumbRight)) ||
+				IsDown(static_cast<int>(Input::Key::GpLeftThumbDown)) ||
+				IsDown(static_cast<int>(Input::Key::GpLeftThumbLeft)));
+		}
 
 		if (m_inputState.m_isKeyDown[i])continue;
 		// 入力していなければ長押し時間を0に
@@ -112,7 +138,7 @@ std::string GamePad::GetDirectionText(DirectionFour direction)
 		return "Right";
 	case DirectionFour::Down:
 		return "Down";
-	case DirectionFour::left:
+	case DirectionFour::Left:
 		return "Left";
 	case DirectionFour::Max:
 	default:

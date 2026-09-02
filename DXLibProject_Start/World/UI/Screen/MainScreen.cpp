@@ -10,6 +10,7 @@
 #include "Utility/Loder/FromCsv.h"
 #include "Utility/Loder/CsvLoader.h"
 #include "World/Map/TileManager.h"
+#include "World/UI/Group/UIItemList.h"
 #include<memory>
 namespace {
 	const char* const kCameraParamPath = "CameraParam";
@@ -17,7 +18,10 @@ namespace {
 MainScreen::MainScreen() :
 	m_pCameraMgr(nullptr),
 	m_pTileManager(nullptr),
-	m_pPlayer(nullptr)
+	m_pPlayer(nullptr),
+	m_pDragon(nullptr),
+	m_pBarrier(nullptr),
+	m_pUiItemList(nullptr)
 {
 	// ライトの向きを設定
 Vector3 lightVec = Vector3::YAxis * -1;
@@ -47,6 +51,9 @@ void MainScreen::Init()
 	
 	GameObjectManager::GetInstance().Init();
 	m_pTileManager->Init();
+
+	m_pUiItemList = new UIItemList();
+	m_pUiItemList->Init();
 }
 
 void MainScreen::CreateObjects()
@@ -76,7 +83,7 @@ void MainScreen::Update(float deltaTime, const InputData & inputData)
 	GameObjectManager::GetInstance().CheckCollision();
 	// マップ上にプレイヤーのトランスフォームを設定
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-
+	m_pUiItemList->Update(deltaTime,inputData);
 }
 
 void MainScreen::Draw()
@@ -89,5 +96,5 @@ void MainScreen::Draw()
 
 	// マップの描画処理
 	m_pTileManager->Draw();
-
+	m_pUiItemList->Draw();
 }

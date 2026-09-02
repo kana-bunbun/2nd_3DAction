@@ -9,7 +9,7 @@ namespace {
 		Up,
 		Right,
 		Down,
-		left,
+		Left,
 		Max,
 	};
 	enum class DirectionEight {	// 8•ûŒü
@@ -20,7 +20,7 @@ namespace {
 		DownRight,
 		Down,
 		DownLeft,
-		left,
+		Left,
 		UpLeft,
 		Max,
 	};
@@ -163,7 +163,7 @@ namespace MyMath {
 		if (angle < 45.0f && angle >= -45.0f)return DirectionFour::Right;
 		else if (angle >= -135.0f && angle < -45.0f)return DirectionFour::Down;
 		else if (angle < 135.0f && angle >= 45.0f)return DirectionFour::Up;
-		else return DirectionFour::left;
+		else return DirectionFour::Left;
 	}
 	DirectionFour RadianToDirectionFour(float radian) {
 		return AngleToDirectionFour(radian * ToDegree);
@@ -177,7 +177,7 @@ namespace MyMath {
 		else if (angle < 67.5&&angle<22.5f)return DirectionEight::UpRight;
 		else if (angle < 112.5f && angle < 67.5f)return DirectionEight::Up;
 		else if (angle < 157.5f && angle < 112.5f)return DirectionEight::UpLeft;
-		else return DirectionEight::left;
+		else return DirectionEight::Left;
 	}
 	DirectionEight RadianToDirectionEight(float radian) {
 		return AngleToDirectionEight(radian * ToDegree);

@@ -197,9 +197,9 @@ void TileManager::DrawMark()
 	Transform drawPos;
 	drawPos.position = GetMiniMapPosition(m_markPos.position);
 	DrawRotaGraph(drawPos.position.x, drawPos.position.y, kCursorScale, m_markPos.rotation.y, m_cursorHandle, TRUE);
-	drawPos = CharacterManager::GetInstance().GetDragon()->GetTransform();
+	/*drawPos = CharacterManager::GetInstance().GetDragon()->GetTransform();
 	drawPos.position = GetMiniMapPosition(drawPos.position);
-	DrawRotaGraph(drawPos.position.x, drawPos.position.y, kCursorScale, drawPos.rotation.y, m_cursorHandle, TRUE);
+	DrawRotaGraph(drawPos.position.x, drawPos.position.y, kCursorScale, drawPos.rotation.y, m_cursorHandle, TRUE);*/
 
 }
 

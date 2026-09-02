@@ -1,5 +1,5 @@
 #include "UIObject.h"
-
+#include "Input/InputData.h"
 UIObject::UIObject():
 	m_position(Vector2::Zero),
 	m_visible(true),
@@ -18,16 +18,16 @@ void UIObject::Init()
 	}
 }
 
-void UIObject::Update(float deltaTime)
+void UIObject::Update(float deltaTime, const InputData& inputData)
 {
 	// 自身固有の更新処理
-	OnUpdate(deltaTime);
+	OnUpdate(deltaTime,inputData);
 	// 子オブジェクトの更新処理
 	for (auto& child : m_children) {
 		if (!child)continue;
-		child->Update(deltaTime);
+		child->Update(deltaTime,inputData);
 	}
-	AfterUpdate(deltaTime);
+	AfterUpdate(deltaTime,inputData);
 }
 
 void UIObject::Draw()

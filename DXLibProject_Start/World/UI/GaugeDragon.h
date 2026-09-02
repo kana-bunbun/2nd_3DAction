@@ -14,7 +14,7 @@ public:
 	void OnInit()override;
 	void SetDragon(Dragon* dragon);
 	void OnEnd()override;
-	void OnUpdate(float deltaTime)override;
+	void OnUpdate(float deltaTime, const InputData& inputData)override;
 	void OnDraw()override;
 private:
 	// ゲージのポインタ

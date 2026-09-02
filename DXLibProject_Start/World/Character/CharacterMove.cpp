@@ -46,8 +46,8 @@ void CharacterMove::Update(float deltaTime)
 
 
 	Vector3 moveVec = Vector3::zero;
-	moveVec.x = -cosf(m_transform.rotation.y);
-	moveVec.z = sinf(m_transform.rotation.y);
+	moveVec.x = -sinf(m_transform.rotation.y);
+	moveVec.z = -cosf(m_transform.rotation.y);
 	moveVec *= m_speed;
 	moveVec += m_pendingPush;
 	if (moveVec.GetLength() < MyMath::Epsilon)return;

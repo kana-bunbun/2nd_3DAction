@@ -142,6 +142,16 @@ bool InputManager::IsDown(const Input::Action& action, const Input::GamePad& pad
 
 		assert(false && "IsDown action Out Of Range");
 	}
+
+	if(action==Input::Action::Move||
+		action == Input::Action::SelectMove || 
+		action == Input::Action::Camera){
+		for (int i = 0; i < m_actionParam[actionIndex].keys.size(); i++) {
+			Input::Key key = m_actionParam[actionIndex].keys[i];
+
+			if (GetVector(key, pad).GetSqLength())return true;
+		}
+	}
 	for (int i = 0; i < m_actionParam[actionIndex].keys.size();i++) {
 		Input::Key key = m_actionParam[actionIndex].keys[i];
 

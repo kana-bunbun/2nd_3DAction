@@ -4,7 +4,7 @@
 
 namespace {
 	// アイテムスロットの個数
-	constexpr int kItemSlotNum = 10;
+	constexpr int kItemSlotMax = 10;
 }
 
 class ItemList
@@ -47,7 +47,7 @@ private:
 	/// <summary>
 	/// 所持しているアイテムの配列
 	/// </summary>
-	std::array<ItemData, kItemSlotNum> m_items;
+	std::array<ItemData, kItemSlotMax> m_items;
 
 };
 

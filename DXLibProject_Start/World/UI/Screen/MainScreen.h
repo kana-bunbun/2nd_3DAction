@@ -6,6 +6,7 @@ class CameraManager;
 class Player;
 class Dragon;
 class Barrier;
+class UIItemList;
 
 class MainScreen:public Screen
 {
@@ -23,5 +24,6 @@ private:
 	Player* m_pPlayer;
 	Dragon* m_pDragon;
 	Barrier* m_pBarrier;
+	UIItemList* m_pUiItemList;
 };
 

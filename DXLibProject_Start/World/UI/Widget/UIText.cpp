@@ -54,7 +54,7 @@ void UIText::OnInit()
 	Build();
 }
 
-void UIText::OnUpdate(float deltaTime)
+void UIText::OnUpdate(float deltaTime, const InputData& inputData)
 {
 
 }

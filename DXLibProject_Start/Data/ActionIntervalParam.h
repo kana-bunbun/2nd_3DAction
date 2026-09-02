@@ -7,4 +7,5 @@ public:
 	int ID = -1;
 	float maxSecond = 0.0f;
 	float intervalSecond = 0.0f;
+	float firstInterval = 0.0f;
 };

@@ -5,7 +5,7 @@ void UIScreen::Update(float deltaTime, const InputData& input)
 
 	for (auto& object : m_rootObjects) {
 		if (!object)continue;
-		object->Update(deltaTime);
+		object->Update(deltaTime,input);
 	}
 }
 

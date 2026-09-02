@@ -149,6 +149,7 @@ namespace Data {
 				param.ID = Get<int>(row, "ID");
 				param.maxSecond = Get<float>(row, "maxSecond");
 				param.intervalSecond = Get<float>(row, "intervalSecond");
+				param.firstInterval = Get<float>(row, "firstInterval");
 				return param;
 			}
 		};

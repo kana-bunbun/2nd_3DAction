@@ -58,7 +58,7 @@ void GaugePlayer::OnEnd()
 
 }
 
-void GaugePlayer::OnUpdate(float deltaTime)
+void GaugePlayer::OnUpdate(float deltaTime, const InputData& inputData)
 {
 	// ゲージの更新処理を行う
 	m_HPGauge->Update(deltaTime);

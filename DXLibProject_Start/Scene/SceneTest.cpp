@@ -89,8 +89,25 @@ std::unique_ptr<SceneBase> SceneTest::Update(float deltaTime) {
 	ProfileScope("Update");
 
 	InputData inputData = InputManager::GetInputData();
+	printfDx("input  isDown up : %d\n", inputData.IsDown(Input::Action::Up));
 	m_pScreenManager->Update(deltaTime, inputData);
 	
+	printfDx("input  isDown Up : %d\n", inputData.IsDown(Input::Action::Up));
+
+	printfDx("input isDown Up : %d\n",inputData.IsDown(Input::Action::Up));
+	printfDx("input isDown Right : %d\n",inputData.IsDown(Input::Action::Right));
+	printfDx("input isDown Down : %d\n",inputData.IsDown(Input::Action::Down));
+	printfDx("input isDown Left : %d\n",inputData.IsDown(Input::Action::Left));
+	printfDx("input isDown Decide : %d\n",inputData.IsDown(Input::Action::Decide));
+	printfDx("input isDown Cancel : %d\n",inputData.IsDown(Input::Action::Cancel));
+	printfDx("input isDown Menu : %d\n",inputData.IsDown(Input::Action::Menu));
+	printfDx("input isDown Start : %d\n",inputData.IsDown(Input::Action::Start));
+	printfDx("input isDown Move : %d\n",inputData.IsDown(Input::Action::Move));
+	printfDx("input isDown SelectMove : %d\n",inputData.IsDown(Input::Action::SelectMove));
+	printfDx("input isDown Camera : %d\n",inputData.IsDown(Input::Action::Camera));
+	printfDx("input isDown DragonCall : %d\n",inputData.IsDown(Input::Action::DragonCall));
+	printfDx("input isDown Dash : %d\n",inputData.IsDown(Input::Action::Dash));
+	printfDx("input isDown Parry : %d\n", inputData.IsDown(Input::Action::Parry));
 	ItemManager::GetInstance().Update();
 	return nullptr;
 }

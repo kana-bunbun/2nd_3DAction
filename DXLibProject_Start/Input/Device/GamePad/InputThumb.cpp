@@ -3,6 +3,12 @@
 namespace {
 	// スティックの最大入力値
 	constexpr int kThumbInputMax = 32767;
+	// スティックの入力を無視する割合
+	constexpr float kThumbDeadZone = 0.2f;
+	// スティックの最小入力値
+	constexpr float kThumbInputMin = kThumbInputMax* kThumbDeadZone;
+	// スティックの最小入力値の2乗
+	constexpr float kThumbInputSqMin = kThumbInputMin * kThumbInputMin;
 
 	// 角度計算用の定数
 	constexpr float kDirectonFourCalculateValue = 45.0f * MyMath::ToRadian;
@@ -27,9 +33,9 @@ InputThumb::InputThumb(int holizontal, int vertical) :
 		m_thumbData.vectorState.vector.y = MyMath::Clamp(static_cast<float>(vertical) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
 	}
 	// 入力角度を求める
-	m_thumbData.vectorState.radian = atan2(m_thumbData.vectorState.vector.y, m_thumbData.vectorState.vector.x);
+	m_thumbData.vectorState.radian = atan2(m_thumbData.vectorState.vector.x, m_thumbData.vectorState.vector.y);
 	// 入力があれば入力量を計算
-	if (m_thumbData.vectorState.vector.GetSqLength() < MyMath::Epsilon) {
+	if (m_thumbData.vectorState.vector.GetSqLength() < kThumbDeadZone) {
 		{
 			m_thumbData.vectorState.vector = Vector2::Zero;
 			m_thumbData.vectorState.radian = 0.0f;
@@ -41,5 +47,5 @@ InputThumb::InputThumb(int holizontal, int vertical) :
 	m_thumbData.directionFour = MyMath::RadianToDirectionFour(m_thumbData.vectorState.radian);
 	// 8方向の入力方向を取得
 	m_thumbData.directionEight = MyMath::RadianToDirectionEight(m_thumbData.vectorState.radian);
-	m_thumbData.vectorState.ratio= m_thumbData.vectorState.vector.GetLength() / static_cast<float>(kThumbInputMax);
+	m_thumbData.vectorState.ratio = MyMath::Clamp(m_thumbData.vectorState.vector.GetLength(), 0.0f, 1.0f);
 }

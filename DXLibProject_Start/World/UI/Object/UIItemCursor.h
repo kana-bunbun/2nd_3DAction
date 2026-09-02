@@ -6,10 +6,10 @@ class UIItemCursor:public UIObject
 public:
 	UIItemCursor();
 	~UIItemCursor()override = default;
-	void OnInit();
-	void OnEnd();
-	void OnUpdatate(float deltaTime);
-	void OnDraw();
+	void OnInit()override;
+	void OnEnd()override;
+	void OnUpdate(float deltaTime, const InputData& inputData)override;
+	void OnDraw()override;
 	void SetLerpPosition(const Vector2& position) { m_desirePosition = position; }
 	void SetPosition(const Vector2& position) { m_position = position; }
 private:

@@ -32,6 +32,10 @@ public:
 	/// </summary>
 	bool IsFinish();
 	/// <summary>
+	/// 外部から呼ぶ終了処理
+	/// </summary>
+	void Finish();
+	/// <summary>
 	/// 効果発動可能か
 	/// </summary>
 	/// <returns></returns>
@@ -48,6 +52,10 @@ private:
 	/// インターバルのパラメータ
 	/// </summary>
 	ActionIntervalParam m_param;
+	/// <summary>
+	/// 最初に効果を発動するまでのカウント
+	/// </summary>
+	float m_firstCount;
 	/// <summary>
 	/// 効果が発動してからのカウント
 	/// </summary>
