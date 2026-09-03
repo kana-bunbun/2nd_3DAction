@@ -50,8 +50,8 @@ private:
 private:
 	// ModelDataのDuplicate関数から生ポインタを追加したい
 	std::vector<GraphData*>m_graphData;
-	std::vector <ModelData*> m_modelData;
-	std::vector <ModelData*> m_DuplicateList;
+	std::vector<ModelData*> m_modelData;
+	std::vector<ModelData*> m_DuplicateList;
 };
 namespace {
 	const char* const kDataPath = "Data\\";

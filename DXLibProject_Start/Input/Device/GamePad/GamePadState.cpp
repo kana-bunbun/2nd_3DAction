@@ -20,7 +20,7 @@ GamePadState::GamePadState(const XINPUT_STATE& inputState) :
 	// スティックの入力方向をキャッシュ
 	ThumbData leftThumbData = m_leftThumb.GetThumbData();
 	ThumbData rightThumbData = m_rightThumb.GetThumbData();
-	if(leftThumbData.vectorState.ratio>MyMath::Epsilon)
+	if(leftThumbData.vectorState.GetRatio()>MyMath::Epsilon)
 	// 左右スティックの4方向の入力を取得
 	for (int i = 0; i < static_cast<int>(DirectionFour::Max); i++) {
 		// スティック入力方向のキーIDを取得
@@ -31,7 +31,7 @@ GamePadState::GamePadState(const XINPUT_STATE& inputState) :
 		m_isKeyDown[thumbDirection] = true;
 		break;
 	}
-	if(rightThumbData.vectorState.ratio>MyMath::Epsilon)
+	if(rightThumbData.vectorState.GetRatio()>MyMath::Epsilon)
 	for (int i = 0; i < static_cast<int>(DirectionFour::Max); i++) {
 		// スティック入力方向のキーIDを取得
 		int thumbDirection = static_cast<int>(Input::GamePadKey::RightThumbUp) + i;

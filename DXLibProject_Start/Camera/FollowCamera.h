@@ -19,7 +19,7 @@ public:
 	///		ICamera クラスのメンバ変数
 	/// =========================================
 
-	void Update(float deltaTime,const InputData& inputData)override;
+	void Update(float deltaTime,InputData inputData)override;
 	Camera::CameraView GetView()const override;
 
 

@@ -14,6 +14,8 @@ namespace {
 	constexpr Vector2 kSlotDistance = { 100 * Game::kWindowScale ,0.0f };
 	// カーソル移動のインターバル
 	constexpr int kCursorIntervalID = 2;
+	// カーソル移動のアクション
+	constexpr Input::Action kCursorMoveAction = Input::Action::ItemCursorMove;
 }
 UIItemList::UIItemList():
 	m_selectIndex(0)
@@ -43,29 +45,36 @@ void UIItemList::OnUpdate(float deltatime, const InputData& inputData)
 {
 	ItemList itemList = *CharacterManager::GetInstance().GetPlayer()->GetItemList();
 	InputData input = inputData;
-	Vector2 inputVector = input.GetVector(Input::Action::SelectMove);
+	Vector2 inputVector = input.GetVector(Input::Action::CursorMove);
 
 	m_pItemCursor->SetLerpPosition(CalculateSlotPos(m_selectIndex));
 	
-	if (input.IsPressed(Input::Action::SelectMove)) {
+	if (input.IsPressed(kCursorMoveAction)) {
+		// インターバルの初期化
 		m_cursorInterval.Setup();
+		// カーソル移動のインターバル開始
 		m_cursorInterval.SetActive(true);
+		// カーソル移動
 		MoveCursor(inputVector);
 	}
-	if (inputVector.GetSqLength()) {
-		m_cursorInterval.Update(deltatime);
 
+	if (input.IsDown(kCursorMoveAction)) {
+		m_cursorInterval.Update(deltatime);
+		printfDx("inputVector x : %f | y : %f\n", inputVector.x, inputVector.y);
 		if (m_cursorInterval.IsExecute()) {
-		// 入力したベクトルをもとに
+		// 入力したベクトルをもとにカーソル移動
 		MoveCursor(inputVector);
-		m_cursorInterval.Execute();
+		// カウントをリセット
+		m_cursorInterval.ReCount();
 		}
 	}
-	else if (input.IsReleased(Input::Action::SelectMove)) {
+	else if (input.IsReleased(kCursorMoveAction)) {
+		// インターバルの終了処理
 		m_cursorInterval.Finish();
 	}
-	for (auto& itemSlot : m_itemSlots) {
-		itemSlot->SetItemData(itemList.GetItemData(itemSlot->GetID()));
+	for (int i = 0; i < m_itemSlots.size();i++) {
+		// プレイヤーの所持アイテムリストの情報を設定
+		m_itemSlots[i]->SetItemData(itemList.GetItemData(m_itemSlots[i]->GetID()));
 	}
 	printfDx("m_selectIndex : %d\n", m_selectIndex);
 }
@@ -99,6 +108,8 @@ void UIItemList::MoveCursor(const Vector2& inputVector)
 {
 	DirectionFour inputDirection = DirectionFour::Invalid;
 
+	// 横方向の入力量があるとき
+	if (MyMath::Abs(inputVector.x) > MyMath::Epsilon)
 	// 左右の大きい方を入力方向とする
 	inputDirection = (inputVector.x >= 0) ? DirectionFour::Right : DirectionFour::Left;
 

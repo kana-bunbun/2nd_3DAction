@@ -21,7 +21,7 @@ void ItemObjectBase::IntervalUpdate(float deltaTime)
 	if (m_pInterval->IsExecute()) {
 		// 効果の発動処理
 		m_pActionEffect->Execute(m_pEffectCollision.get());
-		m_pInterval->Execute();
+		m_pInterval->ReCount();
 	}
 	// 発動効果が終了したら
 	if (m_pInterval->IsFinish()) {

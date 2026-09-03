@@ -153,12 +153,12 @@ std::unique_ptr<SceneBase> SceneInGameUITest::Update(float deltaTime) {
 	// 現在最前面に表示しているのがPauseScreenかどうかチェック
 	// 表示していたらポインタ取得
 
-	ScreenCommand command = m_pUIManager->ConsumeCommand();
+	UI::Command command = m_pUIManager->ConsumeCommand();
 	switch (command)
 	{
-	case ScreenCommand::ResumeGame:
+	case UI::Command::ResumeGame:
 		break;
-	case ScreenCommand::LoadDebugScene:
+	case UI::Command::LoadDebugScene:
 		return std::make_unique<SceneSelectDebug>();
 		break;
 	default:

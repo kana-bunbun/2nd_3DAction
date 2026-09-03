@@ -12,22 +12,22 @@ void InputData::Init(std::array<ActionInputState, static_cast<int>(Input::Action
 	this->m_vectorState= vectorState;
 }
 
-const Vector2 InputData::GetVector(const Input::Action& action) const
+const Vector2 InputData::GetVector(const Input::Action& action) 
 {
 	int actionID = static_cast<int>(action);
-	return m_vectorState[actionID].vector;
+	return m_vectorState[actionID].GetVector();
 }
 
-float InputData::GetRadian(const Input::Action& action) const
+float InputData::GetRadian(const Input::Action& action) 
 {
 	int actionID = static_cast<int>(action);
-	return m_vectorState[actionID].radian;
+	return m_vectorState[actionID].GetRadian();
 }
 
-float InputData::GetInputRatio(const Input::Action& action) const
+float InputData::GetInputRatio(const Input::Action& action) 
 {
 	int actionID = static_cast<int>(action);
-	return m_vectorState[actionID].ratio;
+	return m_vectorState[actionID].GetRatio();
 }
 
 

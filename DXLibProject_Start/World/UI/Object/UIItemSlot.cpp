@@ -44,7 +44,7 @@ void UIItemSlot::OnDraw()
 	// 描画座標を求める
 	Vector2 drawPos = m_position;
 	//if (m_select)drawPos += kSelectIconOffset;
-
+	int graphHandle = itemGraph->GetHandle();
 	// アイテムアイコン描画
 	DrawRotaGraph(
 		drawPos.x, drawPos.y,

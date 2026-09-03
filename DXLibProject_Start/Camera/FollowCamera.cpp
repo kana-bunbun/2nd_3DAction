@@ -52,7 +52,7 @@ FollowCamera::~FollowCamera()
 
 }
 
-void FollowCamera::Update(float deltaTime, const InputData& inputData)
+void FollowCamera::Update(float deltaTime,InputData inputData)
 {
     // 距離の更新
     UpdateDistance(deltaTime);

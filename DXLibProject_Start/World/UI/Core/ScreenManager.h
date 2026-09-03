@@ -2,7 +2,7 @@
 #include<memory>
 #include<vector>
 #include"UIInput.h"
-#include"ScreenCommand.h"
+#include"../ScreenCommand.h"
 #include"Input/InputManager.h"
 class UIScreen;
 class Screen;
@@ -44,7 +44,7 @@ public:
 	/// 最前面にあるコマンド取得後、値をリセット
 	/// </summary>
 	/// <returns></returns>
-	ScreenCommand ConsumeCommand();
+	UI::Command ConsumeCommand();
 private:
 
 	/// <summary>

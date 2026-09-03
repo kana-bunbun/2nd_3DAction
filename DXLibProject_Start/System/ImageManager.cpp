@@ -45,12 +45,18 @@ std::shared_ptr<ImageResource> ImageManager::GetImage(int ID)
 
 	// ハンドル作成に失敗していないかどうかチェック
 
-	// 読み込んでいないものとして処理
+	// 以下は読み込んでいないものとして処理
+
+	// 画像読み込みのためのパスを取得
 	std::string path = kGraphPath + GetGraphPath(ID) + kPng;
+	// パスをもとに画像読み込み
 	int handle = LoadGraph((path).c_str());
+	// 画像読み込みが失敗していれば
 	assert(handle != -1, "ImageManager : GetGraphHandle handle==-1");
 	if (handle == -1)return nullptr;
+	// 画像オブジェクトをShared_ptrで作成
 	std::shared_ptr<ImageResource>image = std::make_shared<ImageResource>(ID, handle);
+	// 配列に追加
 	m_images.emplace_back(image);
 	return image;
 }
@@ -62,17 +68,6 @@ const std::string& ImageManager::GetGraphPath(int ID)
 		return param.graphName;
 	}
 	return "";
-}
-
-bool ImageManager::Exists(int ID) const
-{
-	for (const auto& image : m_images) {
-		// ファイルパスが同じものを探す
-		if (image->GetID() != ID)continue;
-		// あればtrue
-		return true;
-	}
-	return false;
 }
 
 bool ImageManager::IsLodad(int ID) const

@@ -65,7 +65,7 @@ void ActionInterval::UpdateCount(float deltaTime)
 	}
 }
 
-void ActionInterval::Execute()
+void ActionInterval::ReCount()
 {
 	// カウントのリセット
 	m_intervalCount = m_param.intervalSecond;

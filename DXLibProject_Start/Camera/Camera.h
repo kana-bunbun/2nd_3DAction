@@ -60,7 +60,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	virtual void Update(float deltaTime, const InputData& inputData) = 0;
+	virtual void Update(float deltaTime, InputData inputData) = 0;
 	/// <summary>
 	/// 現在のカメラデータを取得
 	/// </summary>

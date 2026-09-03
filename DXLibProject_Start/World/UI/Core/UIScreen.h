@@ -4,7 +4,7 @@
 #include<type_traits>
 #include"UIObject.h"
 #include"Input/InputData.h"
-#include"ScreenCommand.h"
+#include"../ScreenCommand.h"
 #include"Screen.h"
 /// <summary>
 /// UIObjectをまとめて管理するクラス
@@ -31,7 +31,7 @@ public:
 	template<class T,class... Args>
 	T* CreateUIObject(Args&&... args);
 
-	ScreenCommand ConsumeCommand()override;
+	
 
 protected:
 
@@ -44,14 +44,13 @@ protected:
 	/// コマンドの設定
 	/// </summary>
 	/// <param name="command"></param>
-	void SetUICommand(const ScreenCommand& command) { m_command = command; }
+	void SetUICommand(const UI::Command& command) { m_command = command; }
 
 protected:
 	/// <summary>
 	/// このクラスで管理するUIObject
 	/// </summary>
 	std::vector<std::unique_ptr<UIObject>>m_rootObjects;
-
 
 
 };

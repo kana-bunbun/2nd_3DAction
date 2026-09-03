@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	/// ゼロベクトル
 	/// </summary>
-	static const Vector2 Zero;
+	static const Vector2 zero;
 
 	/// <summary>
 	/// X軸の正方向の単位ベクトル

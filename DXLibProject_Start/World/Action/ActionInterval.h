@@ -25,7 +25,7 @@ public:
 	/// <summary>
 	/// 効果発動処理
 	/// </summary>
-	void Execute();
+	void ReCount();
 
 	/// <summary>
 	/// 発動効果が終了しているかどうか

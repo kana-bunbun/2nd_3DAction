@@ -1,7 +1,7 @@
 #include "UIObject.h"
 #include "Input/InputData.h"
 UIObject::UIObject():
-	m_position(Vector2::Zero),
+	m_position(Vector2::zero),
 	m_visible(true),
 	m_parent(nullptr)
 {

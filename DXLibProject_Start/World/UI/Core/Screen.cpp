@@ -1,8 +1,8 @@
 #include "Screen.h"
 
-ScreenCommand Screen::ConsumeCommand()
+UI::Command Screen::ConsumeCommand()
 {
-    ScreenCommand command = m_command;
-    m_command = ScreenCommand::None;
+    UI::Command command = m_command;
+    m_command = UI::Command::None;
     return command;
 }

@@ -18,11 +18,15 @@ public:
 	// 画像ハンドルの取得
 	std::shared_ptr<ImageResource> GetImage(int ID);
 	const std::string& GetGraphPath(int ID);
-	// 現状の実装だと機能は不十分
-	// ・現在何を読み込んでいるのか
-	// ・正常に読み込んでいるのか
-	// ・読み込んだものを解放できるのか
-
+	// 現在何を読み込んでいるのか
+	// 正常に読み込んでいるのか
+	// 読み込んだものを解放できるのか
+	
+	/// <summary>
+	/// 現在読み込んでいる画像の個数を返す
+	/// </summary>
+	/// <returns></returns>
+	int GetLoadedCount()const {return m_images.size(); }
 	/// <summary>
 	/// 指定したパスの画像が管理されているかどうかチェック
 	/// 主にデバッグ目的で使用することを想定

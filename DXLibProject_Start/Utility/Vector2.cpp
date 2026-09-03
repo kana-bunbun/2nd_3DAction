@@ -5,7 +5,7 @@
 #include <cmath>
 #include "../Utility/MyMath.h"
 
-const Vector2 Vector2::Zero{ 0.0f, 0.0f };
+const Vector2 Vector2::zero{ 0.0f, 0.0f };
 const Vector2 Vector2::XAxis{ 1.0f, 0.0f };
 const Vector2 Vector2::YAxis{ 0.0f, 1.0f };
 

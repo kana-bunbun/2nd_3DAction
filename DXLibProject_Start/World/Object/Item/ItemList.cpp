@@ -70,7 +70,7 @@ bool ItemList::CanUseItem(int itemIndex, int useCount)
 
 const ItemData& ItemList::GetItemData(int ID) const
 {
-	if (ID <= 0 || ID >= m_items.size())return ItemData();
+	if (ID < 0 || ID >= m_items.size())return ItemData();
 	return m_items[ID];
 }
 

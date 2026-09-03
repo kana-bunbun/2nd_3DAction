@@ -53,8 +53,8 @@ Screen* ScreenManager::GetTopScreen()
 	return m_screens.back().get();
 }
 
-ScreenCommand ScreenManager::ConsumeCommand()
+UI::Command ScreenManager::ConsumeCommand()
 {
-	if (m_screens.empty())return ScreenCommand::None;
+	if (m_screens.empty())return UI::Command::None;
 	return m_screens.back()->ConsumeCommand();
 }

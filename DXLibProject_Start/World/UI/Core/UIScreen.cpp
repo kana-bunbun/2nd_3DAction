@@ -17,13 +17,6 @@ void UIScreen::Draw()
 	}
 }
 
-ScreenCommand UIScreen::ConsumeCommand()
-{
-	ScreenCommand command = m_command;
-	m_command = ScreenCommand::None;
-	return command;
-}
-
 void UIScreen::AddUIObject(std::unique_ptr<UIObject> object)
 {
 	// 空ならreturn

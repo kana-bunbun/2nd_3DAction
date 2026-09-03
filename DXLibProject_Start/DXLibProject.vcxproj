@@ -154,6 +154,7 @@
     <ClCompile Include="Input\Device\GamePad\GamePadState.cpp" />
     <ClCompile Include="Input\Device\GamePad.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Input\VectorState.cpp" />
     <ClCompile Include="World\UI\Screen\MainScreen.cpp" />
     <ClCompile Include="World\UI\Core\Screen.cpp" />
     <ClCompile Include="System\EffectManager.cpp" />
@@ -336,11 +337,11 @@
     <ClInclude Include="World\UI\MPShow.h" />
     <ClInclude Include="World\UI\HPShow.h" />
     <ClInclude Include="System\ImageResource.h" />
-    <ClInclude Include="World\UI\Core\ScreenCommand.h" />
     <ClInclude Include="World\UI\Core\UIInput.h" />
     <ClInclude Include="World\UI\Screen\IngameHudScreen.h" />
     <ClInclude Include="Scene\TestScene\SceneInGameUITest.h" />
     <ClInclude Include="World\UI\Screen\PauseScreen.h" />
+    <ClInclude Include="World\UI\ScreenCommand.h" />
     <ClInclude Include="World\UI\Widget\UIButton.h" />
     <ClInclude Include="System\ImageManager.h" />
     <ClInclude Include="System\ActionParamManager.h" />

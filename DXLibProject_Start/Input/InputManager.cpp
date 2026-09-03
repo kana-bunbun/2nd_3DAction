@@ -214,7 +214,7 @@ Vector2 InputManager::GetVector(const Input::Action& action, const Input::GamePa
 
 		assert(false && "IsHold action Out Of Range");
 	}
-	Vector2 max = Vector2::Zero;
+	Vector2 max = Vector2::zero;
 	for (int i = 0; i < m_actionParam[actionIndex].keys.size(); i++) {
 		Input::Key key = m_actionParam[actionIndex].keys[i];
 		Vector2 vec = GetVector(key, pad);
@@ -235,13 +235,13 @@ Vector2 InputManager::GetVector(const Input::Key& key, const Input::GamePad& pad
 	int keyID = m_keyParam[keyIndex].keyID;
 	switch (device) {
 	case Input::Device::GamePad:{}
-		return m_gamePad[static_cast<int>(pad)]->GetVectorState(keyID).vector;
+		return m_gamePad[static_cast<int>(pad)]->GetVectorState(keyID).GetVector();
 	case Input::Device::Keyboard:
 		break;
 	case Input::Device::Mouce:
 		break;
 	}
-	return Vector2::Zero;
+	return Vector2::zero;
 }
 
 const InputData InputManager::GetInputData()
@@ -277,7 +277,7 @@ VectorState InputManager::GetVectorState(const Input::Action& action, const Inpu
 		Input::Key key = m_actionParam[actionIndex].keys[i];
 		VectorState state = GetVectorState(key, pad);
 
-		if (max.vector.GetSqLength() < state.vector.GetSqLength())
+		if (max.GetVector().GetSqLength() < state.GetVector().GetSqLength())
 			max = state;
 	}
 	return max;

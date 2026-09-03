@@ -19,6 +19,7 @@ public:
 	bool IsHold(int deviceKeyID, int holdCount = Input::kHoldDefaultCount)override;
 	VectorState GetVectorState(int deviceKeyID)override;
 	std::string GetDirectionText(DirectionFour direction);
+	const GamePadState GetInputState() { return m_inputState; }
 private:
 	VectorState GetCrossVectorState();
 private:

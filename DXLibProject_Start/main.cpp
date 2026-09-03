@@ -12,6 +12,7 @@
 #include"System/Debug/ProfileScope.h"
 #include"System/ActionEffectParamManager.h"
 #include"System/CollisionDataManager.h"
+#include"System/ImageManager.h"
 #include"System/ResourceManager.h"
 #include"Input/InputManager.h"
 #include"Input/InputConst.h"
@@ -116,7 +117,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// •`‰ææ‚ğØ‚è‘Ö‚¦‚é
 		ScreenFlip();
 	}
+
 	ResourceManager::GetInstance().End();
+	ImageManager::GetInstance().End();
 	CollisionDataManager::GetInstance().End();
 	ActionEffectParamManager::GetInstance().End();
 	pSceneMgr->End();

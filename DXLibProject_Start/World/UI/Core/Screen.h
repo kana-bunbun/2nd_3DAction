@@ -1,6 +1,6 @@
 #pragma once
 #include"Input/InputData.h"
-#include"ScreenCommand.h"
+#include"../ScreenCommand.h"
 class Screen
 {
 public:
@@ -10,11 +10,12 @@ public:
 	virtual void Init() {};
 	virtual void Update(float deltaTime, const InputData& input) {};
 	virtual void Draw() {};
-	virtual ScreenCommand ConsumeCommand();
+	virtual UI::Command ConsumeCommand();
 protected:
 	/// <summary>
 	/// 外部に送るUIのコマンド
 	/// </summary>
-	ScreenCommand m_command = ScreenCommand::None;
+	UI::Command m_command = UI::Command::None;
+
 };
 

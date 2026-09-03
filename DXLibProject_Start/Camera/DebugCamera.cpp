@@ -35,8 +35,7 @@ DebugCamera::~DebugCamera()
 
 }
 
-void DebugCamera::Update(float deltaTime, const InputData& inputData)
-
+void DebugCamera::Update(float deltaTime, InputData inputData)
 {
     // 移動量の計算 レバーを倒した割合にかける
     float moveAmount = inputData.GetInputRatio(Input::Action::Camera) * m_rotSpeed;

@@ -74,6 +74,8 @@ namespace Input{
 		DragonCall,
 		Dash,
 		Parry,
+		CursorMove,
+		ItemCursorMove,
 		Max,
 	};
 	enum class VectorAction {

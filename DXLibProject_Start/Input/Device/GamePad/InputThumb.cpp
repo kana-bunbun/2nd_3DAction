@@ -22,30 +22,33 @@ m_thumbData()
 InputThumb::InputThumb(int holizontal, int vertical) :
 	m_thumbData()
 {
+	Vector2 inputVector = Vector2::zero;
+	float inputRadian = 0.0f;
+	float inputRatio = 0.0f;
 	if (holizontal)
 	{
 		// 水平方向の入力があれば入力割合を取得
-		m_thumbData.vectorState.vector.x = MyMath::Clamp(static_cast<float>(holizontal) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
+		inputVector.x = MyMath::Clamp(static_cast<float>(holizontal) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
 	}
 	if (vertical)
 	{
 		// 垂直方向の入力があれば入力割合を取得
-		m_thumbData.vectorState.vector.y = MyMath::Clamp(static_cast<float>(vertical) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
+		inputVector.y = MyMath::Clamp(static_cast<float>(vertical) / static_cast<float>(kThumbInputMax), -1.0f, 1.0f);
 	}
 	// 入力角度を求める
-	m_thumbData.vectorState.radian = atan2(m_thumbData.vectorState.vector.x, m_thumbData.vectorState.vector.y);
+	inputRadian = atan2(inputVector.x, inputVector.y);
 	// 入力があれば入力量を計算
-	if (m_thumbData.vectorState.vector.GetSqLength() < kThumbDeadZone) {
+	if (inputVector.GetSqLength() > kThumbDeadZone) {
 		{
-			m_thumbData.vectorState.vector = Vector2::Zero;
-			m_thumbData.vectorState.radian = 0.0f;
-			m_thumbData.vectorState.ratio = 0.0f;
-			return;
-		} }
+			// 4方向の入力方向を取得
+			m_thumbData.directionFour = MyMath::RadianToDirectionFour(inputRadian);
+			// 8方向の入力方向を取得
+			m_thumbData.directionEight = MyMath::RadianToDirectionEight(inputRadian);
+			inputRatio = MyMath::Clamp(inputVector.GetLength(), 0.0f, 1.0f);
+		}
+	}
 
-	// 4方向の入力方向を取得
-	m_thumbData.directionFour = MyMath::RadianToDirectionFour(m_thumbData.vectorState.radian);
-	// 8方向の入力方向を取得
-	m_thumbData.directionEight = MyMath::RadianToDirectionEight(m_thumbData.vectorState.radian);
-	m_thumbData.vectorState.ratio = MyMath::Clamp(m_thumbData.vectorState.vector.GetLength(), 0.0f, 1.0f);
+
+			m_thumbData.vectorState = VectorState(inputVector, inputRadian, inputRatio);
+			return;
 }
