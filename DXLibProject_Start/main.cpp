@@ -1,4 +1,5 @@
-#include "DxLib.h"
+#include"pch.h"
+
 #include "Utility/Game.h"
 #include"Input/InputData.h"
 #include "Utility/GameSetting.h"
@@ -16,10 +17,6 @@
 #include"System/ResourceManager.h"
 #include"Input/InputManager.h"
 #include"Input/InputConst.h"
-#include<EffekseerForDXLib.h>
-
-#include<memory>
-
 // 追加のインクルードディレクトリ
 // 現在Dxライブラリを使用するにあたってC/C++、リンカーにて設定している
 // この設定は複数設定して良いもの
