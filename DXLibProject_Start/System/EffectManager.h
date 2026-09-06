@@ -12,7 +12,6 @@ class EffectManager
 {
 public:
 
-	EffectManager() = default;
 	EffectManager(EffectResourceManager& resourceManager);
 	std::shared_ptr<EffectInstance>Play(int Id, const Vector3& pos);
 
@@ -28,7 +27,7 @@ private:
 
 	/// <summary>
 	/// 読み込み担当のEffectResourceManagerの参照
-	/// このクラスでは「絶対」に使用するので参照で持つ
+	/// このクラスでは絶対に使用するので参照で持つ
 	/// 注意点としては、後から差し替えることが面倒・依存度が上がる
 	/// </summary>
 	EffectResourceManager& m_effectResoruceManager;

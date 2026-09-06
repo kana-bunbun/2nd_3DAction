@@ -2,7 +2,7 @@
 #include"pch.h"
 
 class EffectResource;
-class EffectPathParam;
+struct EffectPathParam;
 
 class EffectResourceManager
 {
