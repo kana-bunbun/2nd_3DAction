@@ -1,5 +1,6 @@
 #pragma once
-#include<string>
+#include"pch.h"
+
 
 /// <summary>
 /// 画像をオブジェクトとして扱うためのクラス

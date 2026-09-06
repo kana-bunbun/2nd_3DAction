@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "GaugeShow.h"
-#include<string>
-#include<DxLib.h>
 #include"../../Utility/MyMath.h"
 #include"GaugeParam.h"
 #include"../../System/ImageManager.h"

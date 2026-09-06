@@ -1,8 +1,9 @@
+#include"pch.h"
+
 #include "EffectManager.h"
 #include"EffectInstance.h"
 #include"EffectResourceManager.h"
 #include"EffectResource.h"
-#include<EffekseerForDXLib.h>
 EffectManager::EffectManager(EffectResourceManager& resourceManager):
     m_effectResoruceManager(resourceManager)
 {}
@@ -18,7 +19,7 @@ std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Vector3 & pos)
     // インスタンスの再生が失敗したら
     if (!instance)return nullptr;
     m_instances.emplace_back(instance);
-
+    instance->play(pos);
     return instance;
 }
 

@@ -1,6 +1,7 @@
+#include"pch.h"
 #include "DragonBreath.h"
-#include "../../../Utility/Color.h"
-#include"../../../System/TimeManager.h"
+#include "Utility/Color.h"
+#include"System/TimeManager.h"
 #include"../CharacterManager.h"
 namespace {
 	constexpr float kMoveSpeed = 500.0f;

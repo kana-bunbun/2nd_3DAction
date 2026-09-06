@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "UIScreen.h"
 
 void UIScreen::Update(float deltaTime, const InputData& input)

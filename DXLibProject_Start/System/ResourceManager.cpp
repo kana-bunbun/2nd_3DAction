@@ -1,8 +1,7 @@
+#include "pch.h"
 #include "ResourceManager.h"
 #include "../Utility/Loder/CsvLoader.h"
 #include "../World/Character/Animation.h"
-#include<DxLib.h>
-
 
 
 ResourceManager::~ResourceManager()

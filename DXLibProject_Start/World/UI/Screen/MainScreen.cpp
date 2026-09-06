@@ -1,3 +1,5 @@
+#include"pch.h"
+
 #include "MainScreen.h"
 #include "../../Object/Barrier.h"
 #include "../../Character/Player/Player.h"
@@ -11,7 +13,6 @@
 #include "Utility/Loder/CsvLoader.h"
 #include "World/Map/TileManager.h"
 #include "World/UI/Group/UIItemList.h"
-#include<memory>
 namespace {
 	const char* const kCameraParamPath = "CameraParam";
 }

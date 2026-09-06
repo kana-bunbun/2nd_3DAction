@@ -1,8 +1,7 @@
-#include "GameObjectManager.h"
+#include "pch.h"
+#include "GameObjectmanager.h"
 #include"Object/Barrier.h"
 #include"Character/Character.h"
-#include<memory>
-#include<vector>
 #include"../Utility/MyMath.h"
 #include"../System/Debug/ProfileScope.h"
 #include"../System/Debug/Profiler.h"

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ItemObjectField.h"
 #include "../../UI/ItemCursor.h"
 namespace {

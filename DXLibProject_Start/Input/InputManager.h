@@ -1,7 +1,6 @@
 #pragma once
-#include<DxLib.h>
-#include<vector>
-#include<memory>
+#include"pch.h"
+
 #include"Input/InputConst.h"
 #include"Input/InputData.h"
 class GamePad;

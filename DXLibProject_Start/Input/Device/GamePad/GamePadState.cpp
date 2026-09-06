@@ -1,3 +1,4 @@
+#include"pch.h"
 #include"GamePadState.h"
 #include<math.h>
 #include"Utility/MyMath.h"

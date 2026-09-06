@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "GaugePlayer.h"
 #include "../Character/Player/Player.h"
 #include "../../Utility/Game.h"
@@ -6,8 +7,7 @@
 #include"HPShow.h"
 #include"MPShow.h"
 #include"GaugeParam.h"
-#include<string>
-#include<memory>
+
 
 namespace{
 	// プレイヤー顔画像のパスID

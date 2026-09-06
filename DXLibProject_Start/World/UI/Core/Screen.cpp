@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Screen.h"
 
 UI::Command Screen::ConsumeCommand()

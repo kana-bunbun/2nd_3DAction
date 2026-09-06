@@ -1,11 +1,9 @@
+#include"pch.h"
 #include "FollowCamera.h"
 #include "Camera.h"
 
 #include"../Utility//Vector3.h"
 #include"../World/Component/Transform.h"
-
-#include<cassert>
-#include<math.h>
 
 #include"Input/InputData.h"
 #include "../Utility/MyMath.h"

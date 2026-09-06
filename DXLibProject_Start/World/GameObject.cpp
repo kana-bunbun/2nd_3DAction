@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "GameObject.h"
-
-#include<DxLib.h>
-#include<cassert>
 
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "HPShow.h"
 #include"../../System/ImageManager.h"
 namespace {

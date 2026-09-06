@@ -1,3 +1,5 @@
+#include"pch.h"
+
 #include "PauseScreen.h"
 #include"../Widget/UIButton.h"
 #include"../Widget/UIText.h"
@@ -7,7 +9,6 @@
 #include"../../../Utility/Loder/CsvLoader.h"
 #include"../../../Utility/Game.h"
 #include"../../../System/ResourceManager.h"
-#include<memory>
 namespace {
 	const char* const kDataName = "TextUIParam";
 	constexpr Vector2 kInitPos{ 300.0f,400.0f };

@@ -1,8 +1,8 @@
 #pragma once
+#include"pch.h"
 
 #include"Utility/Vector3.h"
 #include"World/Component/Transform.h"
-#include<memory>
 
 class EffectResource;
 
@@ -15,7 +15,7 @@ private:
 public:
 
 	EffectInstance(std::shared_ptr<EffectResource> resource);
-	~EffectInstance()=default;
+	virtual ~EffectInstance()=default;
 
 	EffectInstance(const EffectInstance&) = delete;
 	EffectInstance& operator= (const EffectInstance&) = delete;

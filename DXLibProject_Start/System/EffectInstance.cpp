@@ -1,6 +1,5 @@
+#include"pch.h"
 #include "EffectInstance.h"
-#include<cassert>
-#include<EffekseerForDXLib.h>
 #include"System/EffectResource.h"
 EffectInstance::EffectInstance(std::shared_ptr<EffectResource> resource):
 	m_resource(resource),

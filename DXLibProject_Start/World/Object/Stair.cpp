@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "Stair.h"
 #include"../Map/MapManager.h"
 #include"../UI/BillboardManager.h"

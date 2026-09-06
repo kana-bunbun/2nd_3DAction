@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "Collision.h"
-
-#include<cassert>
-#include<DxLib.h>
 #include"../../Utility/Color.h"
 #include"../../Utility/MyMath.h"
 

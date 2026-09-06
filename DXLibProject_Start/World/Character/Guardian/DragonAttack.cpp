@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "DragonAttack.h"
 namespace {
 	constexpr int kAttackInterval = 1;

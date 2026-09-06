@@ -1,6 +1,7 @@
 #pragma once
 #include<DxLib.h>
 #include<EffekseerForDXLib.h>
+#include"Utility/Loder/json.hpp"
 
 #include<math.h>
 #include<vector>
@@ -8,9 +9,8 @@
 #include<memory>
 #include<string>
 #include<cassert>
-
-#include"Utility/Loder/CsvLoader.h"
-#include"Utility/Loder/JsonLoader.h"
-#include"Utility/Loder/Data.h"
+#include<type_traits>
+#include<unordered_map>
+#include<map>
 
 #include"Utility/MyRandom.h"

@@ -1,5 +1,6 @@
 #pragma once
-#include<memory>
+#include"pch.h"
+
 #include"../core/Screen.h"
 class TileManager;
 class CameraManager;
@@ -8,6 +9,9 @@ class Dragon;
 class Barrier;
 class UIItemList;
 
+/// <summary>
+/// ゲームのメイン画面
+/// </summary>
 class MainScreen:public Screen
 {
 public:

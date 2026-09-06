@@ -1,8 +1,8 @@
+#include"pch.h"
 #include "CollisionDataManager.h"
 #include"../World/GameObjectParam.h"
 #include"../Utility/Loder/Data.h"
 #include"../Utility/Loder/CsvLoader.h"
-#include<vector>
 namespace {
 	const char* const kCollisionDataPath = "CollisionParam";
 	constexpr int kInitCollisionNum = 100;

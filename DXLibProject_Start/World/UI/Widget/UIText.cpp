@@ -1,6 +1,6 @@
+#include"pch.h"
 #include "UIText.h"
-#include<string>
-#include<DxLib.h>
+
 
 #include"../../../System/FontManager.h"
 #include"../../../Utility/Color.h"

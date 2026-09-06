@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "InputThumb.h"
 #include"Utility/MyMath.h"
 namespace {

@@ -1,8 +1,6 @@
+#include "pch.h"
 #include "Dragon.h"
 #include"../Player/Player.h"
-#include<string>
-#include<math.h>
-#include<cassert>
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"DragonAttack.h"

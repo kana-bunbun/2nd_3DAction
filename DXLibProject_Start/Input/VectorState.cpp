@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "VectorState.h"
 
 VectorState::VectorState(Vector2 vector, float radian, float ratio):

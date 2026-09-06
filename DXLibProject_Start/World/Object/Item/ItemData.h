@@ -1,5 +1,6 @@
 #pragma once
-#include<array>
+#include"pch.h"
+
 
 struct ItemData
 {
@@ -34,6 +35,7 @@ public:
 	/// 自身がアイテムの情報を持っているかどうか取得
 	/// </summary>
 	bool ExistItem();
+
 private:
 	// 自身の種類
 	Type m_type = Type::Invalid;

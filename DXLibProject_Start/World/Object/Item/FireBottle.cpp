@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "FireBottle.h"
 #include "ItemManager.h"
 #include "../../../System/ResourceManager.h"

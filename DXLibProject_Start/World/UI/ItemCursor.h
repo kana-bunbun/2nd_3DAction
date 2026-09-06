@@ -1,9 +1,10 @@
 #pragma once
+#include"pch.h"
+
 #include"Input/InputData.h"
 #include"../../Utility/Vector3.h"
 #include"../Object/Item/BlendManager.h"
-#include<array>
-#include<memory>
+
 namespace {
 	// スロットの個数
 	constexpr int kSlotMax = 10;

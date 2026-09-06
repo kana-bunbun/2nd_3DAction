@@ -1,10 +1,8 @@
+#include"pch.h"
 #include "Data.h"
 
-#include<vector>
-#include<string>
 #include<sstream>
 #include<fstream>
-#include<cassert>
 
 namespace {
 	const char* const kCSVFilePath = "Data\\CSV\\";

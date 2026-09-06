@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "SceneBase.h"
 #include "../Utility/Color.h"
 #include "../Utility/Game.h"

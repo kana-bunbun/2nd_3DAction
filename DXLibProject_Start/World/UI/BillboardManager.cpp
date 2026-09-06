@@ -1,5 +1,6 @@
+#include"pch.h"
 #include "BillboardManager.h"
-#include<DxLib.h>
+
 namespace {
 	const char* const kGraphPath[BillboardManager::eBillboard::Max] = {
 		"Resource\\Graph\\BillboardText_Stair.png",

@@ -15,3 +15,4 @@ ActionID,Action,Key[0],Key[1],Key[2],Key[3],Key[4],Key[5],KeyID[0],KeyID[1],KeyI
 13,Parry,GpSouth,Invalid,Invalid,Invalid,Invalid,Invalid,7,0,0,0,0,0
 14,CursorMove,GpCross,Invalid,Invalid,Invalid,Invalid,Invalid,25,0,0,0,0,0
 15,ItemCursorMove,GpRight,GpLeft,Invalid,Invalid,Invalid,Invalid,2,4,0,0,0,0
+16,UseItem,GpWest,Invalid,Invalid,Invalid,Invalid,Invalid,8,0,0,0,0,0

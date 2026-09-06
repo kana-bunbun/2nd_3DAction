@@ -1,7 +1,8 @@
 #pragma once
+#include"pch.h"
+
 #include<random>
-#include<vector>
-#include<array>
+
 /// <summary>
 /// 乱数を生成するクラス
 /// 以下のページを参考に作成
@@ -43,7 +44,6 @@ public:
 	static T ArrayRandom(std::vector<T> vector);
 private:
 	static std::mt19937& Engine();
-
 };
 
 template<typename T>

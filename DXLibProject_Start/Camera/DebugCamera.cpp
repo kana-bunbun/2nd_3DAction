@@ -1,9 +1,9 @@
+#include"pch.h"
 #include "DebugCamera.h"
 #include "Camera.h"
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
 #include"../Utility/MyMath.h"
-#include<DxLib.h>
 #include<cmath>
 #include"Input/InputData.h"
 

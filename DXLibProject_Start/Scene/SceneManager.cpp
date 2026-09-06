@@ -1,5 +1,5 @@
-#include <cassert>
-#include <memory>
+#include"pch.h"
+
 #include "SceneManager.h"
 #include "SceneTest.h"
 #include "../System/TimeManager.h"
@@ -10,6 +10,7 @@
 SceneManager::SceneManager() {
 
 	m_pCurrentScene = nullptr;
+	m_pNextScene = nullptr;
 }
 
 SceneManager::~SceneManager() {}
@@ -57,17 +58,6 @@ void SceneManager::Update(float deltaTime) {
 		m_pCurrentScene->Init();
 		m_pCurrentScene->SceneBase::StartFadeIn();
 	}
-
-	////if ( pScene != m_pCurrentScene ) {
-
-	//	m_pCurrentScene->End();
-	//	//delete m_pCurrentScene;
-
-	//	// ƒ|ƒCƒ“ƒ^‚ð‰Šú‰»
-	//	m_pCurrentScene = pScene;
-	//	m_pCurrentScene->Init();
-	//}
-
 }
 
 void SceneManager::Draw() {

@@ -76,6 +76,7 @@ namespace Input{
 		Parry,
 		CursorMove,
 		ItemCursorMove,
+		UseItem,
 		Max,
 	};
 	enum class VectorAction {

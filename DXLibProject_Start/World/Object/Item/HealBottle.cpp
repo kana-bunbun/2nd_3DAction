@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "HealBottle.h"
 #include "../../../System/ResourceManager.h"
 #include "../../../System/CollisionDataManager.h"

@@ -1,7 +1,6 @@
+#include "pch.h"
 #include "GaugeDragon.h"
 #include "GaugeParam.h"
-#include<string>
-#include<DxLib.h>
 #include"../../System/ImageManager.h"
 #include"../Character/Guardian/Dragon.h"
 #include"../../Utility/Vector3.h"

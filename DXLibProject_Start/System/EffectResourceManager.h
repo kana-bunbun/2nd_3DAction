@@ -1,7 +1,5 @@
 #pragma once
-#include<string>
-#include<memory>
-#include<unordered_map>
+#include"pch.h"
 
 class EffectResource;
 class EffectPathParam;
@@ -9,6 +7,7 @@ class EffectPathParam;
 class EffectResourceManager
 {
 public:
+
 	EffectResourceManager();
 	~EffectResourceManager();
 
@@ -22,14 +21,15 @@ public:
 	/// エフェクト素材の取得
 	/// </summary>
 	std::shared_ptr<EffectResource> GetResource(int ID)const;
-	const std::string& GetEffectPath(int ID);
+	const EffectPathParam& GetEffectParam(int ID);
 	/// <summary>
 	/// 管理しているエフェクトの数を取得
 	/// </summary>
 	/// <returns></returns>
 	int GetLoadCount()const { return static_cast<int>(m_resources.size()); }
+	void Clear() { m_resources.clear(); }
+private:
 	std::unordered_map < int, std::shared_ptr<EffectResource> >m_resources;
 	std::vector<EffectPathParam>m_effectPathParam;
-
 };
 

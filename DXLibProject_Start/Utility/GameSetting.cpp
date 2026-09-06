@@ -1,9 +1,9 @@
-#include "GameSetting.h"
+#include"pch.h"
 
+#include "GameSetting.h"
 #include "../Utility/Vector3.h"
 #include "Game.h"
 
-#include<EffekseerForDXLib.h>
 
 namespace {
 	constexpr int BackGroundR=112/*128*/;

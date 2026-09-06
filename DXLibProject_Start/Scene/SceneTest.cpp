@@ -1,3 +1,4 @@
+#include"pch.h"
 
 #include "SceneTest.h"
 #include "SceneBase.h"
@@ -38,9 +39,7 @@
 #include"../World/UI/Screen/MainScreen.h"
 #include"Input/InputManager.h"
 #include"Input/InputData.h"
-#include<cassert>
-#include<memory>
-#include<DxLib.h>
+
 
 namespace {
 

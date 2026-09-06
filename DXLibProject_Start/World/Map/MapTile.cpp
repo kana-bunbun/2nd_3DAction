@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "MapTile.h"
 
 MapTile::MapTile(int posX,int posY, int id) :

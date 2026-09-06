@@ -1,6 +1,6 @@
 #pragma once
-#include<cassert>
-#include<string>
+#include"pch.h"
+
 #include<type_traits>
 #include"Data.h"
 #include"CsvConvert.h"
@@ -191,6 +191,7 @@ namespace Data {
 				EffectPathParam param;
 				param.ID = Get<int>(row, "ID");
 				param.effectName= Get<std::string>(row, "effectName");
+				param.scale = Get<float>(row, "scale");
 				return param;
 			}
 		};

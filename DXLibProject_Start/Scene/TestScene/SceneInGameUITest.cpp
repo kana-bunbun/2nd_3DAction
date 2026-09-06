@@ -1,5 +1,6 @@
-#include "SceneInGameUITest.h"
+#include"pch.h"
 
+#include "SceneInGameUITest.h"
 #include "../SceneTest.h"
 #include "../SceneBase.h"
 #include "Utility/Vector3.h"
@@ -40,9 +41,7 @@
 #include"../../World/UI/Core/UIInput.h"
 #include"../../Scene/SceneSelectDebug.h"
 #include"Input/InputManager.h"
-#include<cassert>
-#include<memory>
-#include<DxLib.h>
+
 
 namespace {
 

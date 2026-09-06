@@ -1,6 +1,7 @@
+#include"pch.h"
 #include "SceneCollisionTest.h"
 #include "../SceneSelectDebug.h"
-#include<DxLib.h>
+
 #include"Utility/Color.h"
 #include"Utility/MyMath.h"
 #include"Input/InputData.h"

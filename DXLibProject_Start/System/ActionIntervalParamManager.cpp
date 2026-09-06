@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ActionIntervalParamManager.h"
 #include "../Utility/Loder/CsvLoader.h"
 namespace {

@@ -1,8 +1,9 @@
+#include "pch.h"
 #include "SoundManager.h"
 
 #include "../Utility/Vector3.h"
-#include <string>
-#include <cassert>
+#include<string>
+#include<cassert>
 
 namespace {
 

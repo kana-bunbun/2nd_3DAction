@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "Player.h"
-#include<DxLib.h>
-#include<string>
-#include<vector>
 #include"../../../Data/ModelPathParam.h"
 #include"../Animation.h"
 #include"../../../Camera/CameraOld.h"

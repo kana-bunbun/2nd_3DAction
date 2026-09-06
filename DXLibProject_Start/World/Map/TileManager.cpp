@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "TileManager.h"
 #include"MapConst.h"
 #include"MapCreate.h"
@@ -13,8 +14,7 @@
 #include"../Object/Item/ItemManager.h"
 #include"../../System/Debug/ProfileScope.h"
 #include"../../System/Debug/Profiler.h"
-#include<DxLib.h>
-#include<vector>
+
 
 namespace {
 	constexpr Vector3 blockSize = { 5.0f,5.0f ,0.0f };

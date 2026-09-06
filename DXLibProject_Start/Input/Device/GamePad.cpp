@@ -1,6 +1,6 @@
+#include"pch.h"
+
 #include "GamePad.h"
-#include<DxLib.h>
-#include<cassert>
 #include"Input/InputConst.h"
 #include"Input/Device/GamePad/GamePadState.h"
 GamePad::GamePad(int padID):

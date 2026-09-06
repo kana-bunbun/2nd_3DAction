@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "RoomData.h"
 #include "SquareData.h"
 #include "MapTile.h"

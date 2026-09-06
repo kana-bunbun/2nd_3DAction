@@ -1,13 +1,15 @@
 #pragma once
+#include"pch.h"
+
 #include"../Object/UIItemSlot.h"
 #include"../../Object/Item/ItemList.h"
 #include"../Core/UIObject.h"
 #include"World/Action/ActionInterval.h"
 #include"Utility/MyMath.h"
-#include<array>
-#include<memory>
+
 class UIItemCursor;
 class ActionInterval;
+class Character;
 /// <summary>
 /// プレイヤーの所持アイテムリストのUI表示をする
 /// </summary>
@@ -59,5 +61,9 @@ private:
 	/// カーソル移動のインターバル
 	/// </summary>
 	ActionInterval m_cursorInterval;
+	/// <summary>
+	/// アイテムのリストを表示してほしいキャラクター
+	/// </summary>
+	Character* m_pCharacter;
 };
 

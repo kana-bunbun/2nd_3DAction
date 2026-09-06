@@ -1,11 +1,9 @@
 #pragma once
+#include"pch.h"
 
-#include<vector>
-#include<string>
 #include<unordered_map>
 
 #include"CsvConvert.h"
-#include"Utility/Loder/json.hpp"
 /// <summary>
 /// 外部データに関する処理
 /// </summary>

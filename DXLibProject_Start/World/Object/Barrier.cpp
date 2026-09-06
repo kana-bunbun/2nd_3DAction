@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Barrier.h"
 #include"../../Utility/Color.h"
 #include"../../System/TimeManager.h"

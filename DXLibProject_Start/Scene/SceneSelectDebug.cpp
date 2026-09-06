@@ -1,5 +1,6 @@
+#include"pch.h"
+
 #include "SceneSelectDebug.h"
-#include<DxLib.h>
 #include"../Utility/Color.h"
 #include"../Utility/MyMath.h"
 #include"Input/InputData.h"
@@ -106,6 +107,7 @@ std::unique_ptr<SceneBase> SceneSelectDebug::Update(float deltaTime)
     if (inputData.IsPressed(Input::Action::Down))m_selectIndex++;
     // 一定範囲内でループ
     m_selectIndex = (m_sceneList.size() + m_selectIndex) % m_sceneList.size();
+
     return nullptr;
 }
 

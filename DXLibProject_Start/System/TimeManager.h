@@ -1,5 +1,6 @@
 #pragma once
-#include<DxLib.h>
+#include "pch.h"
+
 class TimeManager
 {
 public:

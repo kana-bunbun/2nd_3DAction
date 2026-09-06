@@ -1,5 +1,6 @@
+#include"pch.h"
 #include "FontManager.h"
-#include<DxLib.h>
+
 
 FontManager& FontManager::GetInstance()
 {

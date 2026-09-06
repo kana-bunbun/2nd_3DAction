@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "UIImage.h"
 #include"../../../System/ImageResource.h"
 UIImage::UIImage():

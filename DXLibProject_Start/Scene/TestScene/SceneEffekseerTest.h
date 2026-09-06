@@ -1,8 +1,6 @@
 #pragma once
-#include "Scene/SceneBase.h"
-#pragma once
-#include "../SceneBase.h"
-#include "Utility/Vector3.h"
+#include"Scene/SceneBase.h"
+#include"Utility/Vector3.h"
 #include"Input/InputData.h"
 #include"World/Component/Collision.h"
 #include<memory>
@@ -21,18 +19,27 @@ class Barrier;
 class ScreenManager;
 class TileManager;
 class FloorBlock;
+class PadManager;
 class GameObjectManager;
 class GameObject;
-class IngameHudScreen;
-class PauseScreen;
-class ScreenManager;
+#include"System/EffectResourceManager.h"
+#include"System/EffectManager.h"
 
-class SceneEffekseerTest :public SceneBase
+class SceneEffekseerTest  : public SceneBase
 {
 public:
-	SceneEffekseerTest();
-	~SceneEffekseerTest();
 
+	/// <summary>
+	/// SceneEffekseerTest  画面のコンストラクタ
+	/// メンバの初期設定を行う
+	/// </summary>
+	SceneEffekseerTest ();
+
+	/// <summary>
+	/// SceneEffekseerTest  画面のデストラクタ
+	/// メンバの後処理を行う
+	/// </summary>
+	virtual ~SceneEffekseerTest ();
 
 	/// <summary>
 	/// 画面の初期設定を行う
@@ -45,13 +52,13 @@ public:
 	void End()override;
 
 	/// <summary>
-	/// SceneTest画面の処理を行う
+	/// SceneEffekseerTest  画面の処理を行う
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
 	std::unique_ptr<SceneBase> Update(float deltaTime)override;
-	void UpdateInGame(float deltaTime,InputData inputData);
+
 	/// <summary>
-	/// SceneTest画面の描画を行う
+	/// SceneEffekseerTest  画面の描画を行う
 	/// </summary>
 	void Draw()override;
 
@@ -64,20 +71,11 @@ private:
 
 private:
 
-	std::unique_ptr<CameraManager> m_pCameraMgr;
-	Player* m_pPlayer;
-	Dragon* m_pDragon;
 	/// <summary>
-	/// プレイヤーの数
+	/// Cameraクラスのポインタ
 	/// </summary>
-	int m_playerNum;
+	std::unique_ptr<ScreenManager> m_pScreenManager;
 
-	Barrier* m_pBarrier;
-
-	std::unique_ptr<TileManager>m_pTileManager;
-	std::unique_ptr<ScreenManager> m_pUIManager;
-
-	int m_effectResourceHandle;
-	int m_playEffectHandle;
-	bool m_isEffect;
+	std::unique_ptr<EffectResourceManager>m_pEffectResourceManager;
+	std::unique_ptr<EffectManager>m_pEffectManager;
 };

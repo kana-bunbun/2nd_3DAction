@@ -1,7 +1,7 @@
+#include"pch.h"
 #include "CameraManager.h"
 #include"../Utility/MyMath.h"
-#include<cassert>
-#include<EffekseerForDXLib.h>
+
 namespace {
 	constexpr float kNearDistance = 5.0f;	// カメラの手前のクリップ距離
 	constexpr float kFarDistance = 20000.0f;	// カメラの奥のクリップ距離

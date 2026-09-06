@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ActionEffect_Heal.h"
 #include "../../System/ActionEffectParamManager.h"
 #include"../GameObjectManager.h"

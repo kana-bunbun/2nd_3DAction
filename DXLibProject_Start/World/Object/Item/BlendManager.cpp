@@ -1,9 +1,10 @@
+#include"pch.h"
 #include "BlendManager.h"
 #include"../../../Utility/Loder/CsvLoader.h"
 #include"../../../Utility/Loder/Data.h"
 #include"../../../Data/BlendRecipe.h"
 
-#include<DxLib.h>
+
 namespace {
 	constexpr int kTypeMax = static_cast<int>(ItemData::Type::Max);
 

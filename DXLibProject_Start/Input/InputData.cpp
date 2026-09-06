@@ -1,3 +1,6 @@
+#include"pch.h"
+
+
 #include "InputData.h"
 #include"VectorState.h"
 InputData::InputData():

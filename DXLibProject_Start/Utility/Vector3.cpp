@@ -1,8 +1,7 @@
+#include "pch.h"
 #include "Vector3.h"
-#include<DxLib.h>
-#include<math.h>
 #include"MyMath.h"
-#include<cassert>
+
 const Vector3 Vector3::zero{ 0.0f, 0.0f, 0.0f };
 const Vector3 Vector3::XAxis{ 1.0f, 0.0f, 0.0f };
 const Vector3 Vector3::YAxis{ 0.0f, 1.0f, 0.0f };

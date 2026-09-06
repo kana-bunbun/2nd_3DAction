@@ -1,6 +1,5 @@
 #pragma once
-#include<string>
-#include<vector>
+
 #include"../World/Character/AnimationController.h"
 #include"../World/Character/Animation.h"
 #include"../Utility/Loder/Data.h"

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "SceneTextTest.h"
 #include "Scene/SceneSelectDebug.h"
 #include"Utility/Color.h"

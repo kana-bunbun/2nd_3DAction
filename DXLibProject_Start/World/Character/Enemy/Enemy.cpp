@@ -1,6 +1,7 @@
+#include "pch.h"
 #include "Enemy.h"
 #include "../../UI/BillboardManager.h"
-#include <string>
+
 namespace {
 	//const char* const kFilePath = "Resource\\Enemy\\Queen\\";
 	//const char* const kModelPath = "Model.mv1";

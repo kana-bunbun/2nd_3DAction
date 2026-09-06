@@ -1,5 +1,6 @@
 #include "Resource.h"
-#include<DxLib.h>
+#include"pch.h"
+
 #include"ResourceManager.h"
 #include"../Utility/Loder/CsvLoader.h"
 #include"../Data/ModelPathParam.h"

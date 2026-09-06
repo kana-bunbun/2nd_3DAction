@@ -1,9 +1,10 @@
+#include"pch.h"
+
 #include "ImageManager.h"
 #include"ImageResource.h"
 #include"../Utility/Loder/CsvLoader.h"
 #include"../Data/GraphPathParam.h"
-#include<DxLib.h>
-#include<cassert>
+
 namespace{
 	const char* const kGraphPath = "Resource\\Graph\\";
 	const char* const kPng = ".png";

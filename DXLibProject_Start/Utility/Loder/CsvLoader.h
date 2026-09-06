@@ -1,7 +1,6 @@
 #pragma once
-#include<vector>
-#include<string>
-#include<cassert>
+#include"pch.h"
+
 #include"Data.h"
 #include"FromCsv.h"
 

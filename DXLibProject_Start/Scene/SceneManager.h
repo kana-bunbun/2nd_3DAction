@@ -1,6 +1,6 @@
 #pragma once
+#include"pch.h"
 
-#include<memory>
 // ‘O•ûéŒ¾
 class SceneBase;
 

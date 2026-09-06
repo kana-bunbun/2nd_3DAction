@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include"MapConst.h"
 #include"RoomData.h"
 class SquareData

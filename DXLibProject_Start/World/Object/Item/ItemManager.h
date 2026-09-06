@@ -1,5 +1,6 @@
 #pragma once
-#include<memory>
+#include"pch.h"
+
 #include"../../../Camera/Camera.h"
 #include"ItemData.h"
 #include "../../../Utility/Vector3.h"

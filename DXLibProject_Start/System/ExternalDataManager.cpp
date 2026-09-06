@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ExternalDataManager.h"
 #include"../Utility/Loder/CsvLoader.h"
 #include"../World/GameObjectParam.h"

@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "MyMath.h"
 
 Vector3 MyMath::ClosestPointOnSegment(const Vector3& point, const Vector3& start, const Vector3& end)

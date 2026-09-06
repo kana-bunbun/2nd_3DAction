@@ -1,5 +1,5 @@
+#include"pch.h"
 #include "ImageResource.h"
-#include<DxLib.h>
 ImageResource::ImageResource(int ID, int handle):
 	ID(ID),
 	m_handle(handle)

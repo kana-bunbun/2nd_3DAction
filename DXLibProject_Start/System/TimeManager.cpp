@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "TimeManager.h"
-
-#include<DxLib.h>
-#include<cassert>
 
 namespace {
 	/// <summary>

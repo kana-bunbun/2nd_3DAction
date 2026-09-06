@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "TileObject.h"
 #include "../../Utility/Color.h"
 #include"MapTile.h"

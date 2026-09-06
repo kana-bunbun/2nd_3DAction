@@ -1,5 +1,7 @@
+#include"pch.h"
+
 #include "ItemList.h"
-#include<DxLib.h>
+
 ItemList::ItemList()
 {
 
@@ -50,7 +52,6 @@ void ItemList::UseItem(int itemIndex, int subNum)
 	if (!CanUseItem(itemIndex, subNum))return;
 	// アイテムの消費
 	m_items[itemIndex].Sub(subNum);
-
 	if (m_items[itemIndex].GetItemNum() > 0)return;
 	// アイテムの所持数が無くなったらアイテムの種類を不正値に設定
 	m_items[itemIndex].SetType(ItemData::Type::Invalid);

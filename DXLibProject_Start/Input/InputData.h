@@ -1,8 +1,9 @@
 #pragma once
+#include"pch.h"
+
 #include"Input/InputConst.h"
 #include"Input/ActionInputState.h"
 #include"Utility/Vector2.h"
-#include<array>
 #include"VectorState.h"
 /// <summary>
 /// Še‰æ–Êó‘Ô‚É“n‚·“ü—Íî•ñ

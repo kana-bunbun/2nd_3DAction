@@ -1,3 +1,5 @@
+#include"pch.h"
+
 #include "InputManager.h"
 #include "InputConst.h"
 #include "Input/Device/GamePad.h"
@@ -6,7 +8,7 @@
 #include "Data/ActionKeyParam.h"
 #include "Input/ActionInputState.h"
 #include "Input/InputData.h"
-#include<array>
+
 namespace{ 
 	constexpr int kRightTrigger = 10;
 	constexpr int kLeftTrigger = 11;

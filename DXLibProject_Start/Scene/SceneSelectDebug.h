@@ -1,8 +1,6 @@
 #pragma once
+#include"pch.h"
 #include "SceneBase.h"
-#include<memory>
-#include<vector>
-#include<string>
 #include<functional>
 
 // 関数オブジェクトとは、関数を変数のように扱うことができるオブジェクト

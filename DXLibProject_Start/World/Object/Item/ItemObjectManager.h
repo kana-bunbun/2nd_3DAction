@@ -1,7 +1,7 @@
 #pragma once
+#include"pch.h"
+
 #include"../../GameObjectManager.h"
-#include<vector>
-#include<memory>
 #include <type_traits>
 #include"ItemObjectBase.h"
 class GameObject;

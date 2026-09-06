@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "UIItemSlot.h"
 #include"../../../Utility/Game.h"
 #include"../../../Utility/Vector2.h"

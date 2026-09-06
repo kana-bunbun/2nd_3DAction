@@ -1,6 +1,7 @@
 #pragma once
+#include"pch.h"
+
 #include"ItemData.h"
-#include<array>
 
 namespace {
 	// アイテムスロットの個数

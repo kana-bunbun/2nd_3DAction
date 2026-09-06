@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "ScreenManager.h"
 #include"Screen.h"
 ScreenManager::ScreenManager()

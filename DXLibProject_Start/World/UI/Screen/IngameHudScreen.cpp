@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "IngameHudScreen.h"
 #include"../../../Utility/Loder/CsvLoader.h"
 #include"../../../Data/UITextParam.h"

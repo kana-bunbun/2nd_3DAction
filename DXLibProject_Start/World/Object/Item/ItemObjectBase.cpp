@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ItemObjectBase.h"
 #include "../../../Utility/MyRandom.h"
 namespace {

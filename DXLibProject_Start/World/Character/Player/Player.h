@@ -1,3 +1,5 @@
+#include"pch.h"
+
 #include"../../GameObject.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
@@ -6,7 +8,7 @@
 #include"../../../Camera/Camera.h"
 #include"../../GameObjectParam.h"
 #include"../Character.h"
-#include<array>
+
 class CameraOld;
 class Barrier;
 

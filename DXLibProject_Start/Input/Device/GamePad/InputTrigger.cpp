@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "InputTrigger.h"
 namespace {
 	// トリガーの最大入力値

@@ -1,7 +1,6 @@
 #pragma once
-#include<string>
-#include<vector>
-#include<memory>
+#include"pch.h"
+
 #include"ImageResource.h"
 struct GraphPathParam;
 class ImageResource;

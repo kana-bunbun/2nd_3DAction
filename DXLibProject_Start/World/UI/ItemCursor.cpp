@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ItemCursor.h"
 #include "../Object/Item/ItemData.h"
 #include"../../Utility/Game.h"
@@ -14,8 +15,7 @@
 #include"../Object/Item/FireBottle.h"
 #include"../Character/CharacterManager.h"
 #include"ItemSlot.h"
-#include<string>
-#include<array>
+
 namespace {
 
 	// スロット表示する際の中心座標

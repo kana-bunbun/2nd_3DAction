@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "UIItemCursor.h"
 #include"../../../System/ImageManager.h"
 #include"../../../Utility/Game.h"

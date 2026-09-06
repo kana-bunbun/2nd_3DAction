@@ -1,13 +1,16 @@
+#include"pch.h"
+
 #include "UIItemList.h"
-#include"../../../Utility/MyMath.h"
-#include"../../../Utility/Game.h"
-#include"../../../World/Character/CharacterManager.h"
-#include"../../../World/Character/Player/Player.h"
+#include"Utility/MyMath.h"
+#include"Utility/Game.h"
+#include"World/Character/CharacterManager.h"
+#include"World/Character/Player/Player.h"
 #include"../Object/UIItemCursor.h"
 #include"Data/ActionintervalParam.h"
 #include"Utility/Loder/FromCsv.h"
 #include"World/Action/ActionInterval.h"
 #include"System/ActionIntervalParamManager.h"
+#include"World/Object/Item/ItemManager.h"
 
 namespace {
 	constexpr Vector2 kFirstSlotPosition = { Game::kScreenWidth * 0.05f,Game::kScreenHeight * 0.9f };
@@ -18,7 +21,11 @@ namespace {
 	constexpr Input::Action kCursorMoveAction = Input::Action::ItemCursorMove;
 }
 UIItemList::UIItemList():
-	m_selectIndex(0)
+	m_selectIndex(0),
+	m_itemSlots(),
+	m_pItemCursor(nullptr),
+	m_cursorInterval(),
+	m_pCharacter(nullptr)
 {
 	m_cursorInterval.Init(kCursorIntervalID);
 }
@@ -26,7 +33,7 @@ UIItemList::UIItemList():
 void UIItemList::OnInit()
 {
 	// プレイヤーのアイテムリスト
-	Player* player = CharacterManager::GetInstance().GetPlayer();
+	m_pCharacter = CharacterManager::GetInstance().GetPlayer();
 	for (int i = 0; i < m_itemSlots.size(); i++) {
 		std::unique_ptr<UIItemSlot>slot = std::make_unique<UIItemSlot>(i);
 		slot->Init();
@@ -43,7 +50,7 @@ void UIItemList::OnInit()
 
 void UIItemList::OnUpdate(float deltatime, const InputData& inputData)
 {
-	ItemList itemList = *CharacterManager::GetInstance().GetPlayer()->GetItemList();
+	ItemList* itemList = m_pCharacter->GetItemList();
 	InputData input = inputData;
 	Vector2 inputVector = input.GetVector(Input::Action::CursorMove);
 
@@ -74,8 +81,17 @@ void UIItemList::OnUpdate(float deltatime, const InputData& inputData)
 	}
 	for (int i = 0; i < m_itemSlots.size();i++) {
 		// プレイヤーの所持アイテムリストの情報を設定
-		m_itemSlots[i]->SetItemData(itemList.GetItemData(m_itemSlots[i]->GetID()));
+		m_itemSlots[i]->SetItemData(itemList->GetItemData(m_itemSlots[i]->GetID()));
 	}
+
+	if (input.IsPressed(Input::Action::UseItem)) {
+		// リスト上の消費処理
+		itemList->UseItem(m_selectIndex);
+		// アイテムの
+		ItemData item=itemList->GetItemData(m_selectIndex);
+		ItemManager::GetInstance().CreateFieldItem(item.GetType(), m_pCharacter->GetPosition());
+	}
+
 	printfDx("m_selectIndex : %d\n", m_selectIndex);
 }
 

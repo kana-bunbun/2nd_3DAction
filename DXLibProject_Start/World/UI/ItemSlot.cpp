@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ItemSlot.h"
 #include "../../System/ResourceManager.h"
 #include "../../System/Debug/ProfileScope.h"

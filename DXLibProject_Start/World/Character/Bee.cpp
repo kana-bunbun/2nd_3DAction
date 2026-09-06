@@ -1,14 +1,9 @@
+#include "pch.h"
 #include "Bee.h"
 
 #include"../GameObject.h"
 #include"Animation.h"
 #include"AnimationController.h"
-
-#include<DxLib.h>
-#include<cassert>
-#include<string>
-#include<memory>
-
 #include"../../Utility/Color.h"
 #include"../../Utility/MyMath.h"
 

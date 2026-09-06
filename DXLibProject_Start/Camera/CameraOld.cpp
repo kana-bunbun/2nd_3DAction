@@ -1,8 +1,7 @@
+#include "pch.h"
 #include "CameraOld.h"
 
 #include "../Utility/Vector3.h"
-#include <math.h>
-#include <cassert>
 #include"../World/Character/Player/Player.h"
 #include"Input/InputData.h"
 #include "../Utility/MyMath.h"

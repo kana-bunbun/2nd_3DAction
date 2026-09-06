@@ -1,3 +1,4 @@
+#include"pch.h"
 #include "ActionEffectParamManager.h"
 #include "../Data/ActionEffectParam.h"
 #include "../Utility/Loder/Data.h"

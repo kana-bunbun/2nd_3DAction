@@ -1,7 +1,5 @@
+#include "pch.h"
 #include "Vector2.h"
-
-#include <DxLib.h>
-#include <cassert>
 #include <cmath>
 #include "../Utility/MyMath.h"
 

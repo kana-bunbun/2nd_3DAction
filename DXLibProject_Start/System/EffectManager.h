@@ -1,7 +1,5 @@
 #pragma once
-#include<memory>
-#include<vector>
-#include<string>
+#include"pch.h"
 #include"Utility/Vector3.h"
 class EffectInstance;
 class EffectResourceManager;
@@ -14,6 +12,7 @@ class EffectManager
 {
 public:
 
+	EffectManager() = default;
 	EffectManager(EffectResourceManager& resourceManager);
 	std::shared_ptr<EffectInstance>Play(int Id, const Vector3& pos);
 
