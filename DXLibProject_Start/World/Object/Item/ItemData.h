@@ -28,7 +28,7 @@ public:
 	// 所持数に加算
 	void Add(int addVallue = 1) { m_num += addVallue; }
 	// 所持数から減らす
-	void Sub(int subVallue = 1) { m_num -= subVallue; }
+	void Sub(int subVallue = 1);
 	// 使用できるかどうか
 	bool CanUse(int useCount = 1) { return m_num >= useCount; }
 	/// <summary>

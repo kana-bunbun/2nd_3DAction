@@ -22,7 +22,7 @@ public:
 	EffectInstance(EffectInstance&&) = delete;
 	EffectInstance& operator= (const EffectInstance&&) = delete;
 
-	bool play(const Vector3& position);
+	bool Play(const Transform* transform);
 	void Update(float deltaTime);
 	void Stop();
 	/// <summary>
@@ -39,5 +39,7 @@ public:
 	/// 再生中のエフェクトハンドル
 	/// </summary>
 	int m_playHandle;
+	const Transform* m_transform;
+	
 };
 

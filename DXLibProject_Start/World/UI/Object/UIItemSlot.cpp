@@ -6,6 +6,9 @@
 #include"../../../System/ImageManager.h"
 #include"../../Object/Item/ItemList.h"
 #include"../../Object/Item/ItemData.h"
+#include"../../Object/Item/ItemManager.h"
+#include"../../Object/Item/HealBottle.h"
+#include"../../Object/Item/FireBottle.h"
 namespace {
 	// アイテムアイコン画像の画像パスID
 	constexpr int kItemPathID[static_cast<int>(ItemData::Type::Max)] = {
@@ -51,6 +54,22 @@ void UIItemSlot::OnDraw()
 		drawPos.x, drawPos.y,
 		GetNormalizeGraphScale(itemGraph->GetHandle()),
 		0, itemGraph->GetHandle(), TRUE);
+}
+
+void UIItemSlot::ConsumeItem(const Transform& transform)
+{
+	m_itemData.Sub();
+	switch (m_itemData.GetType())
+	{
+	case ItemData::Type::HealBottle:
+	ItemManager::GetInstance().CallItem<HealBottle>(transform);
+		break;
+	case ItemData::Type::FireBottle:
+	ItemManager::GetInstance().CallItem<FireBottle>(transform);
+		break;
+	default:
+		break;
+	}
 }
 
 float UIItemSlot::GetNormalizeGraphScale(int graphHandle)

@@ -192,6 +192,7 @@ namespace Data {
 				param.ID = Get<int>(row, "ID");
 				param.effectName= Get<std::string>(row, "effectName");
 				param.scale = Get<float>(row, "scale");
+				param.isChace = Get<bool>(row, "isChace");
 				return param;
 			}
 		};

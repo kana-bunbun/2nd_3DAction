@@ -87,9 +87,7 @@ void UIItemList::OnUpdate(float deltatime, const InputData& inputData)
 	if (input.IsPressed(Input::Action::UseItem)) {
 		// リスト上の消費処理
 		itemList->UseItem(m_selectIndex);
-		// アイテムの
-		ItemData item=itemList->GetItemData(m_selectIndex);
-		ItemManager::GetInstance().CreateFieldItem(item.GetType(), m_pCharacter->GetPosition());
+		m_itemSlots[m_selectIndex]->ConsumeItem(m_pCharacter->GetTransform());
 	}
 
 	printfDx("m_selectIndex : %d\n", m_selectIndex);

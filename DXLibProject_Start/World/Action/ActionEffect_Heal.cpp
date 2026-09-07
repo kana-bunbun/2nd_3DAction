@@ -3,6 +3,7 @@
 #include "../../System/ActionEffectParamManager.h"
 #include"../GameObjectManager.h"
 #include"../Character/Character.h"
+#include"System/EffectManager.h"
 namespace {
 	constexpr float kAlphaMax = 0.5f;
 }
@@ -24,9 +25,7 @@ void ActionEffect_Heal::Init(int paramID)
 
 void ActionEffect_Heal::Draw(const Vector3& position)
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawSphere3D(pos.ToVECTOR(), radius, 10, Color::kGreen, Color::kGreen, TRUE);
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+
 }
 
 void ActionEffect_Heal::Execute(Collision::Shape* collision)

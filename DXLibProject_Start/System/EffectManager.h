@@ -1,6 +1,6 @@
 #pragma once
 #include"pch.h"
-#include"Utility/Vector3.h"
+#include"World/Component/Transform.h"
 class EffectInstance;
 class EffectResourceManager;
 
@@ -11,10 +11,9 @@ class EffectResourceManager;
 class EffectManager
 {
 public:
-
-	EffectManager(EffectResourceManager& resourceManager);
-	std::shared_ptr<EffectInstance>Play(int Id, const Vector3& pos);
-
+	static EffectManager& GetInstance();
+	void Init(EffectResourceManager& resourceManager);
+	std::shared_ptr<EffectInstance>Play(int Id, const Transform* pos);
 	void Update(float deltaTime);
 	void Draw();
 
@@ -23,6 +22,12 @@ public:
 	int GetInstanceCount()const { return m_instances.size(); }
 
 
+private:
+	EffectManager() = default;
+	EffectManager& operator=(const EffectManager&) = delete;
+	EffectManager(const EffectManager&) = delete;
+	EffectManager& operator=(EffectManager&&) = delete;
+	EffectManager(const EffectManager&&) = delete;
 private:
 
 	/// <summary>

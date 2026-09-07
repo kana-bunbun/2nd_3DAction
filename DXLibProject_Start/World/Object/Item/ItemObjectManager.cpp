@@ -34,7 +34,7 @@ void ItemObjectManager::Draw()
 	printfDx("item active num : %d\n", m_items.size());
 }
 
-void ItemObjectManager::SetupItem(ItemObjectBase* item, GameObject* obj)
+void ItemObjectManager::SetupItem(ItemObjectBase* item, const Transform& transform)
 {
-	item->Setup(obj->GetTransform());
+	item->Setup(transform);
 }

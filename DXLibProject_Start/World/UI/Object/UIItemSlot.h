@@ -1,6 +1,9 @@
 #pragma once
+#include"pch.h"
 #include"../Core/UIObject.h"
-#include"../../../World/Object/Item/ItemData.h"
+#include"World/Object/Item/ItemData.h"
+#include"World/Component/Transform.h"
+#include"Utility/Vector3.h"
 class Character;
 class ImageResource;
 /// <summary>
@@ -19,6 +22,10 @@ public:
 	/// 所持アイテムのリストを設定
 	/// </summary>
 	void SetItemData(const ItemData& itemData) { m_itemData= itemData; }
+	/// <summary>
+	/// 所持アイテムの消費
+	/// </summary>
+	void ConsumeItem(const Transform& transform);
 	/// <summary>
 	/// 指定した画像がアイテムスロットに合うようなスケール値を取得
 	/// </summary>

@@ -70,7 +70,7 @@ ModelData* ResourceManager::GetModel(std::string dataName)
 	ModelData* modelData = new ModelData(dataName);
 	// 読み込み失敗していたら不正値を返す
 	if (modelData->GetHandle() ==-1)return nullptr;
-
+	m_modelData.emplace_back(modelData);
 	// モデルハンドルを返す
 	return modelData;
 }

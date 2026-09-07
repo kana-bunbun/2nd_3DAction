@@ -4,6 +4,7 @@
 #include"../../../Camera/Camera.h"
 #include"ItemData.h"
 #include "../../../Utility/Vector3.h"
+#include"ItemObjectManager.h"
 class ItemCursor;
 class ItemObjectField;
 class ItemObjectManager;
@@ -19,7 +20,8 @@ public:
 	void Draw();
 	void CreateFielditemFloor(int createnum);
 	bool CreateFieldItem(const ItemData::Type& type,const Vector3& position);
-
+	template<class T>
+	void CallItem(const Transform& transform);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
 	void SetCameraView(const Camera::CameraView& view) { m_view = view; }
@@ -38,3 +40,8 @@ private:
 	std::vector<ItemObjectField*> m_fieldItems;
 };
 
+template<class T>
+inline void ItemManager::CallItem(const Transform& transform)
+{
+	m_pItemObjectManager->CallItem<T>(transform);
+}

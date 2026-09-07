@@ -4,11 +4,18 @@
 #include"EffectInstance.h"
 #include"EffectResourceManager.h"
 #include"EffectResource.h"
-EffectManager::EffectManager(EffectResourceManager& resourceManager):
-    m_effectResoruceManager(resourceManager)
-{}
 
-std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Vector3 & pos)
+EffectManager& EffectManager::GetInstance()
+{
+    static EffectManager
+}
+
+void EffectManager::Init(EffectResourceManager& resourceManager)
+{
+    m_effectResoruceManager = resourceManager;
+}
+
+std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Transform* transform)
 {
     // 再生するエフェクト素材を取得
     auto resource = m_effectResoruceManager.GetResource(ID);
@@ -19,13 +26,13 @@ std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Vector3 & pos)
     // インスタンスの再生が失敗したら
     if (!instance)return nullptr;
     m_instances.emplace_back(instance);
-    instance->play(pos);
+    instance->Play(transform);
     return instance;
 }
 
 void EffectManager::Update(float deltaTime)
 {
-    UpdateEffekseer3D();
+    UpdateEffekseer3D(deltaTime);
     for (auto& instance : m_instances) {
         instance->Update(deltaTime);
     }

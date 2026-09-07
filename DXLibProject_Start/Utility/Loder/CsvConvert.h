@@ -47,8 +47,8 @@ namespace Data {
 		// bool型に型変換
 		template<>
 		inline bool Convert<bool>(const std::string& str) {
-			if (str == "true" || str == "1")return true;
-			if (str == "false" || str == "0")return false;
+			if (str == "true" || str == "TRUE" || str == "1")return true;
+			if (str == "false" || str == "FALSE" || str == "0")return false;
 
 			assert(false && "comvert<bool> input error");
 

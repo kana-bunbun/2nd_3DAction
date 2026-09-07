@@ -1,8 +1,8 @@
 #include"pch.h"
 #include "EFfectResource.h"
 #include"EffectResourceManager.h"
-EffectResource::EffectResource(int ID,int handle):
-	ID(ID),m_handle(handle)
+EffectResource::EffectResource(int ID,int handle,bool isChace):
+	ID(ID),m_handle(handle),m_isChace(isChace)
 {
 }
 

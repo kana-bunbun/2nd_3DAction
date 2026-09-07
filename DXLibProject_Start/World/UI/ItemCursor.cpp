@@ -195,10 +195,10 @@ void ItemCursor::UseItem()
 	switch (m_slots[m_selectIndex]->GetItemType())
 	{
 	case ItemData::Type::HealBottle:
-		m_pItemObjectManager->CallItem<HealBottle>(pPlayer);
+		m_pItemObjectManager->CallItem<HealBottle>(pPlayer->GetTransform());
 		break;
 	case ItemData::Type::FireBottle:
-		m_pItemObjectManager->CallItem<FireBottle>(pPlayer);
+		m_pItemObjectManager->CallItem<FireBottle>(pPlayer->GetTransform());
 		break;
 	default:
 		return;

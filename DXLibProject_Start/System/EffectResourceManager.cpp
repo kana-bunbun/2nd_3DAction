@@ -5,13 +5,16 @@
 #include"Utility/Loder/CsvLoader.h"
 
 namespace {
-	const char* const kFilePath = "\\Resource\\Effect\\";
+	const char* const kFilePath = "Resource\\Effect\\";
 	const char* const kEfkefc = ".efkefc";
 	const char* const kResourcePath = "EffectPathParam";
 }
 EffectResourceManager::EffectResourceManager()
 {
 	m_effectPathParam = Data::Csv::LoadCsvAs<EffectPathParam>(kResourcePath);
+	for (int i = 0; i < m_effectPathParam.size(); i++) {
+		LoadEffect(m_effectPathParam[i].ID);
+	}
 }
 
 EffectResourceManager::~EffectResourceManager()
@@ -30,7 +33,7 @@ bool EffectResourceManager::LoadEffect(int ID)
 	EffectPathParam param = GetEffectParam(ID);
 	std::string path = kFilePath + param.effectName + kEfkefc;
 	int effectHandle = LoadEffekseerEffect(path.c_str(), param.scale);
-	auto resouce = std::make_shared<EffectResource>(ID, effectHandle);
+	auto resouce = std::make_shared<EffectResource>(ID, effectHandle,param.isChace);
 	m_resources[ID] = resouce;
 	return true;
 }

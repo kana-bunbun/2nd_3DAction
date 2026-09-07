@@ -40,8 +40,6 @@ HealBottle::HealBottle()
 
 HealBottle::~HealBottle()
 {
-	delete m_modelData;
-	m_modelData = nullptr;
 }
 
 void HealBottle::Init()
@@ -81,6 +79,7 @@ void HealBottle::Setup(const Transform& transform)
 	// 垂直方向に飛ばす
 	m_moveVector.y = kThrowPower;
 	m_pInterval->Setup();
+	m_pInterval->SetActive(false);
 	// 発動効果を非アクティイブに
 	//if (!m_actionEffect)return;
 	//m_actionEffect->SetActive(true);

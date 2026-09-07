@@ -83,7 +83,7 @@ void SceneEffekseerTest  ::Init() {
 
 	// エフェクト読み込み
 	m_pEffectResourceManager = std::make_unique<EffectResourceManager>();
-	m_pEffectManager= std::make_unique<EffectManager>(m_pEffectResourceManager);
+	m_pEffectManager= std::make_unique<EffectManager>(*m_pEffectResourceManager);
 }
 
 void SceneEffekseerTest  ::End() {
@@ -119,17 +119,26 @@ std::unique_ptr<SceneBase> SceneEffekseerTest  ::Update(float deltaTime) {
 	printfDx("input isDown DragonCall : %d\n", inputData.IsDown(Input::Action::DragonCall));
 	printfDx("input isDown Dash : %d\n", inputData.IsDown(Input::Action::Dash));
 	printfDx("input isDown Parry : %d\n", inputData.IsDown(Input::Action::Parry));
+	printfDx("effect instanceCount : %d\n", m_pEffectManager->GetInstanceCount());
 
 	// エフェクトの再生処理
-	if (inputData.IsDown(Input::Action::Menu)) {
+	if (inputData.IsPressed(Input::Action::Menu)) {
 		// エフェクトの再生
-		//m_playEffectHandle = PlayEffekseer3DEffect(m_effectHandle);
 		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
-		m_pEffectManager->Play(1,playerTransform.position);
-		//SetPosPlayingEffekseer3DEffect(m_playEffectHandle, playerTransform.position.x, playerTransform.position.y + 100 , playerTransform.position.z);
-		//SetRotationPlayingEffekseer3DEffect(m_playEffectHandle, playerTransform.rotation.x, playerTransform.rotation.y, playerTransform.rotation.z);
-
+		m_pEffectManager->Play(100, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
 	}
+	if (inputData.IsPressed(Input::Action::Decide)) {
+		// エフェクトの再生
+		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
+		m_pEffectManager->Play(10000, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
+	}
+	bool cancel = inputData.IsPressed(Input::Action::Cancel);
+	if (inputData.IsPressed(Input::Action::Cancel)) {
+		// エフェクトの再生
+		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
+		m_pEffectManager->Play(101, &playerTransform);
+	}
+
 	// エフェクトの更新処理
 	m_pEffectManager->Update(deltaTime);
 

@@ -18,11 +18,11 @@ public:
 	void Draw();
 	// アイテム生成
 	template<class T>
-	T* CreateItem(GameObject* obj);
+	T* CreateItem(const Transform& transform);
 	// アイテム呼び出し
 	template<class T>
-	void CallItem(GameObject* obj);
-	void SetupItem(ItemObjectBase* item, GameObject* obj);
+	void CallItem(const Transform& transform);
+	void SetupItem(ItemObjectBase* item, const Transform& transform);
 public:
 	ItemCursor* GetItemCursor() { return m_pItemCursor.get(); }
 	
@@ -34,13 +34,13 @@ private:
 };
 
 template<class T>
-inline T* ItemObjectManager::CreateItem(GameObject* obj)
+inline T* ItemObjectManager::CreateItem(const Transform& transform)
 {
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObjectBase, T>::value, "アイテム生成:アイテムの基底クラスを未継承");
 	// オブジェクト生成
 	auto item = GameObjectManager::GetInstance().CreateObject<T>();
-	SetupItem(item, obj);
+	SetupItem(item, transform);
 
 	// 配列に追加
 	m_items.push_back(item);
@@ -48,7 +48,7 @@ inline T* ItemObjectManager::CreateItem(GameObject* obj)
 }
 
 template<class T>
-inline void ItemObjectManager::CallItem(GameObject* obj)
+inline void ItemObjectManager::CallItem(const Transform& transform)
 {
 	// 継承チェック
 	static_assert(std::is_base_of<ItemObjectBase, T>::value, "アイテム呼び出し:アイテムの基底クラスを未継承");
@@ -62,13 +62,13 @@ inline void ItemObjectManager::CallItem(GameObject* obj)
 		if (!dynamic_cast<T*>(m_items[i])) continue;
 		//if (!std::is_same < T, typeid(item) > ::value)continue;
 		// アイテムのセットアップ
-		m_items[i]->Setup(obj->GetTransform());
+		m_items[i]->Setup(transform);
 		
 		return;
 	}
 
 	// 再利用できるオブジェクトがなければ
-	auto item=CreateItem<T>(obj);
+	auto item=CreateItem<T>(transform);
 
 	return;
 }
