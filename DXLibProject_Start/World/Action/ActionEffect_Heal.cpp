@@ -23,9 +23,13 @@ void ActionEffect_Heal::Init(int paramID)
 	m_param = ActionEffectParamManager::GetInstance().GetEffectParam(paramID);
 }
 
+void ActionEffect_Heal::Start(const Vector3& position)
+{
+}
+
 void ActionEffect_Heal::Draw(const Vector3& position)
 {
-
+	
 }
 
 void ActionEffect_Heal::Execute(Collision::Shape* collision)

@@ -59,10 +59,6 @@ void ItemManager::Update()
 
 void ItemManager::Draw()
 {
-
-	// アイテムスロットの更新処理
-	m_pItemCursor->Draw();
-
 	m_pItemObjectManager->Draw();
 }
 

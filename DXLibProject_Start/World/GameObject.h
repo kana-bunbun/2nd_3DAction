@@ -85,7 +85,8 @@ public:
 	/// </summary>
 	/// <param name="shape"></param>
 	/// <param name="type"></param>
-	void AddCollision(std::unique_ptr<Collision::Shape> shape,CollisionType type);
+	void AddCollision(std::unique_ptr<Collision::Shape> shape,const CollisionType& type);
+	void AddCollision(const CollisionParam& collisionParam, const CollisionType& type);
 	/*void AddCollision(const AddCollisionAABBData& addCollisionData);
 	void AddCollision(const AddCollisionSphereData& addCollisionData);*/
 

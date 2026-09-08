@@ -18,15 +18,21 @@ void ItemObjectBase::IntervalUpdate(float deltaTime)
 	if (!m_pInterval)return;
 	m_pInterval->Update(deltaTime);
 	if (!m_pActionEffect)return;
+	bool isReCount = false;
 	// 効果発動可能なら
 	if (m_pInterval->IsExecute()) {
 		// 効果の発動処理
 		m_pActionEffect->Execute(m_pEffectCollision.get());
-		m_pInterval->ReCount();
+		isReCount = true;
 	}
 	// 発動効果が終了したら
 	if (m_pInterval->IsFinish()) {
 		// 自身を非アクティブに設定
-		SetActive(false);
+		GameObject::SetActive(false);
+		m_pInterval->Finish();
+		m_isEffect = false;
+		isReCount = true;
 	}
+	if (isReCount)
+		m_pInterval->ReCount();
 }

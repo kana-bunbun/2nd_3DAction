@@ -1,9 +1,10 @@
 #include"pch.h"
 #include "FireBottle.h"
 #include "ItemManager.h"
-#include "../../../System/ResourceManager.h"
+#include "System/ResourceManager.h"
 #include"../../GameObjectParam.h"
-#include"../../../System/CollisionDataManager.h"
+#include"System/CollisionDataManager.h"
+#include"System/EffectManager.h"
 namespace {
 	const char* const kModelPath = "FireBottleModel";
 	// 投げる角度のオフセット
@@ -25,12 +26,14 @@ namespace {
 	constexpr int kCollisionID = 200;
 	// エフェクトの当たり判定ID
 	constexpr int kEffectCollisionID = 201;
-
-
+	// 再生するエフェクトのID
+	constexpr int kEffectID = 110;
 }
 FireBottle::FireBottle()
 {
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(param,CollisionType::Body);
 	Init();
 }
 
@@ -64,7 +67,7 @@ void FireBottle::Update(float deltaTime,const InputData& inputData)
 
 	EffectSetup();
 	}
-	if (!true)return;
+	if (!m_isEffect)return;
 	UpdateEffect(deltaTime);
 }
 
@@ -77,7 +80,7 @@ void FireBottle::Draw()
 {
 	printfDx("molotov::CollisionType : %d\n", m_collisions[0].type);
 	printfDx("molotov::TileID : %d\n", GetOnTileID());
-	if (true) {
+	if (m_isEffect) {
 		DrawEffect();
 	}
 	else {
@@ -146,11 +149,15 @@ void FireBottle::Setup(const Transform & transform)
 	m_transform.rotation = m_rotateSpeed;
 	m_effectCount = kEffectMaxCount;
 	m_isActive = true;
+	m_isEffect = false;
 }
 
 void FireBottle::EffectSetup()
 {
 	m_moveVector = Vector3::zero;
+	if(!m_isEffect)
+	EffectManager::GetInstance().Play(kEffectID, &m_transform);
+	m_isEffect = true;
 }
 
 void FireBottle::UpdateObject(float deltaTime)
@@ -186,6 +193,7 @@ void FireBottle::UpdateEffect(float deltaTime)
 		m_effectCount = 0;
 		// 非アクティブ状態にする
 		m_isActive = false;
+		m_isEffect = false;
 	}
 
 

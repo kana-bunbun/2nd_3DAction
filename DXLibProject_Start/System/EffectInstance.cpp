@@ -39,6 +39,11 @@ void EffectInstance::Stop()
 	m_playHandle = -1;
 }
 
+void EffectInstance::SetScale(float scale)
+{
+	SetScalePlayingEffekseer3DEffect(m_resource->GetHandle(), scale, scale, scale);
+}
+
 bool EffectInstance::IsFnished() const
 {
 	if (m_playHandle == -1)return true;

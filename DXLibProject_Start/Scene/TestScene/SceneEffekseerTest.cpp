@@ -12,7 +12,6 @@
 #include "Utility/Loder/JsonLoader.h"
 #include "World/Component/Transform.h"
 #include "World/Component/Collision.h"
-#include "Camera/CameraOld.h"
 #include "Camera/CameraManager.h"
 #include "Camera/FollowCamera.h"
 #include "Camera/DebugCamera.h"
@@ -61,10 +60,7 @@ namespace {
 }
 
 SceneEffekseerTest  ::SceneEffekseerTest  () :
-	m_pScreenManager(nullptr),
-	m_pEffectResourceManager(nullptr),
-	m_pEffectManager(nullptr)
-
+	m_pScreenManager(nullptr)
 {
 	m_pScreenManager = std::make_unique<ScreenManager>();
 	m_pScreenManager->PushScreen(std::make_unique<MainScreen>());
@@ -80,10 +76,7 @@ void SceneEffekseerTest  ::Init() {
 
 	// フェード処理開始
 	SceneBase::StartFadeIn();
-
-	// エフェクト読み込み
-	m_pEffectResourceManager = std::make_unique<EffectResourceManager>();
-	m_pEffectManager= std::make_unique<EffectManager>(*m_pEffectResourceManager);
+	EffectManager::GetInstance();
 }
 
 void SceneEffekseerTest  ::End() {
@@ -92,8 +85,7 @@ void SceneEffekseerTest  ::End() {
 	GameObjectManager::GetInstance().End();
 	ItemManager::GetInstance().End();
 
-	m_pEffectResourceManager->Clear();
-	m_pEffectManager->Clear();
+	EffectManager::GetInstance().Clear();
 }
 
 std::unique_ptr<SceneBase> SceneEffekseerTest  ::Update(float deltaTime) {
@@ -119,28 +111,28 @@ std::unique_ptr<SceneBase> SceneEffekseerTest  ::Update(float deltaTime) {
 	printfDx("input isDown DragonCall : %d\n", inputData.IsDown(Input::Action::DragonCall));
 	printfDx("input isDown Dash : %d\n", inputData.IsDown(Input::Action::Dash));
 	printfDx("input isDown Parry : %d\n", inputData.IsDown(Input::Action::Parry));
-	printfDx("effect instanceCount : %d\n", m_pEffectManager->GetInstanceCount());
+	printfDx("effect instanceCount : %d\n", EffectManager::GetInstance().GetInstanceCount());
 
 	// エフェクトの再生処理
 	if (inputData.IsPressed(Input::Action::Menu)) {
 		// エフェクトの再生
 		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
-		m_pEffectManager->Play(100, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
+		EffectManager::GetInstance().Play(100, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
 	}
 	if (inputData.IsPressed(Input::Action::Decide)) {
 		// エフェクトの再生
 		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
-		m_pEffectManager->Play(10000, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
+		EffectManager::GetInstance().Play(10000, &CharacterManager::GetInstance().GetPlayer()->GetTransform());
 	}
 	bool cancel = inputData.IsPressed(Input::Action::Cancel);
 	if (inputData.IsPressed(Input::Action::Cancel)) {
 		// エフェクトの再生
 		Transform playerTransform = CharacterManager::GetInstance().GetPlayer()->GetTransform();
-		m_pEffectManager->Play(101, &playerTransform);
+		EffectManager::GetInstance().Play(110, &playerTransform);
 	}
 
 	// エフェクトの更新処理
-	m_pEffectManager->Update(deltaTime);
+	EffectManager::GetInstance().Update(deltaTime);
 
 	ItemManager::GetInstance().Update();
 	return nullptr;
@@ -158,7 +150,11 @@ void SceneEffekseerTest  ::Draw() {
 	printfDx("LeftThumb :  angle : %f\n", inputRadian * MyMath::ToDegree);
 	printfDx("LeftThumb :  ratio : %f\n", inputData.GetInputRatio(Input::Action::Move));
 
-	m_pEffectManager->Draw();
+	EffectManager::GetInstance().Draw();
+
+	printfDx("LoadedEffectNum : %d\n", EffectManager::GetInstance().GetLoadedCound());
+	printfDx("nstanceEffectNum : %d\n", EffectManager::GetInstance().GetInstanceCount());
+
 }
 
 void SceneEffekseerTest ::DrawGround()

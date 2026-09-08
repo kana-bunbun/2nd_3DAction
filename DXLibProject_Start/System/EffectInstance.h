@@ -25,6 +25,7 @@ public:
 	bool Play(const Transform* transform);
 	void Update(float deltaTime);
 	void Stop();
+	void SetScale(float scale);
 	/// <summary>
 	/// 再生終了しているかどうかチェック
 	/// </summary>

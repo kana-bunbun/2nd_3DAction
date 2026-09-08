@@ -1,6 +1,7 @@
 #pragma once
 #include"pch.h"
 #include"World/Component/Transform.h"
+
 class EffectInstance;
 class EffectResourceManager;
 
@@ -12,18 +13,18 @@ class EffectManager
 {
 public:
 	static EffectManager& GetInstance();
-	void Init(EffectResourceManager& resourceManager);
-	std::shared_ptr<EffectInstance>Play(int Id, const Transform* pos);
+	void Init();
+	std::shared_ptr<EffectInstance>Play(int ID, const Transform* transform,float scale=1.0f);
 	void Update(float deltaTime);
 	void Draw();
-
+	void End();
 	void Clear();
 
 	int GetInstanceCount()const { return m_instances.size(); }
-
+	int GetLoadedCound()const;
 
 private:
-	EffectManager() = default;
+	EffectManager();
 	EffectManager& operator=(const EffectManager&) = delete;
 	EffectManager(const EffectManager&) = delete;
 	EffectManager& operator=(EffectManager&&) = delete;
@@ -35,7 +36,7 @@ private:
 	/// このクラスでは絶対に使用するので参照で持つ
 	/// 注意点としては、後から差し替えることが面倒・依存度が上がる
 	/// </summary>
-	EffectResourceManager& m_effectResoruceManager;
+	std::unique_ptr<EffectResourceManager>m_pEffectResourceManager;
 
 	/// <summary>
 	/// 管理しているインスタンス

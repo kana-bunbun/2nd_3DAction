@@ -75,7 +75,4 @@ private:
 	/// Cameraクラスのポインタ
 	/// </summary>
 	std::unique_ptr<ScreenManager> m_pScreenManager;
-
-	std::unique_ptr<EffectResourceManager>m_pEffectResourceManager;
-	std::unique_ptr<EffectManager>m_pEffectManager;
 };

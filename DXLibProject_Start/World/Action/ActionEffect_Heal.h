@@ -7,6 +7,7 @@ public:
 	~ActionEffect_Heal();
 
 	void Init(int paramID)override;
+	void Start(const Vector3& position)override;
 	void Draw(const Vector3& position)override;
 	void Reset();
 	void Execute(Collision::Shape* collision)override;

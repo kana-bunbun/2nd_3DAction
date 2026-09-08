@@ -80,11 +80,28 @@ void GameObject::UpdateHitData()
 	}
 }
 
-void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, CollisionType type)
+void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, const CollisionType& type)
 {
 	assert(shape && "GameCbject::AddCOllision : shape null");
 
-	m_collisions.push_back({ std::move(shape),type });
+	m_collisions.emplace_back( std::move(shape),type );
+}
+
+void GameObject::AddCollision(const CollisionParam& collisionParam, const CollisionType& type)
+{
+	switch (collisionParam.shapeType)
+	{
+	case CollisionShape::AABB:
+		m_collisions.emplace_back(std::make_unique<Collision::AABB>(collisionParam.position, collisionParam.size),type);
+		return;
+	case CollisionShape::Sphere:
+		m_collisions.emplace_back(std::make_unique<Collision::Sphere>(collisionParam.position, collisionParam.radius), type);
+		return;
+	default:
+		break;
+	}
+	assert(false && "AddCollison CollisionType InvalidValue");
+	return;
 }
 //
 //void GameObject::AddCollision(const AddCollisionAABBData& addCollisionData)

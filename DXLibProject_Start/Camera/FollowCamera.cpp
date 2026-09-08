@@ -141,8 +141,8 @@ void FollowCamera::UpdatePosition(float deltaTime)
     cameraPos += m_target->position;
     cameraPos = (cameraPos + rotate);
 
-    m_view.transform.position = cameraPos;
-    m_view.transform.rotation = m_transform.rotation;
+    m_view.transform.position= cameraPos;
+    //m_view.transform.rotation = m_transform.rotation;
     m_view.target = m_target->position;
     m_view.target += m_param.offsetPos;
     m_transform.position = cameraPos;
@@ -155,5 +155,7 @@ void FollowCamera::UpdatePosition(float deltaTime)
 
     printfDx("FollowCamera rotate.y : %f\n", m_transform.rotation.y);
     printfDx("FollowCamera  angle.y : %f\n", m_transform.rotation.y * MyMath::ToDegree);
-
+    Vector3 dd = m_view.target - m_view.transform.position;
+    printfDx("FollowCamera dd.x %f | dd.y %f | dd.z %f  : %f\n", dd.x, dd.y, dd.z);
+    
 }

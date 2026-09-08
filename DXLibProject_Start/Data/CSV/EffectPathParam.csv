@@ -1,4 +1,4 @@
 ID,comment,effectName,scale,isChace
 100,回復ボトルのエフェクト,HealBottleEffect,100,FALSE
-101,火炎ボトルのエフェクト,FireBottleEffect ,100,FALSE
+110,火炎ボトルのエフェクト,FireBottleEffect ,100,FALSE
 10000,テスト,Laser01,20,TRUE

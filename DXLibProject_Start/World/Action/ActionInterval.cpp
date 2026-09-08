@@ -60,10 +60,6 @@ void ActionInterval::UpdateCount(float deltaTime)
 	// 最大カウントが不正値の時処理を抜ける
 	if (m_param.maxSecond <= 0)return;
 
-	// 効果全体のカウントが一定値を超えたら
-	if (m_effectCount >= m_param.maxSecond) {
-		Finish();
-	}
 }
 
 void ActionInterval::ReCount()

@@ -2,7 +2,6 @@
 #include "Player.h"
 #include"../../../Data/ModelPathParam.h"
 #include"../Animation.h"
-#include"../../../Camera/CameraOld.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"

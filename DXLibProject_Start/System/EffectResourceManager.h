@@ -10,7 +10,10 @@ public:
 
 	EffectResourceManager();
 	~EffectResourceManager();
-
+	/// <summary>
+	/// エフェクトをすべて読み込む
+	/// </summary>
+	void Init();
 	/// <summary>
 	/// エフェクトの読み込み
 	/// </summary>

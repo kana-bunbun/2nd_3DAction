@@ -68,5 +68,9 @@ protected:
 	/// 発動効果の当たり判定
 	/// </summary>
 	std::unique_ptr<Collision::Shape>m_pEffectCollision;
+	/// <summary>
+	/// 効果発動中かどうか
+	/// </summary>
+	bool m_isEffect;
 };
 

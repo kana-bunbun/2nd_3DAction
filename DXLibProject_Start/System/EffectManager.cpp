@@ -7,18 +7,27 @@
 
 EffectManager& EffectManager::GetInstance()
 {
-    static EffectManager
+    static EffectManager instance;
+    return instance;
 }
-
-void EffectManager::Init(EffectResourceManager& resourceManager)
+EffectManager::EffectManager()
 {
-    m_effectResoruceManager = resourceManager;
+    Init();
 }
 
-std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Transform* transform)
+void EffectManager::Init()
+{
+    if (!m_pEffectResourceManager) {
+        m_pEffectResourceManager = std::make_unique<EffectResourceManager>();
+    }
+
+    m_pEffectResourceManager->Init();
+}
+
+std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Transform* transform, float scale)
 {
     // 再生するエフェクト素材を取得
-    auto resource = m_effectResoruceManager.GetResource(ID);
+    auto resource = m_pEffectResourceManager->GetResource(ID);
         // 素材がなければnullptr
 
     if (!resource)return nullptr;
@@ -27,6 +36,7 @@ std::shared_ptr<EffectInstance> EffectManager::Play(int ID, const Transform* tra
     if (!instance)return nullptr;
     m_instances.emplace_back(instance);
     instance->Play(transform);
+    instance->SetScale(scale);
     return instance;
 }
 
@@ -49,6 +59,11 @@ void EffectManager::Draw()
     DrawEffekseer3D();
 }
 
+void EffectManager::End()
+{
+    Clear();
+}
+
 void EffectManager::Clear()
 {
     // すべてのエフェクト停止
@@ -56,3 +71,9 @@ void EffectManager::Clear()
         instance->Stop();
     }
 }
+
+int EffectManager::GetLoadedCound() const
+{
+    return m_pEffectResourceManager->GetLoadCount();
+}
+

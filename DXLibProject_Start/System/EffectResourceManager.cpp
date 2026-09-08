@@ -11,14 +11,19 @@ namespace {
 }
 EffectResourceManager::EffectResourceManager()
 {
-	m_effectPathParam = Data::Csv::LoadCsvAs<EffectPathParam>(kResourcePath);
-	for (int i = 0; i < m_effectPathParam.size(); i++) {
-		LoadEffect(m_effectPathParam[i].ID);
-	}
+	
 }
 
 EffectResourceManager::~EffectResourceManager()
 {
+}
+
+void EffectResourceManager::Init()
+{
+	m_effectPathParam = Data::Csv::LoadCsvAs<EffectPathParam>(kResourcePath);
+	for (int i = 0; i < m_effectPathParam.size(); i++) {
+		LoadEffect(m_effectPathParam[i].ID);
+	}
 }
 
 bool EffectResourceManager::LoadEffect(int ID)

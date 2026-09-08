@@ -11,6 +11,7 @@
 #include "Camera/DebugCamera.h"
 #include "Utility/Loder/FromCsv.h"
 #include "Utility/Loder/CsvLoader.h"
+#include "World/Object/Item/ItemManager.h"
 #include "World/Map/TileManager.h"
 #include "World/UI/Group/UIItemList.h"
 namespace {
@@ -76,6 +77,7 @@ void MainScreen::Update(float deltaTime, const InputData & inputData)
 	m_pCameraMgr->Update(deltaTime,inputData);
 	// カメラの状態をプレイヤーに渡す
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
+	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	// マップの更新処理
 	m_pTileManager->Update(deltaTime, inputData);
 	// オブジェクトの更新処理
@@ -94,7 +96,7 @@ void MainScreen::Draw()
 
 	// ゲームオブジェクトの描画処理
 	GameObjectManager::GetInstance().Draw();
-
+	ItemManager::GetInstance().Draw();
 	// マップの描画処理
 	m_pTileManager->Draw();
 	m_pUiItemList->Draw();

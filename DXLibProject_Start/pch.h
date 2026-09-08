@@ -1,6 +1,8 @@
 #pragma once
 #include<DxLib.h>
 #include<EffekseerForDXLib.h>
+#include<imgui.h>
+
 #include"Utility/Loder/json.hpp"
 
 #include<math.h>

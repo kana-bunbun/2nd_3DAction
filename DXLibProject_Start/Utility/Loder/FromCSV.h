@@ -112,7 +112,7 @@ namespace Data {
 			static CollisionParam Binding(const Csv::Row& row) {
 				CollisionParam param;
 				param.ID = Get<int>(row, "ID");
-				param.shapeType= static_cast<CollisionShape>(Get<int>(row, "RangeType"));
+				param.shapeType= Get<CollisionShape>(row, "RangeType");
 				switch (param.shapeType) {
 				case CollisionShape::Sphere:
 					Sphere(param, row);
@@ -120,6 +120,8 @@ namespace Data {
 				case CollisionShape::AABB:
 					AABB(param, row);
 					break;
+				default:
+					assert(0 && "Convert CollisionParam CollisionShape Key not Found");
 				}
 
 				return param;

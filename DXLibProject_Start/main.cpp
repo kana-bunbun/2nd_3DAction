@@ -15,6 +15,8 @@
 #include"System/CollisionDataManager.h"
 #include"System/ImageManager.h"
 #include"System/ResourceManager.h"
+#include"System/EffectManager.h"
+#include"System/ImguiManager.h"
 #include"Input/InputManager.h"
 #include"Input/InputConst.h"
 // 追加のインクルードディレクトリ
@@ -75,6 +77,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// シーンの初期化
 	pSceneMgr->Init();
 
+	// ImGuiを生成
+	auto pImGuiManager = std::make_unique<ImguiManager>();
+	pImGuiManager->Init();
+
 	// 描画先を裏面にセット
 	SetDrawScreen(DX_SCREEN_BACK);
 	// メインループ
@@ -88,7 +94,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 入力更新
 		InputManager::Update(deltaTime);
 		
-
+		pImGuiManager->BeginFrame();
 
 		pSceneMgr->Update(deltaTime);
 		
@@ -110,6 +116,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			std::string recordDesc = recordName + " : " + recordMs + "ms";
 			DrawString(500, count * 20, recordDesc.c_str(), Color::kRed);
 		}
+		pImGuiManager->EndFrame();
+		ImGui::Begin("Test");
+		ImGui::End();
 
 		// 描画先を切り替える
 		ScreenFlip();
@@ -119,6 +128,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImageManager::GetInstance().End();
 	CollisionDataManager::GetInstance().End();
 	ActionEffectParamManager::GetInstance().End();
+	EffectManager::GetInstance().End();
+	pImGuiManager->Release();
+
 	pSceneMgr->End();
 	Effkseer_End();
 	DxLib_End();				// DXライブラリの終了処理

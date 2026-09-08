@@ -1,13 +1,15 @@
 #include"pch.h"
 #include "HealBottle.h"
-#include "../../../System/ResourceManager.h"
-#include "../../../System/CollisionDataManager.h"
-#include"../../../Utility/MyRandom.h"
+#include"System/ResourceManager.h"
+#include"System/CollisionDataManager.h"
+#include"Utility/MyRandom.h"
 #include"../../GameObjectManager.h"
-#include"../../../World/Action/ActionEffect_Heal.h"
-#include"../../../System/ActionEffectParamManager.h"
-#include"../../../System/ActionParamManager.h"
-#include"../../../System/ActionIntervalParamManager.h"
+#include"World/Action/ActionEffect_Heal.h"
+#include"System/ActionEffectParamManager.h"
+#include"System/ActionParamManager.h"
+#include"System/ActionIntervalParamManager.h"
+#include"World/Action/ActionInterval.h"
+#include"System/EffectManager.h"
 namespace {
 	const char* const kModelPath = "HealBottleModel";
 
@@ -15,14 +17,17 @@ namespace {
 	constexpr float kThrowPower=1200.0f;
 	// 落下速度
 	constexpr float kFallSpeed = kThrowPower *2.5f;
-
-	// アイテム自身の当たり判定
+	// 自身の当たり判定ID
 	constexpr int kCollisionID = 100;
+	// 回復エフェクトのID
+	constexpr int kPlayEffectID = 100;
+
 	// 透明度の最大値
 	constexpr float kAlphaMax = 0.5f;
 	// 回復効果のID
 	constexpr int kEffectID = 0;
-
+	// 効果発動インターバルのID
+	constexpr int kActionIntervalID = 1;
 }
 
 HealBottle::HealBottle()
@@ -32,10 +37,6 @@ HealBottle::HealBottle()
 	// モデルデータの取得
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
 	Init();
-	// 本体の当たり判定の追加
-	CollisionParam param= CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius), CollisionType::Body);
-
 }
 
 HealBottle::~HealBottle()
@@ -60,6 +61,12 @@ void HealBottle::InitParameter()
 	// 効果の発動インターバルパラメータ追加
 	m_pInterval = std::make_unique<ActionInterval>();
 	m_pInterval->Init(m_actionParam.intervalID);
+
+	// 本体の当たり判定の追加
+	CollisionParam param= CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	CollisionParam effectParam= CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
+	AddCollision(param,CollisionType::Body);
+	AddCollision(effectParam, CollisionType::Heal);
 }
 
 void HealBottle::End()
@@ -71,6 +78,7 @@ void HealBottle::Setup(const Transform& transform)
 {
 	// 自身をアクティブに
 	m_isActive = true;
+	m_isEffect = false;
 	// ランダムな回転速度を取得
 	RandomRotate();
 	m_transform.rotation = m_rotateSpeed;
@@ -80,6 +88,7 @@ void HealBottle::Setup(const Transform& transform)
 	m_moveVector.y = kThrowPower;
 	m_pInterval->Setup();
 	m_pInterval->SetActive(false);
+
 	// 発動効果を非アクティイブに
 	//if (!m_actionEffect)return;
 	//m_actionEffect->SetActive(true);
@@ -89,14 +98,13 @@ void HealBottle::Update(float deltaTime,const InputData& inputData)
 {
 	IntervalUpdate(deltaTime);
 	UpdateObject(deltaTime);
-	m_pEffectCollision->SetPosition(m_transform.position);
+	//m_pEffectCollision->SetPosition(m_transform.position);
 
 }
 
 void HealBottle::Draw()
 {
 	DrawModel();
-	m_pActionEffect->Draw(m_transform.position);
 }
 
 void HealBottle::DrawModel()
@@ -130,6 +138,12 @@ void HealBottle::EffectSetup()
 {
 	// 座標設定
 	m_pEffectCollision->SetPosition(m_transform.position);
+	// 効果発動開始直後にエフェクト再生
+	if (!m_isEffect&&m_isActive) {
+		EffectManager::GetInstance().Play(kPlayEffectID, &m_transform);
+	}
+
+	m_isEffect = true;
 	// インターバルをアクティブに設定
 	m_pInterval->SetActive(true);
 }

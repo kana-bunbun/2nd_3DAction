@@ -152,6 +152,15 @@ namespace Data {
 			return static_cast<Input::Device>(stoi(str));
 
 		}
+		template<>
+		inline CollisionShape Convert<CollisionShape>(const std::string& str) {
+			if (str == "AABB")return CollisionShape::AABB;
+			if (str == "Sphere")return CollisionShape::Sphere;
+
+			assert(0 && "Convert CollisionType Key not Found");
+			return CollisionShape::Invalid;
+
+		}
 	
 	}
 
