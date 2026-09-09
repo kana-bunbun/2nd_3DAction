@@ -32,12 +32,11 @@ public:
 	/// <summary>
 	/// グラフィックハンドルを取得する関数
 	/// </summary>
-	GraphData* GetGraph(std::string dataName);
+	GraphData* GetGraph(const std::string& dataName);
 	/// <summary>
 	/// モデルハンドルのみを取得する関数
 	/// </summary>
-	ModelData* GetModel(std::string dataName);
-	
+	ModelData* GetModel(const std::string& dataName);
 
 private:
 

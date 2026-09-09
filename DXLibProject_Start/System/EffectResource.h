@@ -1,9 +1,10 @@
 #pragma once
 #include<string>
+#include"Data/EffectPathParam.h"
 class EffectResource
 {
 public:
-	EffectResource(int ID, int handle, bool isChace);
+	EffectResource(const EffectPathParam& param);
 	~EffectResource();
 
 	// 素材をコピーされることを防ぐ
@@ -15,10 +16,14 @@ public:
 	bool Load();
 	bool IsLoaded()const { return m_handle != -1; }
 	int GetHandle()const { return m_handle; }
-	int GetID()const { return ID; }
+	int GetID()const { return m_ID; }
 	bool GetIsChace()const { return m_isChace; }
 public:
-	int ID;
+	int m_ID;
+	/// <summary>
+	/// エフェクトのパラメータ
+	/// </summary>
+	EffectPathParam m_param;
 	/// <summary>
 	/// エフェクトハンドル
 	/// </summary>

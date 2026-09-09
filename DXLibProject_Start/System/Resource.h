@@ -6,14 +6,16 @@ public:
 	Resource() = default;
 	~Resource() = default;
 public:
-	int GetHandle() { return m_handle; }
-	std::string GetName() { return m_name; }
+	int GetHandle()const { return m_handle; }
+	std::string GetName()const { return m_name; }
+	int GetID()const { return m_ID; }
 private:
 	virtual void Load(std::string path) = 0;
 	virtual void Delete() = 0;
 protected:
 	int m_handle;			// データのハンドル
 	std::string m_name;	// データ名
+	int m_ID = -1;
 };
 
 class ModelData :public Resource {			// モデルのデータ

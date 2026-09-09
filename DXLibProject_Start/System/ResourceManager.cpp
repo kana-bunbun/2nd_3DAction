@@ -31,7 +31,7 @@ ResourceManager& ResourceManager::GetInstance()
 
 }
 
-GraphData* ResourceManager::GetGraph(std::string dataName)
+GraphData* ResourceManager::GetGraph(const std::string& dataName)
 {
 	// 総当たりして同じ名前の画像を探す
 	for (auto& graphData : m_graphData) {
@@ -54,7 +54,7 @@ GraphData* ResourceManager::GetGraph(std::string dataName)
 	return graphData;
 }
 
-ModelData* ResourceManager::GetModel(std::string dataName)
+ModelData* ResourceManager::GetModel(const std::string& dataName)
 {
 	// 総当たりして同じ名前のデータを探す
 	for (auto& model : m_modelData) {
