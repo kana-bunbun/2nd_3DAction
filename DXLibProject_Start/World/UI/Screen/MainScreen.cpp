@@ -100,4 +100,8 @@ void MainScreen::Draw()
 	// マップの描画処理
 	m_pTileManager->Draw();
 	m_pUiItemList->Draw();
+
+	ImGui::Begin("Test");
+	ImGui::Text("sdfhs");
+	ImGui::End();
 }

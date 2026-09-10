@@ -21,10 +21,10 @@ ModelData::~ModelData()
 	Delete();
 }
 
-ModelData* ModelData::Duplicate()
+std::unique_ptr<ModelData> ModelData::Duplicate()
 {
 	if (m_handle==-1)return nullptr;
-	ModelData* modelData = new ModelData(m_name);
+	std::unique_ptr<ModelData> modelData = std::make_unique<ModelData>(m_name);
 	modelData->m_name = m_name;
 	modelData->m_handle = MV1DuplicateModel(m_handle);
 	for (int i = 0; i < m_animHandle.size(); i++) {
@@ -52,7 +52,7 @@ void ModelData::Delete()
 		m_animHandle[i] = kHandleInvalidValue;
 	}
 	m_handle = kHandleInvalidValue;
-	m_name = "";
+	//m_name = "";
 }
 
 GraphData::GraphData(std::string path)

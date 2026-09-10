@@ -35,8 +35,8 @@ private:
 	Transform m_markPos;
 	int m_cursorHandle;
 	std::vector<TileObject*> m_pTiles;
-	ModelData* m_floorModel;
-	ModelData* m_wallmodel;
+	std::unique_ptr<ModelData> m_floorModel;
+	std::unique_ptr<ModelData> m_wallmodel;
 	Stair* m_pStair;
 	// 階段を登れるかどうか
 	bool m_upStair;

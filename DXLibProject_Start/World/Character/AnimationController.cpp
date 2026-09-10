@@ -99,15 +99,6 @@ void AnimationController::Update(float deltaTime)
 	MV1SetAttachAnimTime(m_modelData->GetHandle(), m_attachIndex, m_playCount);
 }
 
-AnimationController AnimationController::Duplicate()
-{
-	AnimationController duplicate;
-
-	duplicate.m_modelData = m_modelData->Duplicate();
-
-	return duplicate;
-}
-
 void AnimationController::Debug()
 {
 	printfDx("animation |    modeel   : %d\n", m_modelData->GetHandle());

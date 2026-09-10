@@ -91,7 +91,7 @@ private:
 private:
 
 	/// <summary>
-	/// Cameraクラスのポインタ
+	/// スクリーンクラスのポインタ
 	/// </summary>
 	std::unique_ptr<ScreenManager> m_pScreenManager;
 

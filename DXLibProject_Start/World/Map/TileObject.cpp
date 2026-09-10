@@ -63,11 +63,11 @@ void TileObject::Draw()
 	// 階段マスなら描画しない
 	if (m_isStair)return;
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelData->GetHandle() != -1) {
+	if (m_floorModelData->GetHandle() != -1) {
 		Vector3 pos = m_transform.position + kModelOffset;
-	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelData->GetHandle(), pos.ToVECTOR());
-	MV1DrawModel(m_modelData->GetHandle());
+	MV1SetRotationXYZ(m_floorModelData->GetHandle(), m_transform.rotation.ToVECTOR());
+	MV1SetPosition(m_floorModelData->GetHandle(), pos.ToVECTOR());
+	MV1DrawModel(m_floorModelData->GetHandle());
 	}
 
 	// 壁マスでなければ処理しない
@@ -84,11 +84,11 @@ void TileObject::Draw()
 
 void TileObject::SetFloorModel(ModelData* modelData)
 {
-	m_modelData = modelData;
-	MV1SetScale(m_modelData->GetHandle(), kFloorSize.ToVECTOR());
+	m_floorModelData = modelData;
+	MV1SetScale(m_floorModelData->GetHandle(), kFloorSize.ToVECTOR());
 	// 読み込んだ値を元にエミッシブカラーを設定
 	COLOR_F color = { 0.1f,0.1f,0.1f,1.0f };
-	MV1SetMaterialEmiColor(m_modelData->GetHandle(), 0, color);
+	MV1SetMaterialEmiColor(m_floorModelData->GetHandle(), 0, color);
 }
 
 

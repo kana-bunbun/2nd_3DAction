@@ -32,7 +32,7 @@ void GameObject::UpdateCollision()
 void GameObject::Draw()
 {
 	// モデルが読み込まれているかどうかチェック
-	if (m_modelData->GetHandle() == -1)return;
+	if (!m_modelData||m_modelData->GetHandle() == -1)return;
 	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
 	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
 	MV1DrawModel(m_modelData->GetHandle());

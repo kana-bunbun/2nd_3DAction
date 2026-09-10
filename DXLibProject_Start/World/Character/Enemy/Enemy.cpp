@@ -108,7 +108,7 @@ void Enemy::LoadModel()
 	}
 	// アニメーション初期化
 	MV1SetScale(m_modelData->GetHandle(), kModelSize.ToVECTOR());
-	m_animation.Init(m_modelData);
+	m_animation.Init(m_modelData.get());
 
 	m_status = Status::Queen::Neutral;
 	// アニメーション再生

@@ -171,6 +171,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ModelResource.cpp" />
+    <ClCompile Include="Scene\TestScene\SceneStageBuild.cpp" />
+    <ClCompile Include="World\UI\Screen\StageBuildScreen.cpp" />
+    <ClCompile Include="World\Object\StagePart.cpp" />
+    <ClCompile Include="Stage\StageSpawner.cpp" />
+    <ClCompile Include="Stage\StagePartDatabase.cpp" />
     <ClCompile Include="System\ImguiManager.cpp" />
     <ClCompile Include="Input\ActionInputState.cpp" />
     <ClCompile Include="Input\InputData.cpp" />
@@ -336,6 +341,13 @@
     <ClInclude Include="Data\GraphPathParam.h" />
     <ClInclude Include="Data\ActionKeyParam.h" />
     <ClInclude Include="ModelResource.h" />
+    <ClInclude Include="Stage\StageData.h" />
+    <ClInclude Include="World\UI\Screen\StageBuildScreen.h" />
+    <ClInclude Include="World\Object\StagePart.h" />
+    <ClInclude Include="Stage\StageSpawner.h" />
+    <ClInclude Include="Stage\PartData.h" />
+    <ClInclude Include="Scene\TestScene\SceneStageBuild.h" />
+    <ClInclude Include="Stage\StagePartDatabase.h" />
     <ClInclude Include="System\ImguiManager.h" />
     <ClInclude Include="Input\ActionInputState.h" />
     <ClInclude Include="Input\InputData.h" />

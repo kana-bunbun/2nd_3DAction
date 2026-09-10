@@ -89,11 +89,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		clsDx();				// デバッグ文字の初期化
 		
 		Profiler::BeginFrame();
+		
 		TimeManager::Update();
 		float deltaTime = TimeManager::GetDeltaTime();
 		// 入力更新
 		InputManager::Update(deltaTime);
-		
 		pImGuiManager->BeginFrame();
 
 		pSceneMgr->Update(deltaTime);
@@ -116,9 +116,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			std::string recordDesc = recordName + " : " + recordMs + "ms";
 			DrawString(500, count * 20, recordDesc.c_str(), Color::kRed);
 		}
+
 		pImGuiManager->EndFrame();
-		ImGui::Begin("Test");
-		ImGui::End();
 
 		// 描画先を切り替える
 		ScreenFlip();

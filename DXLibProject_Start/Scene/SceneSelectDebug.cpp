@@ -10,6 +10,7 @@
 #include"TestScene/SceneTextTest.h"
 #include"TestScene/SceneInGameUITest.h"
 #include"TestScene/SceneEffekseerTest.h"
+#include"TestScene/SceneStageBuild.h"
 
 #include<functional>
 
@@ -82,6 +83,7 @@ void SceneSelectDebug::Init()
     m_sceneList.push_back({ "Text", []() {return std::make_unique<SceneTextTest>(); } });
     m_sceneList.push_back({ "InGameUI", []() {return std::make_unique<SceneInGameUITest>(); } });
     m_sceneList.push_back({ "EffekseerTest", []() {return std::make_unique<SceneEffekseerTest>(); } });
+    m_sceneList.push_back({ "StageBuild", []() {return std::make_unique<SceneStageBuild>(); } });
 
 }
 

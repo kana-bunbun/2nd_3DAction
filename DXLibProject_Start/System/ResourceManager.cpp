@@ -11,11 +11,11 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::End()
 {
-	for (size_t i = 0; i < m_modelData.size(); i++) {
-		if (!m_modelData[i])continue;
-		delete m_modelData[i];
-		m_modelData[i] = nullptr;
-	}
+	//for (size_t i = 0; i < m_modelData.size(); i++) {
+	//	if (!m_modelData[i])continue;
+	//	delete m_modelData[i];
+	//	m_modelData[i] = nullptr;
+	//}
 
 	for (size_t i = 0; i < m_graphData.size(); i++) {
 		if (!m_graphData[i])continue;
@@ -54,23 +54,24 @@ GraphData* ResourceManager::GetGraph(const std::string& dataName)
 	return graphData;
 }
 
-ModelData* ResourceManager::GetModel(const std::string& dataName)
+std::unique_ptr<ModelData> ResourceManager::GetModel(const std::string& dataName)
 {
 	// 総当たりして同じ名前のデータを探す
 	for (auto& model : m_modelData) {
 		if (model->GetName() != dataName)continue;
-		m_DuplicateList.emplace_back(model->Duplicate());
-		// モデルハンドルを複製して返す
-		return m_DuplicateList[m_DuplicateList.size() - 1];
+		// 同じ名前のデータがあれば複製する
+		std::unique_ptr<ModelData> dupricate = model->Duplicate();
+		m_DuplicateList.emplace_back(dupricate.get());
+		return dupricate;
 	}
 
 	// 以下の処理は読み込んでいない判定
 	// パスを作成
 	// パスをもとにモデル読み込み
-	ModelData* modelData = new ModelData(dataName);
+	std::unique_ptr<ModelData> modelData = std::make_unique<ModelData>(dataName);
 	// 読み込み失敗していたら不正値を返す
 	if (modelData->GetHandle() ==-1)return nullptr;
-	m_modelData.emplace_back(modelData);
+	m_modelData.emplace_back(modelData.get());
 	// モデルハンドルを返す
 	return modelData;
 }

@@ -99,7 +99,7 @@ Dragon::Dragon():
 	Vector3 modelScale{ kModelScale ,kModelScale ,kModelScale };
 	MV1SetScale(m_modelData->GetHandle(), modelScale.ToVECTOR());
 	// アニメーション初期化
-	m_animation.Init(m_modelData);
+	m_animation.Init(m_modelData.get());
 
 	m_move.SetTransform(m_transform);
 	// 角度の補間速度を設定

@@ -104,6 +104,8 @@ public:
 	/// <returns></returns>
 	virtual bool IsTransparent() { return false; }
 	virtual bool IsDead() { return false; }
+	void SetModelData(std::unique_ptr<ModelData> modelData) { m_modelData = std::move(modelData); }
+	void SetTransform(const Transform& transform) { m_transform = transform; }
 protected:
 	bool IsCollisionEnter(Collision::Shape* collision);
 
@@ -120,7 +122,7 @@ protected:
 	/// <summary>
 	/// モデルハンドル
 	/// </summary>
-	ModelData* m_modelData;
+	std::unique_ptr<ModelData> m_modelData;
 
 	/// <summary>
 	/// 当たり判定

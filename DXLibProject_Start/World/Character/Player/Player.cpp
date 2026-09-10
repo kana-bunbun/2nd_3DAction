@@ -154,7 +154,7 @@ Player::~Player()
 void Player::Init()
 {
 	// アニメーションの初期化
-	m_animation.Init(m_modelData);
+	m_animation.Init(m_modelData.get());
 	
 	// アニメーションデータの初期化処理
 	for (int i = 0; i < static_cast<int>(Status::Player::Max); i++) {

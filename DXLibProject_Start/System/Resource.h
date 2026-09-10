@@ -22,7 +22,7 @@ class ModelData :public Resource {			// モデルのデータ
 public:
 	ModelData(std::string path);
 	~ModelData();
-	ModelData* Duplicate();
+	std::unique_ptr<ModelData> Duplicate();
 public:
 	const std::vector<int>& GetAnimHandle()const { return m_animHandle; }
 private:

@@ -36,7 +36,7 @@ public:
 	/// <summary>
 	/// モデルハンドルのみを取得する関数
 	/// </summary>
-	ModelData* GetModel(const std::string& dataName);
+	std::unique_ptr<ModelData> GetModel(const std::string& dataName);
 
 private:
 

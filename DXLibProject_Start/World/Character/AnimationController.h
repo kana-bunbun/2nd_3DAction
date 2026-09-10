@@ -33,10 +33,6 @@ public:
 	/// 更新処理
 	/// </summary>
 	void Update(float deltaTime);
-	/// <summary>
-	/// 自身の複製を返す関数
-	/// </summary>
-	AnimationController Duplicate();
 
 	/// <summary>
 	/// アニメーションを再生しているかどうかを返す関数

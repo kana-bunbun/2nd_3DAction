@@ -43,6 +43,9 @@ protected:
 	bool m_isStair;
 	// 壁の当たり判定
 	std::vector < std::unique_ptr<Collision::Shape>>m_walls;
+	// 床のモデルデータ
+	ModelData* m_floorModelData;
+	// 壁のモデルデータ
 	ModelData* m_wallModelData;
 };
 
