@@ -2,7 +2,7 @@
 #include "EffectResourceManager.h"
 #include"EffectResource.h"
 #include"Data/EffectPathParam.h"
-#include"Utility/Loder/CsvLoader.h"
+#include"Utility/Loader/CsvLoader.h"
 namespace {
 	// CSVデータの名前
 	const char* const kResourcePath = "EffectPathParam";

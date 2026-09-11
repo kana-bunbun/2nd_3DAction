@@ -74,6 +74,19 @@ namespace Data{
 			vec.z = Convert<float>(json.at("z"));
 			return vec;
 		}
+		template<>
+		inline Transform Convert<Transform>(const JsonObject& json) {
+			// jsonデータに各データが設定されているかどうか確認
+
+			assert(json.contains("position"));
+			assert(json.contains("rotation"));
+			assert(json.contains("scale"));
+			Transform transform;
+			transform.position = Convert<Vector3>(json.at("position"));
+			transform.rotation = Convert<Vector3>(json.at("rotation"));
+			transform.scale = Convert<Vector3>(json.at("scale"));
+			return transform;
+		}
 
 	}
 }

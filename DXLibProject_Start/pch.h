@@ -3,7 +3,7 @@
 #include<EffekseerForDXLib.h>
 #include<imgui.h>
 
-#include"Utility/Loder/json.hpp"
+#include"Utility/Loader/json.hpp"
 
 #include<math.h>
 #include<vector>

@@ -1,7 +1,7 @@
 #pragma once
 #include"pch.h"
 #include"World/GameObjectParam.h"
-
+#include"World/Component/Collision.h"
 namespace Stage{
 
 	/// <summary>

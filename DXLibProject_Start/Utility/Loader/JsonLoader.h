@@ -10,7 +10,7 @@ namespace Data {
 		template<typename T>
 		std::vector<T>LoadJsonAs(const std::string& path) {
 			// Jsonデータの読み込み
-			JsonObject json = LoadRawJSON(path);
+			JsonObject json = LoadRawJSOS(path);
 
 			// データが空かどうかチェック
 			if (json.empty())

@@ -2,7 +2,7 @@
 #include"pch.h"
 
 #include"ResourceManager.h"
-#include"../Utility/Loder/CsvLoader.h"
+#include"../Utility/Loader/CsvLoader.h"
 #include"../Data/ModelPathParam.h"
 namespace {
 	// データ読み込み時の不正値

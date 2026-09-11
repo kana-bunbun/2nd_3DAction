@@ -2,7 +2,7 @@
 
 #include "ImageManager.h"
 #include"ImageResource.h"
-#include"../Utility/Loder/CsvLoader.h"
+#include"../Utility/Loader/CsvLoader.h"
 #include"../Data/GraphPathParam.h"
 
 namespace{

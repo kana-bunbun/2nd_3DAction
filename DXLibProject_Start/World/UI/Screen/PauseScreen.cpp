@@ -6,7 +6,7 @@
 #include"../Widget/UIImage.h"
 #include"../Core/UIGroup.h"
 #include"../../../System/ImageManager.h"
-#include"../../../Utility/Loder/CsvLoader.h"
+#include"../../../Utility/Loader/CsvLoader.h"
 #include"../../../Utility/Game.h"
 #include"../../../System/ResourceManager.h"
 namespace {

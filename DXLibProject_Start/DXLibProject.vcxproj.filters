@@ -153,7 +153,7 @@
     <ClCompile Include="World\UI\ItemSlot.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\Loder\Data.cpp">
+    <ClCompile Include="Utility\Loader\Data.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\Character\CharacterManager.cpp">
@@ -581,7 +581,7 @@
     <ClInclude Include="World\UI\Core\ScreenManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\CsvLoader.h">
+    <ClInclude Include="Utility\Loader\CsvLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\UI\GaugePlayer.h">
@@ -677,7 +677,7 @@
     <ClInclude Include="World\UI\ItemSlot.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\Data.h">
+    <ClInclude Include="Utility\Loader\Data.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Character\CharacterManager.h">
@@ -686,7 +686,7 @@
     <ClInclude Include="World\Character\Character.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\CsvConvert.h">
+    <ClInclude Include="Utility\Loader\CsvConvert.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Object\Item\HealBottle.h">
@@ -707,7 +707,7 @@
     <ClInclude Include="Data\CameraParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\FromCSV.h">
+    <ClInclude Include="Utility\Loader\FromCSV.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\Object\Item\FireBottle.h">
@@ -719,13 +719,13 @@
     <ClInclude Include="Data\ModelPathParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\JsonConvert.h">
+    <ClInclude Include="Utility\Loader\JsonConvert.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\FromJson.h">
+    <ClInclude Include="Utility\Loader\FromJson.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Loder\JsonLoader.h">
+    <ClInclude Include="Utility\Loader\JsonLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Utility\ModelData.h">

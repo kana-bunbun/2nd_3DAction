@@ -1,8 +1,8 @@
 #include"pch.h"
 #include "ActionEffectParamManager.h"
 #include "../Data/ActionEffectParam.h"
-#include "../Utility/Loder/Data.h"
-#include "../Utility/Loder/CsvLoader.h"
+#include "../Utility/Loader/Data.h"
+#include "../Utility/Loader/CsvLoader.h"
 
 namespace {
     const char* const kActionEffectParamData = "ActionEffectParam";

@@ -5,7 +5,7 @@
 #include"../Widget/UIButton.h"
 #include"../../../System/ImageManager.h"
 #include"../Core/UIGroup.h"
-#include"../../../Utility/Loder/CsvLoader.h"
+#include"../../../Utility/Loader/CsvLoader.h"
 namespace {
 	const char* const kDataName = "TextUIParam";
 	const char* const kInitText = "Tsgrrreat";

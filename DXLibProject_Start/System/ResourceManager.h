@@ -2,7 +2,7 @@
 
 #include"../World/Character/AnimationController.h"
 #include"../World/Character/Animation.h"
-#include"../Utility/Loder/Data.h"
+#include"../Utility/Loader/Data.h"
 #include"../Utility/ModelData.h"
 #include"Resource.h"
 

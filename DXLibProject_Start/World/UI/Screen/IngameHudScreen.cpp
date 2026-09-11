@@ -1,6 +1,6 @@
 #include"pch.h"
 #include "IngameHudScreen.h"
-#include"../../../Utility/Loder/CsvLoader.h"
+#include"../../../Utility/Loader/CsvLoader.h"
 #include"../../../Data/UITextParam.h"
 #include"../Widget/UIText.h"
 #include"../Widget/UIImage.h"

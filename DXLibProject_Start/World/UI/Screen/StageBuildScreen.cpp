@@ -8,8 +8,8 @@
 #include "Camera/CameraManager.h"
 #include "Camera/FollowCamera.h"
 #include "Camera/DebugCamera.h"
-#include "Utility/Loder/FromCsv.h"
-#include "Utility/Loder/CsvLoader.h"
+#include "Utility/Loader/FromCsv.h"
+#include "Utility/Loader/CsvLoader.h"
 #include "World/Object/Item/ItemManager.h"
 #include "World/Map/TileManager.h"
 #include "World/UI/Group/UIItemList.h"
@@ -67,7 +67,10 @@ void StageBuildScreen::Init()
 	m_pStagePartDatabase->Register("TestBlock", { "StageBoxModel", CollisionTag::Barrier, false });
 	
 	StageBuilder builder;
-	m_pStageParts = m_pStageSpawner->SpawnStage(builder.BuildStageDefault());
+
+	Stage::StageData stage=builder.BuildStageTest();
+	stage = builder.BuildFromJson("StageTest");
+	m_pStageSpawner->AddStageData(stage);
 
 }
 
@@ -101,9 +104,7 @@ void StageBuildScreen::Update(float deltaTime, const InputData& inputData)
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pUiItemList->Update(deltaTime, inputData);
 
-	for (auto& part : m_pStageParts) {
-		part->Update(deltaTime, inputData);
-	}
+
 }
 
 void StageBuildScreen::Draw()
@@ -118,10 +119,6 @@ void StageBuildScreen::Draw()
 	m_pTileManager->Draw();
 	m_pUiItemList->Draw();
 	
-	for (auto& part : m_pStageParts) {
-	part->Draw();
-	}
-
 	ImGui::Begin("Test");
 	ImGui::Text("sdfhs");
 	ImGui::End();

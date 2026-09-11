@@ -77,7 +77,7 @@ namespace Data
 		/// <summary>
 		/// JSONを読み込む
 		/// </summary>
-		JsonObject LoadRawJSON(const std::string& path);
+		JsonObject LoadRawJSOS(const std::string& path);
 
 	}
 

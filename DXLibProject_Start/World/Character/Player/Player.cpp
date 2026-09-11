@@ -5,10 +5,10 @@
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
-#include"../../../Utility/Loder/CsvLoader.h"
+#include"../../../Utility/Loader/CsvLoader.h"
 #include"../../../Camera/Camera.h"
-#include "../../../Utility/Loder/Data.h"
-#include "../../../Utility/Loder/FromCSV.h"
+#include "../../../Utility/Loader/Data.h"
+#include "../../../Utility/Loader/FromCSV.h"
 #include"../../../System/CollisionDataManager.h"
 namespace {
 	const char* const kModelDataName = "PlayerModel";

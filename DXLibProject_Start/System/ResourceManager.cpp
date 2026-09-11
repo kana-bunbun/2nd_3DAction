@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "ResourceManager.h"
-#include "../Utility/Loder/CsvLoader.h"
+#include "../Utility/Loader/CsvLoader.h"
 #include "../World/Character/Animation.h"
 
 

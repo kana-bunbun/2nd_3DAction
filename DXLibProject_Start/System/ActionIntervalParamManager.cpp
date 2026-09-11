@@ -1,6 +1,6 @@
 #include"pch.h"
 #include "ActionIntervalParamManager.h"
-#include "../Utility/Loder/CsvLoader.h"
+#include "../Utility/Loader/CsvLoader.h"
 namespace {
 	const char* const kDataName = "ActionIntervalParam";
 }

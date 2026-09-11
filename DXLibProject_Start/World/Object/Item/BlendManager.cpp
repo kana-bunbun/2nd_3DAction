@@ -1,7 +1,7 @@
 #include"pch.h"
 #include "BlendManager.h"
-#include"../../../Utility/Loder/CsvLoader.h"
-#include"../../../Utility/Loder/Data.h"
+#include"../../../Utility/Loader/CsvLoader.h"
+#include"../../../Utility/Loader/Data.h"
 #include"../../../Data/BlendRecipe.h"
 
 

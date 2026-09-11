@@ -7,7 +7,7 @@
 #include"World/Character/Player/Player.h"
 #include"../Object/UIItemCursor.h"
 #include"Data/ActionintervalParam.h"
-#include"Utility/Loder/FromCsv.h"
+#include"Utility/Loader/FromCsv.h"
 #include"World/Action/ActionInterval.h"
 #include"System/ActionIntervalParamManager.h"
 #include"World/Object/Item/ItemManager.h"

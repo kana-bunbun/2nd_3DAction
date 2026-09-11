@@ -1,6 +1,6 @@
 #include"pch.h"
 #include "ExternalDataManager.h"
-#include"../Utility/Loder/CsvLoader.h"
+#include"../Utility/Loader/CsvLoader.h"
 #include"../World/GameObjectParam.h"
 namespace {
 	// プレイヤーのパス情報のデータ名

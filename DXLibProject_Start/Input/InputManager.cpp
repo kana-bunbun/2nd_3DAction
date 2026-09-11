@@ -3,7 +3,7 @@
 #include "InputManager.h"
 #include "InputConst.h"
 #include "Input/Device/GamePad.h"
-#include "Utility/Loder/CsvLoader.h"
+#include "Utility/Loader/CsvLoader.h"
 #include "Data/InputKeyParam.h"
 #include "Data/ActionKeyParam.h"
 #include "Input/ActionInputState.h"
