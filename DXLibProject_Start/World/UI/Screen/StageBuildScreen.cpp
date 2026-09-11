@@ -15,6 +15,7 @@
 #include "World/UI/Group/UIItemList.h"
 #include"Stage/StageSpawner.h"
 #include"Stage/StagePartDatabase.h"
+#include"Stage/StageBuilder.h"
 #include"World/Object/StagePart.h"
 
 namespace {
@@ -65,13 +66,9 @@ void StageBuildScreen::Init()
 
 	m_pStagePartDatabase->Register("TestBlock", { "StageBoxModel", CollisionTag::Barrier, false });
 	
-	Stage::StageData stage;
-	Vector3 playerPos = m_pPlayer->GetTransform().position;
-	for (int i = 0; i < 10; i++) {
-		Vector3 randomPos = Vector3(MyRandom::Float01(),MyRandom::Float01() ,MyRandom::Float01())*350;
-		stage.objects.push_back({ "TestBlock", { {playerPos + randomPos},{0.0f,0.0f,0.0f},{1.0f,1.0f,1.0f} } });
-	}
-	m_pStageParts = m_pStageSpawner->SpawnStage(stage);
+	StageBuilder builder;
+	m_pStageParts = m_pStageSpawner->SpawnStage(builder.BuildStageDefault());
+
 }
 
 void StageBuildScreen::CreateObjects()

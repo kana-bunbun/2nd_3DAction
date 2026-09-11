@@ -4,6 +4,7 @@
 #include"Stage/StagePartDatabase.h"
 #include"Stage/PartData.h"
 #include "World/Object/StagePart.h"
+#include "World/GameObjectManager.h"
 
 StageSpawner::StageSpawner(StagePartDatabase& database):
     m_database(database)
@@ -53,4 +54,26 @@ std::vector<std::unique_ptr<StagePart>> StageSpawner::SpawnStage(const Stage::St
 
     }
     return result;
+}
+
+StagePart* StageSpawner::AddStagePart(const std::string& partName)
+{
+
+    // DatabaseからStageのPartを取得
+    const Stage::PartData* pData = m_database.GetData(partName);
+
+    // データの確認
+    // ヒューマンエラーを防ぐ
+    assert(pData);
+
+    // StagePartのインスタンスを生成
+    auto part = GameObjectManager::GetInstance().CreateObject<StagePart>();
+    // インスタンスをモデルに設定
+    auto model = ResourceManager::GetInstance().GetModel(pData->modelName);
+    part->SetModelData(std::move(model));
+    // インスタンスにコリジョンの設定
+    if (pData->hasCollision) {
+
+    }
+    return part;
 }

@@ -172,6 +172,7 @@
     </ClCompile>
     <ClCompile Include="ModelResource.cpp" />
     <ClCompile Include="Scene\TestScene\SceneStageBuild.cpp" />
+    <ClCompile Include="Stage\StageBuilder.cpp" />
     <ClCompile Include="World\UI\Screen\StageBuildScreen.cpp" />
     <ClCompile Include="World\Object\StagePart.cpp" />
     <ClCompile Include="Stage\StageSpawner.cpp" />
@@ -341,6 +342,7 @@
     <ClInclude Include="Data\GraphPathParam.h" />
     <ClInclude Include="Data\ActionKeyParam.h" />
     <ClInclude Include="ModelResource.h" />
+    <ClInclude Include="Stage\StageBuilder.h" />
     <ClInclude Include="Stage\StageData.h" />
     <ClInclude Include="World\UI\Screen\StageBuildScreen.h" />
     <ClInclude Include="World\Object\StagePart.h" />
