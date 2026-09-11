@@ -77,6 +77,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ƒV[ƒ“‚Ì‰Šú‰»
 	pSceneMgr->Init();
 
+
 	// ImGui‚ğ¶¬
 	auto pImGuiManager = std::make_unique<ImguiManager>();
 	pImGuiManager->Init();
