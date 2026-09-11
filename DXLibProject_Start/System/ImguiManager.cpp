@@ -64,6 +64,6 @@ void ImguiManager::UpdateMouseInput()
 	io.AddMouseButtonEvent(0, (mouce & MOUSE_INPUT_LEFT) != 0);
 	io.AddMouseButtonEvent(1, (mouce & MOUSE_INPUT_RIGHT) != 0);
 	io.AddMouseButtonEvent(2, (mouce & MOUSE_INPUT_MIDDLE) != 0);
-	io.AddMouseButtonEvent(0.0f, static_cast<float>(wheel) / 120.0f);
+	io.AddMouseWheelEvent(0.0f, static_cast<float>(wheel) / 120.0f);
 
 }
