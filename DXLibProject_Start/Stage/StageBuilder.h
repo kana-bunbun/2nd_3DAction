@@ -11,8 +11,9 @@ public:
 	// StageDataを返す関数
 	// ゲーム中に出てくるステージの数だけ用意
 
-	Stage::StageData BuildStageDefault()const;
+	Stage::StageData BuildStageTest()const;
 
+	Stage::StageData BuildFromJson(const std::string& path) const;
 
 };
 

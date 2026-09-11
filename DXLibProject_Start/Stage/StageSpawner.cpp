@@ -77,3 +77,33 @@ StagePart* StageSpawner::AddStagePart(const std::string& partName)
     }
     return part;
 }
+
+void StageSpawner::AddStageData(const Stage::StageData& stageData)
+{
+    // StageDataの中に登録されているobjectをGameObjectManagerに登録する
+    for (const auto& objectData : stageData.objects) {
+        auto* part = AddStagePart(objectData.partName);
+
+        // 登録したらTransform設定
+        part->SetTransform(objectData.transform);
+    }
+
+}
+
+void StageSpawner::SetUpStagePart(StagePart& part, const Stage::PartData& data, const std::string& partName)
+{
+    // パーツの名前設定
+    part.SetName(partName);
+
+    // モデルの設定
+    auto model = ResourceManager::GetInstance().GetModel(data.modelName);
+    part.SetModelData(std::move(model));
+    // コリジョンの設定
+    if (data.hasCollision) {
+        switch (data.collisionTag)
+        {
+        default:
+            break;
+        }
+    }
+}

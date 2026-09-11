@@ -2,7 +2,9 @@
 #include "StageBuilder.h"
 #include"World/Character/CharacterManager.h"
 #include"World/Character/Player/Player.h"
-Stage::StageData StageBuilder::BuildStageDefault() const
+#include"Utility/Loader/JsonLoader.h"
+
+Stage::StageData StageBuilder::BuildStageTest() const
 {
 	Stage::StageData stage;
 	
@@ -15,5 +17,12 @@ Stage::StageData StageBuilder::BuildStageDefault() const
 		stage.objects.push_back({ "TestBlock", { {playerPos + randomPos},{0.0f,0.0f,0.0f},{1.0f,1.0f,1.0f} } });
 	}
 
-	return Stage::StageData();
+	return stage;
+}
+
+Stage::StageData StageBuilder::BuildFromJson(const std::string& path) const
+{
+	Stage::StageData data;
+	data.objects = Data::Json::LoadJsonAs<Stage::ObjectData>(path);
+	return data;
 }

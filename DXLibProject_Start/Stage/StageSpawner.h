@@ -21,6 +21,9 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	StagePart* AddStagePart(const std::string& partName);
+	void AddStageData(const Stage::StageData& stageData);
+private:
+	void SetUpStagePart(StagePart& part,const Stage::PartData& data,const std::string& partName);
 private:
 
 	StagePartDatabase& m_database;

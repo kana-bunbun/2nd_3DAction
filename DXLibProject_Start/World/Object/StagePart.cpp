@@ -15,3 +15,10 @@ void StagePart::ResolveCollision(GameObject & other, const CollisionData & myDat
 {
 
 }
+
+void StagePart::Draw()
+{
+	GameObject::Draw();
+
+
+}

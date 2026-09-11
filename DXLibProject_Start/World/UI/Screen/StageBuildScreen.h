@@ -31,7 +31,7 @@ private:
 
 	std::unique_ptr<StagePartDatabase>m_pStagePartDatabase;
 	std::unique_ptr<StageSpawner>m_pStageSpawner;
-	std::vector<std::unique_ptr<StagePart>>m_pStageParts;
+	std::vector<StagePart*>m_pStageParts;
 
 };
 
