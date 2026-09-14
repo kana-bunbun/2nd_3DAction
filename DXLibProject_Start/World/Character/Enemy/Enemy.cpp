@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Enemy.h"
 #include "../../UI/BillboardManager.h"
-
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
 namespace {
 	//const char* const kFilePath = "Resource\\Enemy\\Queen\\";
 	//const char* const kModelPath = "Model.mv1";

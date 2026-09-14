@@ -149,6 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Component\Collision\Capsule.cpp" />
+    <ClCompile Include="World\Component\Collision\Sphere.cpp" />
+    <ClCompile Include="World\Component\Collision\AABB.cpp" />
     <ClCompile Include="Include\imgui\backends\imgui_impl_dx11.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -287,7 +290,6 @@
     <ClCompile Include="World\Character\Player\Player.cpp" />
     <ClCompile Include="World\Character\Bee.cpp" />
     <ClCompile Include="World\GameObject.cpp" />
-    <ClCompile Include="World\Component\Collision.cpp" />
     <ClCompile Include="Utility\MyRandom.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
@@ -337,6 +339,10 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\Component\Collision\Capsule.h" />
+    <ClInclude Include="World\Component\Collision\CollisionShape.h" />
+    <ClInclude Include="World\Component\Collision\Sphere.h" />
+    <ClInclude Include="World\Component\Collision\AABB.h" />
     <ClInclude Include="Data\ActionParam.h" />
     <ClInclude Include="Data\EffectPathParam.h" />
     <ClInclude Include="Data\GraphPathParam.h" />
@@ -344,6 +350,8 @@
     <ClInclude Include="ModelResource.h" />
     <ClInclude Include="Stage\StageBuilder.h" />
     <ClInclude Include="Stage\StageData.h" />
+    <ClInclude Include="World\Component\Collision\Collision.h" />
+    <ClInclude Include="World\Component\Collision\ICollider.h" />
     <ClInclude Include="World\UI\Screen\StageBuildScreen.h" />
     <ClInclude Include="World\Object\StagePart.h" />
     <ClInclude Include="Stage\StageSpawner.h" />
@@ -479,7 +487,6 @@
     <ClInclude Include="World\Character\Player\Player.h" />
     <ClInclude Include="World\Character\Bee.h" />
     <ClInclude Include="World\GameObject.h" />
-    <ClInclude Include="World\Component\Collision.h" />
     <ClInclude Include="World\Component\Transform.h" />
     <ClInclude Include="Utility\MyRandom.h" />
     <ClInclude Include="World\Character\Animation.h" />

@@ -5,6 +5,7 @@
 #include"Stage/PartData.h"
 #include "World/Object/StagePart.h"
 #include "World/GameObjectManager.h"
+#include"System/CollisionDataManager.h"
 
 StageSpawner::StageSpawner(StagePartDatabase& database):
     m_database(database)
@@ -21,14 +22,8 @@ std::unique_ptr<StagePart> StageSpawner::Spawn(const std::string & partName)
 
     // StagePartのインスタンスを生成
     auto part = std::make_unique<StagePart>();
-    // インスタンスをモデルに設定
-    auto model = ResourceManager::GetInstance().GetModel(pData->modelName);
-    part->SetModelData(std::move(model));
-    // インスタンスにコリジョンの設定
-    if (pData->hasCollision) {
-
-    }
-
+    // 生成したStagePartにパラメータ設定
+    SetUpStagePart(*part, *pData, partName);
 
     return part;
 }
@@ -68,13 +63,9 @@ StagePart* StageSpawner::AddStagePart(const std::string& partName)
 
     // StagePartのインスタンスを生成
     auto part = GameObjectManager::GetInstance().CreateObject<StagePart>();
-    // インスタンスをモデルに設定
-    auto model = ResourceManager::GetInstance().GetModel(pData->modelName);
-    part->SetModelData(std::move(model));
-    // インスタンスにコリジョンの設定
-    if (pData->hasCollision) {
+    // 生成したStagePartにパラメータ設定
+    SetUpStagePart(*part, *pData, partName);
 
-    }
     return part;
 }
 
@@ -98,12 +89,9 @@ void StageSpawner::SetUpStagePart(StagePart& part, const Stage::PartData& data, 
     // モデルの設定
     auto model = ResourceManager::GetInstance().GetModel(data.modelName);
     part.SetModelData(std::move(model));
+    CollisionParam _collisionParam=CollisionDataManager::GetInstance().GetCollisionData(data.CollisionParamID);
     // コリジョンの設定
     if (data.hasCollision) {
-        switch (data.collisionTag)
-        {
-        default:
-            break;
-        }
+        part.AddCollision(_collisionParam);
     }
 }

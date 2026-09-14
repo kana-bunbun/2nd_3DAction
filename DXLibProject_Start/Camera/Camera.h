@@ -8,15 +8,15 @@
 namespace Camera{
 	struct CameraView
 	{
-		Transform transform;// åº§æ¨™
-		Vector3 target;		// æ³¨è¦–ç‚¹
-		float fov;			// è¦–é‡è§’ field of view
+		Transform transform;// À•W
+		Vector3 target;		// ’‹“_
+		float fov;			// ‹–ìŠp field of view
 
 		Vector3 GetForward() const
 		{
 			Vector3 dir;
 			dir = transform.position - target;
-			// 0å‰²ã‚Šå¯¾ç­–
+			// 0Š„‚è‘Îô
 			if (dir.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
@@ -26,7 +26,7 @@ namespace Camera{
 		Vector3 GetPlaneVectorForward()const {
 			Vector3 vec = GetForward();
 			vec.y = 0.0f;
-			// 0å‰²ã‚Šå¯¾ç­–
+			// 0Š„‚è‘Îô
 			if (vec.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
@@ -37,7 +37,7 @@ namespace Camera{
 		Vector3 GetPlaneVectorRight()const {
 			Vector3 vec = GetPlaneVectorForward();
 			vec.y = 0.0f;
-			// 0å‰²ã‚Šå¯¾ç­–
+			// 0Š„‚è‘Îô
 			if (vec.IsLengthNearlyZero()) {
 				assert(0 && "CameraView::GetForward");
 				return Vector3::zero;
@@ -58,16 +58,16 @@ class ICamera
 public:
 	virtual ~ICamera() = default;
 	/// <summary>
-	/// æ›´æ–°å‡¦ç†
+	/// XVˆ—
 	/// </summary>
 	virtual void Update(float deltaTime, InputData inputData) = 0;
 	/// <summary>
-	/// ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+	/// Œ»İ‚ÌƒJƒƒ‰ƒf[ƒ^‚ğæ“¾
 	/// </summary>
 	/// <returns></returns>
 	virtual Camera::CameraView GetView()const = 0;
 	/// <summary>
-	/// ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯ã‚’ã•ã›ã‚‹é–¢æ•°
+	/// ƒJƒƒ‰ƒVƒFƒCƒN‚ğ‚³‚¹‚éŠÖ”
 	/// </summary>
 	/// <param name="power"></param>
 	/// <param name="second"></param>

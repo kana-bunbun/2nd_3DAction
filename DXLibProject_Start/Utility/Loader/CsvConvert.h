@@ -9,7 +9,7 @@
 #include"Data/BlendRecipe.h"
 #include"World/GameObjectParam.h"
 #include"World/GameObject.h"
-#include"World/Component/Collision.h"
+#include"World/Component/Collision/Collision.h"
 #include"Utility/Color.h"
 #include"Input/InputConst.h"
 namespace Data {

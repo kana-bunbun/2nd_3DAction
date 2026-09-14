@@ -185,7 +185,7 @@ void GameObjectManager::CheckCollision()
 
 }
 
-std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::Shape& collision)
+std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::ICollider& collision)
 {
 	// 当たっているオブジェクトの配列を用意
 	std::vector<GameObject*> hitList;
@@ -288,7 +288,7 @@ bool GameObjectManager::IsChebyishevTile(GameObject* baseObj, GameObject* checkO
 	return isChebyshev;
 }
 
-bool GameObjectManager::IsChebyishevTile(const Collision::Shape& baseCollision, GameObject* checkObj)
+bool GameObjectManager::IsChebyishevTile(const Collision::ICollider& baseCollision, GameObject* checkObj)
 {
 	int baseID = MapManager::GetInstance().GetIDFromWorldPos(baseCollision.GetPos());
 	int checkID = checkObj->GetOnTileID();
@@ -297,7 +297,7 @@ bool GameObjectManager::IsChebyishevTile(const Collision::Shape& baseCollision, 
 	return isChebyshev;
 }
 
-bool GameObjectManager::IsChebyishevTile(const Collision::Shape& baseCollision, const Collision::Shape& checkCollision)
+bool GameObjectManager::IsChebyishevTile(const Collision::ICollider& baseCollision, const Collision::ICollider& checkCollision)
 {
 	int baseID = MapManager::GetInstance().GetIDFromWorldPos(baseCollision.GetPos());
 	int checkID = MapManager::GetInstance().GetIDFromWorldPos(checkCollision.GetPos());

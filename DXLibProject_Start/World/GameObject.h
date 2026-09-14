@@ -3,10 +3,13 @@
 #include<vector>
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
-#include"../World/Component/Collision.h"
 #include"GameObjectParam.h"
 #include"../System/Resource.h"
 #include"Input/InputData.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
+
+#include"World/Component/Collision/CollisionShape.h"
 /// <summary>
 /// ゲームで扱うオブジェクトの基本クラス
 /// 座標・モデル・衝突判定・ライフサイクルを管理する
@@ -17,12 +20,12 @@ class GameObject
 public:
 	struct CollisionData {
 	public:
-		std::unique_ptr<Collision::Shape>shape;
+		std::unique_ptr<Collision::ICollider>shape;
 		CollisionType type;
 	};
 	struct HitCollisionData {
 	public:
-		Collision::Shape* collision;
+		Collision::ICollider* collision;
 		bool isHit;
 	};
 public:
@@ -85,8 +88,8 @@ public:
 	/// </summary>
 	/// <param name="shape"></param>
 	/// <param name="type"></param>
-	void AddCollision(std::unique_ptr<Collision::Shape> shape,const CollisionType& type);
-	void AddCollision(const CollisionParam& collisionParam, const CollisionType& type);
+	void AddCollision(std::unique_ptr<Collision::ICollider> shape, const CollisionType& type);
+	void AddCollision(const CollisionParam& collisionParam);
 	/*void AddCollision(const AddCollisionAABBData& addCollisionData);
 	void AddCollision(const AddCollisionSphereData& addCollisionData);*/
 
@@ -107,7 +110,7 @@ public:
 	void SetModelData(std::unique_ptr<ModelData> modelData) { m_modelData = std::move(modelData); }
 	void SetTransform(const Transform& transform) { m_transform = transform; }
 protected:
-	bool IsCollisionEnter(Collision::Shape* collision);
+	bool IsCollisionEnter(Collision::ICollider* collision);
 
 	
 protected:

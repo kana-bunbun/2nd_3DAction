@@ -1,7 +1,6 @@
 #pragma once
 #include"pch.h"
 #include"World/GameObjectParam.h"
-#include"World/Component/Collision.h"
 namespace Stage{
 
 	/// <summary>
@@ -16,13 +15,19 @@ namespace Stage{
 		std::string modelName;
 
 		/// <summary>
+		/// コリジョンを所持するかどうか
+		/// </summary>
+		bool hasCollision;
+
+		/// <summary>
 		/// コリジョンタグ
 		/// </summary>
 		CollisionTag collisionTag;
 
 		/// <summary>
-		/// コリジョンを所持するかどうか
+		/// コリジョンのパラメータのID
 		/// </summary>
-		bool hasCollision;
+		int CollisionParamID;
+
 	};
 }

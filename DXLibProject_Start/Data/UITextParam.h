@@ -3,7 +3,7 @@
 /// <summary>
 /// UITextの見た目の関する情報をまとめた構造体
 /// </summary>
-class UITextParam {
+struct UITextParam {
 public:
 	/// <summary>
 	/// フォントの名前

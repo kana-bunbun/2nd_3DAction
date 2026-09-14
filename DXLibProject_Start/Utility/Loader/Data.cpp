@@ -125,7 +125,7 @@ std::vector <std::vector<int>> Data::Csv::TiIntTable(const Table& table)
 	return intTable;
 }
 
-Data::Json::JsonObject Data::Json::LoadRawJSOS(const std::string& path)
+Data::Json::JsonObject Data::Json::LoadRawJSON(const std::string& path)
 {
 	JsonObject jsonObject;
 

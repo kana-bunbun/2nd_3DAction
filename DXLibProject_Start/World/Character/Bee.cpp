@@ -6,6 +6,7 @@
 #include"AnimationController.h"
 #include"../../Utility/Color.h"
 #include"../../Utility/MyMath.h"
+#include"World/Component/Collision/CollisionShape.h"
 
 namespace {
 	// モデルのファイルパス

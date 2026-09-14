@@ -1,8 +1,12 @@
 #include"pch.h"
 #include "CollisionDataManager.h"
-#include"../World/GameObjectParam.h"
-#include"../Utility/Loader/Data.h"
-#include"../Utility/Loader/CsvLoader.h"
+#include"World/GameObjectParam.h"
+#include"Utility/Loader/Data.h"
+#include"Utility/Loader/CsvLoader.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
+#include"World/Component/Collision/CollisionShape.h"
+
 namespace {
 	const char* const kCollisionDataPath = "CollisionParam";
 	constexpr int kInitCollisionNum = 100;
@@ -42,18 +46,19 @@ void CollisionDataManager::End()
 {
 }
 
-std::unique_ptr<Collision::Shape> CollisionDataManager::GetCollision(int ID)
+std::unique_ptr<Collision::ICollider> CollisionDataManager::GetCollision(int ID)
 {
 	CollisionParam param = GetCollisionData(ID);
 	switch (param.shapeType)
 	{
 	case CollisionShape::Sphere: {
-		std::unique_ptr<Collision::Sphere>sphere=std::make_unique<Collision::Sphere>(param.position,param.radius);
+		std::unique_ptr<Collision::Sphere>sphere=std::make_unique<Collision::Sphere>(param.startPos,param.radius);
 		return sphere;
 	}
 	case CollisionShape::AABB: {
-		std::unique_ptr<Collision::AABB>aabb = std::make_unique<Collision::AABB>(param.position, param.size);
+		std::unique_ptr<Collision::AABB>aabb = std::make_unique<Collision::AABB>(param.startPos, param.size);
 		return aabb;
+
 	}
 	default:
 		break;

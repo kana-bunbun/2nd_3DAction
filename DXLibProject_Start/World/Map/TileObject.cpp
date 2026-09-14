@@ -3,6 +3,9 @@
 #include "../../Utility/Color.h"
 #include"MapTile.h"
 #include"MapManager.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
+#include"World/Component/Collision/AABB.h"
 namespace {
 	constexpr Vector3 kFloorSize = { MapConst::kFloorScale,MapConst::kFloorScale*25 ,MapConst::kFloorScale };
 	constexpr float kWallDistance = MapConst::kTileUnscaledSize * (0.5f);
@@ -138,7 +141,7 @@ void TileObject::RegistWall(const MapConst::eDirectionFour& direction)
 	default:
 		return;
 	}
-	std::unique_ptr<Collision::Shape> shape = std::make_unique<Collision::AABB>(kCollisionOffset+regist.position, collisionSize);
+	std::unique_ptr<Collision::ICollider> shape = std::make_unique<Collision::AABB>(kCollisionOffset+regist.position, collisionSize);
 	regist.position += m_transform.position;
 	m_collisions[wallNum].shape = std::move(shape);
 	m_collisions[wallNum].shape ->SetPosition(regist.position);

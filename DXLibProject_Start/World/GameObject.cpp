@@ -3,15 +3,19 @@
 
 #include"../World/Component/Transform.h"
 #include"../Utility/Vector3.h"
-#include"../World/Component/Collision.h"
 #include"Map/MapManager.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
+#include"World/Component/Collision/CollisionShape.h"
+
 namespace {
 	constexpr int kInitcOllisionCount = 10;
 }
 
 GameObject::GameObject():
 m_transform(),
-m_isActive(true)
+m_isActive(true),
+m_onTileID(0)
 {
 	m_collisions.reserve(kInitcOllisionCount);
 }
@@ -80,22 +84,22 @@ void GameObject::UpdateHitData()
 	}
 }
 
-void GameObject::AddCollision(std::unique_ptr<Collision::Shape> shape, const CollisionType& type)
+void GameObject::AddCollision(std::unique_ptr<Collision::ICollider> shape, const CollisionType& type)
 {
 	assert(shape && "GameCbject::AddCOllision : shape null");
 
-	m_collisions.emplace_back( std::move(shape),type );
+	m_collisions.emplace_back( std::move(shape));
 }
 
-void GameObject::AddCollision(const CollisionParam& collisionParam, const CollisionType& type)
+void GameObject::AddCollision(const CollisionParam& collisionParam)
 {
 	switch (collisionParam.shapeType)
 	{
 	case CollisionShape::AABB:
-		m_collisions.emplace_back(std::make_unique<Collision::AABB>(collisionParam.position, collisionParam.size),type);
+		m_collisions.emplace_back(std::make_unique<Collision::AABB>(collisionParam.startPos, collisionParam.size),collisionParam.collisitonType);
 		return;
 	case CollisionShape::Sphere:
-		m_collisions.emplace_back(std::make_unique<Collision::Sphere>(collisionParam.position, collisionParam.radius), type);
+		m_collisions.emplace_back(std::make_unique<Collision::Sphere>(collisionParam.startPos, collisionParam.radius), collisionParam.collisitonType);
 		return;
 	default:
 		break;
@@ -135,7 +139,7 @@ int GameObject::GetOnTileID()
 	return m_onTileID;
 }
 
-bool GameObject::IsCollisionEnter(Collision::Shape* collision)
+bool GameObject::IsCollisionEnter(Collision::ICollider* collision)
 {
 	bool inList = false;
 	for (int i = 0; i < m_hitData.size(); i++) {

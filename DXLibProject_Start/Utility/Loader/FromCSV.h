@@ -10,7 +10,7 @@
 #include"Data/ActionEffectParam.h"
 #include"Data/ActionIntervalParam.h"
 #include"../Color.h"
-#include"World/Component/Collision.h"
+#include"World/Component/Collision/Collision.h"
 #include"World/GameObjectParam.h"
 #include"Data/UITextParam.h"
 #include"Data/ActionParam.h"
@@ -113,6 +113,7 @@ namespace Data {
 				CollisionParam param;
 				param.ID = Get<int>(row, "ID");
 				param.shapeType= Get<CollisionShape>(row, "RangeType");
+				param.collisitonType = static_cast<CollisionType>(Get<int>(row, "CollisionTypeID"));
 				switch (param.shapeType) {
 				case CollisionShape::Sphere:
 					Sphere(param, row);
@@ -128,11 +129,11 @@ namespace Data {
 			}
 			static void Sphere(CollisionParam& param,const Csv::Row& row) {
 				param.radius = Get<float>(row, "Param[0]");
-				param.position = Get<Vector3>(row, "Param[1]");
+				param.startPos = Get<Vector3>(row, "Param[1]");
 			}
 			static void AABB(CollisionParam& param,const Csv::Row& row) {
 				param.size = Get<Vector3>(row, "Param[0]");
-				param.position = Get<Vector3>(row, "Param[1]");
+				param.startPos = Get<Vector3>(row, "Param[1]");
 			}
 		};
 		template<>
@@ -140,7 +141,7 @@ namespace Data {
 			static ActionEffectParam Binding(const Csv::Row& row) {
 				ActionEffectParam param;
 				param.ID = Get<int>(row, "ID");
-				param.power = Get<int>(row, "power");
+				param.value = Get<int>(row, "power");
 				return param;
 			}
 		};

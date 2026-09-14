@@ -33,7 +33,7 @@ FireBottle::FireBottle()
 {
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(param,CollisionType::Body);
+	AddCollision(param);
 	Init();
 }
 

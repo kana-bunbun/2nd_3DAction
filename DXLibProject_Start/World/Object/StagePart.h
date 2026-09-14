@@ -1,6 +1,6 @@
 #pragma once
 #include"World/GameObject.h"
-class StagePart:public GameObject
+class StagePart :public GameObject
 {
 public:
 
@@ -16,6 +16,7 @@ public:
 	void SetName(const std::string& partName) { m_partName = partName; }
 	const std::string GetName() const { return m_partName; }
 	void Draw()override;
+	void SetPartCollisionTag(const CollisionTag& collisionTag) { m_collisionTag = collisionTag; }
 private:
 	std::string m_partName;
 };

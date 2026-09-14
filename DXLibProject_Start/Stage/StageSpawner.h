@@ -1,6 +1,7 @@
 #pragma once
 #include"pch.h"
 #include"StageData.h"
+#include"PartData.h"
 
 class StagePart;
 class StagePartDatabase;
@@ -23,7 +24,7 @@ public:
 	StagePart* AddStagePart(const std::string& partName);
 	void AddStageData(const Stage::StageData& stageData);
 private:
-	void SetUpStagePart(StagePart& part,const Stage::PartData& data,const std::string& partName);
+	void SetUpStagePart(StagePart& part, const Stage::PartData& data, const std::string& partName);
 private:
 
 	StagePartDatabase& m_database;

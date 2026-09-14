@@ -1,7 +1,7 @@
 #pragma once
+#include"pch.h"
 #include"../Utility/Vector3.h"
 #include<memory>
-#include"Component/Collision.h"
 
 // 外部データからゲーム内のパラメータにアクセスする際の注意点
 // CSVやJsonからデータを取得してゲーム内のパラメータに設定する際に、
@@ -57,14 +57,20 @@
 		Invalid = -1,
 		Sphere,
 		AABB,
+		Capsule,
 		Max,
 	};
 
+	/// <summary>
+	/// コリジョンのパラメータ
+	/// </summary>
 	class CollisionParam {
 	public:
 		CollisionShape shapeType;
+		CollisionType collisitonType;
 		int ID = -1;
-		Vector3 position = Vector3::zero;
+		Vector3 startPos = Vector3::zero;
+		Vector3 endPos = Vector3::zero;
 		Vector3 size = Vector3::zero;
 		float radius = 0;
 	};

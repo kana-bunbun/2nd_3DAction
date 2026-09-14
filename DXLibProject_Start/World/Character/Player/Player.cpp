@@ -1,15 +1,16 @@
-#include "pch.h"
-#include "Player.h"
-#include"../../../Data/ModelPathParam.h"
+#include"pch.h"
+#include"Player.h"
+#include"Data/ModelPathParam.h"
 #include"../Animation.h"
 #include"../AnimationController.h"
 #include"../CharacterMove.h"
 #include"../../Object/Barrier.h"
-#include"../../../Utility/Loader/CsvLoader.h"
-#include"../../../Camera/Camera.h"
-#include "../../../Utility/Loader/Data.h"
-#include "../../../Utility/Loader/FromCSV.h"
-#include"../../../System/CollisionDataManager.h"
+#include"Utility/Loader/CsvLoader.h"
+#include"Camera/Camera.h"
+#include"Utility/Loader/Data.h"
+#include"Utility/Loader/FromCSV.h"
+#include"System/CollisionDataManager.h"
+#include"World/Component/Collision/CollisionShape.h"
 namespace {
 	const char* const kModelDataName = "PlayerModel";
 	// 各アニメーションのループフラグ
@@ -92,7 +93,7 @@ Player::Player(Vector3 position) :
 	m_capsule = Collision::Capsule(startPos, endPos, kCapsuleRadius);
 	// 当たり判定追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(param.startPos, param.size), CollisionType::Body);
 
 	//AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
 	AddCollision(std::make_unique<Collision::Capsule>(Vector3::zero, Vector3::zero, 60), CollisionType::Body);
@@ -128,7 +129,7 @@ Player::Player() :
 	m_capsule = Collision::Capsule(startPos,endPos,kCapsuleRadius);
 	// 当たり判定追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(param.startPos, param.size), CollisionType::Body);
 	//for (const auto& obj : param) {
 	//}
 	//AddCollision(std::make_unique<Collision::Sphere>(m_transform.position, 0), CollisionType::Body);
@@ -454,7 +455,7 @@ void Player::UpdateCollision()
 	m_capsule.SetEndPosition(waistFrame);
 	Collision::Capsule* capsule = nullptr;
 	for (int i = 0; i < m_collisions.size(); i++) {
-		if (m_collisions[i].shape->GetType() != Collision::Type::Capsule)continue;
+		if (m_collisions[i].shape->GetType() != Collision::Shape::Capsule)continue;
 		capsule = dynamic_cast<Collision::Capsule*>(m_collisions[i].shape.get());
 	}
 

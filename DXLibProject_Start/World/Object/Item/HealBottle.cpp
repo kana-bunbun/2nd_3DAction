@@ -65,8 +65,8 @@ void HealBottle::InitParameter()
 	// 本体の当たり判定の追加
 	CollisionParam param= CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	CollisionParam effectParam= CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
-	AddCollision(param,CollisionType::Body);
-	AddCollision(effectParam, CollisionType::Heal);
+	AddCollision(param);
+	AddCollision(effectParam);
 }
 
 void HealBottle::End()

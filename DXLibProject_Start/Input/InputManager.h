@@ -6,7 +6,7 @@
 class GamePad;
 struct InputKeyParam;
 struct ActionKeyParam;
-struct VectorState;
+class VectorState;
 class InputManager
 {
 public:

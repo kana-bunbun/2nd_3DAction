@@ -1,6 +1,8 @@
 #include"pch.h"
 #include "ItemObjectField.h"
 #include "../../UI/ItemCursor.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/CollisionShape.h"
 namespace {
 	constexpr float kSphereRadius = 50.0f;
 	constexpr Vector3 kCollisionSize = { 100,300,100 };

@@ -4,13 +4,14 @@
 
 #include"Data.h"
 #include"FromJson.h"
+#include"Stage/StageData.h"
 
 namespace Data {
 	namespace Json {
 		template<typename T>
 		std::vector<T>LoadJsonAs(const std::string& path) {
 			// Jsonデータの読み込み
-			JsonObject json = LoadRawJSOS(path);
+			JsonObject json = LoadRawJSON(path);
 
 			// データが空かどうかチェック
 			if (json.empty())
@@ -26,6 +27,32 @@ namespace Data {
 			// 構造体へデータを格納
 			for (const auto& obj : json) {
 				result.emplace_back(FromJson<T>::Binding(obj));
+			}
+
+			return result;
+		}
+		template<>
+		inline std::vector<Stage::ObjectData> LoadJsonAs<Stage::ObjectData>(const std::string& path){
+			// Jsonデータの読み込み
+			JsonObject json = LoadRawJSON(path);
+
+			// データが空かどうかチェック
+			if (json.empty())
+			{
+				assert(false && "LoasJsonAs json is empty");
+				return {};
+			}
+
+			// Objectsキーの中にある配列を取得
+			const JsonObject& arrayJson = json.at("objects");
+
+			// 変換結果を返す変数を用意
+			// 読み込む量がわかっているのできちんとメモリを確保
+			std::vector<Stage::ObjectData>result;
+			result.reserve(arrayJson.size());
+			// 構造体へデータを格納
+			for (const auto& obj : arrayJson) {
+				result.emplace_back(FromJson<Stage::ObjectData>::Binding(obj));
 			}
 
 			return result;

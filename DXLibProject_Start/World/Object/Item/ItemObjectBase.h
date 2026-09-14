@@ -5,7 +5,6 @@
 #include"../../../Data/ActionIntervalParam.h"
 #include"../../../Data/ActionEffectParam.h"
 #include"../../Action/ActionInterval.h"
-#include"../../Component/Collision.h"
 #include"../../../World/Action/ActionEffectBase.h"
 class ItemObjectBase :public GameObject
 {
@@ -67,7 +66,7 @@ protected:
 	/// <summary>
 	/// 発動効果の当たり判定
 	/// </summary>
-	std::unique_ptr<Collision::Shape>m_pEffectCollision;
+	std::unique_ptr<Collision::ICollider>m_pEffectCollision;
 	/// <summary>
 	/// 効果発動中かどうか
 	/// </summary>

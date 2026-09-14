@@ -8,6 +8,7 @@
 #include"../../../Camera/Camera.h"
 #include"../../GameObjectParam.h"
 #include"../Character.h"
+#include"World/Component/Collision/CollisionShape.h"
 
 class CameraOld;
 class Barrier;

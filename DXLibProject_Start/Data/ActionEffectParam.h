@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 /// <summary>
 /// 効果のパラメータ
 /// </summary>
@@ -8,5 +8,5 @@ public:
 	/// <summary>
 	/// 効果の値
 	/// </summary>
-	int power;
+	int value;
 };

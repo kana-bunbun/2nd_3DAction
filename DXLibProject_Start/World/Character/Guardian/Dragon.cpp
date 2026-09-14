@@ -10,6 +10,8 @@
 #include"../../Map/RouteSearcher.h"
 #include"../../Map/MapManager.h"
 #include"../../../System/CollisionDataManager.h"
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
 namespace {
 	const char* const kModelDataName = "DragonModel";
 	constexpr bool kLoopFrag[static_cast<int>(Status::Dragon::Max)]{
@@ -114,7 +116,7 @@ Dragon::Dragon():
 		m_breath[i] = GameObjectManager::GetInstance().CreateObject<DragonBreath>();
 	}
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(std::make_unique<Collision::AABB>(param.position, param.size), CollisionType::Body);
+	AddCollision(std::make_unique<Collision::AABB>(param.startPos, param.size), CollisionType::Body);
 	m_collisionTag = CollisionTag::Dragon;
 }
 

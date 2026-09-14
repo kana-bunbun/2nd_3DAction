@@ -6,7 +6,7 @@
 
 #include "../Data/CameraParam.h"
 /// <summary>
-/// 繝励Ξ繧､繝､繝ｼ繧定ｿｽ蠕薙☆繧九き繝｡繝ｩ
+/// プレイヤーを追従するカメラ
 /// </summary>
 class FollowCamera : public ICamera
 {
@@ -16,7 +16,7 @@ public:
 	~FollowCamera();
 
 	/// =========================================
-	///		ICamera 繧ｯ繝ｩ繧ｹ縺ｮ繝｡繝ｳ繝仙､画焚
+	///		ICamera クラスのメンバ変数
 	/// =========================================
 
 	void Update(float deltaTime,InputData inputData)override;
@@ -24,19 +24,19 @@ public:
 
 
 	/// =========================================
-	///		FollowCamera 繧ｯ繝ｩ繧ｹ縺ｮ繝｡繝ｳ繝仙､画焚
+	///		FollowCamera クラスのメンバ変数
 	/// =========================================
 	
 	/// <summary>
-	/// 陲ｫ蜀吩ｽ薙→縺ｮ霍晞屬繧呈峩譁ｰ
+	/// 被写体との距離を更新
 	/// </summary>
 	void UpdateDistance(float deltaTime);
 	/// <summary>
-	/// 繧ｫ繝｡繝ｩ縺ｮ隗貞ｺｦ繧呈峩譁ｰ
+	/// カメラの角度を更新
 	/// </summary>
 	void UpdateAngle(float deltaTime, InputData inputData);
 	/// <summary>
-	/// 繧ｫ繝｡繝ｩ縺ｮ蠎ｧ讓吶ｒ譖ｴ譁ｰ
+	/// カメラの座標を更新
 	/// </summary>
 	void UpdatePosition(float deltaTime);
 
@@ -45,24 +45,24 @@ public:
 private:
 
 	/// <summary>
-	/// 霑ｽ蠕灘ｯｾ雎｡
-	/// 隱ｭ縺ｿ蜿悶ｊ蟆ら畑
+	/// 追従対象
+	/// 読み取り専用
 	/// </summary>
 	const Transform* m_target;
 	/// <summary>
-	/// 繧ｫ繝｡繝ｩ繝�繝ｼ繧ｿ
+	/// カメラデータ
 	/// </summary>
 	Camera::CameraView m_view;
 	/// <summary>
-	/// 繧ｫ繝｡繝ｩ縺ｮ蠎ｧ讓吶�ｻ蝗櫁ｻ｢繝ｻ諡｡邵ｮ
+	/// カメラの座標・回転・拡縮
 	/// </summary>
 	Transform m_transform;
 	/// <summary>
-	/// target縺ｨ縺ｮ霍晞屬
+	/// targetとの距離
 	/// </summary>
 	float m_distance;
 	/// <summary>
-	/// FollowCamera縺ｮ繝代Λ繝｡繝ｼ繧ｿ鄒､
+	/// FollowCameraのパラメータ群
 	/// </summary>
 	FollowCameraParam m_param;
 

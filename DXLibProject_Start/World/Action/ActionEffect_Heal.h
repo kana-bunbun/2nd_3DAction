@@ -7,16 +7,12 @@ public:
 	~ActionEffect_Heal();
 
 	void Init(int paramID)override;
-	void Start(const Vector3& position)override;
-	void Draw(const Vector3& position)override;
+	void Start()override;
+	void Draw()override;
 	void Reset();
-	void Execute(Collision::Shape* collision)override;
+	void Execute(Collision::ICollider* collision)override;
 
-	bool IsTransparent() { return m_isTrans; }
 public:
 	float m_alpha;
-	bool m_isTrans;
-	Vector3 pos;
-	float radius;
 };
 

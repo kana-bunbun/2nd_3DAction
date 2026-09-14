@@ -64,12 +64,12 @@ void StageBuildScreen::Init()
 	m_pStagePartDatabase = std::make_unique<StagePartDatabase>();
 	m_pStageSpawner = std::make_unique<StageSpawner>(*m_pStagePartDatabase);
 
-	m_pStagePartDatabase->Register("TestBlock", { "StageBoxModel", CollisionTag::Barrier, false });
+	m_pStagePartDatabase->Register("StageBox", { "StageBox", true , CollisionTag::Barrier,10});
 	
 	StageBuilder builder;
 
 	Stage::StageData stage=builder.BuildStageTest();
-	stage = builder.BuildFromJson("StageTest");
+	stage = builder.BuildFromJson("StageData");
 	m_pStageSpawner->AddStageData(stage);
 
 }

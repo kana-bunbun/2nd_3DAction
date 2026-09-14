@@ -3,6 +3,8 @@
 #include<vector>
 #include<memory>
 #include<type_traits>
+#include"World/Component/Collision/Collision.h"
+#include"World/Component/Collision/ICollider.h"
 
 class CollisionDataManager
 {
@@ -18,7 +20,7 @@ public:
 	// 指定IDのコリジョンのパラメータを返す
 	CollisionParam GetCollisionData(int ID);
 	void End();
-	std::unique_ptr<Collision::Shape> GetCollision(int ID);
+	std::unique_ptr<Collision::ICollider> GetCollision(int ID);
 private:
 	CollisionDataManager(const CollisionDataManager&) = delete;
 	CollisionDataManager& operator =(const CollisionDataManager&) = delete;

@@ -3,6 +3,7 @@
 #include "Utility/Color.h"
 #include"System/TimeManager.h"
 #include"../CharacterManager.h"
+#include"World/Component/Collision/ICollider.h"
 namespace {
 	constexpr float kMoveSpeed = 500.0f;
 	constexpr float kDeleteCount = 3.0f;
