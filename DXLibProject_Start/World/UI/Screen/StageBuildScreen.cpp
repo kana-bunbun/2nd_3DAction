@@ -5,6 +5,7 @@
 #include "../../Character/Enemy/Enemy.h"
 #include "../../Character/Guardian/Dragon.h"
 #include "../../GameObjectManager.h"
+#include "../../Character/CharacterManager.h"
 #include "Camera/CameraManager.h"
 #include "Camera/FollowCamera.h"
 #include "Camera/DebugCamera.h"
@@ -17,6 +18,7 @@
 #include"Stage/StagePartDatabase.h"
 #include"Stage/StageBuilder.h"
 #include"World/Object/StagePart.h"
+#include"World/Component/Collision/CollisionShape.h"
 
 namespace {
 	const char* const kCameraParamPath = "CameraParam";
@@ -27,7 +29,8 @@ StageBuildScreen::StageBuildScreen() :
 	m_pPlayer(nullptr),
 	m_pDragon(nullptr),
 	m_pBarrier(nullptr),
-	m_pUiItemList(nullptr)
+	m_pUiItemList(nullptr),
+	m_pTriangle(nullptr)
 {
 	// ライトの向きを設定
 	Vector3 lightVec = Vector3::YAxis * -1;
@@ -72,6 +75,14 @@ void StageBuildScreen::Init()
 	stage = builder.BuildFromJson("StageData");
 	m_pStageSpawner->AddStageData(stage);
 
+	Player* player = CharacterManager::GetInstance().GetPlayer();
+	if (!player)return;
+	Vector3 playerPos = player->GetTransform().position;
+	Vector3 vertex0 = { playerPos.x + 350,playerPos.y + 150,playerPos.z};
+	Vector3 vertex1 = { playerPos.x - 50,playerPos.y +0,playerPos.z};
+	Vector3 vertex2 = { playerPos.x + 150,playerPos.y + 0,playerPos.z};
+	m_pTriangle = std::make_unique<Collision::Triangle>(vertex0, vertex1, vertex2);
+
 }
 
 void StageBuildScreen::CreateObjects()
@@ -85,6 +96,7 @@ void StageBuildScreen::CreateObjects()
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
 
 	m_pCameraMgr->Init();
+	
 }
 
 void StageBuildScreen::Update(float deltaTime, const InputData& inputData)
@@ -122,4 +134,15 @@ void StageBuildScreen::Draw()
 	ImGui::Begin("Test");
 	ImGui::Text("sdfhs");
 	ImGui::End();
+	if(m_pTriangle)
+	m_pTriangle->DebugDraw();
+
+	std::string s = "out";
+	Vector3 pos = m_pPlayer->GetTransform().position;
+	if (m_pTriangle->IsPointInside(pos)) {
+		s = "in";
+	}
+	printfDx("Triangle : %s\n", s.c_str());
+
+
 }

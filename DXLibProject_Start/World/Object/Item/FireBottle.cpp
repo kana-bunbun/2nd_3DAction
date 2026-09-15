@@ -198,3 +198,12 @@ void FireBottle::UpdateEffect(float deltaTime)
 
 
 }
+
+bool FireBottle::IsUsing()
+{
+	// インターバルを持っていなかった時用
+	if (!m_pInterval)return m_isActive;
+
+	// 自身かインターバルがアクティブの時true
+	return (m_isActive || m_pInterval->IsActive());
+}

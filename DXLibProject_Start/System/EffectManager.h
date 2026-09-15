@@ -21,7 +21,7 @@ public:
 	void Clear();
 
 	int GetInstanceCount()const { return m_instances.size(); }
-	int GetLoadedCound()const;
+	int GetLoadedCount()const;
 
 private:
 	EffectManager();

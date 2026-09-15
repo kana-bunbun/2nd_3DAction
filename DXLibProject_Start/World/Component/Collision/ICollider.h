@@ -3,6 +3,7 @@
 #include"pch.h"
 #include"Utility/Color.h"
 #include"World/Component/Collision/Collision.h"
+#include"World/GameObjectParam.h"
 
 
 namespace Collision {
@@ -17,7 +18,7 @@ namespace Collision {
 		/// 形状データを取得する
 		/// </summary>
 		/// <returns></returns>
-		virtual Shape GetType()const = 0;
+		virtual Shape GetShape()const = 0;
 		/// <summary>
 		/// 衝突判定
 		/// </summary>

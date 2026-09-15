@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Component\Collision\Triangle.cpp" />
     <ClCompile Include="World\Component\Collision\Capsule.cpp" />
     <ClCompile Include="World\Component\Collision\Sphere.cpp" />
     <ClCompile Include="World\Component\Collision\AABB.cpp" />
@@ -339,6 +340,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\Component\Collision\Triangle.h" />
     <ClInclude Include="World\Component\Collision\Capsule.h" />
     <ClInclude Include="World\Component\Collision\CollisionShape.h" />
     <ClInclude Include="World\Component\Collision\Sphere.h" />

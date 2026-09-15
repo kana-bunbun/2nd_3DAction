@@ -5,7 +5,8 @@
 #include"World/Component/Collision/CollisionShape.h"
 
 namespace Collision{
-
+	class Sphere;
+	class AABB;
 	class Capsule :public ICollider {
 	public:
 		Capsule() = default;
@@ -16,7 +17,7 @@ namespace Collision{
 		/// 形状データを取得する
 		/// </summary>
 		/// <returns></returns>
-		Shape GetType()const override { return Shape::Capsule; }
+		Shape GetShape()const override { return Shape::Capsule; }
 		/// <summary>
 		/// 衝突判定
 		/// </summary>

@@ -3280,20 +3280,20 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
         {
             IMGUI_DEMO_MARKER("Widgets/Selection State/Multi-Select (advanced)");
             // Options
-            enum WidgetType { WidgetType_Selectable, WidgetType_TreeNode };
+            enum WidGetShape { WidGetShape_Selectable, WidGetShape_TreeNode };
             static bool use_clipper = true;
             static bool use_deletion = true;
             static bool use_drag_drop = true;
             static bool show_in_table = false;
             static bool show_color_button = true;
             static ImGuiMultiSelectFlags flags = ImGuiMultiSelectFlags_ClearOnEscape | ImGuiMultiSelectFlags_BoxSelect1d;
-            static WidgetType widget_type = WidgetType_Selectable;
+            static WidGetShape widget_type = WidGetShape_Selectable;
 
             if (ImGui::TreeNode("Options"))
             {
-                if (ImGui::RadioButton("Selectables", widget_type == WidgetType_Selectable)) { widget_type = WidgetType_Selectable; }
+                if (ImGui::RadioButton("Selectables", widget_type == WidGetShape_Selectable)) { widget_type = WidGetShape_Selectable; }
                 ImGui::SameLine();
-                if (ImGui::RadioButton("Tree nodes", widget_type == WidgetType_TreeNode)) { widget_type = WidgetType_TreeNode; }
+                if (ImGui::RadioButton("Tree nodes", widget_type == WidGetShape_TreeNode)) { widget_type = WidGetShape_TreeNode; }
                 ImGui::SameLine();
                 HelpMarker("TreeNode() is technically supported but... using this correctly is more complicated (you need some sort of linear/random access to your tree, which is suited to advanced trees setups already implementing filters and clipper. We will work toward simplifying and demoing this.\n\nFor now the tree demo is actually a little bit meaningless because it is an empty tree with only root nodes.");
                 ImGui::Checkbox("Enable clipper", &use_clipper);
@@ -3339,12 +3339,12 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
 
             ImGui::Text("Selection size: %d/%d", selection.Size, items.Size);
 
-            const float items_height = (widget_type == WidgetType_TreeNode) ? ImGui::GetTextLineHeight() : ImGui::GetTextLineHeightWithSpacing();
+            const float items_height = (widget_type == WidGetShape_TreeNode) ? ImGui::GetTextLineHeight() : ImGui::GetTextLineHeightWithSpacing();
             ImGui::SetNextWindowContentSize(ImVec2(0.0f, items.Size * items_height));
             if (ImGui::BeginChild("##Basket", ImVec2(-FLT_MIN, ImGui::GetFontSize() * 20), ImGuiChildFlags_FrameStyle | ImGuiChildFlags_ResizeY))
             {
                 ImVec2 color_button_sz(ImGui::GetFontSize(), ImGui::GetFontSize());
-                if (widget_type == WidgetType_TreeNode)
+                if (widget_type == WidGetShape_TreeNode)
                     ImGui::PushStyleVarY(ImGuiStyleVar_ItemSpacing, 0.0f);
 
                 ImGuiMultiSelectIO* ms_io = ImGui::BeginMultiSelect(flags, selection.Size, items.Size);
@@ -3356,7 +3356,7 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
 
                 if (show_in_table)
                 {
-                    if (widget_type == WidgetType_TreeNode)
+                    if (widget_type == WidGetShape_TreeNode)
                         ImGui::PushStyleVar(ImGuiStyleVar_CellPadding, ImVec2(0.0f, 0.0f));
                     ImGui::BeginTable("##Split", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings | ImGuiTableFlags_NoPadOuterX);
                     ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch, 0.70f);
@@ -3407,11 +3407,11 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
                         bool item_is_selected = selection.Contains((ImGuiID)n);
                         bool item_is_open = false;
                         ImGui::SetNextItemSelectionUserData(n);
-                        if (widget_type == WidgetType_Selectable)
+                        if (widget_type == WidGetShape_Selectable)
                         {
                             ImGui::Selectable(label, item_is_selected, ImGuiSelectableFlags_None);
                         }
-                        else if (widget_type == WidgetType_TreeNode)
+                        else if (widget_type == WidGetShape_TreeNode)
                         {
                             ImGuiTreeNodeFlags tree_node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
                             if (item_is_selected)
@@ -3453,7 +3453,7 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
                             ImGui::EndDragDropSource();
                         }
 
-                        if (widget_type == WidgetType_TreeNode && item_is_open)
+                        if (widget_type == WidGetShape_TreeNode && item_is_open)
                             ImGui::TreePop();
 
                         // Right-click: context menu
@@ -3487,7 +3487,7 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
                 if (show_in_table)
                 {
                     ImGui::EndTable();
-                    if (widget_type == WidgetType_TreeNode)
+                    if (widget_type == WidGetShape_TreeNode)
                         ImGui::PopStyleVar();
                 }
 
@@ -3497,7 +3497,7 @@ static void DemoWindowWidgetsSelectionAndMultiSelect(ImGuiDemoWindowData* demo_d
                 if (want_delete)
                     selection.ApplyDeletionPostLoop(ms_io, items, item_curr_idx_to_focus);
 
-                if (widget_type == WidgetType_TreeNode)
+                if (widget_type == WidGetShape_TreeNode)
                     ImGui::PopStyleVar();
             }
             ImGui::EndChild();

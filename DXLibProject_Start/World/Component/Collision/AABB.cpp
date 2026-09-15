@@ -28,7 +28,7 @@ namespace Collision {
 	// めり込み具合 penetration
 	// 求めた結果をreturnで返す
 		Collision::Result result;
-		switch (other.GetType())
+		switch (other.GetShape())
 		{
 		case Shape::Sphere:
 
@@ -38,7 +38,7 @@ namespace Collision {
 			// 相手の座標を取得するためAABBクラスをdynamic_castで取得
 			const AABB* checkBox = dynamic_cast<const AABB*>(&other);
 
-			// GetTypeでAABBと取れているため問題ないはずだけど一応
+			// GetShapeでAABBと取れているため問題ないはずだけど一応
 			assert(checkBox);
 
 			if (m_maxPos.x<checkBox->m_minPos.x || m_minPos.x>checkBox->m_maxPos.x)return result;

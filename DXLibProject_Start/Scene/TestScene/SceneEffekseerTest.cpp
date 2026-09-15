@@ -58,7 +58,7 @@ namespace {
 	const char* const kEffectPath = "Resource\\Effect\\Laser01.efkefc";
 }
 
-SceneEffekseerTest  ::SceneEffekseerTest  () :
+SceneEffekseerTest::SceneEffekseerTest() :
 	m_pScreenManager(nullptr)
 {
 	m_pScreenManager = std::make_unique<ScreenManager>();
@@ -66,9 +66,9 @@ SceneEffekseerTest  ::SceneEffekseerTest  () :
 
 }
 
-SceneEffekseerTest  ::~SceneEffekseerTest  () {}
+SceneEffekseerTest::~SceneEffekseerTest() {}
 
-void SceneEffekseerTest  ::Init() {
+void SceneEffekseerTest::Init() {
 
 	SoundManager::GetInstance().LoadBGM();
 	SoundManager::GetInstance().LoadSe();
@@ -78,7 +78,7 @@ void SceneEffekseerTest  ::Init() {
 	EffectManager::GetInstance();
 }
 
-void SceneEffekseerTest  ::End() {
+void SceneEffekseerTest::End() {
 	SoundManager::GetInstance().Release();
 
 	GameObjectManager::GetInstance().End();
@@ -87,7 +87,7 @@ void SceneEffekseerTest  ::End() {
 	EffectManager::GetInstance().Clear();
 }
 
-std::unique_ptr<SceneBase> SceneEffekseerTest  ::Update(float deltaTime) {
+std::unique_ptr<SceneBase> SceneEffekseerTest::Update(float deltaTime) {
 	ProfileScope("Update");
 
 	InputData inputData = InputManager::GetInputData();
@@ -137,7 +137,7 @@ std::unique_ptr<SceneBase> SceneEffekseerTest  ::Update(float deltaTime) {
 	return nullptr;
 }
 
-void SceneEffekseerTest  ::Draw() {
+void SceneEffekseerTest::Draw() {
 	ProfileScope("Draw");
 
 	//ItemManager::GetInstance().Draw();
@@ -151,7 +151,7 @@ void SceneEffekseerTest  ::Draw() {
 
 	EffectManager::GetInstance().Draw();
 
-	printfDx("LoadedEffectNum : %d\n", EffectManager::GetInstance().GetLoadedCound());
+	printfDx("LoadedEffectNum : %d\n", EffectManager::GetInstance().GetLoadedCount());
 	printfDx("nstanceEffectNum : %d\n", EffectManager::GetInstance().GetInstanceCount());
 
 }

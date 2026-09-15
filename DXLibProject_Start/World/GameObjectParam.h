@@ -40,6 +40,7 @@
 		Dragon,
 		Enemy,
 		Wall,
+		Stair,
 		Stage,
 		Barrier,
 	};
@@ -72,6 +73,9 @@
 		Vector3 startPos = Vector3::zero;
 		Vector3 endPos = Vector3::zero;
 		Vector3 size = Vector3::zero;
+		Vector3 vertex0 = Vector3::zero;
+		Vector3 vertex1 = Vector3::zero;
+		Vector3 vertex2 = Vector3::zero;
 		float radius = 0;
 	};
 

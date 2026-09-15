@@ -14,6 +14,9 @@
 #include "World/Object/Item/ItemManager.h"
 #include "World/Map/TileManager.h"
 #include "World/UI/Group/UIItemList.h"
+
+
+#include"System/EffectManager.h"
 namespace {
 	const char* const kCameraParamPath = "CameraParam";
 }
@@ -87,6 +90,12 @@ void MainScreen::Update(float deltaTime, const InputData & inputData)
 	// マップ上にプレイヤーのトランスフォームを設定
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pUiItemList->Update(deltaTime,inputData);
+	InputData _inputData = inputData;
+	if (_inputData.IsPressed(Input::Action::Dash)) {
+		EffectManager::GetInstance().Play(10000, &m_pPlayer->GetTransform());
+
+	}
+	EffectManager::GetInstance().Update(deltaTime);
 }
 
 void MainScreen::Draw()
@@ -100,7 +109,7 @@ void MainScreen::Draw()
 	// マップの描画処理
 	m_pTileManager->Draw();
 	m_pUiItemList->Draw();
-
+	EffectManager::GetInstance().Draw();
 	ImGui::Begin("Test");
 	ImGui::Text("sdfhs");
 	ImGui::End();

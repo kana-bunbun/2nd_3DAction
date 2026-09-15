@@ -15,7 +15,7 @@ namespace Collision {
 			// めり込み具合 penetration
 		// 求めた結果をreturnで返す
 		Collision::Result result;
-		switch (other.GetType())
+		switch (other.GetShape())
 		{
 		case Shape::Sphere:
 		{
@@ -52,7 +52,7 @@ namespace Collision {
 		// 相手の座標を取得するため
 			// Sphereクラスをdynamic_castして派生クラスであるSphereクラスを用意する
 		Collision::Result result;
-		// GetTypeでSphereと取れているため問題ないはずだけど一応
+		// GetShapeでSphereと取れているため問題ないはずだけど一応
 		//assert(checkSphere);
 		// 球の中心座標から」チェックする球の中心座標を指すベクトルを求める
 		Vector3 dif = this->GetPos() - other.GetPos();

@@ -10,7 +10,9 @@ class UIItemList;
 class StageSpawner;
 class StagePart;
 class StagePartDatabase;
-
+namespace Collision {
+	class Triangle;
+}
 class StageBuildScreen:public Screen
 {
 public:
@@ -32,6 +34,7 @@ private:
 	std::unique_ptr<StagePartDatabase>m_pStagePartDatabase;
 	std::unique_ptr<StageSpawner>m_pStageSpawner;
 	std::vector<StagePart*>m_pStageParts;
+	std::unique_ptr<Collision::Triangle>m_pTriangle;
 
 };
 

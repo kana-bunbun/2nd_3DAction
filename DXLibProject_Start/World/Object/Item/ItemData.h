@@ -16,7 +16,7 @@ public:
 		Max,
 	};
 	// アイテムの種類を取得
-	const Type& GetType() { return m_type; }
+	const Type& GetShape() { return m_type; }
 	// アイテムの種類を設定
 	void SetType(const Type& type) { 
 		m_type = type; 

@@ -21,24 +21,25 @@ class FloorBlock;
 class PadManager;
 class GameObjectManager;
 class GameObject;
+
 #include"System/EffectResourceManager.h"
 #include"System/EffectManager.h"
 
-class SceneEffekseerTest  : public SceneBase
+class SceneEffekseerTest: public SceneBase
 {
 public:
 
 	/// <summary>
-	/// SceneEffekseerTest  画面のコンストラクタ
+	/// SceneEffekseerTest画面のコンストラクタ
 	/// メンバの初期設定を行う
 	/// </summary>
-	SceneEffekseerTest ();
+	SceneEffekseerTest();
 
 	/// <summary>
-	/// SceneEffekseerTest  画面のデストラクタ
+	/// SceneEffekseerTest画面のデストラクタ
 	/// メンバの後処理を行う
 	/// </summary>
-	virtual ~SceneEffekseerTest ();
+	virtual ~SceneEffekseerTest();
 
 	/// <summary>
 	/// 画面の初期設定を行う
@@ -51,13 +52,13 @@ public:
 	void End()override;
 
 	/// <summary>
-	/// SceneEffekseerTest  画面の処理を行う
+	/// SceneEffekseerTest画面の処理を行う
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
 	std::unique_ptr<SceneBase> Update(float deltaTime)override;
 
 	/// <summary>
-	/// SceneEffekseerTest  画面の描画を行う
+	/// SceneEffekseerTest画面の描画を行う
 	/// </summary>
 	void Draw()override;
 

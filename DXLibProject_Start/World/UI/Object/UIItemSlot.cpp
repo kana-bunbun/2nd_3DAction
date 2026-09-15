@@ -43,7 +43,7 @@ void UIItemSlot::OnDraw()
 	// 自身が担当しているスロットにアイテムがなければ即時return
 	if (!m_itemData.ExistItem())return;
 	// 描画する画像を取得
-	int itemGraphID = kItemPathID[static_cast<int>(m_itemData.GetType())];
+	int itemGraphID = kItemPathID[static_cast<int>(m_itemData.GetShape())];
 	std::shared_ptr<ImageResource> itemGraph = ImageManager::GetInstance().GetImage(itemGraphID);
 	// 描画座標を求める
 	Vector2 drawPos = m_position;
@@ -59,7 +59,7 @@ void UIItemSlot::OnDraw()
 void UIItemSlot::ConsumeItem(const Transform& transform)
 {
 	m_itemData.Sub();
-	switch (m_itemData.GetType())
+	switch (m_itemData.GetShape())
 	{
 	case ItemData::Type::HealBottle:
 	ItemManager::GetInstance().CallItem<HealBottle>(transform);

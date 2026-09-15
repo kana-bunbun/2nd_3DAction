@@ -455,7 +455,7 @@ void Player::UpdateCollision()
 	m_capsule.SetEndPosition(waistFrame);
 	Collision::Capsule* capsule = nullptr;
 	for (int i = 0; i < m_collisions.size(); i++) {
-		if (m_collisions[i].shape->GetType() != Collision::Shape::Capsule)continue;
+		if (m_collisions[i].shape->GetShape() != Collision::Shape::Capsule)continue;
 		capsule = dynamic_cast<Collision::Capsule*>(m_collisions[i].shape.get());
 	}
 

@@ -23,6 +23,7 @@ public:
 	void EffectSetup()override;
 	void UpdateObject(float deltaTime)override;
 	void UpdateEffect(float deltaTime)override;
+	bool IsUsing()override;
 private:
 
 	/// <summary>

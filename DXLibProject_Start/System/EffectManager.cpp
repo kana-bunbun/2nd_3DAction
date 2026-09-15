@@ -72,7 +72,7 @@ void EffectManager::Clear()
     }
 }
 
-int EffectManager::GetLoadedCound() const
+int EffectManager::GetLoadedCount() const
 {
     return m_pEffectResourceManager->GetLoadCount();
 }

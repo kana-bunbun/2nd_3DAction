@@ -9,6 +9,8 @@
 
 namespace Collision {
 	
+	class Capsule;
+	class Sphere;
 	class AABB :public ICollider {
 	public:
 		AABB() = default;
@@ -19,7 +21,7 @@ namespace Collision {
 		/// 形状データを取得する
 		/// </summary>
 		/// <returns></returns>
-		Shape GetType()const override { return Shape::AABB; }
+		Shape GetShape()const override { return Shape::AABB; }
 		/// <summary>
 		/// 衝突判定
 		/// </summary>

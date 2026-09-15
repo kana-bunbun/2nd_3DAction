@@ -9381,7 +9381,7 @@ IM_MSVC_RUNTIME_CHECKS_RESTORE
 // - GetKeyName()
 // - GetKeyChordName() [Internal]
 // - CalcTypematicRepeatAmount() [Internal]
-// - GetTypematicRepeatRate() [Internal]
+// - GetShapematicRepeatRate() [Internal]
 // - GetKeyPressedAmount() [Internal]
 // - GetKeyMagnitude2d() [Internal]
 //-----------------------------------------------------------------------------

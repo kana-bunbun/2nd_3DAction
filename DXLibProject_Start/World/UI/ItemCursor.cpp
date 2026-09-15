@@ -276,7 +276,7 @@ bool ItemCursor::SubItem(const ItemData::Type& type)
 
 	//// そのアイテムをすでに所持しているときは所持数を減らす
 	//for (int i = 0; i < m_slots.size(); i++) {
-	//	if (m_slots[i]->m_itemData.GetType != type)continue;
+	//	if (m_slots[i]->m_itemData.GetShape != type)continue;
 	//	// 所持数を減らす
 	//	m_slots[i]->Sub();
 

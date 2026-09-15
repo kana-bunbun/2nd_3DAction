@@ -17,7 +17,7 @@ namespace Collision {
 	Collision::Result Capsule::CheckCollision(const ICollider& other) const
 	{
 		Collision::Result result;
-		switch (other.GetType())
+		switch (other.GetShape())
 		{
 		case Collision::Shape::Sphere: {
 			const Collision::Sphere* checkSphere = dynamic_cast<const Collision::Sphere*>(&other);

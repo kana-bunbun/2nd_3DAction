@@ -312,9 +312,9 @@ bool MapManager::IsChebyishevTile(int baseID, int checkID)
     int differ = MyMath::Abs(baseID - checkID);
     // IDの差が 1 以下の時(同じマスまたは左右に隣り合っている時)または
     // 差が横幅-1 以上かつ横幅+1 以下の時(上下または斜めに隣り合っている時)true
-    if (differ <= 1 ||
-        (differ <= MapConst::MAP_SQUARE_WIDTH_COUNT - 1 &&
-         differ >= MapConst::MAP_SQUARE_WIDTH_COUNT + 1))return true;
+    if (differ <= 1)return true;
+        if(differ >= MapConst::MAP_SQUARE_WIDTH_COUNT - 1 &&
+         differ <= MapConst::MAP_SQUARE_WIDTH_COUNT + 1)return true;
     return false;
 }
 

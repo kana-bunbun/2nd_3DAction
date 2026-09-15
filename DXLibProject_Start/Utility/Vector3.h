@@ -98,6 +98,16 @@ public:
 	float Dot(const Vector3& vec)const;
 
 	/// <summary>
+	/// 外積：2つのベクトルの表法に垂直な方向がわかる
+	/// 2つのベクトルが並行なら計算結果は0ベクトルになる
+	/// 計算するベクトルの順番を逆にすると判定向きのベクトルが求められる
+	/// 三角形の法線やライティング、当たり判定で使用
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
+	Vector3 Cross(const Vector3& vec)const;
+
+	/// <summary>
 	/// DxLibのVECTOR型に変換する関数
 	/// </summary>
 	/// <returns></returns>

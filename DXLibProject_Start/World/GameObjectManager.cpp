@@ -280,11 +280,14 @@ const std::vector<std::unique_ptr<GameObject>>& GameObjectManager::GetObjects() 
 
 bool GameObjectManager::IsChebyishevTile(GameObject* baseObj, GameObject* checkObj)
 {
+
 	// 2つのオブジェクトのマスIDを取得
 	int baseID = baseObj->GetOnTileID();
 	int checkID = checkObj->GetOnTileID();
-	// 2つのマスDIが隣り合っているかどうかを返す
+
+	// 2つのマスIDが隣り合っているかどうかを返す
 	bool isChebyshev = MapManager::GetInstance().IsChebyishevTile(baseID, checkID);
+
 	return isChebyshev;
 }
 
@@ -292,7 +295,7 @@ bool GameObjectManager::IsChebyishevTile(const Collision::ICollider& baseCollisi
 {
 	int baseID = MapManager::GetInstance().GetIDFromWorldPos(baseCollision.GetPos());
 	int checkID = checkObj->GetOnTileID();
-	// 2つのマスDIが隣り合っているかどうかを返す
+	// 2つのマスIDが隣り合っているかどうかを返す
 	bool isChebyshev = MapManager::GetInstance().IsChebyishevTile(baseID, checkID);
 	return isChebyshev;
 }

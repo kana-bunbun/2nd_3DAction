@@ -27,6 +27,8 @@ Stair::Stair():
 	float sizeAxis = MapConst::kFloorScale;
 	Vector3 size = { sizeAxis,sizeAxis ,sizeAxis };
 	MV1SetScale(m_modelData->GetHandle(), size.ToVECTOR());
+
+	m_collisionTag = CollisionTag::Stair;
 }
 
 Stair::~Stair()
