@@ -8,6 +8,9 @@ namespace {
 	constexpr int kItemSlotMaxs = 10;
 }
 
+/// <summary>
+/// キャラクターが持っているアイテムのデータ
+/// </summary>
 class ItemList
 {
 public:
@@ -19,7 +22,8 @@ public:
 	/// </summary>
 	/// <param name="type"></param>
 	/// <param name="addNum"></param>
-	void AddItem(const ItemData::Type& type, int addNum = 1);
+	/// <returns>アイテムを追加出来たらtrue</returns>
+	bool AddItem(const ItemData::Type& type, int addNum = 1);
 	/// <summary>
 	/// アイテムを獲得できるかどうか取得
 	/// </summary>

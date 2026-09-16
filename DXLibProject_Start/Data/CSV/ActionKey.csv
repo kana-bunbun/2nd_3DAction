@@ -17,3 +17,4 @@ ActionID,Action,Key[0],Key[1],Key[2],Key[3],Key[4],Key[5],KeyID[0],KeyID[1],KeyI
 15,ItemCursorMove,GP_Right,GP_Left,Invalid,Invalid,Invalid,Invalid,2,4,0,0,0,0
 16,UseItem,GP_West,Invalid,Invalid,Invalid,Invalid,Invalid,8,0,0,0,0,0
 17,PickUpItem,GP_East,Invalid,Invalid,Invalid,Invalid,Invalid,6,0,0,0,0,0
+18,BlendItem,Gp_North,Invalid,Invalid,Invalid,Invalid,Invalid,5,0,0,0,0,0

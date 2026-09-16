@@ -12,7 +12,7 @@ ItemList::~ItemList()
 
 }
 
-void ItemList::AddItem(const ItemData::Type & type, int addNum)
+bool ItemList::AddItem(const ItemData::Type & type, int addNum)
 {
 	// すでに同じアイテムを所持していたら加算する
 	for (int i = 0; i < m_items.size(); i++) {
@@ -20,7 +20,8 @@ void ItemList::AddItem(const ItemData::Type & type, int addNum)
 		if(itemType != type)continue;
 		// 同じアイテムを所持していたら加算して終了
 		m_items[i].Add(addNum);
-		return;
+		// アイテムを追加できたのでtrue
+		return true;
 	}
 
 	// 同じアイテムを所持していないとき
@@ -32,8 +33,11 @@ void ItemList::AddItem(const ItemData::Type & type, int addNum)
 		// 空のアイテム枠があれば加算して終了
 		m_items[i].Add(addNum);
 		m_items[i].SetType(type);
-		return;
+		// アイテムを追加できたのでtrue
+		return true;
 	}
+	// アイテムを追加できなかったのでfalse
+	return false;
 }
 
 bool ItemList::CanAddItem(const ItemData::Type & type)

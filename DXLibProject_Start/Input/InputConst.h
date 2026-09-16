@@ -185,6 +185,7 @@ namespace Input{
 		ItemCursorMove,
 		UseItem,
 		PickUpItem,
+		BlendItem,
 		Max,
 	};
 	enum class VectorAction {

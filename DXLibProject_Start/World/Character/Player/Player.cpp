@@ -176,6 +176,7 @@ void Player::Init()
 	m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
 	m_itemList->AddItem(ItemData::Type::Honey, 34);
 	m_itemList->AddItem(ItemData::Type::FireBottle, 877);
+	m_itemList->AddItem(ItemData::Type::Jam, 877);
 }
 
 void Player::LoadModel()

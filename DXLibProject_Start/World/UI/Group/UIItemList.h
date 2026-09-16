@@ -14,7 +14,7 @@ class UIItemCursor;
 class ActionInterval;
 class Character;
 /// <summary>
-/// プレイヤーの所持アイテムリストのUI表示をする
+/// キャラクターの所持アイテムリストのUI表示をする
 /// </summary>
 class UIItemList: public UIObject
 {
@@ -62,6 +62,15 @@ private:
 	/// </summary>
 	/// <param name="slotID">指定番号のスロット選択状況をリセット、デフォルト値の時はすべてリセット</param>
 	void Cancel(int slotID = -1);
+	/// <summary>
+	/// 選択したアイテムの合成
+	/// </summary>
+	void Blend();
+	/// <summary>
+	/// 選択中の個数を取得
+	/// </summary>
+	/// <returns></returns>
+	int SelectedNum();
 private:
 	/// <summary>
 	/// 選択中のインデックス

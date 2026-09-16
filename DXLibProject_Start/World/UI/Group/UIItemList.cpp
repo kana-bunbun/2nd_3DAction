@@ -11,6 +11,7 @@
 #include"World/Action/ActionInterval.h"
 #include"System/ActionIntervalParamManager.h"
 #include"World/Object/Item/ItemManager.h"
+#include"World/Object/Item/BlendManager.h"
 
 namespace {
 	constexpr Vector2 kFirstSlotPosition = { Game::kScreenWidth * 0.05f,Game::kScreenHeight * 0.9f };
@@ -78,7 +79,6 @@ void UIItemList::CursorUpdate(float deltatime, const InputData& inputData)
 	if (input.IsDown(Input::Action::ItemCursorMove)) {
 		// インターバルの更新
 		m_cursorInterval.Update(deltatime);
-		printfDx("inputVector x : %f | y : %f\n", inputVector.x, inputVector.y);
 
 		if (m_cursorInterval.IsExecute()) {
 		// 入力したベクトルをもとにカーソル移動
@@ -104,7 +104,9 @@ void UIItemList::CursorUpdate(float deltatime, const InputData& inputData)
 	if (input.IsPressed(Input::Action::Decide)) {
 		Select();
 	}
-
+	if (input.IsPressed(Input::Action::BlendItem)) {
+		Blend();
+	}
 }
 
 void UIItemList::SelectPrevIndex()
@@ -180,28 +182,92 @@ void UIItemList::MoveCursor(const DirectionFour& direction)
 void UIItemList::Select()
 {
 	if (!m_itemSlots[m_cursorIndex]->Exists())return;
-	for (int i = 0; i < m_selectIndex.size();i++) {
-
-		if (m_itemSlots[m_cursorIndex]->Select()) {
-			m_selectIndex[i] = m_cursorIndex;
+	bool selected = m_itemSlots[m_cursorIndex]->Select();
+	if (selected) {
+		for (int i = 0; i < m_selectIndex.size(); i++) {
+			// 選択中のインデックスに不正値があれば
+			if (m_selectIndex[i]<0||m_selectIndex[i]>=m_itemSlots.size()) {
+				// インデックスを現在のカーソル番号に
+				m_selectIndex[i] = m_cursorIndex;
+				// 番号を設定できたので関数を抜ける
+				return;
+			}
+			// すでに選択可能な最大個数まで選択していたら
+			if (i == m_selectIndex.size() - 1) {
+				// 選択できないので選択状態をもとに戻す
+				Cancel(m_cursorIndex);
+				return;
+			}
 		}
-		else {
-			m_selectIndex[i] = -1;
-		}
-
-		break;
 	}
+	else {
+		Cancel(m_cursorIndex);
+	}
+
 }
 
 void UIItemList::Cancel(int slotID)
 {
+	// 指定されているスロット番号が正常な値なら
 	if (slotID >= 0 && slotID < m_itemSlots.size()) {
+		// その番号のスロットのキャンセルを呼ぶ
 		m_itemSlots[slotID]->Cancel();
+		for (auto& select : m_selectIndex) {
+			if (select != slotID)continue;
+			select = -1;
+			break;
+		}
 	}
+	// 不正値が渡されているとき
 	else {
+		// すべてのキャンセル処理を呼ぶ
 		for (auto& slot : m_itemSlots) {
 			slot->Cancel();
 		}
 		m_selectIndex.fill(-1);
 	}
+}
+
+void UIItemList::Blend()
+{
+	// 最大数選択されていなければ処理しない
+	if (SelectedNum() != kItemSelectMax)return;
+
+	ItemList* _itemList = m_pCharacter->GetItemList();
+	if (!_itemList)return;
+
+	// 選択中のアイテムの種類を取得
+	ItemData::Type select0 = m_itemSlots[m_selectIndex[0]]->GetItemData().GetType();
+	ItemData::Type select1 = m_itemSlots[m_selectIndex[1]]->GetItemData().GetType();
+	// 選択アイテムの合成結果を取得
+	ItemData::Type blendResult = BlendManager::GetInstnce().Blend(select0, select1);
+
+	// 合成結果が不正値なら処理しない
+	if (blendResult == ItemData::Type::Invalid){
+		Cancel();
+		return;
+	}
+	// アイテムを追加できたかどうかを調べる
+	bool addItem = _itemList->AddItem(blendResult);
+
+	// アイテムを追加できなければ処理しない
+	if (!addItem)return;
+
+	// アイテムを追加できたので選択スロットの消費処理
+	for (auto& select : m_selectIndex) {
+		_itemList->UseItem(select);
+	}
+}
+
+int UIItemList::SelectedNum()
+{
+	int selectNum = 0;
+	for (auto& select : m_selectIndex) {
+		// 選択しているインデックスが不正値ならスキップ
+		if (select < 0 || select >= kItemSlotMax)continue;
+		// 選択している数に加算
+		selectNum++;
+	}
+
+	return selectNum;
 }
