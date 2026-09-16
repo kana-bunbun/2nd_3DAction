@@ -27,10 +27,25 @@ public:
 	/// </summary>
 	void ConsumeItem(const Transform& transform);
 	/// <summary>
+	/// 所持アイテムの選択
+	/// </summary>
+	/// <returns>選択したらtrue,キャンセルしたらfalse</returns>
+	bool Select();
+	/// <summary>
+	/// 所持アイテムの選択状況のキャンセル
+	/// </summary>
+	void Cancel();
+	/// <summary>
 	/// 指定した画像がアイテムスロットに合うようなスケール値を取得
 	/// </summary>
 	float GetNormalizeGraphScale(int graphHandle);
 	int GetID() { return m_slotID; }
+	/// <summary>
+	/// アイテムを取得しているかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	bool Exists() { return m_itemData.GetType() != ItemData::Type::Invalid; }
+	ItemData GetItemData()const{ return m_itemData; }
 private:
 	ItemData m_itemData;
 	/// <summary>
@@ -41,6 +56,10 @@ private:
 	/// アイテムスロット背景の画像
 	/// </summary>
 	std::shared_ptr<ImageResource>m_backGroundImage;
+	/// <summary>
+	/// 選択しているかどうか
+	/// </summary>
+	bool m_isSelect;
 
 
 };

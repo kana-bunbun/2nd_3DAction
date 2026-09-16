@@ -26,8 +26,10 @@ namespace {
 	constexpr Vector2 kSelectIconOffset = { 0.0f,-70 * Game::kWindowScale };
 	constexpr int kNormalIconSize = 32;
 }
-UIItemSlot::UIItemSlot(int ID):
-	m_slotID(ID)
+UIItemSlot::UIItemSlot(int ID) :
+	m_itemData(),
+	m_slotID(ID),
+	m_isSelect(false)
 {
 	// スロット背景画像取得
 	m_backGroundImage = ImageManager::GetInstance().GetImage(kBackGroundPathID);
@@ -43,10 +45,10 @@ void UIItemSlot::OnDraw()
 	// 自身が担当しているスロットにアイテムがなければ即時return
 	if (!m_itemData.ExistItem())return;
 	// 描画する画像を取得
-	int itemGraphID = kItemPathID[static_cast<int>(m_itemData.GetShape())];
+	int itemGraphID = kItemPathID[static_cast<int>(m_itemData.GetType())];
 	std::shared_ptr<ImageResource> itemGraph = ImageManager::GetInstance().GetImage(itemGraphID);
 	// 描画座標を求める
-	Vector2 drawPos = m_position;
+	Vector2 drawPos = m_position + (kSelectIconOffset * m_isSelect);
 	//if (m_select)drawPos += kSelectIconOffset;
 	int graphHandle = itemGraph->GetHandle();
 	// アイテムアイコン描画
@@ -59,7 +61,7 @@ void UIItemSlot::OnDraw()
 void UIItemSlot::ConsumeItem(const Transform& transform)
 {
 	m_itemData.Sub();
-	switch (m_itemData.GetShape())
+	switch (m_itemData.GetType())
 	{
 	case ItemData::Type::HealBottle:
 	ItemManager::GetInstance().CallItem<HealBottle>(transform);
@@ -70,6 +72,26 @@ void UIItemSlot::ConsumeItem(const Transform& transform)
 	default:
 		break;
 	}
+}
+
+bool UIItemSlot::Select()
+{
+	// 選択中ならキャンセルし、処理を抜ける
+	if (m_isSelect) {
+		Cancel();
+		// キャンセルしたのでfalse
+		return false;
+	}
+	// 選択状態にする
+	m_isSelect = true;
+	// 選択したのでtrue
+	return true;
+}
+
+void UIItemSlot::Cancel()
+{
+	// 非選択状態にする
+	m_isSelect = false;
 }
 
 float UIItemSlot::GetNormalizeGraphScale(int graphHandle)

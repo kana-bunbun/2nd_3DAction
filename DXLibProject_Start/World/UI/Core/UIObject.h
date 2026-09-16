@@ -22,6 +22,10 @@ public:
 	/// IsVisibleInHierarchyの結果が非表示なら即時return
 	/// </summary>
 	void Draw();
+	/// <summary>
+	/// デバッグの描画処理
+	/// </summary>
+	virtual void DebugDraw() {}
 	void End();
 	void SetPosition(const Vector2& position) { m_position = position; }
 	const Vector2& GetPosition() { return m_position; }

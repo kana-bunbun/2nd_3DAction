@@ -13,7 +13,6 @@ public:
 	void Setup(const Transform& transform)override;
 	void Update(float deltaTime, const InputData& inputData)override;
 	void Draw()override;
-	void DrawModel();
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

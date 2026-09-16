@@ -11,8 +11,6 @@ public:
 	void Update(float deltaTime, const InputData& inputData)override;
 	void End()override;
 	void Draw()override;
-	void DrawEffect();
-	void DrawModel();
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,
@@ -30,5 +28,6 @@ private:
 	/// 透明度を扱うかどうか
 	/// </summary>
 	float m_alpha;
+	CollisionParam m_collisionParam;
 };
 

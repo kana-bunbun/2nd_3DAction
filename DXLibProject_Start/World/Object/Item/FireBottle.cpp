@@ -5,6 +5,7 @@
 #include"../../GameObjectParam.h"
 #include"System/CollisionDataManager.h"
 #include"System/EffectManager.h"
+#include"World/Component/Collision/CollisionShape.h"
 namespace {
 	const char* const kModelPath = "FireBottleModel";
 	// 投げる角度のオフセット
@@ -32,8 +33,6 @@ namespace {
 FireBottle::FireBottle()
 {
 	m_modelData = ResourceManager::GetInstance().GetModel(kModelPath);
-	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	AddCollision(param);
 	Init();
 }
 
@@ -49,15 +48,14 @@ void FireBottle::Init()
 
 void FireBottle::InitParameter()
 {
-	//// 本体の当たり判定の追加
-	//CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
-	//AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Body);
-	//param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
-	//AddCollision(std::make_unique<Collision::Sphere>(param.position, param.radius),CollisionType::Null);
-	//// エフェクトの当たり判定のパラメータをキャッシュしておく
-	//m_collisionParam = param;
+	// 本体の当たり判定の追加
+	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	AddCollision(param);
+	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
+	AddCollision(param);
+	// エフェクトの当たり判定のパラメータをキャッシュしておく
+	m_collisionParam = param;
 
-	//AddCollision(std::make_unique<Collision::AABB>(m_transform.position, Vector3::zero),CollisionType::Invalid);
 }
 
 void FireBottle::Update(float deltaTime,const InputData& inputData)
@@ -80,30 +78,11 @@ void FireBottle::Draw()
 {
 	printfDx("molotov::CollisionType : %d\n", m_collisions[0].type);
 	printfDx("molotov::TileID : %d\n", GetOnTileID());
-	if (m_isEffect) {
-		DrawEffect();
-	}
-	else {
-		DrawModel();
+	if (!m_isEffect) {
+		GameObject::Draw();
 	}
 }
-void FireBottle::DrawModel()
-{
-	// モデルが読み込まれているかどうかチェック
-	if (m_modelData->GetHandle() == -1)return;
 
-	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
-	MV1DrawModel(m_modelData->GetHandle());
-}
-
-void FireBottle::DrawEffect()
-{
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 * m_alpha);
-	//DrawSphere3D(m_transform.position.ToVECTOR(), m_collisionParam.radius, 10, Color::kRed, Color::kRed, TRUE);
-	//SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
-
-}
 void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData, const CollisionData& otherData, const Collision::Result& result)
 {
 	Vector3 push = result.normal * result.penetration;

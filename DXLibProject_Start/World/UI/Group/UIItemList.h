@@ -2,11 +2,14 @@
 #include"pch.h"
 
 #include"../Object/UIItemSlot.h"
-#include"../../Object/Item/ItemList.h"
 #include"../Core/UIObject.h"
 #include"World/Action/ActionInterval.h"
 #include"Utility/MyMath.h"
-
+namespace {
+	// アイテムスロットの個数
+	constexpr int kItemSlotMax = 10;
+	constexpr int kItemSelectMax = 2;
+}
 class UIItemCursor;
 class ActionInterval;
 class Character;
@@ -21,6 +24,7 @@ public:
 
 	void OnInit()override;
 	void OnUpdate(float deltatime, const InputData& inputData)override;
+	void CursorUpdate(float deltatime, const InputData& inputData);
 	/// <summary>
 	/// 1つ後の項目を設定する
 	/// </summary>
@@ -33,6 +37,10 @@ public:
 	/// 指定した番号のスロットの座標を求める
 	/// </summary>
 	const Vector2& CalculateSlotPos(int slotID);
+	/// <summary>
+	/// デバッグ表示
+	/// </summary>
+	void DebugDraw()override;
 private:
 	/// <summary>
 	/// ベクトル指定のカーソル移動処理
@@ -46,9 +54,19 @@ private:
 	void MoveCursor(const DirectionFour& direction);
 private:
 	/// <summary>
+	/// カーソル下のスロットを選択する
+	/// </summary>
+	void Select();
+	/// <summary>
+	/// アイテムの選択状況をリセットする
+	/// </summary>
+	/// <param name="slotID">指定番号のスロット選択状況をリセット、デフォルト値の時はすべてリセット</param>
+	void Cancel(int slotID = -1);
+private:
+	/// <summary>
 	/// 選択中のインデックス
 	/// </summary>
-	int m_selectIndex;
+	int m_cursorIndex;
 	/// <summary>
 	/// 自身が管理するスロットの配列
 	/// </summary>
@@ -65,5 +83,6 @@ private:
 	/// アイテムのリストを表示してほしいキャラクター
 	/// </summary>
 	Character* m_pCharacter;
+	std::array<int, kItemSelectMax>m_selectIndex;
 };
 

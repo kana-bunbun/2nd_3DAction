@@ -98,23 +98,11 @@ void HealBottle::Update(float deltaTime,const InputData& inputData)
 {
 	IntervalUpdate(deltaTime);
 	UpdateObject(deltaTime);
-	//m_pEffectCollision->SetPosition(m_transform.position);
-
 }
 
 void HealBottle::Draw()
 {
-	DrawModel();
-}
-
-void HealBottle::DrawModel()
-{
-	// モデルが読み込まれているかどうかチェック
-	if (m_modelData->GetHandle() == -1)return;
-	if (m_pInterval->IsActive())return;
-	MV1SetRotationXYZ(m_modelData->GetHandle(), m_transform.rotation.ToVECTOR());
-	MV1SetPosition(m_modelData->GetHandle(), m_transform.position.ToVECTOR());
-	MV1DrawModel(m_modelData->GetHandle());
+	GameObject::Draw();
 }
 
 void HealBottle::ResolveCollision(GameObject & other, const CollisionData & myData, const CollisionData & otherData, const Collision::Result & result)

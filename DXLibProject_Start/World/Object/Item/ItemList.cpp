@@ -16,7 +16,7 @@ void ItemList::AddItem(const ItemData::Type & type, int addNum)
 {
 	// すでに同じアイテムを所持していたら加算する
 	for (int i = 0; i < m_items.size(); i++) {
-		ItemData::Type itemType = m_items[i].GetShape();
+		ItemData::Type itemType = m_items[i].GetType();
 		if(itemType != type)continue;
 		// 同じアイテムを所持していたら加算して終了
 		m_items[i].Add(addNum);
@@ -39,7 +39,7 @@ void ItemList::AddItem(const ItemData::Type & type, int addNum)
 bool ItemList::CanAddItem(const ItemData::Type & type)
 {
 	for (int i = 0; i < m_items.size(); i++) {
-		ItemData::Type itemType = m_items[i].GetShape();
+		ItemData::Type itemType = m_items[i].GetType();
 		if (itemType != ItemData::Type::Invalid && itemType != type)continue;
 		return true;
 	}
@@ -62,7 +62,7 @@ bool ItemList::CanUseItem(int itemIndex, int useCount)
 	if (itemIndex < 0 || itemIndex >= m_items.size())return false;
 	ItemData data = m_items[itemIndex];
 	// 指定した番号でアイテムがなければfalse
-	if (data.GetShape()==ItemData::Type::Invalid)return false;
+	if (data.GetType()==ItemData::Type::Invalid)return false;
 	// 指定した番号のアイテム所持数が消費数より少なければfalse
 	if (data.GetItemNum()<useCount)return false;
 	// ここまで来たら使用可能
