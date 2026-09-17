@@ -13,6 +13,7 @@ namespace {
 class UIItemCursor;
 class ActionInterval;
 class Character;
+class ItemList;
 /// <summary>
 /// キャラクターの所持アイテムリストのUI表示をする
 /// </summary>
@@ -23,8 +24,9 @@ public:
 
 
 	void OnInit()override;
-	void OnUpdate(float deltatime, const InputData& inputData)override;
-	void CursorUpdate(float deltatime, const InputData& inputData);
+	void OnUpdate(float deltatime, const InputData& _inputData)override;
+	void AfterUpdate(float deltatime, const InputData& _inputData)override;
+	void CursorUpdate(float deltatime, const InputData& _inputData);
 	/// <summary>
 	/// 1つ後の項目を設定する
 	/// </summary>
@@ -41,7 +43,6 @@ public:
 	/// デバッグ表示
 	/// </summary>
 	void DebugDraw()override;
-private:
 	/// <summary>
 	/// ベクトル指定のカーソル移動処理
 	/// </summary>
@@ -52,7 +53,10 @@ private:
 	/// </summary>
 	/// <param name="direction">入力した方向</param>
 	void MoveCursor(const DirectionFour& direction);
-private:
+	/// <summary>
+	/// 選択しているアイテムを使用
+	/// </summary>
+	void UseItem();
 	/// <summary>
 	/// カーソル下のスロットを選択する
 	/// </summary>
@@ -66,6 +70,12 @@ private:
 	/// 選択したアイテムの合成
 	/// </summary>
 	void Blend();
+	/// <summary>
+	/// キャラクターを設定する
+	/// </summary>
+	/// <param name="pCharacter"></param>
+	void SetCharacter(Character* pCharacter);
+private:
 	/// <summary>
 	/// 選択中の個数を取得
 	/// </summary>
@@ -92,6 +102,7 @@ private:
 	/// アイテムのリストを表示してほしいキャラクター
 	/// </summary>
 	Character* m_pCharacter;
+	ItemList* m_pItemList;
 	std::array<int, kItemSelectMax>m_selectIndex;
 };
 

@@ -173,7 +173,7 @@ void Player::Init()
 	GameObject::m_collisionTag = CollisionTag::Player;
 	m_itemList = std::make_unique<ItemList>();
 	m_itemList->AddItem(ItemData::Type::ChiliPepper, 144);
-	m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
+	//m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
 	m_itemList->AddItem(ItemData::Type::Honey, 34);
 	m_itemList->AddItem(ItemData::Type::FireBottle, 877);
 	m_itemList->AddItem(ItemData::Type::Jam, 877);
@@ -196,20 +196,20 @@ void Player::LoadModel()
 
 }
 
-void Player::Update(float deltaTime, const InputData& inputData)
+void Player::Update(float deltaTime, const InputData& _inputData)
 {
 
 	// アニメーションの速度を1倍で設定
 	m_animation.SetAnimSpeed(1);
 
 	// ステータスに応じた更新処理
-	UpdateAction(inputData);
+	UpdateAction(_inputData);
 	// フラグの更新
 	UpdateFlag();
 	// トランスフォームの更新
-	UpdateTransform(deltaTime, inputData);
+	UpdateTransform(deltaTime, _inputData);
 	// アニメーションの更新
-	UpdateAnimation(deltaTime, inputData);
+	UpdateAnimation(deltaTime, _inputData);
 
 	// バリアの座標を設定
 	if (m_pBarrier) {

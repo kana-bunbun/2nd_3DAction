@@ -16,7 +16,7 @@ public:
 	/// 更新処理
 	/// 現状、非表示にしていても更新処理は走る
 	/// </summary>
-	void Update(float deltaTime,const InputData& inputData);
+	void Update(float deltaTime,const InputData& _inputData);
 	/// <summary>
 	/// 描画処理
 	/// IsVisibleInHierarchyの結果が非表示なら即時return
@@ -35,8 +35,8 @@ protected:
 	// 基本的に空の関数
 	// 個別で処理したいことがあればoverrideで記載
 	virtual void OnInit() {};
-	virtual void OnUpdate(float deltaTime, const InputData& inputData) {};
-	virtual void AfterUpdate(float deltaTime, const InputData& inputData) {};
+	virtual void OnUpdate(float deltaTime, const InputData& _inputData) {};
+	virtual void AfterUpdate(float deltaTime, const InputData& _inputData) {};
 	virtual void OnDraw() {};
 	virtual void OnEnd() {};
 

@@ -14,6 +14,8 @@
 #include "World/Object/Item/ItemManager.h"
 #include "World/Map/TileManager.h"
 #include "World/UI/Group/UIItemList.h"
+#include "System/Controller/ItemListController.h"
+#include "System/Controller/ItemUseController.h"
 
 
 #include"System/EffectManager.h"
@@ -26,7 +28,8 @@ MainScreen::MainScreen() :
 	m_pPlayer(nullptr),
 	m_pDragon(nullptr),
 	m_pBarrier(nullptr),
-	m_pUiItemList(nullptr)
+	m_pUiItemList(nullptr),
+	m_pItemUseController(nullptr)
 {
 	// ライトの向きを設定
 Vector3 lightVec = Vector3::YAxis * -1;
@@ -35,7 +38,10 @@ ChangeLightTypeDir(lightVec.ToVECTOR());
 
 MainScreen::~MainScreen()
 {
-
+	delete m_pUiItemList;
+	m_pUiItemList = nullptr;
+	delete m_pItemUseController;
+	m_pItemUseController = nullptr;
 }
 
 void MainScreen::Init()
@@ -59,6 +65,8 @@ void MainScreen::Init()
 
 	m_pUiItemList = new UIItemList();
 	m_pUiItemList->Init();
+	m_pItemUseController = new ItemUseController(m_pUiItemList);
+
 }
 
 void MainScreen::CreateObjects()
@@ -90,6 +98,8 @@ void MainScreen::Update(float deltaTime, const InputData & inputData)
 	// マップ上にプレイヤーのトランスフォームを設定
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
 	m_pUiItemList->Update(deltaTime,inputData);
+	m_pItemUseController->Update(deltaTime, inputData);
+
 	InputData _inputData = inputData;
 	if (_inputData.IsPressed(Input::Action::Dash)) {
 		EffectManager::GetInstance().Play(10000, &m_pPlayer->GetTransform());

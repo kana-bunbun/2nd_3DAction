@@ -11,12 +11,12 @@ ScreenManager::~ScreenManager()
 
 }
 
-void ScreenManager::Update(float deltaTime, const InputData& inputData)
+void ScreenManager::Update(float deltaTime, const InputData& _inputData)
 {
 	// 管理しているUIScreenが空なら即時return
 	if (Empty())return;
 	// 最前面のUIScreenを更新する
-	m_screens.back()->Update(deltaTime,inputData);
+	m_screens.back()->Update(deltaTime,_inputData);
 }
 
 void ScreenManager::Draw()

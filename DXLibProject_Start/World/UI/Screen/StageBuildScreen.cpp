@@ -22,6 +22,14 @@
 
 namespace {
 	const char* const kCameraParamPath = "CameraParam";
+	constexpr Vector3 kVertex[6] = {
+	{-200,-100,-200} ,
+	{-200,-100,200} ,
+	{200,-100,-200} ,
+	{200,-100,200} ,
+	{-200,100,400} ,
+	{200,100,400} 
+	};
 }
 StageBuildScreen::StageBuildScreen() :
 	m_pCameraMgr(nullptr),
@@ -30,7 +38,10 @@ StageBuildScreen::StageBuildScreen() :
 	m_pDragon(nullptr),
 	m_pBarrier(nullptr),
 	m_pUiItemList(nullptr),
-	m_pTriangle(nullptr)
+	m_pTriangle0(nullptr),
+	m_pTriangle1(nullptr),
+	m_pTriangle2(nullptr),
+	m_pTriangle3(nullptr)
 {
 	// ライトの向きを設定
 	Vector3 lightVec = Vector3::YAxis * -1;
@@ -78,10 +89,16 @@ void StageBuildScreen::Init()
 	Player* player = CharacterManager::GetInstance().GetPlayer();
 	if (!player)return;
 	Vector3 playerPos = player->GetTransform().position;
-	Vector3 vertex0 = { playerPos.x + 350,playerPos.y + 150,playerPos.z};
-	Vector3 vertex1 = { playerPos.x - 50,playerPos.y +0,playerPos.z};
-	Vector3 vertex2 = { playerPos.x + 150,playerPos.y + 0,playerPos.z};
-	m_pTriangle = std::make_unique<Collision::Triangle>(vertex0, vertex1, vertex2);
+	Vector3 vertex0 = { playerPos.x + 50,playerPos.y + 150,playerPos.z+10};
+	Vector3 vertex1 = { playerPos.x - 50,playerPos.y - 1,playerPos.z};
+	Vector3 vertex2 = { playerPos.x + 150,playerPos.y - 1,playerPos.z};
+
+	m_pSphere = std::make_unique<Collision::Sphere>(m_pPlayer->GetTransform().position, 30);
+
+	m_pTriangle0 = std::make_unique<Collision::Triangle>(kVertex[0], kVertex[1], kVertex[2]);
+	m_pTriangle1 = std::make_unique<Collision::Triangle>(kVertex[1], kVertex[3], kVertex[2]);
+	m_pTriangle2 = std::make_unique<Collision::Triangle>(kVertex[1], kVertex[4], kVertex[3]);
+	m_pTriangle3 = std::make_unique<Collision::Triangle>(kVertex[4], kVertex[5], kVertex[3]);
 
 }
 
@@ -99,24 +116,24 @@ void StageBuildScreen::CreateObjects()
 	
 }
 
-void StageBuildScreen::Update(float deltaTime, const InputData& inputData)
+void StageBuildScreen::Update(float deltaTime, const InputData& _inputData)
 {
 	// カメラ更新
-	m_pCameraMgr->Update(deltaTime, inputData);
+	m_pCameraMgr->Update(deltaTime, _inputData);
 	// カメラの状態をプレイヤーに渡す
 	m_pPlayer->SetCameraView(m_pCameraMgr->GetCameraView());
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());
 	// マップの更新処理
-	m_pTileManager->Update(deltaTime, inputData);
+	m_pTileManager->Update(deltaTime, _inputData);
 	// オブジェクトの更新処理
-	GameObjectManager::GetInstance().Update(deltaTime, inputData);
+	GameObjectManager::GetInstance().Update(deltaTime, _inputData);
 	// オブジェクトの衝突処理
 	GameObjectManager::GetInstance().CheckCollision();
 	// マップ上にプレイヤーのトランスフォームを設定
 	m_pTileManager->SetMarkPos(m_pPlayer->GetTransform());
-	m_pUiItemList->Update(deltaTime, inputData);
+	m_pUiItemList->Update(deltaTime, _inputData);
 
-
+	m_pTriangle0->CalcurateClosestPoint(m_pPlayer->GetTransform().position);
 }
 
 void StageBuildScreen::Draw()
@@ -134,15 +151,14 @@ void StageBuildScreen::Draw()
 	ImGui::Begin("Test");
 	ImGui::Text("sdfhs");
 	ImGui::End();
-	if(m_pTriangle)
-	m_pTriangle->DebugDraw();
-
-	std::string s = "out";
-	Vector3 pos = m_pPlayer->GetTransform().position;
-	if (m_pTriangle->IsPointInside(pos)) {
-		s = "in";
-	}
-	printfDx("Triangle : %s\n", s.c_str());
+	if(m_pTriangle0)
+	m_pTriangle0->DebugDraw();
+	if (m_pTriangle1)
+		m_pTriangle1->DebugDraw();
+	if (m_pTriangle2)
+		m_pTriangle2->DebugDraw();
+	if (m_pTriangle3)
+		m_pTriangle3->DebugDraw();
 
 
 }

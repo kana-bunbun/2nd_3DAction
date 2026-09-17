@@ -27,11 +27,11 @@ void ItemObjectField::End()
 
 }
 
-void ItemObjectField::Update(float deltaTime, const InputData& inputData)
+void ItemObjectField::Update(float deltaTime, const InputData& _inputData)
 {
 	m_hitLog[0] = m_hitLog[1];
 	m_hitLog[1] = false;
-	PickUpItem(inputData);
+	PickUpItem(_inputData);
 }
 
 void ItemObjectField::Draw()
@@ -53,9 +53,9 @@ void ItemObjectField::ResolveCollision(GameObject & other, const CollisionData &
 	}
 }
 
-void ItemObjectField::PickUpItem(const InputData& inputData)
+void ItemObjectField::PickUpItem(const InputData& _inputData)
 {
-	InputData input = inputData;
+	InputData input = _inputData;
 	if (!m_hitLog[0])return;
 	if (!input.IsPressed(Input::Action::PickUpItem))return;
 

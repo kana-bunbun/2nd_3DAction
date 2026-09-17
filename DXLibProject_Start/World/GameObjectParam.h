@@ -43,6 +43,7 @@
 		Stair,
 		Stage,
 		Barrier,
+		Item,
 	};
 	enum class CollisionType {
 		Invalid = -1,

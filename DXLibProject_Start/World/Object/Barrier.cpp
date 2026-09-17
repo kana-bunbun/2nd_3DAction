@@ -44,7 +44,7 @@ void Barrier::Init()
 {
 }
 
-void Barrier::Update(float deltaTime, const InputData& inputData)
+void Barrier::Update(float deltaTime, const InputData& _inputData)
 {
 
 	m_alpha = CheckAlpha();

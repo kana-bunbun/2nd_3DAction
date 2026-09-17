@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	void Update(float deltaTime,const InputData& inputData)override;
+	void Update(float deltaTime,const InputData& _inputData)override;
 	/// <summary>
 	/// ステータスに応じた行動の更新処理
 	/// </summary>

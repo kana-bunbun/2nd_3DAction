@@ -27,7 +27,7 @@ void CameraManager::Init()
 	SetCameraNearFar(kNearDistance, kFarDistance);
 }
 
-void CameraManager::Update(float deltaTime, const InputData& inputData)
+void CameraManager::Update(float deltaTime, const InputData& _inputData)
 {
 	assert(!m_cameras.empty());
 	//if (m_cameras.empty())return;
@@ -35,7 +35,7 @@ void CameraManager::Update(float deltaTime, const InputData& inputData)
 	//m_currentView=m_cameras[m_activeIndex]->GetView();
 	size_t index = static_cast<size_t>(m_cameraType);
 	if (!m_cameras[index])return;
-	m_cameras[index]->Update(deltaTime,inputData);
+	m_cameras[index]->Update(deltaTime,_inputData);
 	m_currentView = m_cameras[index]->GetView();
 }
 

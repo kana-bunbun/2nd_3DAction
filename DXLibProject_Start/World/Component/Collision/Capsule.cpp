@@ -101,6 +101,7 @@ namespace Collision {
 		result.isHit = true;
 
 		float distance = dif.GetLength();
+
 		if (distance > MyMath::Epsilon) {
 			result.normal = dif / distance;
 		}

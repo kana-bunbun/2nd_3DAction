@@ -25,7 +25,7 @@ void UIItemCursor::OnEnd()
 
 }
 
-void UIItemCursor::OnUpdate(float deltaTime, const InputData& inputData)
+void UIItemCursor::OnUpdate(float deltaTime, const InputData& _inputData)
 {
 	Vector2 differ = m_desirePosition - m_position;
 	float sqLength = differ.GetSqLength();

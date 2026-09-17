@@ -1,6 +1,9 @@
 #pragma once
 #include "ICollider.h"
 namespace Collision {
+	class Sphere;
+	class Capsule;
+	class AABB;
 	class Triangle :public ICollider
 	{
 	public:
@@ -46,12 +49,28 @@ namespace Collision {
 		/// </summary>
 		/// <returns></returns>
 		Vector3 GetNormal()const;
+
+		/// <summary>
+		/// 三角形と点の最近接点を求める
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		Vector3 CalcurateClosestPoint(const Vector3& position)const;
+
+	private:
+		
 		/// <summary>
 		/// 任意の座標が三角形の面の内供部に存在しているかどうか調べる
 		/// </summary>
 		/// <param name="point"></param>
 		/// <returns></returns>
 		bool IsPointInside(const Vector3& point)const;
+		/// <summary>
+		/// 球との衝突判定
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		Collision::Sphere CheckCollision(const Collision::Sphere& other )const;
 
 	private:
 		/// <summary>

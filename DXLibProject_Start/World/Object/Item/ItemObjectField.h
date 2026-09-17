@@ -14,7 +14,7 @@ public:
 
 	void Init()override;
 	void End()override;
-	void Update(float deltaTime,const InputData& inputData)override;
+	void Update(float deltaTime,const InputData& _inputData)override;
 	void Draw()override;
 	void ResolveCollision(
 		GameObject& other,
@@ -22,7 +22,7 @@ public:
 		const CollisionData& otherData,
 		const Collision::Result& result
 	);
-	void PickUpItem(const InputData& inputData);
+	void PickUpItem(const InputData& _inputData);
 	void Setup(const ItemData::Type& type, const Vector3& position);
 public:
 	void SetItemCursor(ItemCursor* itemcursor) { m_pItemCursor = itemcursor; }

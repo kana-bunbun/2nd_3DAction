@@ -5,9 +5,9 @@ class VectorState {
 public:
 	VectorState() {}
 	VectorState(Vector2 vector, float radian, float ratio);
-	Vector2 GetVector() { return vector; }
-	const float GetRadian() { return radian; }
-	const float GetRatio() { return ratio; }
+	Vector2 GetVector()const { return vector; }
+	const float GetRadian()const { return radian; }
+	const float GetRatio()const { return ratio; }
 private:
 	Vector2 vector = Vector2::zero;
 	float radian=0.0f;

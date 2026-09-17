@@ -8,6 +8,7 @@ class Player;
 class Dragon;
 class Barrier;
 class UIItemList;
+class ItemUseController;
 
 /// <summary>
 /// ゲームのメイン画面
@@ -20,7 +21,7 @@ public:
 
 	void Init() override ;
 	void CreateObjects();
-	void Update(float deltaTime, const InputData& inputData) override;
+	void Update(float deltaTime, const InputData& _inputData) override;
 	void Draw() override;
 private:
 	std::unique_ptr<CameraManager> m_pCameraMgr;
@@ -29,5 +30,6 @@ private:
 	Dragon* m_pDragon;
 	Barrier* m_pBarrier;
 	UIItemList* m_pUiItemList;
+	ItemUseController* m_pItemUseController;
 };
 

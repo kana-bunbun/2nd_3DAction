@@ -7,6 +7,7 @@
 namespace Collision {
 	class Capsule;
 	class AABB;
+	class Triangle;
 	class Sphere :public ICollider {
 	public:
 
@@ -45,6 +46,7 @@ namespace Collision {
 		void DebugDraw(int color = Color::kWhite)const  override;
 		Collision::Result CheckSphere(const Collision::Sphere& other)const;
 		Collision::Result CheckCapsule(const Collision::Capsule& other)const;
+		Collision::Result CheckTriangle (const Collision::Triangle& other)const;
 
 	private:
 		/// <summary>

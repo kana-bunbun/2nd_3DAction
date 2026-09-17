@@ -18,7 +18,7 @@ public:
 	void OnInit()override;
 	void SetPlayer(Player* player);
 	void OnEnd()override;
-	void OnUpdate(float deltaTime, const InputData& inputData)override;
+	void OnUpdate(float deltaTime, const InputData& _inputData)override;
 	void OnDraw()override;
 private:
 

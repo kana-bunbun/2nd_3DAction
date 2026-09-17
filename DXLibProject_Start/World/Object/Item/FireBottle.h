@@ -8,7 +8,7 @@ public:
 
 	void Init()override;
 	void InitParameter()override;
-	void Update(float deltaTime, const InputData& inputData)override;
+	void Update(float deltaTime, const InputData& _inputData)override;
 	void End()override;
 	void Draw()override;
 	void ResolveCollision(

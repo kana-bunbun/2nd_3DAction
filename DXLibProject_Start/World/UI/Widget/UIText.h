@@ -17,7 +17,7 @@ public:
 	
 	// UIObjectクラスのメンバ関数
 	void OnInit()override;
-	void OnUpdate(float deltaTime, const InputData& inputData)override;
+	void OnUpdate(float deltaTime, const InputData& _inputData)override;
 	void OnDraw()override;
 	void OnEnd()override;
 

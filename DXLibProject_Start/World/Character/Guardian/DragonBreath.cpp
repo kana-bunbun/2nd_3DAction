@@ -39,7 +39,7 @@ void DragonBreath::Setup(const Vector3& RegistPos, const Vector3& moveVec)
 	m_lifeCount = 0.0f;
 }
 
-void DragonBreath::Update(float deltaTime, const InputData& inputData)
+void DragonBreath::Update(float deltaTime, const InputData& _inputData)
 {
 
 	m_transform.position += m_moveVec * kMoveSpeed * deltaTime;

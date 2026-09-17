@@ -19,7 +19,7 @@ void UIImage::OnInit()
 
 }
 
-void UIImage::OnUpdate(float deltaTime, const InputData& inputData)
+void UIImage::OnUpdate(float deltaTime, const InputData& _inputData)
 {
 
 }

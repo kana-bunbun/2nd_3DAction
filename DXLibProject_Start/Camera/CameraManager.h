@@ -16,7 +16,7 @@ public:
 	~CameraManager();
 
 	void Init();
-	void Update(float deltaTime, const InputData& inputData);
+	void Update(float deltaTime, const InputData& _inputData);
 
 	/// <summary>
 	/// DXライブラリの描画に必要のパラメータを設定

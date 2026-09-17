@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// 最前面のUIScreenを更新
 	/// </summary>
-	void Update(float deltaTime,const InputData& inputData);
+	void Update(float deltaTime,const InputData& _inputData);
 	/// <summary>
 	/// 管理しているUIScreenを描画
 	/// </summary>

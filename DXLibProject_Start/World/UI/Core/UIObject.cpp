@@ -19,16 +19,16 @@ void UIObject::Init()
 	}
 }
 
-void UIObject::Update(float deltaTime, const InputData& inputData)
+void UIObject::Update(float deltaTime, const InputData& _inputData)
 {
 	// 自身固有の更新処理
-	OnUpdate(deltaTime,inputData);
+	OnUpdate(deltaTime,_inputData);
 	// 子オブジェクトの更新処理
 	for (auto& child : m_children) {
 		if (!child)continue;
-		child->Update(deltaTime,inputData);
+		child->Update(deltaTime,_inputData);
 	}
-	AfterUpdate(deltaTime,inputData);
+	AfterUpdate(deltaTime,_inputData);
 }
 
 void UIObject::Draw()

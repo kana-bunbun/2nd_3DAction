@@ -94,7 +94,7 @@ void HealBottle::Setup(const Transform& transform)
 	//m_actionEffect->SetActive(true);
 }
 
-void HealBottle::Update(float deltaTime,const InputData& inputData)
+void HealBottle::Update(float deltaTime,const InputData& _inputData)
 {
 	IntervalUpdate(deltaTime);
 	UpdateObject(deltaTime);

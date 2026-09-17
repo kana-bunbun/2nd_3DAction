@@ -40,7 +40,7 @@ void Stair::Init()
 
 }
 
-void Stair::Update(float deltaTime, const InputData& inputData)
+void Stair::Update(float deltaTime, const InputData& _inputData)
 {
 	m_isHitOld = m_isHit;
 	// アルファ値の増減量を求める

@@ -148,12 +148,12 @@ void Dragon::Init()
 
 }
 
-void Dragon::Update(float deltaTime, const InputData& inputData)
+void Dragon::Update(float deltaTime, const InputData& _inputData)
 {
 	// タイルIDの更新処理
 	TileIDUpdate();
 	// 入力による更新処理
-	UpdateFromInput(inputData);
+	UpdateFromInput(_inputData);
 
 	// アニメーション速度を初期化
 	m_animation.SetAnimSpeed();
@@ -208,9 +208,9 @@ void Dragon::TileIDUpdate()
 	
 }
 
-void Dragon::UpdateFromInput(const InputData& inputData)
+void Dragon::UpdateFromInput(const InputData& _inputData)
 {
-	InputData input = inputData;
+	InputData input = _inputData;
 	if (input.IsPressed(Input::Action::DragonCall)) {
 		if (m_followState!=FollowState::Attack&&m_status!=Status::Dragon::Attack) {
 			SetTarget(CharacterManager::GetInstance().CheckNearestCharacter(m_transform.position, Character::Type::Enemy));

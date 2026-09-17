@@ -149,6 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\Controller\ItemUseController.cpp" />
+    <ClCompile Include="System\Controller\ItemListController.cpp" />
+    <ClCompile Include="System\Controller\Controller.cpp" />
     <ClCompile Include="World\Component\Collision\Triangle.cpp" />
     <ClCompile Include="World\Component\Collision\Capsule.cpp" />
     <ClCompile Include="World\Component\Collision\Sphere.cpp" />
@@ -340,6 +343,9 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System\Controller\ItemUseController.h" />
+    <ClInclude Include="System\Controller\ItemListController.h" />
+    <ClInclude Include="System\Controller\Controller.h" />
     <ClInclude Include="World\Component\Collision\Triangle.h" />
     <ClInclude Include="World\Component\Collision\Capsule.h" />
     <ClInclude Include="World\Component\Collision\CollisionShape.h" />

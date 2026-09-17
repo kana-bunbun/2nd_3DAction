@@ -28,10 +28,10 @@ public:
 	~Dragon();
 
 	void Init()override;
-	void Update(float deltaTime,const InputData& inputData)override;
+	void Update(float deltaTime,const InputData& _inputData)override;
 	void TileIDUpdate();
 	const Character::Type& GetCharacterType()override { return Character::Type::Dragon; }
-	void UpdateFromInput(const InputData& inputData);
+	void UpdateFromInput(const InputData& _inputData);
 	/// <summary>
 	/// 追従時の更新処理
 	/// </summary>

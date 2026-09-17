@@ -26,7 +26,8 @@ UIItemList::UIItemList():
 	m_itemSlots(),
 	m_pItemCursor(nullptr),
 	m_cursorInterval(),
-	m_pCharacter(nullptr)
+	m_pCharacter(nullptr),
+	m_pItemList(nullptr)
 {
 	m_cursorInterval.Init(kCursorIntervalID);
 	m_selectIndex.fill(-1);
@@ -34,8 +35,13 @@ UIItemList::UIItemList():
 
 void UIItemList::OnInit()
 {
-	// プレイヤーのアイテムリスト
-	m_pCharacter = CharacterManager::GetInstance().GetPlayer();
+	if (!m_pCharacter) {
+		m_pCharacter = CharacterManager::GetInstance().GetPlayer();
+	}
+	if (!m_pItemList) {
+		m_pItemList = m_pCharacter->GetItemList();
+	}
+
 	for (int i = 0; i < m_itemSlots.size(); i++) {
 		std::unique_ptr<UIItemSlot>slot = std::make_unique<UIItemSlot>(i);
 		slot->Init();
@@ -46,66 +52,30 @@ void UIItemList::OnInit()
 	}
 	std::unique_ptr<UIItemCursor> cursor=std::make_unique<UIItemCursor>();
 	m_pItemCursor = cursor.get();
+	m_pItemCursor->SetLerpPosition(CalculateSlotPos(m_cursorIndex));
 	m_pItemCursor->SetPosition(CalculateSlotPos(m_cursorIndex));
 	AddChild(std::move(cursor));
 }
 
-void UIItemList::OnUpdate(float deltatime, const InputData& inputData)
+void UIItemList::OnUpdate(float deltatime, const InputData& _inputData)
 {
-	CursorUpdate(deltatime, inputData);
+	CursorUpdate(deltatime, _inputData);
 
 	printfDx("m_selectIndex : %d\n", m_cursorIndex);
 	DebugDraw();
 }
 
-void UIItemList::CursorUpdate(float deltatime, const InputData& inputData)
+void UIItemList::AfterUpdate(float deltatime, const InputData& _inputData)
 {
-	ItemList* itemList = m_pCharacter->GetItemList();
-	InputData input = inputData;
-	Vector2 inputVector = input.GetVector(Input::Action::CursorMove);
-
 	m_pItemCursor->SetLerpPosition(CalculateSlotPos(m_cursorIndex));
-	// カーソル移動の入力をした瞬間
-	if (input.IsPressed(Input::Action::ItemCursorMove)) {
-		// インターバルの初期化
-		m_cursorInterval.Setup();
-		// カーソル移動のインターバル開始
-		m_cursorInterval.SetActive(true);
-		// カーソル移動
-		MoveCursor(inputVector);
-	Vector2 inputVectora = input.GetVector(Input::Action::ItemCursorMove);
-	}
-	// カーソル移動の入力をしているあいだ
-	if (input.IsDown(Input::Action::ItemCursorMove)) {
-		// インターバルの更新
-		m_cursorInterval.Update(deltatime);
 
-		if (m_cursorInterval.IsExecute()) {
-		// 入力したベクトルをもとにカーソル移動
-		MoveCursor(inputVector);
-		// カウントをリセット
-		m_cursorInterval.ReCount();
-		}
-	}
-	// カーソル移動の入力を離した瞬間
-	else if (input.IsReleased(kCursorMoveAction)) {
-		// インターバルの終了処理
-		m_cursorInterval.Finish();
-	}
-	for (int i = 0; i < m_itemSlots.size();i++) {
+}
+
+void UIItemList::CursorUpdate(float deltatime, const InputData& _inputData)
+{
+	for (int i = 0; i < m_itemSlots.size(); i++) {
 		// プレイヤーの所持アイテムリストの情報を設定
-		m_itemSlots[i]->SetItemData(itemList->GetItemData(m_itemSlots[i]->GetID()));
-	}
-	if (input.IsPressed(Input::Action::UseItem)) {
-		// リスト上の消費処理
-		itemList->UseItem(m_cursorIndex);
-		m_itemSlots[m_cursorIndex]->ConsumeItem(m_pCharacter->GetTransform());
-	}
-	if (input.IsPressed(Input::Action::Decide)) {
-		Select();
-	}
-	if (input.IsPressed(Input::Action::BlendItem)) {
-		Blend();
+		m_itemSlots[i]->SetItemData(m_pItemList->GetItemData(m_itemSlots[i]->GetID()));
 	}
 }
 
@@ -177,6 +147,13 @@ void UIItemList::MoveCursor(const DirectionFour& direction)
 		// カーソル左方向に1つずらす
 		SelectPrevIndex();
 	}
+}
+
+void UIItemList::UseItem()
+{
+	// リスト上の消費処理
+	m_pItemList->UseItem(m_cursorIndex);
+	m_itemSlots[m_cursorIndex]->ConsumeItem(m_pCharacter->GetTransform());
 }
 
 void UIItemList::Select()
@@ -257,6 +234,12 @@ void UIItemList::Blend()
 	for (auto& select : m_selectIndex) {
 		_itemList->UseItem(select);
 	}
+}
+
+void UIItemList::SetCharacter(Character* pCharacter)
+{
+	m_pCharacter = pCharacter;
+	m_pItemList = m_pCharacter->GetItemList();
 }
 
 int UIItemList::SelectedNum()

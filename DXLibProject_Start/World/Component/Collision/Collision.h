@@ -14,7 +14,7 @@ namespace Collision {
 		Capsule,
 		AABB,		// Axis Aligned Bounding Box
 		//OBB,		// Oriented Bounding Box
-
+		Triangle,
 	};
 
 	struct Result {

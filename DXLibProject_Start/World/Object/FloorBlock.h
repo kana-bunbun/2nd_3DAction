@@ -9,7 +9,7 @@ public:
 	~FloorBlock()override = default;
 
 	void Init()override;
-	void Update(float deltaTime,const InputData& inputData)override;
+	void Update(float deltaTime,const InputData& _inputData)override;
 	void ResolveCollision(
 		GameObject& other,
 		const CollisionData& myData,

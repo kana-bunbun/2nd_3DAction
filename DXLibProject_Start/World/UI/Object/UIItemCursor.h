@@ -8,7 +8,7 @@ public:
 	~UIItemCursor()override = default;
 	void OnInit()override;
 	void OnEnd()override;
-	void OnUpdate(float deltaTime, const InputData& inputData)override;
+	void OnUpdate(float deltaTime, const InputData& _inputData)override;
 	void OnDraw()override;
 	void SetLerpPosition(const Vector2& position) { m_desirePosition = position; }
 	void SetPosition(const Vector2& position) { m_position = position; }

@@ -30,12 +30,12 @@ void GameObjectManager::End()
 	Clear();
 }
 
-void GameObjectManager::Update(float deltaTime, const InputData& inputData)
+void GameObjectManager::Update(float deltaTime, const InputData& _inputData)
 {
 	for (auto& obj : m_objects) {
 		if (!obj->IsActive())continue;
 		obj->UpdateHitData();
-		obj->Update(deltaTime,inputData);
+		obj->Update(deltaTime,_inputData);
 		obj->UpdateCollision();
 	}
 }
@@ -139,6 +139,11 @@ void GameObjectManager::CheckCollision()
 			// 壁同士の当たり判定は調べない
 			if (objA->GetCollisionTag() == CollisionTag::Wall &&
 				objB->GetCollisionTag() == CollisionTag::Wall)continue;
+
+			if ((objA->GetCollisionTag() == CollisionTag::Wall && objB->GetCollisionTag() == CollisionTag::Item) ||
+				(objA->GetCollisionTag() == CollisionTag::Item && objB->GetCollisionTag() == CollisionTag::Wall)) {
+				int t = 0;
+			}
 			// 現在いるマスが隣り合っていない場合スルー
 			if (!IsChebyishevTile(objA, objB))continue;
 

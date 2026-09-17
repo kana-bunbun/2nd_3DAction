@@ -117,7 +117,7 @@ void Enemy::LoadModel()
 
 }
 
-void Enemy::Update(float deltaTime, const InputData& inputData)
+void Enemy::Update(float deltaTime, const InputData& _inputData)
 {
 	m_animation.SetAnimSpeed(kDefaultAnimSpeed);
 	// アニメーション速度を初期化

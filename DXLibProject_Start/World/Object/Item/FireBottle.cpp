@@ -51,6 +51,7 @@ void FireBottle::InitParameter()
 	// 本体の当たり判定の追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	AddCollision(param);
+	m_collisionTag = CollisionTag::Item;
 	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
 	AddCollision(param);
 	// エフェクトの当たり判定のパラメータをキャッシュしておく
@@ -58,7 +59,7 @@ void FireBottle::InitParameter()
 
 }
 
-void FireBottle::Update(float deltaTime,const InputData& inputData)
+void FireBottle::Update(float deltaTime,const InputData& _inputData)
 {
 	UpdateObject(deltaTime);
 	if (m_transform.position.y < 0) {
@@ -92,6 +93,7 @@ void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData
 		// エフェクトの当たり判定なら処理を抜ける
 		if (myData.type == CollisionType::Attack)break;
 		SetPosition(m_transform.position + push);
+		//m_transform.position.y = 0.0f;
 		EffectSetup();
 		break;
 	case CollisionTag::Player:

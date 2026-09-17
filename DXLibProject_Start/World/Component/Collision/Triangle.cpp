@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Triangle.h"
 #include "Utility/MyMath.h"
+#include "CollisionShape.h"
 namespace Collision {
 	Triangle::Triangle(const CollisionParam& param) :
 		m_vertex0(param.vertex0),
@@ -11,6 +12,12 @@ namespace Collision {
 	Result Collision::Triangle::CheckCollision(const Collision::ICollider& other) const
 	{
 		return Collision::Result();
+	}
+	Collision::Sphere Triangle::CheckCollision(const Collision::Sphere& other) const
+	{
+		Collision::Result result;
+
+		return Collision::Sphere();
 	}
 
 	void Triangle::SetPosition(const Vector3& pos)
@@ -52,8 +59,52 @@ namespace Collision {
 		Vector3 edge1 = m_vertex1 - m_vertex0;
 		Vector3 edge2 = m_vertex2 - m_vertex0;
 		Vector3 cross = edge1.Cross(edge2);
-		if (!cross.GetSqLength())return Vector3::zero;
+		if (cross.GetSqLength()<MyMath::Epsilon)return Vector3::zero;
 		return cross.Normalize();
+	}
+	Vector3 Triangle::CalcurateClosestPoint(const Vector3& position)const
+	{
+		// 三角形の法線を用意
+		Vector3 normal = GetNormal();
+
+		// 三角形の面の任意の点から引数座標へのベクトルを用意
+		Vector3 fromPlane = position - m_vertex0;
+
+		// 点と三角形の面の距離を求める
+		float distance = fromPlane.Dot(normal);
+		// 三角形の平面へ投影
+		Vector3 projectedPoint = position - normal * distance;
+
+		// 投影した点が三角形の内側に存在しているかチェック
+		if (IsPointInside(projectedPoint)) {
+			// 内側にあれば投影した点が最近接点
+			return projectedPoint;
+		}
+
+		// 三角形の内側に引数座標がないとき
+
+		// 各辺と引数座標の最近接点を求める
+		Vector3 edgeToPosition0 = MyMath::ClosestPointOnSegment(position, m_vertex0, m_vertex1);
+		Vector3 edgeToPosition1 = MyMath::ClosestPointOnSegment(position, m_vertex1, m_vertex2);
+		Vector3 edgeToPosition2 = MyMath::ClosestPointOnSegment(position, m_vertex2, m_vertex0);
+
+		// 各辺と引数座標の距離を求める
+		float distance0 = (edgeToPosition0 - position).GetSqLength();
+		float distance1 = (edgeToPosition1 - position).GetSqLength();
+		float distance2 = (edgeToPosition2 - position).GetSqLength();
+
+		Vector3 closestPos = edgeToPosition0;
+		float minDistance = distance0;
+		if (distance1 < minDistance) {
+			minDistance = distance1;
+			closestPos = edgeToPosition1;
+		}
+		if (distance2 < minDistance) {
+			minDistance = distance2;
+			closestPos = edgeToPosition2;
+		}
+
+		return closestPos;
 	}
 	bool Triangle::IsPointInside(const Vector3& point) const
 	{

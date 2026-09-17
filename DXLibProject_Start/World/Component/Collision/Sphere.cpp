@@ -35,6 +35,12 @@ namespace Collision {
 			result = CheckCapsule(*checkCapsule);
 			break;
 		}
+		case Collision::Shape::Triangle: {
+
+			const Collision::Triangle* checkTriangle = dynamic_cast<const Collision::Triangle*>(&other);
+			result = CheckTriangle(*checkTriangle);
+			break;
+		}
 		default:
 			break;
 		}
@@ -119,6 +125,32 @@ namespace Collision {
 
 		// めり込み量を用意
 		result.penetration = radiusSum - distance;
+		return result;
+	}
+	Collision::Result Sphere::CheckTriangle(const Collision::Triangle& other) const
+	{
+		Collision::Result result;
+		Vector3 closest= other.CalcurateClosestPoint(m_center);
+		Vector3 diff = m_center - closest;
+		float distanceSq = diff.GetSqLength();
+
+		if (distanceSq > m_radius * m_radius) {
+			// 当たっていない
+			return result;
+		}
+
+		// 正式な距離を求める
+		float distance = diff.GetLength();
+		result.penetration = m_radius - distance;
+
+		if (distance < MyMath::Epsilon) {
+			// ゼロ除算を防ぐ
+			result.normal = other.GetNormal();
+		}
+		else {
+			result.normal = diff / distance;
+		}
+
 		return result;
 	}
 }

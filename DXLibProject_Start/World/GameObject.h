@@ -43,7 +43,7 @@ public:
 
 	virtual void Init() = 0;
 	virtual void End();
-	virtual void Update(float deltaTime, const InputData& inputData) {};
+	virtual void Update(float deltaTime, const InputData& _inputData) {};
 	virtual void UpdateCollision();
 	virtual void LateUpdate(float deltaTime) {};	// 最後に行いたい更新処理
 	virtual void Draw();
