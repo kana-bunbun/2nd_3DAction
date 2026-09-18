@@ -60,7 +60,7 @@ public:
 	/// </summary>
 	/// <returns>SceneBase型のポインタ 次に処理をする画面</returns>
 	std::unique_ptr<SceneBase> Update(float deltaTime)override;
-	void UpdateInGame(float deltaTime,InputData inputData);
+	void UpdateInGame(float deltaTime, const InputData& inputData);
 	/// <summary>
 	/// SceneTest画面の描画を行う
 	/// </summary>

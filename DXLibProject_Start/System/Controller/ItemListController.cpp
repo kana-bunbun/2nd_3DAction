@@ -25,23 +25,28 @@ void ItemListController::SetItemList(UIItemList* _itemLlist)
 	m_itemList=_itemLlist;
 }
 
+void ItemListController::Update(float deltaTime, const InputData& _inputData)
+{
+	UpdateMoveCursor(deltaTime, _inputData);
+	UpdateAction(deltaTime, _inputData);
+}
+
 void ItemListController::UpdateMoveCursor(float deltaTime, const InputData& _inputData)
 {
-	InputData input = _inputData;
-	Vector2 inputVector = input.GetVector(Input::Action::CursorMove);
+	Vector2 inputVector = _inputData.GetVector(Input::Action::CursorMove);
 
 	// カーソル移動の入力をした瞬間
-	if (input.IsPressed(Input::Action::ItemCursorMove)) {
+	if (_inputData.IsPressed(Input::Action::ItemCursorMove)) {
 		// インターバルの初期化
 		m_cursorInterval.Setup();
 		// カーソル移動のインターバル開始
 		m_cursorInterval.SetActive(true);
 		// カーソル移動
 		m_itemList->MoveCursor(inputVector);
-		Vector2 inputVectora = input.GetVector(Input::Action::ItemCursorMove);
+		Vector2 inputVectora = _inputData.GetVector(Input::Action::ItemCursorMove);
 	}
 	// カーソル移動の入力をしているあいだ
-	if (input.IsDown(Input::Action::ItemCursorMove)) {
+	if (_inputData.IsDown(Input::Action::ItemCursorMove)) {
 		// インターバルの更新
 		m_cursorInterval.Update(deltaTime);
 
@@ -53,18 +58,8 @@ void ItemListController::UpdateMoveCursor(float deltaTime, const InputData& _inp
 		}
 	}
 	// カーソル移動の入力を離した瞬間
-	else if (input.IsReleased(Input::Action::ItemCursorMove)) {
+	else if (_inputData.IsReleased(Input::Action::ItemCursorMove)) {
 		// インターバルの終了処理
 		m_cursorInterval.Finish();
-	}
-
-	if (input.IsPressed(Input::Action::UseItem)) {
-		m_itemList->UseItem();
-	}
-	if (input.IsPressed(Input::Action::Decide)) {
-		m_itemList->Select();
-	}
-	if (input.IsPressed(Input::Action::BlendItem)) {
-		m_itemList->Blend();
 	}
 }

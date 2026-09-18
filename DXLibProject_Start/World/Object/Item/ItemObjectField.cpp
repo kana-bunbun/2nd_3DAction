@@ -55,9 +55,8 @@ void ItemObjectField::ResolveCollision(GameObject & other, const CollisionData &
 
 void ItemObjectField::PickUpItem(const InputData& _inputData)
 {
-	InputData input = _inputData;
 	if (!m_hitLog[0])return;
-	if (!input.IsPressed(Input::Action::PickUpItem))return;
+	if (!_inputData.IsPressed(Input::Action::PickUpItem))return;
 
 	if (!m_pItemCursor || !m_pItemCursor->AddItem(m_type))return;
 	m_isActive = false;

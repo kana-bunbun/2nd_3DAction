@@ -41,11 +41,11 @@ public:
 	/// <summary>
 	/// ステータスに応じた行動の更新処理
 	/// </summary>
-	void UpdateAction(InputData inputData);
+	void UpdateAction(const InputData& inputData);
 	/// <summary>
 	/// はじき返しの処理
 	/// </summary>
-	void Parry(InputData inputData);
+	void Parry(const InputData& inputData);
 	/// <summary>
 	/// フラグ管理の処理
 	/// </summary>
@@ -53,11 +53,11 @@ public:
 	/// <summary>
 	/// トランスフォームの更新処理
 	/// </summary>
-	void UpdateTransform(float deltaTime,InputData inputData);
+	void UpdateTransform(float deltaTime, const InputData& inputData);
 	/// <summary>
 	/// アニメーションの更新処理
 	/// </summary>
-	void UpdateAnimation(float deltaTime,InputData inputData);
+	void UpdateAnimation(float deltaTime, const InputData& inputData);
 	/// <summary>
 	/// アニメーションの変更を行う処理
 	/// </summary>

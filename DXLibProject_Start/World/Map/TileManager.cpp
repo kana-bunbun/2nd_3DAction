@@ -117,13 +117,12 @@ void TileManager::SetUpFloor()
 	ItemManager::GetInstance().CreateFielditemFloor(5);
 }
 
-void TileManager::Update(float deltaTime, InputData inputData)
+void TileManager::Update(float deltaTime, const InputData& inputData)
 {
 	if (inputData.IsPressed(Input::Action::Decide)) {
 		if (m_pStair->IsHit()) {
 			// フロア生成
-			SetUpFloor();
-			
+			SetUpFloor();			
 		}
 	}
 }

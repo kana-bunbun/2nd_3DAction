@@ -39,7 +39,7 @@ public:
 	/// 管理中のUIScreenが空かどうか取得
 	/// </summary>
 	/// <returns></returns>
-	bool Empty()const { return m_screens.empty(); }
+	bool Empty()const { return m_useScreens.empty(); }
 	/// <summary>
 	/// 最前面にあるコマンド取得後、値をリセット
 	/// </summary>
@@ -50,7 +50,8 @@ private:
 	/// <summary>
 	/// 管理しているUIscreen群
 	/// </summary>
-	std::vector<std::unique_ptr<Screen>>m_screens;
+	std::vector<std::unique_ptr<Screen>>m_useScreens;
+	std::vector<std::unique_ptr<Screen>>m_unUseScreens;
 
 
 };

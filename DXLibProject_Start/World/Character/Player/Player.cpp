@@ -173,7 +173,7 @@ void Player::Init()
 	GameObject::m_collisionTag = CollisionTag::Player;
 	m_itemList = std::make_unique<ItemList>();
 	m_itemList->AddItem(ItemData::Type::ChiliPepper, 144);
-	//m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
+	m_itemList->AddItem(ItemData::Type::HealBottle, 6534);
 	m_itemList->AddItem(ItemData::Type::Honey, 34);
 	m_itemList->AddItem(ItemData::Type::FireBottle, 877);
 	m_itemList->AddItem(ItemData::Type::Jam, 877);
@@ -229,7 +229,7 @@ void Player::Update(float deltaTime, const InputData& _inputData)
 	//m_animation.Debug();
 }
 
-void Player::UpdateAction(InputData inputData)
+void Player::UpdateAction(const InputData& inputData)
 {
 	// ステータスによって行動を分岐
 	switch (m_status)
@@ -261,7 +261,7 @@ void Player::UpdateAction(InputData inputData)
 		break;
 	}
 }
-void Player::Parry(InputData inputData)
+void Player::Parry(const InputData& inputData)
 {
 	// パリィ時のアニメーションの再生速度を設定
 	m_animation.SetAnimSpeed(kParryAnimSpeed);
@@ -292,7 +292,7 @@ void Player::Parry(InputData inputData)
 	}
 }
 
-void Player::UpdateTransform(float deltaTime, InputData inputData)
+void Player::UpdateTransform(float deltaTime, const InputData& inputData)
 {
 	// 入力量を取得
 	float analogAmount = inputData.GetInputRatio(Input::Action::Move);
@@ -334,7 +334,7 @@ void Player::UpdateTransform(float deltaTime, InputData inputData)
 	printfDx("InputRatio   : %f\n", analogAmount);
 }
 
-void Player::UpdateAnimation(float deltaTime, InputData inputData)
+void Player::UpdateAnimation(float deltaTime, const InputData& inputData)
 {
 
 	// アニメーションの更新

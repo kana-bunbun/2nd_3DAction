@@ -42,4 +42,6 @@ GamePadState::GamePadState(const XINPUT_STATE& inputState) :
 		m_isKeyDown[thumbDirection] = true;
 		break;
 	}
+	m_isKeyDown[static_cast<int>(Input::GamePadKey::RightTrigger)] = m_rightTrigger.m_inputRatio;
+	m_isKeyDown[static_cast<int>(Input::GamePadKey::LeftTrigger)] = m_leftTrigger.m_inputRatio;
 }

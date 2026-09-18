@@ -17,7 +17,7 @@ public:
 	~TileManager();
 	void Init();
 	void SetUpFloor();
-	void Update(float deltaTime,InputData inputData);
+	void Update(float deltaTime, const InputData& inputData);
 	void Draw();
 	void DrawMiniMap();
 	bool InDevideList(size_t id);

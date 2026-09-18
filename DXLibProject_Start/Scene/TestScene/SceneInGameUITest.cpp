@@ -176,7 +176,7 @@ std::unique_ptr<SceneBase> SceneInGameUITest::Update(float deltaTime) {
 	return nullptr;
 }
 
-void SceneInGameUITest::UpdateInGame(float deltaTime, InputData inputData)
+void SceneInGameUITest::UpdateInGame(float deltaTime, const InputData& inputData)
 {
 	m_pCameraMgr->Update(deltaTime,inputData);
 	ItemManager::GetInstance().SetCameraView(m_pCameraMgr->GetCameraView());

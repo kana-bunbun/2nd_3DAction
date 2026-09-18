@@ -102,6 +102,7 @@ void HealBottle::Update(float deltaTime,const InputData& _inputData)
 
 void HealBottle::Draw()
 {
+	if(!m_isEffect)
 	GameObject::Draw();
 }
 

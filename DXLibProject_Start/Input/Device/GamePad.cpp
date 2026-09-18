@@ -24,6 +24,8 @@ void GamePad::Update(float deltaTime)
 	m_inputState.m_isKeyDown[static_cast<int>(Input::GamePadKey::RightVector)] = m_inputState.GetRightThumb().GetVector().GetSqLength();
 	// 左スティック4方向のいずれかが入力されていれば入力されている
 	m_inputState.m_isKeyDown[static_cast<int>(Input::GamePadKey::LeftVector)] = m_inputState.GetLeftThumb().GetVector().GetSqLength();
+	m_inputState.m_isKeyDown[static_cast<int>(Input::GamePadKey::RightVector)] = m_inputState.GetLeftThumb().GetVector().GetSqLength();
+
 	// 長押し時間の更新
 	m_holdTime[1] = m_holdTime[0];
 	// すべてのキーを調べる
@@ -55,7 +57,7 @@ bool GamePad::IsDown(int deviceKeyID)
 		assert(false && "不正なキーの入力チェックが行われました");
 		return false;
 	}
-	bool down= m_inputState.m_isKeyDown[deviceKeyID] > MyMath::Epsilon;
+	bool down= m_inputState.m_isKeyDown[deviceKeyID];
 	// 指定キーの入力状態を返す
 	return down;
 }

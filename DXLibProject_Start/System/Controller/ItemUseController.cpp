@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "ItemUseController.h"
+#include "World/UI/Group/UIItemList.h"
 
 ItemUseController::ItemUseController(UIItemList* _itemList)
 {
+	m_itemList = _itemList;
+	ItemListController::Init();
 }
 
-void ItemUseController::Update(float deltaTime, const InputData& _inputData)
+
+void ItemUseController::UpdateAction(float deltaTime, const InputData& _inputData)
 {
-	ItemListController::UpdateMoveCursor(deltaTime, _inputData);
-
-	//if(_inputData)
+	if (_inputData.IsPressed(Input::Action::UseItem)) {
+		m_itemList->UseItem();
+	}
 }
-
-void ItemUseController::UpdateAction(float deltaTime, InputData _inputData)
-{}

@@ -85,13 +85,14 @@ namespace MyMath {
 		return value;
 
 	}
+
 	/// <summary>
 	/// Å‘å’l‚©‚ç‚ÌŠ„‡‚ğ•Ô‚·
 	/// </summary>
 	/// <param name="value">’²‚×‚½‚¢’l</param>
 	/// <param name="Max">Å‘å’l</param>
 	/// <returns></returns>
-	constexpr float Rate(float value, float max) {
+	constexpr float Ratio(float value, float max) {
 		return value / max;
 	}
 

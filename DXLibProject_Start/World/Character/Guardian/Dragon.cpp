@@ -210,8 +210,8 @@ void Dragon::TileIDUpdate()
 
 void Dragon::UpdateFromInput(const InputData& _inputData)
 {
-	InputData input = _inputData;
-	if (input.IsPressed(Input::Action::DragonCall)) {
+
+	if (_inputData.IsPressed(Input::Action::DragonCall)) {
 		if (m_followState!=FollowState::Attack&&m_status!=Status::Dragon::Attack) {
 			SetTarget(CharacterManager::GetInstance().CheckNearestCharacter(m_transform.position, Character::Type::Enemy));
 			Call();
@@ -220,6 +220,12 @@ void Dragon::UpdateFromInput(const InputData& _inputData)
 			CallBack();
 		}
 	}
+
+	ImGui::Begin("RightTrigger");
+
+	ImGui::Text("RightTrigger IsDown : %d", _inputData.IsDown(Input::Action::DragonCall));
+	ImGui::Text("RightTrigger IsPressed : %d", _inputData.IsPressed(Input::Action::DragonCall));
+	ImGui::End();
 }
 
 void Dragon::FollowUpdate(float deltaTime)

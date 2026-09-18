@@ -149,6 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Data\CharacterParam.cpp" />
+    <ClCompile Include="World\Action\ActionEffect_Damage.cpp" />
+    <ClCompile Include="System\Controller\ItenBlendController.cpp" />
     <ClCompile Include="System\Controller\ItemUseController.cpp" />
     <ClCompile Include="System\Controller\ItemListController.cpp" />
     <ClCompile Include="System\Controller\Controller.cpp" />
@@ -343,6 +346,9 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Data\CharacterParam.h" />
+    <ClInclude Include="World\Action\ActionEffect_Damage.h" />
+    <ClInclude Include="System\Controller\ItenBlendController.h" />
     <ClInclude Include="System\Controller\ItemUseController.h" />
     <ClInclude Include="System\Controller\ItemListController.h" />
     <ClInclude Include="System\Controller\Controller.h" />

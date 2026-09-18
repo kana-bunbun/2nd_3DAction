@@ -11,8 +11,9 @@ public:
 	ItemListController(UIItemList* _itemLlist);
 	void Init()override;
 	void SetItemList(UIItemList* _itemLlist);
-
+	void Update(float deltaTime, const InputData& _inputData)override;
 	void UpdateMoveCursor(float deltaTime, const InputData& _inputData);
+	virtual void UpdateAction(float deltaTime, const InputData& _inputData) {};
 protected:
 	ActionInterval m_cursorInterval;
 	UIItemList* m_itemList;

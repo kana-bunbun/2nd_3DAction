@@ -50,7 +50,7 @@ FollowCamera::~FollowCamera()
 
 }
 
-void FollowCamera::Update(float deltaTime,InputData inputData)
+void FollowCamera::Update(float deltaTime,const InputData& inputData)
 {
     // 距離の更新
     UpdateDistance(deltaTime);
@@ -78,7 +78,7 @@ void FollowCamera::UpdateDistance(float deltaTime)
     m_distance = MyMath::Clamp(m_distance, minDistance, maxDistance);
 }
 
-void FollowCamera::UpdateAngle(float deltaTime, InputData inputData)
+void FollowCamera::UpdateAngle(float deltaTime, const InputData& inputData)
 {
 
     float inputRadian = inputData.GetRadian(Input::Action::Camera) + (DX_PI_F * 0.5f);

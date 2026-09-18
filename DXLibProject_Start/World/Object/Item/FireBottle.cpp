@@ -6,6 +6,8 @@
 #include"System/CollisionDataManager.h"
 #include"System/EffectManager.h"
 #include"World/Component/Collision/CollisionShape.h"
+#include"System/ActionParamManager.h"
+#include"World/Action/ActionEffect_Damage.h"
 namespace {
 	const char* const kModelPath = "FireBottleModel";
 	// 投げる角度のオフセット
@@ -29,6 +31,7 @@ namespace {
 	constexpr int kEffectCollisionID = 201;
 	// 再生するエフェクトのID
 	constexpr int kEffectID = 110;
+	constexpr int kActionID = 10;
 }
 FireBottle::FireBottle()
 {
@@ -48,19 +51,28 @@ void FireBottle::Init()
 
 void FireBottle::InitParameter()
 {
+	// 発動効果のパラメータ読み込み
+	m_actionParam = ActionParamManager::GetInstance().GetActionParam(kActionID);
+	// 発動効果の当たり判定追加
+	m_pEffectCollision = std::move(CollisionDataManager::GetInstance().GetCollision(m_actionParam.collisionID));
+	// 発動効果の効果量を追加
+	m_pActionEffect = std::make_unique<ActionEffect_Damage>();
+	m_pActionEffect->Init(m_actionParam.effectID);
+	// 効果の発動インターバルパラメータ追加
+	m_pInterval = std::make_unique<ActionInterval>();
+	m_pInterval->Init(m_actionParam.intervalID);
+
 	// 本体の当たり判定の追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
+	CollisionParam effectParam = CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
 	AddCollision(param);
-	m_collisionTag = CollisionTag::Item;
-	param = CollisionDataManager::GetInstance().GetCollisionData(kEffectCollisionID);
-	AddCollision(param);
-	// エフェクトの当たり判定のパラメータをキャッシュしておく
-	m_collisionParam = param;
-
+	AddCollision(effectParam);
 }
 
 void FireBottle::Update(float deltaTime,const InputData& _inputData)
 {
+	IntervalUpdate(deltaTime);
+
 	UpdateObject(deltaTime);
 	if (m_transform.position.y < 0) {
 
@@ -125,6 +137,7 @@ void FireBottle::Setup(const Transform & transform)
 	}
 
 	m_transform.position = transform.position;
+	m_pInterval->Setup();
 
 	RandomRotate();
 	m_transform.rotation = m_rotateSpeed;

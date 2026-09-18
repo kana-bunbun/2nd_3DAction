@@ -190,7 +190,7 @@ void GameObjectManager::CheckCollision()
 
 }
 
-std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::ICollider& collision)
+std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::ICollider& collision, std::function<bool(GameObject* targetObj)> condition)
 {
 	// 当たっているオブジェクトの配列を用意
 	std::vector<GameObject*> hitList;
@@ -199,6 +199,9 @@ std::vector<GameObject*> GameObjectManager::CheckHitObject(const Collision::ICol
 	for (int objectID = 0; objectID < m_objects.size(); objectID++) {
 		// 現在いるマスが隣り合っていない場合スルー
 		GameObject* object = m_objects[objectID].get();
+
+		if (!condition ||
+			!condition(object))continue;
 
 		// 隣り合っていないマスならスキップ
 		if (!IsChebyishevTile(collision, object))continue;
