@@ -106,7 +106,7 @@ const Vector2& UIItemList::CalculateSlotPos(int slotID)
 
 void UIItemList::DebugDraw()
 {
-	ImGui::Begin("ItemList");
+	/*ImGui::Begin("ItemList");
 	for (int i = 0; i < m_itemSlots.size();i++) {
 		ImGui::Text("slot%d Type : %d | num : %d \n", m_itemSlots[i]->GetID(), static_cast<int>(m_itemSlots[i]->GetItemData().GetType()), m_itemSlots[i]->GetItemData().GetItemNum());
 	}
@@ -118,7 +118,7 @@ void UIItemList::DebugDraw()
 		selected += std::to_string(m_selectIndex[i]);
 	}
 	ImGui::Text(selected.c_str());
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void UIItemList::MoveCursor(const Vector2& inputVector)

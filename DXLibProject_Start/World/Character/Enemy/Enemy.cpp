@@ -3,6 +3,8 @@
 #include "../../UI/BillboardManager.h"
 #include"World/Component/Collision/Collision.h"
 #include"World/Component/Collision/ICollider.h"
+#include"World/Character/CharacterManager.h"
+#include"World/Character/Player/Player.h"
 namespace {
 	//const char* const kFilePath = "Resource\\Enemy\\Queen\\";
 	//const char* const kModelPath = "Model.mv1";
@@ -45,6 +47,8 @@ namespace {
 	constexpr Vector3 kBillboardOffset = { 0.0f,100.0f,0.0f };
 	constexpr float kAlphaSpeed = 255.0f * 3.0f;
 	constexpr Vector3 kModelSize = { 0.3f,0.3f,0.3f };
+
+	constexpr int kCharacterParamID= 200;
 }
 
 Enemy::Enemy():
@@ -65,6 +69,7 @@ Enemy::Enemy():
 	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
+	m_characterData.Init(kCharacterParamID);
 }
 
 Enemy::Enemy(const Transform& transform) :
@@ -85,6 +90,7 @@ Enemy::Enemy(const Transform& transform) :
 	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	AddCollision(std::make_unique<Collision::Sphere>(bodyPos, kSphereRadius), CollisionType::Body);
 	m_collisionTag = CollisionTag::Enemy;
+	m_characterData.Init(kCharacterParamID);
 }
 
 Enemy::~Enemy()
@@ -126,6 +132,33 @@ void Enemy::Update(float deltaTime, const InputData& _inputData)
 	m_animation.Update(deltaTime);
 	//printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
 	UpdateBillboard(deltaTime);
+	ImGui::Begin("EnemyHP");
+	std::string status = "HP : "+std::to_string(m_characterData.HP);
+	ImGui::Text(status.c_str());
+	Player* player = CharacterManager::GetInstance().GetPlayer();
+	//float dot = (m_transform.position - player->GetTransform().position);
+	//std::string dotText = "Dot : " + std::to_string(m_characterData.HP);
+	ImGui::Text(status.c_str());
+	Vector3 myAngle =Vector3::zero;
+	myAngle.z += -cosf(m_transform.rotation.y);
+	myAngle.x += -sinf(m_transform.rotation.y);
+	myAngle.y += 0.0f;
+	float angleSqLength = myAngle.GetSqLength();
+	Vector3 toPlayer = (player->GetTransform().position - m_transform.position).Normalize();
+
+	std::string dot = "dot : " + std::to_string(toPlayer.Dot(myAngle) / angleSqLength);
+	ImGui::Text(dot.c_str());
+	dot = "dotangle : " + std::to_string((toPlayer.Dot(myAngle) / angleSqLength)*180);
+
+	ImGui::Text(dot.c_str());
+	std::string s = std::to_string(myAngle.GetSqLength());
+	ImGui::Text(s.c_str());
+
+	ImGui::End();
+
+	DrawSphere3D((myAngle*100+m_transform.position).ToVECTOR(), 10, 10, Color::kRed, Color::kRed, TRUE);
+	m_transform.rotation.y += deltaTime;
+	m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
 }
 
 
@@ -161,12 +194,7 @@ void Enemy::ResolveCollision(GameObject & other, const CollisionData & myData, c
 	switch (other.GetCollisionTag())
 	{
 	case CollisionTag::Player:
-	/*	if (!IsDead()) {
-			break;
-		}
-		else { 
-			int t=0;
-		}*/
+		if (!IsDead())break;
 		m_isHit = true;
 		m_billboardPos = other.GetTransform().position;
 		break;
@@ -209,9 +237,9 @@ void Enemy::UpdateAnimation(float deltaTime)
 	if (!m_animation.IsPlaying())
 		nextStatus = Status::Queen::Neutral;
 	// HPがなくなっていたら
-	//if (!m_HPGauge->GetValue()) {
-	//	nextStatus = Status::Queen::Dead;
-	//}
+	if (IsDead()) {
+		nextStatus = Status::Queen::Dead;
+	}
 	// ステータスが異なっていたらアニメーションの変更
 	if (m_status != nextStatus) {
 		ChangeAnimation(nextStatus);
@@ -230,5 +258,16 @@ void Enemy::ChangeAnimation(const Status::Queen& status)
 
 void Enemy::Setup()
 {
+}
+
+bool Enemy::IsDead()
+{
+	return m_characterData.HP<=0;
+}
+
+void Enemy::Replace(const Vector3& position)
+{
+	GameObject::SetPosition(position);
+	m_characterData.Reset();
 }
 

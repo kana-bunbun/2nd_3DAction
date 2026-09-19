@@ -61,7 +61,7 @@ void FireBottle::InitParameter()
 	// 効果の発動インターバルパラメータ追加
 	m_pInterval = std::make_unique<ActionInterval>();
 	m_pInterval->Init(m_actionParam.intervalID);
-
+	m_pInterval->SetActive(false);
 	// 本体の当たり判定の追加
 	CollisionParam param = CollisionDataManager::GetInstance().GetCollisionData(kCollisionID);
 	CollisionParam effectParam = CollisionDataManager::GetInstance().GetCollisionData(m_actionParam.collisionID);
@@ -108,13 +108,7 @@ void FireBottle::ResolveCollision(GameObject& other, const CollisionData& myData
 		//m_transform.position.y = 0.0f;
 		EffectSetup();
 		break;
-	case CollisionTag::Player:
-	case CollisionTag::Dragon:
-	case CollisionTag::Enemy:
-		// エフェクトの当たり判定でなければ処理を抜ける
-		if (myData.type == CollisionType::Invalid)break;
-		if (m_activationCount)break;
-		other.Damage(1);
+
 		break;
 	default:
 		break;
@@ -138,6 +132,8 @@ void FireBottle::Setup(const Transform & transform)
 
 	m_transform.position = transform.position;
 	m_pInterval->Setup();
+	m_pInterval->SetActive(false);
+
 
 	RandomRotate();
 	m_transform.rotation = m_rotateSpeed;
@@ -148,10 +144,13 @@ void FireBottle::Setup(const Transform & transform)
 
 void FireBottle::EffectSetup()
 {
-	m_moveVector = Vector3::zero;
+	m_moveVector = Vector3::zero;	// 座標設定
+	m_pEffectCollision->SetPosition(m_transform.position);
 	if(!m_isEffect)
 	EffectManager::GetInstance().Play(kEffectID, &m_transform);
 	m_isEffect = true;
+		// インターバルをアクティブに設定
+	m_pInterval->SetActive(true);
 }
 
 void FireBottle::UpdateObject(float deltaTime)

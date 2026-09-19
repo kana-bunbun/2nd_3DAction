@@ -24,6 +24,7 @@ void ItemObjectBase::IntervalUpdate(float deltaTime)
 		// 効果の発動処理
 		m_pActionEffect->Execute(m_pEffectCollision.get());
 		isReCount = true;
+		DrawSphere3D(m_transform.position.ToVECTOR(), 600, 10, 0x000000, 0x000000, TRUE);
 	}
 	// 発動効果が終了したら
 	if (m_pInterval->IsFinish()) {

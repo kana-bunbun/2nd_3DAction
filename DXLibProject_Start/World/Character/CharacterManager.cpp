@@ -45,7 +45,7 @@ void CharacterManager::SetRandomPos()
 		// ランダムで取得した値のIDをもとにマスのワールド座標を取得
 		Vector3 randomPos = MapManager::GetInstance().GetWorldPosFromID(rooms[roomID]);
 		// 取得したワールド座標にキャラクターを配置
-		character->SetPosition(randomPos);
+		character->Replace(randomPos);
 		character->Setup();
 		// 指定したインデックスの要素を削除
 		rooms.erase(rooms.begin() + roomID);

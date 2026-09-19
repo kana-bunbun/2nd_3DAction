@@ -19,6 +19,7 @@
 #include"Input/InputConst.h"
 #include"Data/InputKeyParam.h"
 #include"Data/ActionKeyParam.h"
+#include"Data/CharacterData.h"
 
 namespace Data {
 	namespace Csv {
@@ -221,6 +222,22 @@ namespace Data {
 					if (key == Input::Key::Invalid)continue;
 					param.keys.push_back(key);
 				}
+				return param;
+			}
+		};
+		template<>
+		struct FromCsv<CharacterData> {
+			static CharacterData Binding(const Csv::Row& row) {
+				CharacterData param;
+				
+				param.ID = Get<int>(row, "ID");
+
+				param.MaxHP = Get<int>(row, "HP");
+				param.HP=param.MaxHP;
+
+				param.MaxMP = Get<int>(row, "MP");
+				param.MP = param.MaxHP;
+				
 				return param;
 			}
 		};

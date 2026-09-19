@@ -34,8 +34,7 @@ void ActionEffect_Heal::Draw()
 void ActionEffect_Heal::Execute(Collision::ICollider* collision)
 {
 	// 効果範囲に触れているオブジェクトを取得
-	std::vector<GameObject*>hitObjects = GameObjectManager::GetInstance().CheckHitObject(
-		*collision, [](GameObject* obj) {return dynamic_cast<Character*>(obj)!=nullptr; });
+	std::vector<GameObject*>hitObjects = GameObjectManager::GetInstance().CheckHitObject(*collision);
 	for (auto& objct : hitObjects) {
 		// キャラクター以外はスルー
 		if (!dynamic_cast<Character*>(objct))continue;

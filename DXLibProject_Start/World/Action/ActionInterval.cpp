@@ -2,7 +2,12 @@
 #include "ActionInterval.h"
 #include "../../Utility/MyMath.h"
 #include "../../System/ActionIntervalParamManager.h"
-ActionInterval::ActionInterval()
+ActionInterval::ActionInterval():
+	m_firstCount (0.0f),
+	m_effectCount (0.0f),
+	m_intervalCount (0.0f),
+	m_isExecute (false),
+	m_isActive (true)
 {
 
 }

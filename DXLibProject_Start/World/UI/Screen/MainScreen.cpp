@@ -76,8 +76,6 @@ void MainScreen::CreateObjects()
 	m_pTileManager = std::make_unique<TileManager>();
 
 	GameObjectManager::GetInstance().CreateObject<Enemy>();
-	GameObjectManager::GetInstance().CreateObject<Enemy>();
-	GameObjectManager::GetInstance().CreateObject<Enemy>();
 
 	m_pCameraMgr->Init();
 }

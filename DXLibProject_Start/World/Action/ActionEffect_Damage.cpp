@@ -32,11 +32,11 @@ void ActionEffect_Damage::Draw()
 void ActionEffect_Damage::Execute(Collision::ICollider* collision)
 {
 	// 効果範囲に触れているオブジェクトを取得
-	std::vector<GameObject*>hitObjects = GameObjectManager::GetInstance().CheckHitObject(
-		*collision, [](GameObject* obj) {return dynamic_cast<Character*>(obj) != nullptr; });
+	std::vector<GameObject*>hitObjects = GameObjectManager::GetInstance().CheckHitObject(*collision);
 	for (auto& objct : hitObjects) {
+		bool isCharacter = !dynamic_cast<Character*>(objct);
 		// キャラクター以外はスルー
-		if (!dynamic_cast<Character*>(objct))continue;
+		if (isCharacter)continue;
 		// ダメージ処理を行う
 		objct->Damage(m_param.value);
 	}

@@ -429,7 +429,10 @@
     <ClCompile Include="World\Action\ActionEffect_Damage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Data\CharacterParam.cpp">
+    <ClCompile Include="Data\CharacterData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\CharacterDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1037,7 +1040,10 @@
     <ClInclude Include="World\Action\ActionEffect_Damage.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Data\CharacterParam.h">
+    <ClInclude Include="Data\CharacterData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\CharacterDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

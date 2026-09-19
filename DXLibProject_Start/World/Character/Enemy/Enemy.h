@@ -42,6 +42,8 @@ public:
 	void UpdateAnimation(float deltaTime);
 	void ChangeAnimation(const Status::Queen& status);
 	void Setup()override;
+	bool IsDead()override;
+	void Replace(const Vector3& position)override;
 public:		// ゲッター・セッター関数
 	const Character::Type& GetCharacterType()override { return Character::Type::Enemy; }
 

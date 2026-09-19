@@ -49,8 +49,8 @@ public:
 	virtual void Draw();
 	virtual void LateDraw() {};	// 最後に行いたい描画処理
 	virtual void DebugCollision(int color=Color::kWhite);
-	virtual void Damage(float damage){}
-	virtual void Heal(float heal) {}
+	virtual void Damage(int damage){}
+	virtual void Heal(int heal) {}
 	/// <summary>
 	/// トランスフォームを取得
 	/// 値変更をしてほしくないため最初にconst
@@ -58,12 +58,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const Transform& GetTransform()const { return m_transform; }
-	/// <summary>
-	/// 座標を取得
-	/// </summary>
-	/// <returns></returns>
-	const Vector3& GetPosition()const { return m_transform.position; }
 	virtual void SetPosition(const Vector3& position);
+	/// <summary>
+	/// キャラクターを配置しなおす処理
+	/// </summary>
+	/// <param name="position"></param>
+	virtual void Replace(const Vector3& position) { SetPosition(position); }
 	/// <summary>
 	/// 当たり判定の取得
 	/// </summary>
