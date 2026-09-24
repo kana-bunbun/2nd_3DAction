@@ -53,6 +53,7 @@
 		Sensor,
 		Attack,
 		Heal,
+		Wall,
 		Null,		// 当たり判定をチェックしない
 	};
 	enum class CollisionShape {

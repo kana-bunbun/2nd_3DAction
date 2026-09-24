@@ -6,19 +6,6 @@
 #include"World/Character/CharacterManager.h"
 #include"World/Character/Player/Player.h"
 namespace {
-	//const char* const kFilePath = "Resource\\Enemy\\Queen\\";
-	//const char* const kModelPath = "Model.mv1";
-	//const char* const kMotionPath = "Animation\\";
-	//const char* const kAnimPath[static_cast<int>(Status::Queen::Max)] =
-	//{
-	//	"Idle.mv1",
-	//	"Roar.mv1",
-	//	"Walk.mv1",
-	//	"Run.mv1",
-	//	"JumpAttack.mv1",
-	//	"Damage.mv1",
-	//	"Death.mv1",
-	//};
 	const char* const kModelDataPath = "EnemyModel";
 	constexpr bool kLoopFrag[static_cast<int>(Status::Queen::Max)]{
 	true,
@@ -132,33 +119,25 @@ void Enemy::Update(float deltaTime, const InputData& _inputData)
 	m_animation.Update(deltaTime);
 	//printfDx("enemy::HP : %f\n", m_HPGauge->GetValue());
 	UpdateBillboard(deltaTime);
+
+
 	ImGui::Begin("EnemyHP");
-	std::string status = "HP : "+std::to_string(m_characterData.HP);
-	ImGui::Text(status.c_str());
+	std::string HpText = "HP : "+std::to_string(m_characterData.HP);
+	ImGui::Text(HpText.c_str());
 	Player* player = CharacterManager::GetInstance().GetPlayer();
-	//float dot = (m_transform.position - player->GetTransform().position);
-	//std::string dotText = "Dot : " + std::to_string(m_characterData.HP);
-	ImGui::Text(status.c_str());
-	Vector3 myAngle =Vector3::zero;
-	myAngle.z += -cosf(m_transform.rotation.y);
-	myAngle.x += -sinf(m_transform.rotation.y);
-	myAngle.y += 0.0f;
-	float angleSqLength = myAngle.GetSqLength();
-	Vector3 toPlayer = (player->GetTransform().position - m_transform.position).Normalize();
+	ImGui::Text(HpText.c_str());
 
-	std::string dot = "dot : " + std::to_string(toPlayer.Dot(myAngle) / angleSqLength);
-	ImGui::Text(dot.c_str());
-	dot = "dotangle : " + std::to_string((toPlayer.Dot(myAngle) / angleSqLength)*180);
 
-	ImGui::Text(dot.c_str());
-	std::string s = std::to_string(myAngle.GetSqLength());
-	ImGui::Text(s.c_str());
+	float atan2value = 0.0f;
+	Vector3 differ = player->GetTransform().position - m_transform.position;
+	atan2value = atan2(-differ.x, -differ.z);
+	std::string atanText = std::to_string(atan2value);
+	ImGui::Text(atanText.c_str());
+	atanText = std::to_string(atan2value*MyMath::ToDegree);
+	ImGui::Text(atanText.c_str());
 
 	ImGui::End();
 
-	DrawSphere3D((myAngle*100+m_transform.position).ToVECTOR(), 10, 10, Color::kRed, Color::kRed, TRUE);
-	m_transform.rotation.y += deltaTime;
-	m_transform.rotation.y = MyMath::NormalizeRadian(m_transform.rotation.y);
 }
 
 
@@ -180,11 +159,6 @@ void Enemy::UpdateBillboard(float deltaTime)
 
 void Enemy::UpdateCollision()
 {
-
-	//Vector3 FootPos = MV1GetFramePosition(m_modelHandle, kLeftFootIndex);
-	//m_collisions[0].shape->SetPosition(FootPos);
-	//FootPos = MV1GetFramePosition(m_modelHandle, kRightFootIndex);
-	//m_collisions[1].shape->SetPosition(FootPos);
 	Vector3 bodyPos = MV1GetFramePosition(m_modelData->GetHandle(), kBodyIndex);
 	m_collisions[0].shape->SetPosition(bodyPos);
 }

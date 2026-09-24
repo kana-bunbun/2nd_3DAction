@@ -140,10 +140,7 @@ void GameObjectManager::CheckCollision()
 			if (objA->GetCollisionTag() == CollisionTag::Wall &&
 				objB->GetCollisionTag() == CollisionTag::Wall)continue;
 
-			if ((objA->GetCollisionTag() == CollisionTag::Wall && objB->GetCollisionTag() == CollisionTag::Item) ||
-				(objA->GetCollisionTag() == CollisionTag::Item && objB->GetCollisionTag() == CollisionTag::Wall)) {
-				int t = 0;
-			}
+			
 			// 現在いるマスが隣り合っていない場合スルー
 			if (!IsChebyishevTile(objA, objB))continue;
 
@@ -159,12 +156,6 @@ void GameObjectManager::CheckCollision()
 					// 衝突判定
 					Collision::Result resultA = collisionA.shape->CheckCollision(*collisionB.shape);
 
-					if ((objA->GetCollisionTag() == CollisionTag::Wall &&
-						collisionB.type==CollisionType::Heal) ||
-						(objA->GetCollisionTag() == CollisionTag::Dragon &&
-							collisionB.type == CollisionType::Heal)) {
-						int f = 0;
-					}
 					// 当たっていなければスルー
 					if (!resultA.isHit)continue;
 

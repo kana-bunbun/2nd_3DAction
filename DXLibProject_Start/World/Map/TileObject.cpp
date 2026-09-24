@@ -29,7 +29,7 @@ TileObject::TileObject(int ID, const Vector3& position, const MapConst::eTerrain
 	for (int i = 0; i < static_cast<int>(MapConst::eDirectionFour::Max); i++) {
 		// 方向を調べる
 		MapConst::eDirectionFour direction = static_cast<MapConst::eDirectionFour>(i);
-		AddCollision(std::make_unique<Collision::AABB>(), CollisionType::Invalid);
+		AddCollision(std::make_unique<Collision::AABB>(), CollisionType::Wall);
 		RegistWall(direction);
 	}
 	ChangeTile(ID, position, terrain);

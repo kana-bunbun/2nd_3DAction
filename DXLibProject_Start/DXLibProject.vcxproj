@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="World\Component\Collision\CollisionCheck.cpp" />
     <ClCompile Include="System\CharacterDataManager.cpp" />
     <ClCompile Include="Data\CharacterData.cpp" />
     <ClCompile Include="World\Action\ActionEffect_Damage.cpp" />
@@ -347,6 +348,7 @@
     <Image Include="Resource\UI\PlayerFace.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="World\Component\Collision\CollisionCheck.h" />
     <ClInclude Include="System\CharacterDataManager.h" />
     <ClInclude Include="Data\CharacterData.h" />
     <ClInclude Include="World\Action\ActionEffect_Damage.h" />

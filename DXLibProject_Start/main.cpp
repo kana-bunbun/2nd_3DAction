@@ -18,14 +18,6 @@
 #include"System/EffectManager.h"
 #include"System/ImguiManager.h"
 #include"Input/InputManager.h"
-#include"Input/InputConst.h"
-// 追加のインクルードディレクトリ
-// 現在Dxライブラリを使用するにあたってC/C++、リンカーにて設定している
-// この設定は複数設定して良いもの
-// ただし追加しすぎると同じファイル名同氏の競合を起こす危険性があるので使いすぎには注意
-// この設定をすることでインクルードの開始地点を増やすことができる
-// 
-
 namespace {
 	constexpr int kParticleMax = 10000;
 }
@@ -34,7 +26,7 @@ namespace {
 // WinMain関数　ここからプログラムが始まる
 //========================================================
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
+															{
 
 
 	GameSetting::InitWindow();
