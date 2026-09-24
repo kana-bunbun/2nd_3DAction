@@ -39,16 +39,34 @@ public:
 	/// カメラの座標を更新
 	/// </summary>
 	void UpdatePosition(float deltaTime);
+	/// <summary>
+	/// フォロー時のカメラ移動
+	/// </summary>
+	/// <param name="deltaTime"></param>
+	void UpdateFollowPosition(float deltaTime);
+	/// <summary>
+	/// ロックオン時のカメラ移動
+	/// </summary>
+	/// <param name="deltaTime"></param>
+	void UpdateLockOnPosition(float deltaTime);
 
-
-
+	/// <summary>
+	/// ロックオンターゲットの設定
+	/// </summary>
+	/// <param name="target"></param>
+	/// <returns></returns>
+	void SetLockOnTarget(const Transform* target);
 private:
 
 	/// <summary>
 	/// 追従対象
 	/// 読み取り専用
 	/// </summary>
-	const Transform* m_target;
+	const Transform* m_followTarget;
+	/// <summary>
+	/// ロックオン対象
+	/// </summary>
+	const Transform* m_lockOnTarget;
 	/// <summary>
 	/// カメラデータ
 	/// </summary>

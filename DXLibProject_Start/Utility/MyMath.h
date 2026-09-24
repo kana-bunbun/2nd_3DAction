@@ -1,7 +1,8 @@
 #pragma once
 
 #include"../Utility/Vector3.h"
-#include<math.h>
+#include"World/GameObject.h"
+#include"pch.h"
 namespace {
 	// “ü—Í•ûŒü
 	enum class DirectionFour {	// 4•ûŒü
@@ -182,6 +183,9 @@ namespace MyMath {
 	}
 	DirectionEight RadianToDirectionEight(float radian) {
 		return AngleToDirectionEight(radian * ToDegree);
+	}
+	GameObject* GetLockOnTarget(const Transform& transform, const std::vector<GameObject*>& targetList) {
+
 	}
 }
 

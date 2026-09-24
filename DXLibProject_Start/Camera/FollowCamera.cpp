@@ -18,7 +18,8 @@ namespace {
 }
 
 FollowCamera::FollowCamera(const Transform* target):
-    m_target(target),
+    m_followTarget(target),
+    m_lockOnTarget(nullptr),
     m_view{},
     m_distance(),
     m_param()
@@ -31,7 +32,7 @@ FollowCamera::FollowCamera(const Transform* target):
 }
 
 FollowCamera::FollowCamera(const Transform* target, const FollowCameraParam& param) :
-    m_target(target),
+    m_followTarget(target),
     m_view{},
     m_distance(),
     m_param(param)
@@ -115,12 +116,18 @@ void FollowCamera::UpdateAngle(float deltaTime, const InputData& inputData)
 
 void FollowCamera::UpdatePosition(float deltaTime)
 {
+    if (!m_lockOnTarget) {
+        UpdateFollowPosition(deltaTime);
+    }
+    else {
+        UpdateLockOnPosition(deltaTime);
+    }
+}
 
-    //assert(m_target);
-    //if (m_target)return;
-    float randRange = DX_PI_F * 0.0f;
-    float rotateX = m_transform.rotation.x + (MyRandom::Float(-randRange, randRange));
-    float rotateY = m_transform.rotation.y + (MyRandom::Float(-randRange, randRange));
+void FollowCamera::UpdateFollowPosition(float deltaTime)
+{
+    float rotateX = m_transform.rotation.x;
+    float rotateY = m_transform.rotation.y;
 
     // 水平方向の成分
     float sinHol = sinf(rotateY);
@@ -138,12 +145,12 @@ void FollowCamera::UpdatePosition(float deltaTime)
     
     Vector3 cameraPos = Vector3(0.0f, 0.0f, 0.0f);
 
-    cameraPos += m_target->position;
+    cameraPos += m_followTarget->position;
     cameraPos = (cameraPos + rotate);
 
     m_view.transform.position= cameraPos;
     //m_view.transform.rotation = m_transform.rotation;
-    m_view.target = m_target->position;
+    m_view.target = m_followTarget->position;
     m_view.target += m_param.offsetPos;
     m_transform.position = cameraPos;
 
@@ -158,4 +165,12 @@ void FollowCamera::UpdatePosition(float deltaTime)
     Vector3 dd = m_view.target - m_view.transform.position;
     printfDx("FollowCamera dd.x %f | dd.y %f | dd.z %f  : %f\n", dd.x, dd.y, dd.z);
     
+}
+
+void FollowCamera::UpdateLockOnPosition(float deltaTime)
+{}
+
+void FollowCamera::SetLockOnTarget(const Transform* target)
+{
+    m_lockOnTarget = target;
 }
