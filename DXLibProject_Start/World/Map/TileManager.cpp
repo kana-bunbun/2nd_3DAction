@@ -12,8 +12,8 @@
 #include"../Object/Stair.h"
 #include"../GameObjectManager.h"
 #include"../Object/Item/ItemManager.h"
-#include"../../System/Debug/ProfileScope.h"
-#include"../../System/Debug/Profiler.h"
+#include"../../System/Profile/ProfileScope.h"
+#include"../../System/Profile/Profiler.h"
 
 
 namespace {

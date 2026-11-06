@@ -1,6 +1,6 @@
 #pragma once
-#include "../GameObject.h"
-#include"../Object/Item/ItemList.h"
+#include "World/GameObject.h"
+#include"World/Object/Item/ItemList.h"
 #include"Data/CharacterData.h"
 #include<functional>
 class Character :public GameObject

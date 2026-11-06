@@ -1,7 +1,7 @@
 #include"pch.h"
 #include "ItemSlot.h"
 #include "../../System/ResourceManager.h"
-#include "../../System/Debug/ProfileScope.h"
+#include "../../System/Profile/ProfileScope.h"
 #include "../../Utility/Game.h"
 #include "../../Utility/MyMath.h"
 #include"../../System/ImageManager.h"

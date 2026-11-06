@@ -5,8 +5,8 @@
 #include "../System/TimeManager.h"
 #include "SceneSelectDebug.h"
 
-#include"../System/Debug/Profiler.h"
-#include"../System/Debug/ProfileScope.h"
+#include"../System/Profile/Profiler.h"
+#include"../System/Profile/ProfileScope.h"
 SceneManager::SceneManager() {
 
 	m_pCurrentScene = nullptr;

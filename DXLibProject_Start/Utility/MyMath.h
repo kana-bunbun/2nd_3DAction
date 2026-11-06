@@ -184,8 +184,8 @@ namespace MyMath {
 	DirectionEight RadianToDirectionEight(float radian) {
 		return AngleToDirectionEight(radian * ToDegree);
 	}
-	GameObject* GetLockOnTarget(const Transform& transform, const std::vector<GameObject*>& targetList) {
+	//GameObject* GetLockOnTarget(const Transform& transform, const std::vector<GameObject*>& targetList) {
 
-	}
+	//}
 }
 

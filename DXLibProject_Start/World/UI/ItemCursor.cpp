@@ -6,7 +6,7 @@
 #include"../../Utility/MyMath.h"
 #include"../../System/FontManager.h"
 #include"../../System/TimeManager.h"
-#include"../../System/Debug/ProfileScope.h"
+#include"../../System/Profile/ProfileScope.h"
 #include"../../Utility/Color.h"
 #include"../Object/Item/BlendManager.h"
 #include"../Character/Player/Player.h"

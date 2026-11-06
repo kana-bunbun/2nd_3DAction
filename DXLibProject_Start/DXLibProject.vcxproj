@@ -230,9 +230,9 @@
     <ClCompile Include="System\ActionEffectParamManager.cpp" />
     <ClCompile Include="System\ActionIntervalParamManager.cpp" />
     <ClCompile Include="System\CollisionDataManager.cpp" />
-    <ClCompile Include="System\Debug\MemoryProfiler.cpp" />
-    <ClCompile Include="System\Debug\Profiler.cpp" />
-    <ClCompile Include="System\Debug\ProfileScope.cpp" />
+    <ClCompile Include="System\Profile\MemoryProfiler.cpp" />
+    <ClCompile Include="System\Profile\Profiler.cpp" />
+    <ClCompile Include="System\Profile\ProfileScope.cpp" />
     <ClCompile Include="System\ExternalDataManager.cpp" />
     <ClCompile Include="System\FontManager.cpp" />
     <ClCompile Include="System\Resource.cpp" />
@@ -420,10 +420,10 @@
     <ClInclude Include="System\ActionEffectParamManager.h" />
     <ClInclude Include="System\ActionIntervalParamManager.h" />
     <ClInclude Include="System\CollisionDataManager.h" />
-    <ClInclude Include="System\Debug\MemoryProfiler.h" />
-    <ClInclude Include="System\Debug\Profiler.h" />
-    <ClInclude Include="System\Debug\ProfileRecord.h" />
-    <ClInclude Include="System\Debug\ProfileScope.h" />
+    <ClInclude Include="System\Profile\MemoryProfiler.h" />
+    <ClInclude Include="System\Profile\Profiler.h" />
+    <ClInclude Include="System\Profile\ProfileRecord.h" />
+    <ClInclude Include="System\Profile\ProfileScope.h" />
     <ClInclude Include="System\ExternalDataManager.h" />
     <ClInclude Include="System\FontManager.h" />
     <ClInclude Include="System\Resource.h" />

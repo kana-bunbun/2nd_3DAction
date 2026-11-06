@@ -234,13 +234,13 @@
     <ClCompile Include="System\TimeManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Debug\MemoryProfiler.cpp">
+    <ClCompile Include="System\Profile\MemoryProfiler.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Debug\Profiler.cpp">
+    <ClCompile Include="System\Profile\Profiler.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="System\Debug\ProfileScope.cpp">
+    <ClCompile Include="System\Profile\ProfileScope.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="World\UI\Widget\UIText.cpp">
@@ -824,16 +824,16 @@
     <ClInclude Include="System\TimeManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Debug\MemoryProfiler.h">
+    <ClInclude Include="System\Profile\MemoryProfiler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Debug\Profiler.h">
+    <ClInclude Include="System\Profile\Profiler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Debug\ProfileRecord.h">
+    <ClInclude Include="System\Profile\ProfileRecord.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="System\Debug\ProfileScope.h">
+    <ClInclude Include="System\Profile\ProfileScope.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="World\UI\Widget\UIText.h">

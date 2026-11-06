@@ -1,13 +1,13 @@
 #include"pch.h"
 
-#include"../../GameObject.h"
-#include"../AnimationController.h"
-#include"../CharacterMove.h"
-#include"../../UI/GaugeShow.h"
+#include"World/GameObject.h"
+#include"World/Character/Character.h"
+#include"World/Character/AnimationController.h"
+#include"World/Character/CharacterMove.h"
+#include"World/UI/GaugeShow.h"
 #include"Input/InputData.h"
-#include"../../../Camera/Camera.h"
-#include"../../GameObjectParam.h"
-#include"../Character.h"
+#include"Camera/Camera.h"
+#include"World/GameObjectParam.h"
 #include"World/Component/Collision/CollisionShape.h"
 
 class CameraOld;

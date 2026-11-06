@@ -6,7 +6,7 @@
 #include"../../Map/MapCreate.h"
 #include"../../Map/MapManager.h"
 #include"../../../Utility/MyRandom.h"
-#include"../../../System/Debug/ProfileScope.h"
+#include"../../../System/Profile/ProfileScope.h"
 #include"../../GameObjectManager.h"
 namespace {
 	constexpr int kDropItemTypeMax = 4;
